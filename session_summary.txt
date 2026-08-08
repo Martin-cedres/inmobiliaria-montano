@@ -4,7 +4,9 @@
 - Elaborado y acordado el Documento de Especificación SDD oficial en implementation_plan.md.
 - Inicializado el proyecto Next.js 16 (App Router) en el directorio raíz con TypeScript, Tailwind CSS y Lucide React icons.
 - Creados los tipos TypeScript (src/types/property.ts), utilidades de WhatsApp contextual (src/utils/whatsapp.ts), datos de prueba (src/data/mockProperties.ts) y los componentes UI Header, HeroSearch, CategoryChips, PropertyCard, OwnerLeadSection y Footer.
-- Removido el cuadro de búsqueda del Hero a pedido del usuario. La barra de Chips de Categorías pasa a ser el único control de filtrado directo, simplificando la UI al máximo.
-- Verificada la compilación limpia de producción con `npm run build` (0 errores).
-- Creado y subido el repositorio oficial en GitHub: https://github.com/Martin-cedres/inmobiliaria-montano.
+- Removido el cuadro de búsqueda del Hero a pedido del usuario. La barra de Chips de Categorías pasa a ser el único control de filtrado directo.
+- Configurada la infraestructura en Vercel: Vercel Blob (`inmobiliaria-montano-blob` en región São Paulo gru1) y Neon Serverless Postgres (`neon-bronze-helmet`).
+- Eliminadas las dos bases de datos secundarias no utilizadas en el panel de Vercel.
+- Instalado el driver de base de datos `@neondatabase/serverless` y enviado el nuevo commit a GitHub.
+- Repositorio GitHub: https://github.com/Martin-cedres/inmobiliaria-montano.
 - Servidor de desarrollo Next.js activo en http://localhost:3000.
