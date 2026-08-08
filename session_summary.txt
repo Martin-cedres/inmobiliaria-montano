@@ -7,6 +7,8 @@
 - Removido el cuadro de búsqueda del Hero a pedido del usuario. La barra de Chips de Categorías pasa a ser el único control de filtrado directo.
 - Configurada la infraestructura en Vercel: Vercel Blob (`inmobiliaria-montano-blob` en región São Paulo gru1) y Neon Serverless Postgres (`neon-bronze-helmet`).
 - Eliminadas las dos bases de datos secundarias no utilizadas en el panel de Vercel.
-- Instalado el driver de base de datos `@neondatabase/serverless` y enviado el nuevo commit a GitHub.
-- Repositorio GitHub: https://github.com/Martin-cedres/inmobiliaria-montano.
+- Instalado el driver de base de datos `@neondatabase/serverless`.
+- Creado e implementado el esquema relacional SQL (`src/db/schema.sql`) para Neon Postgres con tablas de propiedades, imágenes y leads de tasación, e índices de búsqueda optimizados para San José.
+- Creada e implementada la API de inicialización y siembra de base de datos (`src/app/api/db/init/route.ts`).
+- Código enviado a GitHub: https://github.com/Martin-cedres/inmobiliaria-montano.
 - Servidor de desarrollo Next.js activo en http://localhost:3000.
