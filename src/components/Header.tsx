@@ -10,74 +10,41 @@ export const Header: React.FC = () => {
   const whatsappLink = buildGeneralWhatsAppLink('general');
 
   return (
-    <header className="sticky top-0 z-50 bg-white/85 backdrop-blur-md border-b border-slate-200/80 transition-all">
-      {/* Top Utility Bar with Depth Gradient */}
-      <div className="bg-gradient-to-r from-[#2d0b28] via-[#43123c] to-[#5e1754] text-white text-xs py-2 px-4">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex items-center space-x-3">
-            <span className="font-semibold text-amber-300 hidden sm:inline">
-              ✨ Inmobiliaria Montaño — San José de Mayo
-            </span>
-            <span className="text-slate-300 text-[11px]">
-              Compromiso real, eficiencia comprobada.
-            </span>
-          </div>
-          <div className="flex items-center space-x-4">
-            <a
-              href={`tel:${MONTAÑO_WHATSAPP_PHONE}`}
-              className="flex items-center space-x-1.5 hover:text-amber-300 transition-colors font-semibold"
-            >
-              <Phone className="w-3.5 h-3.5 text-amber-400" />
-              <span>092 776 715</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
+    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80 transition-all">
       {/* Main Header Navigation */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-24 sm:h-28">
           
-          {/* Brand Logo with Subtle Depth & Gold Border */}
-          <Link href="/" className="flex items-center space-x-3 group">
-            <div className="w-11 h-11 bg-gradient-to-br from-[#5e1754] to-[#2d0b28] rounded-xl flex items-center justify-center text-amber-400 font-black text-xl shadow-sm group-hover:scale-105 transition-transform border border-amber-400/30">
-              M
-            </div>
-            <div className="flex flex-col">
-              <span className="font-black text-xl sm:text-2xl text-slate-900 tracking-tight leading-none group-hover:text-[#5e1754] transition-colors">
-                MONTAÑO
-              </span>
-              <span className="text-[10px] font-bold tracking-widest text-[#e85d04] uppercase mt-0.5">
-                NEGOCIOS INMOBILIARIOS
-              </span>
+          {/* Official Brand Logo (Gran Protagonista en Recuadro Rectangular Blanco) */}
+          <Link href="/" className="flex items-center space-x-3 group py-1 flex-shrink-0">
+            <div className="px-5 sm:px-7 py-2.5 bg-white rounded-2xl border border-purple-100/90 shadow-sm group-hover:shadow-md transition-all group-hover:scale-105 duration-300 flex items-center justify-center">
+              <img
+                src="/logo.png"
+                alt="Inmobiliaria Montaño Logo"
+                className="h-16 sm:h-20 w-auto object-contain rounded-xl"
+              />
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
+          {/* Desktop Navigation Links (Estructura de Secciones Limpia) */}
           <nav className="hidden md:flex items-center space-x-8 text-xs sm:text-sm font-semibold text-slate-700">
-            <Link href="/" className="hover:text-[#5e1754] transition-colors flex items-center space-x-1.5 group">
-              <span className="p-1.5 rounded-lg bg-[#5e1754]/10 text-[#5e1754] group-hover:bg-[#5e1754] group-hover:text-white transition-colors">
-                <Home className="w-3.5 h-3.5" />
-              </span>
-              <span>Inicio</span>
-            </Link>
-            <Link href="#catalogo" className="hover:text-[#5e1754] transition-colors flex items-center space-x-1.5 group">
-              <span className="p-1.5 rounded-lg bg-[#e85d04]/10 text-[#e85d04] group-hover:bg-[#e85d04] group-hover:text-white transition-colors">
-                <Key className="w-3.5 h-3.5" />
-              </span>
-              <span>Alquileres</span>
-            </Link>
             <Link href="#catalogo" className="hover:text-[#5e1754] transition-colors flex items-center space-x-1.5 group">
               <span className="p-1.5 rounded-lg bg-[#5e1754]/10 text-[#5e1754] group-hover:bg-[#5e1754] group-hover:text-white transition-colors">
                 <Building2 className="w-3.5 h-3.5" />
               </span>
-              <span>Ventas</span>
+              <span>Propiedades</span>
             </Link>
             <Link href="#tasaciones" className="hover:text-[#5e1754] transition-colors flex items-center space-x-1.5 group">
               <span className="p-1.5 rounded-lg bg-[#e85d04]/10 text-[#e85d04] group-hover:bg-[#e85d04] group-hover:text-white transition-colors">
                 <Calculator className="w-3.5 h-3.5" />
               </span>
               <span>Tasaciones</span>
+            </Link>
+            <Link href="#contacto" className="hover:text-[#5e1754] transition-colors flex items-center space-x-1.5 group">
+              <span className="p-1.5 rounded-lg bg-[#5e1754]/10 text-[#5e1754] group-hover:bg-[#5e1754] group-hover:text-white transition-colors">
+                <Phone className="w-3.5 h-3.5" />
+              </span>
+              <span>Contacto</span>
             </Link>
           </nav>
 
@@ -111,28 +78,12 @@ export const Header: React.FC = () => {
       {mobileMenuOpen && (
         <div className="md:hidden bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 pt-3 pb-6 space-y-3 shadow-xl">
           <Link
-            href="/"
-            onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center space-x-3 p-3 rounded-xl hover:bg-slate-50 font-semibold text-slate-800"
-          >
-            <Home className="w-5 h-5 text-[#5e1754]" />
-            <span>Inicio</span>
-          </Link>
-          <Link
-            href="#catalogo"
-            onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center space-x-3 p-3 rounded-xl hover:bg-slate-50 font-semibold text-slate-800"
-          >
-            <Key className="w-5 h-5 text-[#e85d04]" />
-            <span>Alquileres</span>
-          </Link>
-          <Link
             href="#catalogo"
             onClick={() => setMobileMenuOpen(false)}
             className="flex items-center space-x-3 p-3 rounded-xl hover:bg-slate-50 font-semibold text-slate-800"
           >
             <Building2 className="w-5 h-5 text-[#5e1754]" />
-            <span>Ventas</span>
+            <span>Propiedades</span>
           </Link>
           <Link
             href="#tasaciones"
@@ -141,6 +92,14 @@ export const Header: React.FC = () => {
           >
             <Calculator className="w-5 h-5 text-[#e85d04]" />
             <span>Solicitar Tasación</span>
+          </Link>
+          <Link
+            href="#contacto"
+            onClick={() => setMobileMenuOpen(false)}
+            className="flex items-center space-x-3 p-3 rounded-xl hover:bg-slate-50 font-semibold text-slate-800"
+          >
+            <Phone className="w-5 h-5 text-[#5e1754]" />
+            <span>Contacto</span>
           </Link>
           <div className="pt-2">
             <a

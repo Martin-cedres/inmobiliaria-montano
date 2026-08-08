@@ -15,10 +15,15 @@ export const HeroSearch: React.FC = () => {
 
       <div className="max-w-4xl mx-auto relative z-10 space-y-6">
         
-        {/* Glassmorphic Badge Header */}
-        <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/15 text-xs font-extrabold text-amber-300 shadow-sm">
-          <Sparkles className="w-4 h-4 text-amber-400" />
-          <span>Inmobiliaria Montaño — San José de Mayo</span>
+        {/* Prominent Logo Presentation (Tarjeta Blanca con Bordes Redondeados) */}
+        <div className="inline-block mb-3 relative group">
+          <div className="p-3 sm:p-5 bg-white rounded-3xl border border-white/50 shadow-2xl group-hover:scale-105 transition-all duration-300">
+            <img
+              src="/logo.png"
+              alt="Inmobiliaria Montaño Logo Oficial"
+              className="h-24 sm:h-32 w-auto object-contain rounded-2xl"
+            />
+          </div>
         </div>
 
         {/* Headline con Text Gradient Corporativo */}

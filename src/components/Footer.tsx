@@ -9,7 +9,7 @@ export const Footer: React.FC = () => {
   const whatsappUrl = buildGeneralWhatsAppLink('general');
 
   return (
-    <footer className="bg-[#191024] text-slate-300 border-t border-[#2D1D42]">
+    <footer id="contacto" className="bg-[#191024] text-slate-300 border-t border-[#2D1D42]">
       
       {/* Main Footer Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
@@ -17,16 +17,13 @@ export const Footer: React.FC = () => {
           
           {/* Column 1: Brand & Bio */}
           <div className="space-y-4 md:col-span-1">
+            {/* Official Brand Logo (PNG Transparente) */}
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-[#5E1754] to-[#350A2F] rounded-xl flex items-center justify-center text-amber-400 font-bold text-lg border border-amber-400/30">
-                M
-              </div>
-              <div className="flex flex-col">
-                <span className="font-black text-xl text-white tracking-tight">MONTAÑO</span>
-                <span className="text-[9px] font-bold tracking-widest text-[#E85D04] uppercase">
-                  NEGOCIOS INMOBILIARIOS
-                </span>
-              </div>
+              <img
+                src="/logo.png"
+                alt="Inmobiliaria Montaño Logo"
+                className="h-14 w-auto object-contain filter drop-shadow-md"
+              />
             </div>
 
             <p className="text-xs text-slate-400 leading-relaxed">
@@ -141,8 +138,16 @@ export const Footer: React.FC = () => {
         {/* Bottom Copyright & Credit Bar */}
         <div className="mt-12 pt-6 border-t border-[#2D1D42] text-center text-xs text-slate-500 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p>© {new Date().getFullYear()} Inmobiliaria Montaño. San José de Mayo, Uruguay. Todos los derechos reservados.</p>
-          <p className="flex items-center space-x-1">
-            <span>Desarrollado con alta velocidad en Next.js</span>
+          <p className="flex items-center space-x-1 flex-wrap justify-center">
+            <span>¿Te interesa un sitio o proyecto web como este?</span>
+            <a
+              href="https://wa.me/59891090705?text=Hola,%20vi%20la%20web%20de%20Inmobiliaria%20Monta%C3%B1o,%20me%20interesa%20desarrollar%20un%20proyecto%20web%20a%20medida"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#E85D04] font-bold hover:underline hover:text-amber-400 transition-colors ml-1"
+            >
+              Consultá por WhatsApp
+            </a>
           </p>
         </div>
       </div>

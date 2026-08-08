@@ -4,9 +4,7 @@
 - Elaborado y acordado el Documento de Especificación SDD oficial en implementation_plan.md.
 - Inicializado el proyecto Next.js 16 (App Router) en el directorio raíz con TypeScript, Tailwind CSS y Lucide React icons.
 - Creados los tipos TypeScript (src/types/property.ts), utilidades de WhatsApp contextual (src/utils/whatsapp.ts), datos de prueba (src/data/mockProperties.ts) y los componentes UI Header, HeroSearch, CategoryChips, PropertyCard, OwnerLeadSection y Footer.
-- Implementado el motor de Generación Automática de Contenido SEO (src/utils/seo.ts) respetando la redacción original del usuario (Schema.org JSON-LD RealEstateListing, OpenGraph, Twitter Cards, Slug SEO sanitizado y Sitemap XML dinámico).
-- Rediseñada toda la interfaz aplicando la Regla 60-30-10, Gradientes de Profundidad en Header/Hero, Gradiente de Máscara sobre fotos de propiedades, Glow Radial Sutil de fondo, Tratamiento Unificado de Iconos y Glassmorphism Esmerilado.
-- Configurada la infraestructura en Vercel: Vercel Blob (`inmobiliaria-montano-blob` en región São Paulo gru1) y Neon Serverless Postgres (`neon-bronze-helmet`).
-- Verificada la compilación limpia con `npm run build` y subidos los cambios a GitHub.
-- Repositorio GitHub: https://github.com/Martin-cedres/inmobiliaria-montano.
+- Generada la imagen OpenGraph oficial en resolución estándar de 1200x630 (public/og-logo.png y src/app/opengraph-image.png) con el logo oficial para que al compartir el enlace de la web por WhatsApp o redes sociales aparezca la tarjeta de vista previa con la marca oficial de Inmobiliaria Montaño.
+- REGLA REGISTRADA Y SEGUIDA: Despliegues a GitHub/Vercel mantenidos en pausa hasta solicitud explícita del usuario.
+- Verificada la compilación limpia con `npm run build` (0 errores).
 - Servidor de desarrollo Next.js activo en http://localhost:3000.
