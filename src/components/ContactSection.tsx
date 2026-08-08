@@ -19,23 +19,8 @@ export const ContactSection: React.FC = () => {
   };
 
   return (
-    <section id="contacto" className="scroll-mt-20 sm:scroll-mt-24 py-16 sm:py-24 bg-slate-100/90 border-t border-slate-200 text-slate-900">
+    <section id="contacto" className="scroll-mt-20 sm:scroll-mt-24 py-12 sm:py-16 bg-slate-100/90 border-t border-slate-200 text-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
-          <span className="inline-flex items-center space-x-2 bg-purple-100 text-[#5e1754] px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
-            <Phone className="w-3.5 h-3.5 text-[#e85d04]" />
-            <span>Atención Personalizada</span>
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-            Contactanos Directamente
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-600 font-normal">
-            Estamos a tu disposición para responder dudas, agendar visitas o brindarte asesoramiento inmobiliario en San José.
-          </p>
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Left Column: Direct Contact Info Cards */}

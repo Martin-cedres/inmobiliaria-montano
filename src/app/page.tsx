@@ -6,7 +6,6 @@ import { HeroSearch } from '@/components/HeroSearch';
 import { CategoryChips } from '@/components/CategoryChips';
 import { PropertyCard } from '@/components/PropertyCard';
 import { OwnerLeadSection } from '@/components/OwnerLeadSection';
-import { ContactSection } from '@/components/ContactSection';
 import { Footer } from '@/components/Footer';
 import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
 import { MOCK_PROPERTIES } from '@/data/mockProperties';
@@ -36,13 +35,13 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50">
       
-      {/* 1. Sticky Header Navbar (Permanente z-50) */}
+      {/* 1. Sticky Header Navbar */}
       <Header />
 
       {/* 2. Hero Section */}
       <HeroSearch />
 
-      {/* 3 & 4. Sección de Catálogo (Contenedor que incluye la Barra de Chips Fija SOLO en este sector) */}
+      {/* 3 & 4. Sección de Catálogo */}
       <div id="catalogo" className="scroll-mt-20 sm:scroll-mt-24 flex-grow">
         
         {/* Category Chips Bar: Fija de forma contextual únicamente dentro de la sección del Catálogo */}
@@ -64,7 +63,7 @@ export default function Home() {
             </h2>
           </div>
 
-          {/* Property Grid (Equilibrada en 3 Columnas) */}
+          {/* Property Grid */}
           {filteredProperties.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {filteredProperties.map((property) => (
@@ -97,13 +96,10 @@ export default function Home() {
       {/* 5. Owner Lead & Appraisals Section */}
       <OwnerLeadSection />
 
-      {/* 6. Dedicated Clean Contact Section (id="contacto") */}
-      <ContactSection />
-
-      {/* 7. Footer */}
+      {/* 6. Footer */}
       <Footer onSelectCategoryFilter={handleFooterFilterSelect} />
 
-      {/* 8. Floating WhatsApp CTA */}
+      {/* 7. Floating WhatsApp CTA */}
       <FloatingWhatsApp />
 
     </div>

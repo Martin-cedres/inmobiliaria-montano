@@ -4,7 +4,7 @@
 - Elaborado y acordado el Documento de Especificación SDD oficial en implementation_plan.md.
 - Inicializado el proyecto Next.js 16 (App Router) en el directorio raíz con TypeScript, Tailwind CSS y Lucide React icons.
 - Creados los tipos TypeScript (src/types/property.ts), utilidades de WhatsApp contextual (src/utils/whatsapp.ts), datos de prueba (src/data/mockProperties.ts) y los componentes UI Header, HeroSearch, CategoryChips, PropertyCard, OwnerLeadSection y Footer.
-- Creada la sección dedicada ContactSection.tsx (`id="contacto"`) posicionada entre Tasaciones y el Footer. Cuenta con fondo limpio, tarjetas de canales directos (WhatsApp, E-mail, Oficina y Horarios) y un formulario de consulta rápida general. Resuelto al 100% el problema de fragmentación y cortes en el scroll de Contacto.
+- Eliminado completamente el bloque de contacto adicional a solicitud explícita del usuario, manteniendo el flujo limpio directo desde Tasaciones al Footer.
 - REGLA REGISTRADA Y SEGUIDA: Despliegues a GitHub/Vercel mantenidos en pausa hasta solicitud explícita del usuario.
 - Verificada la compilación limpia con `npm run build` (0 errores).
 - Servidor de desarrollo Next.js activo en http://localhost:3000.
