@@ -167,7 +167,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
           </div>
 
           {/* Clean Professional SVG Badges */}
-          <div className="flex flex-wrap gap-1.5 mb-3">
+          <div className="flex flex-wrap gap-1.5 pt-1">
             {property.features.bankCreditEligible && (
               <span className="bg-amber-50 text-amber-900 border border-amber-200/80 text-[10px] font-extrabold px-2 py-0.5 rounded-md flex items-center space-x-1">
                 <Landmark className="w-3 h-3 text-amber-700" />
@@ -195,13 +195,13 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
           </div>
         </div>
 
-        {/* 10% Conversion CTA WhatsApp */}
-        <div className="pt-2">
+        {/* 10% Conversion CTA WhatsApp (Botón de ancho completo al final) */}
+        <div className="pt-3 border-t border-slate-100">
           <a
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full bg-[#e85d04] hover:bg-[#ff7518] active:scale-98 text-white py-2.5 px-4 rounded-xl font-extrabold text-xs sm:text-sm shadow flex items-center justify-center space-x-2 transition-all hover:shadow-orange-500/20"
+            className="w-full bg-[#e85d04] hover:bg-[#ff7518] active:scale-98 text-white py-3 px-4 rounded-xl font-extrabold text-xs sm:text-sm shadow-xs flex items-center justify-center space-x-2 transition-all hover:shadow-orange-500/20"
           >
             <MessageCircle className="w-4 h-4 fill-white text-[#e85d04]" />
             <span>Consultar por WhatsApp</span>

@@ -2,62 +2,57 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Phone, MessageCircle, Menu, X, Home, Key, Building2, Calculator } from 'lucide-react';
-import { MONTAÑO_WHATSAPP_PHONE, buildGeneralWhatsAppLink } from '@/utils/whatsapp';
+import { Calculator, Menu, X, Building2, Phone } from 'lucide-react';
+import { buildGeneralWhatsAppLink } from '@/utils/whatsapp';
 
 export const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const whatsappLink = buildGeneralWhatsAppLink('general');
 
   return (
-    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80 transition-all">
-      {/* Main Header Navigation */}
+    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100 shadow-xs transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-24 sm:h-28">
+        <div className="flex items-center justify-between h-18 sm:h-22">
           
-          {/* Official Brand Logo (Gran Protagonista en Recuadro Rectangular Blanco) */}
-          <Link href="/" className="flex items-center space-x-3 group py-1 flex-shrink-0">
-            <div className="px-5 sm:px-7 py-2.5 bg-white rounded-2xl border border-purple-100/90 shadow-sm group-hover:shadow-md transition-all group-hover:scale-105 duration-300 flex items-center justify-center">
-              <img
-                src="/logo.png"
-                alt="Inmobiliaria Montaño Logo"
-                className="h-16 sm:h-20 w-auto object-contain rounded-xl"
-              />
-            </div>
+          {/* Logo Destacado de Inmobiliaria Montaño (Mayor Presencia Visual) */}
+          <Link href="/" className="flex items-center space-x-2 group py-1 flex-shrink-0">
+            <img
+              src="/logo.png"
+              alt="Inmobiliaria Montaño"
+              className="h-12 sm:h-15 w-auto object-contain group-hover:scale-102 transition-transform duration-300"
+            />
           </Link>
 
-          {/* Desktop Navigation Links (Estructura de Secciones Limpia) */}
-          <nav className="hidden md:flex items-center space-x-8 text-xs sm:text-sm font-semibold text-slate-700">
-            <Link href="#catalogo" className="hover:text-[#5e1754] transition-colors flex items-center space-x-1.5 group">
-              <span className="p-1.5 rounded-lg bg-[#5e1754]/10 text-[#5e1754] group-hover:bg-[#5e1754] group-hover:text-white transition-colors">
-                <Building2 className="w-3.5 h-3.5" />
-              </span>
-              <span>Propiedades</span>
+          {/* Menú Central Limpio (Desktop) */}
+          <nav className="hidden md:flex items-center space-x-8 text-sm font-semibold text-slate-700">
+            <Link
+              href="#catalogo"
+              className="hover:text-[#5e1754] transition-colors relative py-1.5 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#5e1754] hover:after:w-full after:transition-all duration-300"
+            >
+              Propiedades
             </Link>
-            <Link href="#tasaciones" className="hover:text-[#5e1754] transition-colors flex items-center space-x-1.5 group">
-              <span className="p-1.5 rounded-lg bg-[#e85d04]/10 text-[#e85d04] group-hover:bg-[#e85d04] group-hover:text-white transition-colors">
-                <Calculator className="w-3.5 h-3.5" />
-              </span>
-              <span>Tasaciones</span>
+            <Link
+              href="#tasaciones"
+              className="hover:text-[#5e1754] transition-colors relative py-1.5 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#5e1754] hover:after:w-full after:transition-all duration-300"
+            >
+              Tasaciones
             </Link>
-            <Link href="#contacto" className="hover:text-[#5e1754] transition-colors flex items-center space-x-1.5 group">
-              <span className="p-1.5 rounded-lg bg-[#5e1754]/10 text-[#5e1754] group-hover:bg-[#5e1754] group-hover:text-white transition-colors">
-                <Phone className="w-3.5 h-3.5" />
-              </span>
-              <span>Contacto</span>
+            <Link
+              href="#contacto"
+              className="hover:text-[#5e1754] transition-colors relative py-1.5 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#5e1754] hover:after:w-full after:transition-all duration-300"
+            >
+              Contacto
             </Link>
           </nav>
 
-          {/* 10% Accent CTA Button */}
-          <div className="hidden sm:flex items-center space-x-3">
+          {/* Botón CTA Naranja Institucional Diferenciado (Solicitar Tasación) */}
+          <div className="hidden sm:flex items-center">
             <a
-              href={whatsappLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-[#e85d04] hover:bg-[#ff7518] active:scale-95 text-white px-5 py-2.5 rounded-full font-extrabold text-xs sm:text-sm shadow-md hover:shadow-orange-500/20 transition-all flex items-center space-x-2 border border-orange-400/30"
+              href="#tasaciones"
+              className="bg-[#e85d04] hover:bg-[#ff7518] active:scale-95 text-white px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-xs hover:shadow-orange-500/20 transition-all flex items-center space-x-2 border border-orange-400/20"
             >
-              <MessageCircle className="w-4 h-4 fill-white text-[#e85d04]" />
-              <span>Consulta WhatsApp</span>
+              <Calculator className="w-4 h-4 text-amber-200" />
+              <span>Solicitar Tasación</span>
             </a>
           </div>
 
@@ -65,10 +60,10 @@ export const Header: React.FC = () => {
           <div className="flex md:hidden items-center">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2.5 rounded-xl text-slate-800 hover:bg-slate-100 transition-colors"
-              aria-label="Abrir menú"
+              className="p-2 rounded-xl text-slate-800 hover:bg-slate-100 active:bg-slate-200 transition-colors"
+              aria-label="Abrir menú de navegación"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-6 h-6 text-[#5e1754]" /> : <Menu className="w-6 h-6 text-[#5e1754]" />}
             </button>
           </div>
         </div>
@@ -76,40 +71,42 @@ export const Header: React.FC = () => {
 
       {/* Mobile Drawer Navigation */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 pt-3 pb-6 space-y-3 shadow-xl">
+        <div className="md:hidden bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 pt-4 pb-6 space-y-3 shadow-2xl animate-in slide-in-from-top-2 duration-200">
           <Link
             href="#catalogo"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center space-x-3 p-3 rounded-xl hover:bg-slate-50 font-semibold text-slate-800"
+            className="flex items-center space-x-3 p-3 rounded-xl hover:bg-purple-50 text-slate-800 font-bold text-sm"
           >
             <Building2 className="w-5 h-5 text-[#5e1754]" />
-            <span>Propiedades</span>
+            <span>Ver Catálogo de Propiedades</span>
           </Link>
+
           <Link
             href="#tasaciones"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center space-x-3 p-3 rounded-xl hover:bg-slate-50 font-semibold text-slate-800"
+            className="flex items-center space-x-3 p-3 rounded-xl hover:bg-purple-50 text-slate-800 font-bold text-sm"
           >
             <Calculator className="w-5 h-5 text-[#e85d04]" />
-            <span>Solicitar Tasación</span>
+            <span>Solicitud de Tasación</span>
           </Link>
+
           <Link
             href="#contacto"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center space-x-3 p-3 rounded-xl hover:bg-slate-50 font-semibold text-slate-800"
+            className="flex items-center space-x-3 p-3 rounded-xl hover:bg-purple-50 text-slate-800 font-bold text-sm"
           >
             <Phone className="w-5 h-5 text-[#5e1754]" />
-            <span>Contacto</span>
+            <span>Contacto Directo</span>
           </Link>
+
           <div className="pt-2">
             <a
-              href={whatsappLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full bg-[#e85d04] text-white py-3 rounded-xl font-extrabold text-center flex items-center justify-center space-x-2 shadow-md"
+              href="#tasaciones"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full bg-[#e85d04] hover:bg-[#ff7518] text-white py-3 rounded-xl font-black text-center flex items-center justify-center space-x-2 shadow-md text-sm"
             >
-              <MessageCircle className="w-5 h-5 fill-white text-[#e85d04]" />
-              <span>Contactar por WhatsApp (092 776 715)</span>
+              <Calculator className="w-4 h-4 text-amber-200" />
+              <span>Solicitar Tasación Profesional</span>
             </a>
           </div>
         </div>

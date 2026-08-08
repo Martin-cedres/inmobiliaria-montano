@@ -2,14 +2,24 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Phone, Mail, MapPin, MessageCircle, Heart, ShieldCheck, Award } from 'lucide-react';
-import { MONTAÑO_WHATSAPP_PHONE, MONTAÑO_OFFICIAL_EMAIL, buildGeneralWhatsAppLink } from '@/utils/whatsapp';
+import { Phone, Mail, MapPin, MessageCircle, Award, Home, Key, Trees, Warehouse, Landmark, Calculator, ShieldCheck, Lock, Building2 } from 'lucide-react';
+import { MONTAÑO_OFFICIAL_EMAIL, buildGeneralWhatsAppLink } from '@/utils/whatsapp';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  onSelectCategoryFilter?: (category: any, operation?: any) => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
   const whatsappUrl = buildGeneralWhatsAppLink('general');
 
+  const handleFilterClick = (category: string, operation?: string) => {
+    if (onSelectCategoryFilter) {
+      onSelectCategoryFilter(category, operation || 'todas');
+    }
+  };
+
   return (
-    <footer id="contacto" className="bg-[#191024] text-slate-300 border-t border-[#2D1D42]">
+    <footer className="bg-[#191024] text-slate-300 border-t border-[#2D1D42]">
       
       {/* Main Footer Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
@@ -36,60 +46,89 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Column 2: Categorías Frecuentes */}
+          {/* Column 2: Categorías Frecuentes (Con Iconos Vectoriales) */}
           <div className="space-y-3">
             <h4 className="text-white font-bold text-sm uppercase tracking-wider">Búsquedas Frecuentes</h4>
-            <ul className="space-y-2 text-xs">
+            <ul className="space-y-2.5 text-xs">
               <li>
-                <a href="#catalogo" className="hover:text-amber-400 transition-colors">
-                  🏡 Casas en Venta en San José
+                <a
+                  href="#catalogo"
+                  onClick={() => handleFilterClick('casa', 'venta')}
+                  className="hover:text-amber-400 transition-colors flex items-center space-x-2 text-slate-300"
+                >
+                  <Home className="w-3.5 h-3.5 text-[#E85D04]" />
+                  <span>Casas en Venta en San José</span>
                 </a>
               </li>
               <li>
-                <a href="#catalogo" className="hover:text-amber-400 transition-colors">
-                  🏢 Alquileres con Garantía ANDA / CGN
+                <a
+                  href="#catalogo"
+                  onClick={() => handleFilterClick('todos', 'alquiler')}
+                  className="hover:text-amber-400 transition-colors flex items-center space-x-2 text-slate-300"
+                >
+                  <Key className="w-3.5 h-3.5 text-sky-400" />
+                  <span>Alquileres en San José</span>
                 </a>
               </li>
               <li>
-                <a href="#catalogo" className="hover:text-amber-400 transition-colors">
-                  🌾 Chacras y Campos en San José
+                <a
+                  href="#catalogo"
+                  onClick={() => handleFilterClick('chacra')}
+                  className="hover:text-amber-400 transition-colors flex items-center space-x-2 text-slate-300"
+                >
+                  <Trees className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Chacras y Campos</span>
                 </a>
               </li>
               <li>
-                <a href="#catalogo" className="hover:text-amber-400 transition-colors">
-                  📦 Galpones y Depósitos Industriales
+                <a
+                  href="#catalogo"
+                  onClick={() => handleFilterClick('deposito')}
+                  className="hover:text-amber-400 transition-colors flex items-center space-x-2 text-slate-300"
+                >
+                  <Warehouse className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Galpones y Depósitos</span>
                 </a>
               </li>
               <li>
-                <a href="#catalogo" className="hover:text-amber-400 transition-colors">
-                  🏛️ Propiedades Aptas Crédito Bancario
+                <a
+                  href="#catalogo"
+                  onClick={() => handleFilterClick('todos')}
+                  className="hover:text-amber-400 transition-colors flex items-center space-x-2 text-slate-300"
+                >
+                  <Landmark className="w-3.5 h-3.5 text-purple-400" />
+                  <span>Propiedades Aptas Crédito</span>
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Column 3: Navegación & Propietarios */}
+          {/* Column 3: Servicios & Propietarios */}
           <div className="space-y-3">
             <h4 className="text-white font-bold text-sm uppercase tracking-wider">Servicios & Propietarios</h4>
-            <ul className="space-y-2 text-xs">
+            <ul className="space-y-2.5 text-xs">
               <li>
-                <a href="#tasaciones" className="hover:text-amber-400 transition-colors text-amber-300 font-semibold">
-                  📐 Solicitud de Tasación Profesional
+                <a href="#tasaciones" className="hover:text-amber-400 transition-colors text-amber-300 font-semibold flex items-center space-x-2">
+                  <Calculator className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Solicitud de Tasación Profesional</span>
                 </a>
               </li>
               <li>
-                <a href="#tasaciones" className="hover:text-amber-400 transition-colors">
-                  📢 Publicar mi Inmueble con Montaño
+                <a href="#tasaciones" className="hover:text-amber-400 transition-colors flex items-center space-x-2 text-slate-300">
+                  <Home className="w-3.5 h-3.5 text-[#E85D04]" />
+                  <span>Publicar mi Inmueble con Montaño</span>
                 </a>
               </li>
               <li>
-                <a href="#catalogo" className="hover:text-amber-400 transition-colors">
-                  🏗️ Proyectos Residenciales en Pozo
+                <a href="#catalogo" onClick={() => handleFilterClick('proyecto')} className="hover:text-amber-400 transition-colors flex items-center space-x-2 text-slate-300">
+                  <Building2 className="w-3.5 h-3.5 text-purple-400" />
+                  <span>Proyectos Residenciales en Pozo</span>
                 </a>
               </li>
               <li>
-                <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="hover:text-amber-400 transition-colors">
-                  💬 Asesoramiento Notarial / Legal
+                <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="hover:text-amber-400 transition-colors flex items-center space-x-2 text-slate-300">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Asesoramiento Notarial / Legal</span>
                 </a>
               </li>
             </ul>
@@ -137,7 +176,17 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Copyright & Credit Bar */}
         <div className="mt-12 pt-6 border-t border-[#2D1D42] text-center text-xs text-slate-500 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p>© {new Date().getFullYear()} Inmobiliaria Montaño. San José de Mayo, Uruguay. Todos los derechos reservados.</p>
+          <div className="flex items-center space-x-2">
+            <p>© {new Date().getFullYear()} Inmobiliaria Montaño. San José de Mayo, Uruguay.</p>
+            <Link
+              href="/admin"
+              className="text-slate-600 hover:text-slate-400 transition-colors p-1"
+              title="Acceso Administración Interna"
+            >
+              <Lock className="w-3 h-3" />
+            </Link>
+          </div>
+
           <p className="flex items-center space-x-1 flex-wrap justify-center">
             <span>¿Te interesa un sitio o proyecto web como este?</span>
             <a

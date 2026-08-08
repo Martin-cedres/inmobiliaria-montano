@@ -24,7 +24,7 @@ export const OwnerLeadSection: React.FC = () => {
   };
 
   return (
-    <section id="tasaciones" className="relative py-16 bg-gradient-to-br from-[#2d0b28] via-[#43123c] to-[#5e1754] text-white overflow-hidden">
+    <section id="tasaciones" className="relative scroll-mt-20 sm:scroll-mt-24 py-16 sm:py-24 bg-gradient-to-br from-[#2d0b28] via-[#43123c] to-[#5e1754] text-white overflow-hidden">
       
       {/* Halo Radial Blur (Glow Sutil de Fondo) */}
       <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-[#e85d04]/15 rounded-full blur-3xl pointer-events-none" />

@@ -264,4 +264,43 @@ export const MOCK_PROPERTIES: Property[] = [
     createdAt: '2026-07-10T12:00:00Z',
     updatedAt: '2026-08-07T18:00:00Z',
   },
+  {
+    id: 'prop-7',
+    codeRef: 'MON-107',
+    title: 'Terreno de 500 m² Nivelado sobre Calle Asfaltada',
+    slug: 'terreno-500m2-zona-sub-urbana',
+    description: 'Excelente solar urbano nivelado de 500 m² (15 metros de frente por 33.3 metros de profundidad). Cuenta con agua de OSE, energía UTE en puerta y alumbrado público. Listo para edificar.',
+    operation: 'venta',
+    category: 'terreno',
+    status: 'nuevo',
+    price: {
+      amount: 22000,
+      currency: 'USD',
+      period: 'total',
+    },
+    location: {
+      department: 'San José',
+      city: 'San José de Mayo',
+      neighborhood: 'Picada de las Mulas',
+    },
+    features: {
+      plotAreaM2: 500,
+      bankCreditEligible: true,
+      oseWater: true,
+      sanitation: true,
+    },
+    images: [
+      {
+        id: 'img-107-1',
+        blobUrl: '/images/sample-terreno-1.jpg',
+        webpUrl: '/images/sample-terreno-1.jpg',
+        thumbnailUrl: '/images/sample-terreno-1.jpg',
+        altText: 'Terreno solar en venta en San José de Mayo',
+        isMain: true,
+      },
+    ],
+    featured: true,
+    createdAt: '2026-08-07T10:00:00Z',
+    updatedAt: '2026-08-08T09:00:00Z',
+  },
 ];
