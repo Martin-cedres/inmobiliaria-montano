@@ -1,20 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8f9fa;
-  --foreground: #1a1a1a;
+  --background: #f8fafc;
+  --foreground: #0f172a;
 
-  /* Inmobiliaria Montaño Brand Palette */
-  --montano-purple: #5E1754;
-  --montano-purple-dark: #350A2F;
-  --montano-purple-light: #7E2472;
+  /* Inmobiliaria Montaño Corporate Color Palette */
+  --montano-purple-deep: #2d0b28;
+  --montano-purple-base: #5e1754;
+  --montano-purple-light: #832776;
 
-  --montano-orange: #E85D04;
-  --montano-orange-bright: #FF8500;
-  --montano-amber: #FFB800;
+  --montano-orange-base: #e85d04;
+  --montano-orange-bright: #ff7518;
+  --montano-amber-gold: #ffb800;
 
-  --montano-card-dark: #191024;
-  --montano-card-border: #2D1D42;
+  --montano-neutral-dark: #0f172a;
+  --montano-neutral-light: #f8fafc;
 }
 
 body {
@@ -24,36 +24,38 @@ body {
   overflow-x: hidden;
 }
 
-/* Custom Utilities for Montaño Identity */
-.bg-montano-purple {
-  background-color: var(--montano-purple);
+/* 60-30-10 Utility Classes & Depth Gradients */
+.bg-montano-hero {
+  background: linear-[#2d0b28] via-[#43123c] to-[#5e1754];
 }
 
-.bg-montano-purple-dark {
-  background-color: var(--montano-purple-dark);
+.text-gradient-montano {
+  background: linear-gradient(135deg, #ffb800 0%, #ff7518 50%, #ffe29a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.text-montano-purple {
-  color: var(--montano-purple);
+.text-gradient-purple {
+  background: linear-gradient(135deg, #5e1754 0%, #832776 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.bg-montano-orange {
-  background-color: var(--montano-orange);
+/* Glow & Blur Effect Classes */
+.glow-purple {
+  box-shadow: 0 0 50px -10px rgba(94, 23, 84, 0.15);
 }
 
-.text-montano-orange {
-  color: var(--montano-orange);
+.glow-orange {
+  box-shadow: 0 0 40px -10px rgba(232, 93, 4, 0.25);
 }
 
-.border-montano-purple {
-  border-color: var(--montano-purple);
+/* Image Overlay Mask Gradient */
+.image-mask-gradient {
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.2) 50%, rgba(15, 23, 42, 0) 100%);
 }
 
-.border-montano-orange {
-  border-color: var(--montano-orange);
-}
-
-/* Custom Scrollbar for Category Chips */
+/* Hide Scrollbar for Horizontal Chips */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
