@@ -5,8 +5,8 @@
 - Inicializado el proyecto Next.js 16 (App Router) en el directorio raíz con TypeScript, Tailwind CSS y Lucide React icons.
 - Creados los tipos TypeScript (src/types/property.ts), utilidades de WhatsApp contextual (src/utils/whatsapp.ts), datos de prueba (src/data/mockProperties.ts) y los componentes UI Header, HeroSearch, CategoryChips, PropertyCard, OwnerLeadSection y Footer.
 - Implementado el motor de Generación Automática de Contenido SEO (src/utils/seo.ts) respetando la redacción original del usuario (Schema.org JSON-LD RealEstateListing, OpenGraph, Twitter Cards, Slug SEO sanitizado y Sitemap XML dinámico).
-- Creadas las páginas del Panel de Administración (/admin) y de Publicación de Inmuebles (/admin/nueva).
-- Creada la página de detalle dinámico de propiedad (/propiedad/[slug]).
+- Rediseñada toda la interfaz aplicando la Regla 60-30-10, Gradientes de Profundidad en Header/Hero, Gradiente de Máscara sobre fotos de propiedades, Glow Radial Sutil de fondo, Tratamiento Unificado de Iconos y Glassmorphism Esmerilado.
+- Configurada la infraestructura en Vercel: Vercel Blob (`inmobiliaria-montano-blob` en región São Paulo gru1) y Neon Serverless Postgres (`neon-bronze-helmet`).
 - Verificada la compilación limpia con `npm run build` y subidos los cambios a GitHub.
 - Repositorio GitHub: https://github.com/Martin-cedres/inmobiliaria-montano.
 - Servidor de desarrollo Next.js activo en http://localhost:3000.
