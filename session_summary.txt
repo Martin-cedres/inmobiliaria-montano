@@ -11,5 +11,7 @@
 === Sesión 2026-08-08 ===
 - Servidor de desarrollo iniciado en segundo plano (`npm run dev`) escuchando en http://localhost:3000.
 - Corregido el solapamiento visual entre el texto de créditos del footer ("¿Te interesa un sitio...") y el botón flotante fijo de WhatsApp ajustando el padding inferior y el margen derecho responsivo (`sm:pr-48 lg:pr-56 pb-16`) en `Footer.tsx`.
+- Cambios subidos exitosamente a GitHub (`main`) desencadenando despliegue automático en Vercel.
+
 
 
