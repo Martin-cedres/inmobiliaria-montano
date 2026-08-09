@@ -8,6 +8,7 @@ import { Footer } from '@/components/Footer';
 import { generatePropertySlug } from '@/utils/seo';
 import { ArrowLeft, Save, Sparkles, Upload, CheckCircle2, ShieldCheck } from 'lucide-react';
 import { PropertyCategory, OperationType, PropertyStatus, GuaranteeType } from '@/types/property';
+import { AdminLocationPickerWrapper } from '@/components/AdminLocationPickerWrapper';
 
 export default function NuevaPropiedadPage() {
   const router = useRouter();
@@ -24,6 +25,12 @@ export default function NuevaPropiedadPage() {
   const [neighborhood, setNeighborhood] = useState('Centro');
   const [address, setAddress] = useState('');
   
+  // Location Map Pin & Privacy State
+  const [lat, setLat] = useState<number>(-34.3375);
+  const [lng, setLng] = useState<number>(-56.7136);
+  const [isExactLocation, setIsExactLocation] = useState<boolean>(false);
+  const [radiusMeters, setRadiusMeters] = useState<number>(300);
+
   // Features
   const [bedrooms, setBedrooms] = useState<number>(2);
   const [bathrooms, setBathrooms] = useState<number>(1);
@@ -246,6 +253,22 @@ export default function NuevaPropiedadPage() {
                     className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
                   />
                 </div>
+              </div>
+
+              {/* Interactive Map Picker & Privacy Toggle */}
+              <div className="pt-2">
+                <AdminLocationPickerWrapper
+                  lat={lat}
+                  lng={lng}
+                  isExactLocation={isExactLocation}
+                  radiusMeters={radiusMeters}
+                  onChangeLocation={(newLat, newLng) => {
+                    setLat(newLat);
+                    setLng(newLng);
+                  }}
+                  onChangeExactLocation={setIsExactLocation}
+                  onChangeRadiusMeters={setRadiusMeters}
+                />
               </div>
             </div>
 

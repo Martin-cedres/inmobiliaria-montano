@@ -44,6 +44,12 @@ export interface Property {
     city: string;         // "San José de Mayo", "Libertad", etc.
     neighborhood: string; // "Centro", "Plaza Arriaga", "Zona Sub Urbana", etc.
     address?: string;
+    coordinates?: {
+      lat: number;
+      lng: number;
+    };
+    isExactLocation?: boolean; // false por defecto -> dibuja círculo de zona aproximada
+    radiusMeters?: number;     // por defecto 300 metros
   };
   features: {
     bedrooms?: number;

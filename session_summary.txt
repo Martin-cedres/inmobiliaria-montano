@@ -12,6 +12,12 @@
 - Servidor de desarrollo iniciado en segundo plano (`npm run dev`) escuchando en http://localhost:3000.
 - Corregido el solapamiento visual entre el texto de créditos del footer ("¿Te interesa un sitio...") y el botón flotante fijo de WhatsApp ajustando el padding inferior y el margen derecho responsivo (`sm:pr-48 lg:pr-56 pb-16`) en `Footer.tsx`.
 - Cambios subidos exitosamente a GitHub (`main`) desencadenando despliegue automático en Vercel.
+- Diseñada e implementada la solución de Mapa Interactivo Geográfico (Leaflet + OpenStreetMap + CartoDB + Esri Satelital) sin costos de licencias API.
+- Creados `PropertyMap.tsx` y `PropertyMapWrapper.tsx` con soporte para alternar mapa vectorial/satelital, círculo de privacidad de zona aproximada (250m-500m) e integración en la ficha de propiedades (`propiedad/[slug]/page.tsx`).
+- Integrado el selector interactivo de mapa ([`AdminLocationPicker.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/AdminLocationPicker.tsx) y [`AdminLocationPickerWrapper.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/AdminLocationPickerWrapper.tsx)) en el formulario de creación de propiedades del panel admin ([`src/app/admin/nueva/page.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/admin/nueva/page.tsx)) con selector de clic en mapa y switch de privacidad ("Pin Exacto" vs "Círculo de Zona").
 
-
-
+=== Sesión 2026-08-09 ===
+- Diseñado e implementado el componente [`SharePropertyModal.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/SharePropertyModal.tsx) para compartir fichas de propiedades.
+- Integrado soporte híbrido para Web Share API nativa en dispositivos móviles y modal popover corporativo en escritorio (`#191024`, púrpura y naranja).
+- Canales habilitados: WhatsApp con mensaje comercial pre-redactado, Copiar Enlace con aviso Toast interactivo, Facebook, Email e Imprimir/PDF.
+- Integrados botones de compartir en la imagen principal, cabecera de título y tarjeta fija de contacto en [`src/app/propiedad/[slug]/page.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/propiedad/%5Bslug%5D/page.tsx).

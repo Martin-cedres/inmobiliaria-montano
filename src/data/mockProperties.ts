@@ -20,6 +20,9 @@ export const MOCK_PROPERTIES: Property[] = [
       city: 'San José de Mayo',
       neighborhood: 'Plaza Arriaga',
       address: 'Zona Plaza Arriaga',
+      coordinates: { lat: -34.3412, lng: -56.7185 },
+      isExactLocation: false,
+      radiusMeters: 300,
     },
     features: {
       bedrooms: 2,
@@ -66,6 +69,9 @@ export const MOCK_PROPERTIES: Property[] = [
       department: 'San José',
       city: 'San José de Mayo',
       neighborhood: 'Zona Sub Urbana',
+      coordinates: { lat: -34.3050, lng: -56.6850 },
+      isExactLocation: false,
+      radiusMeters: 500,
     },
     features: {
       bedrooms: 1,
@@ -109,6 +115,9 @@ export const MOCK_PROPERTIES: Property[] = [
       department: 'San José',
       city: 'San José de Mayo',
       neighborhood: 'Centro',
+      coordinates: { lat: -34.3381, lng: -56.7132 },
+      isExactLocation: false,
+      radiusMeters: 250,
     },
     features: {
       bedrooms: 2,
@@ -154,6 +163,8 @@ export const MOCK_PROPERTIES: Property[] = [
       department: 'San José',
       city: 'San José de Mayo',
       neighborhood: 'Avenida Lavalleja',
+      coordinates: { lat: -34.3320, lng: -56.7080 },
+      isExactLocation: true,
     },
     features: {
       bathrooms: 2,
@@ -196,6 +207,8 @@ export const MOCK_PROPERTIES: Property[] = [
       department: 'San José',
       city: 'San José de Mayo',
       neighborhood: 'Barrio Prado / Don Bosco',
+      coordinates: { lat: -34.3460, lng: -56.7230 },
+      isExactLocation: true,
     },
     features: {
       bedrooms: 3,
@@ -239,6 +252,9 @@ export const MOCK_PROPERTIES: Property[] = [
       department: 'San José',
       city: 'San José de Mayo',
       neighborhood: 'Centro',
+      coordinates: { lat: -34.3370, lng: -56.7150 },
+      isExactLocation: false,
+      radiusMeters: 300,
     },
     features: {
       bedrooms: 3,
@@ -282,6 +298,8 @@ export const MOCK_PROPERTIES: Property[] = [
       department: 'San José',
       city: 'San José de Mayo',
       neighborhood: 'Picada de las Mulas',
+      coordinates: { lat: -34.3520, lng: -56.7050 },
+      isExactLocation: true,
     },
     features: {
       plotAreaM2: 500,

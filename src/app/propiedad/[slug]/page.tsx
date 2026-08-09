@@ -7,6 +7,8 @@ import { MOCK_PROPERTIES } from '@/data/mockProperties';
 import { generatePropertyMetadata, generatePropertyJsonLd } from '@/utils/seo';
 import { buildPropertyWhatsAppLink } from '@/utils/whatsapp';
 import { MapPin, Bed, Bath, Maximize2, Car, Building, CheckCircle2, MessageCircle, ArrowLeft, ShieldCheck, Share2 } from 'lucide-react';
+import { PropertyMapWrapper } from '@/components/PropertyMapWrapper';
+import { SharePropertyModal } from '@/components/SharePropertyModal';
 
 interface PropertyDetailPageProps {
   params: Promise<{
@@ -78,13 +80,19 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                   Ref. #{property.codeRef}
                 </span>
               </div>
+              <div className="absolute top-4 right-4">
+                <SharePropertyModal property={property} variant="icon" />
+              </div>
             </div>
 
             {/* Title & Location Header */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-purple-100 shadow-sm space-y-4 text-left">
-              <div className="flex items-center space-x-2 text-xs font-bold text-[#E85D04]">
-                <MapPin className="w-4 h-4" />
-                <span>{property.location.neighborhood}, {property.location.city}, {property.location.department}</span>
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                <div className="flex items-center space-x-2 text-xs font-bold text-[#E85D04]">
+                  <MapPin className="w-4 h-4" />
+                  <span>{property.location.neighborhood}, {property.location.city}, {property.location.department}</span>
+                </div>
+                <SharePropertyModal property={property} variant="button" />
               </div>
 
               {/* Exact Human Title Written by User */}
@@ -110,6 +118,30 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                 {property.description}
               </p>
             </div>
+
+            {/* Interactive Map Section */}
+            {property.location.coordinates && (
+              <div className="bg-white rounded-3xl p-6 sm:p-8 border border-purple-100 shadow-sm space-y-4 text-left">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-black text-[#5E1754] flex items-center space-x-2">
+                    <MapPin className="w-5 h-5 text-[#E85D04]" />
+                    <span>Ubicación & Entorno</span>
+                  </h3>
+                  <span className="text-xs text-slate-500 font-semibold bg-purple-50 text-[#5E1754] px-3 py-1 rounded-full border border-purple-200">
+                    San José de Mayo
+                  </span>
+                </div>
+
+                <PropertyMapWrapper
+                  lat={property.location.coordinates.lat}
+                  lng={property.location.coordinates.lng}
+                  title={property.title}
+                  neighborhood={property.location.neighborhood}
+                  isExactLocation={property.location.isExactLocation}
+                  radiusMeters={property.location.radiusMeters}
+                />
+              </div>
+            )}
 
             {/* Quantitative Features & Badges */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-purple-100 shadow-sm space-y-4 text-left">
@@ -188,6 +220,9 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                 <MessageCircle className="w-5 h-5 fill-white text-[#E85D04]" />
                 <span>Consultar por WhatsApp</span>
               </a>
+
+              {/* Secondary Share Action */}
+              <SharePropertyModal property={property} variant="sticky-bar" />
 
               <div className="pt-4 border-t border-slate-100 space-y-2 text-xs font-semibold text-slate-600">
                 <div className="flex items-center space-x-2">
