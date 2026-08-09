@@ -4,7 +4,12 @@
 - Elaborado y acordado el Documento de Especificación SDD oficial en implementation_plan.md.
 - Inicializado el proyecto Next.js 16 (App Router) en el directorio raíz con TypeScript, Tailwind CSS y Lucide React icons.
 - Creados los tipos TypeScript (src/types/property.ts), utilidades de WhatsApp contextual (src/utils/whatsapp.ts), datos de prueba (src/data/mockProperties.ts) y los componentes UI Header, HeroSearch, CategoryChips, PropertyCard, OwnerLeadSection y Footer.
-- Eliminado completamente el bloque de contacto adicional a solicitud explícita del usuario, manteniendo el flujo limpio directo desde Tasaciones al Footer.
-- REGLA REGISTRADA Y SEGUIDA: Despliegues a GitHub/Vercel mantenidos en pausa hasta solicitud explícita del usuario.
+- Subidos todos los cambios limpios a GitHub (solicitado explícitamente por el usuario) en https://github.com/Martin-cedres/inmobiliaria-montano, disparando el despliegue automático en Vercel.
 - Verificada la compilación limpia con `npm run build` (0 errores).
 - Servidor de desarrollo Next.js activo en http://localhost:3000.
+
+=== Sesión 2026-08-08 ===
+- Servidor de desarrollo iniciado en segundo plano (`npm run dev`) escuchando en http://localhost:3000.
+- Corregido el solapamiento visual entre el texto de créditos del footer ("¿Te interesa un sitio...") y el botón flotante fijo de WhatsApp ajustando el padding inferior y el margen derecho responsivo (`sm:pr-48 lg:pr-56 pb-16`) en `Footer.tsx`.
+
+

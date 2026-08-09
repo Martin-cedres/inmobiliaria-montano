@@ -22,7 +22,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
     <footer id="contacto" className="bg-[#191024] text-slate-300 border-t border-[#2D1D42] scroll-mt-20 sm:scroll-mt-24">
       
       {/* Main Footer Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-20 sm:pb-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           
           {/* Column 1: Brand & Bio */}
@@ -175,7 +175,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
         </div>
 
         {/* Bottom Copyright & Credit Bar */}
-        <div className="mt-12 pt-6 border-t border-[#2D1D42] text-center text-xs text-slate-500 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="mt-12 pt-6 border-t border-[#2D1D42] text-center text-xs text-slate-500 flex flex-col md:flex-row justify-between items-center gap-4 pr-0 sm:pr-48 lg:pr-56">
           <div className="flex items-center space-x-2">
             <p>© {new Date().getFullYear()} Inmobiliaria Montaño. San José de Mayo, Uruguay.</p>
             <Link
@@ -187,7 +187,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
             </Link>
           </div>
 
-          <p className="flex items-center space-x-1 flex-wrap justify-center">
+          <p className="flex items-center space-x-1 flex-wrap justify-center sm:justify-end text-slate-400">
             <span>¿Te interesa un sitio o proyecto web como este?</span>
             <a
               href="https://wa.me/59891090705?text=Hola,%20vi%20la%20web%20de%20Inmobiliaria%20Monta%C3%B1o,%20me%20interesa%20desarrollar%20un%20proyecto%20web%20a%20medida"
