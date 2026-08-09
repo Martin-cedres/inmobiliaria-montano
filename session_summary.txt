@@ -23,5 +23,7 @@
 - Integrados botones de compartir en la imagen principal, cabecera de título y tarjeta fija de contacto en [`src/app/propiedad/[slug]/page.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/propiedad/%5Bslug%5D/page.tsx).
 - Registrada la directiva explícita del usuario en [`AGENTS.md`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/AGENTS.md): NO hacer `git push` ni despliegues salvo solicitud directa e inequívoca del usuario.
 - Modificado [`CategoryChips.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/CategoryChips.tsx) reemplazando la barra de scroll horizontal y la flecha por un diseño de cuadrícula envolvente responsivo (`flex flex-wrap justify-center`), logrando que todas las semillas/categorías estén 100% visibles al usuario al instante en pantallas móviles.
+- Ejecutada la compilación limpia de producción (`npm run build`, 0 errores) y realizado el `git push` a la rama `main` (commit `65cf8bd`) por solicitud expresa del usuario, disparando el despliegue automático en Vercel.
+
 
 
