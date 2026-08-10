@@ -103,11 +103,11 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
               {/* Price & Operation Status */}
               <div className="flex items-baseline space-x-2 pt-2 border-t border-slate-100">
                 <span className="text-3xl sm:text-4xl font-black text-[#5E1754]">
-                  {property.price.currency} ${property.price.amount.toLocaleString()}
+                  {property.price.currency === 'USD' ? 'USD' : 'UYU $'} {property.price.amount.toLocaleString('es-UY')}
+                  {property.operation === 'alquiler' && property.price.period && property.price.period !== 'total' && (
+                    <span className="text-sm font-semibold text-slate-500"> / {property.price.period}</span>
+                  )}
                 </span>
-                {property.price.period && (
-                  <span className="text-sm font-semibold text-slate-500">/{property.price.period}</span>
-                )}
               </div>
             </div>
 
@@ -165,15 +165,44 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                     <span>{property.features.builtAreaM2} m² Construidos</span>
                   </div>
                 )}
-                {property.features.garage && (
-                  <div className="flex items-center space-x-2 bg-purple-50 p-3 rounded-2xl text-xs font-bold text-slate-800">
-                    <Car className="w-5 h-5 text-[#5E1754]" />
-                    <span>Garage / Cochera</span>
+                {property.features.plotAreaM2 !== undefined && (
+                  <div className="flex items-center space-x-2 bg-amber-50 p-3 rounded-2xl text-xs font-bold text-amber-900 border border-amber-200">
+                    <span>📐 {property.features.plotAreaM2} m² Terreno</span>
+                  </div>
+                )}
+                {property.features.frontMeters !== undefined && (
+                  <div className="flex items-center space-x-2 bg-amber-50 p-3 rounded-2xl text-xs font-bold text-amber-900 border border-amber-200">
+                    <span>📐 {property.features.frontMeters}m de Frente</span>
+                  </div>
+                )}
+                {property.features.coneatIndex !== undefined && (
+                  <div className="flex items-center space-x-2 bg-amber-100 p-3 rounded-2xl text-xs font-bold text-amber-950 border border-amber-300">
+                    <span>🌾 CONEAT {property.features.coneatIndex}</span>
+                  </div>
+                )}
+                {property.features.waterWellOrPond && (
+                  <div className="flex items-center space-x-2 bg-amber-100 p-3 rounded-2xl text-xs font-bold text-amber-950 border border-amber-300">
+                    <span>💧 Pozo de Agua / Tajamar</span>
+                  </div>
+                )}
+                {property.features.titlesUpToDate && (
+                  <div className="flex items-center space-x-2 bg-purple-100 p-3 rounded-2xl text-xs font-bold text-purple-950 border border-purple-300">
+                    <span>📜 Títulos al Día</span>
                   </div>
                 )}
                 {property.features.bankCreditEligible && (
-                  <div className="flex items-center space-x-2 bg-amber-50 p-3 rounded-2xl text-xs font-bold text-amber-900 border border-amber-200">
+                  <div className="flex items-center space-x-2 bg-purple-50 p-3 rounded-2xl text-xs font-bold text-purple-900 border border-purple-200">
                     <span>🏛️ Apta Crédito Bancario</span>
+                  </div>
+                )}
+                {property.features.acceptsTradeIn && (
+                  <div className="flex items-center space-x-2 bg-purple-50 p-3 rounded-2xl text-xs font-bold text-purple-900 border border-purple-200">
+                    <span>🔄 Acepta Permuta</span>
+                  </div>
+                )}
+                {property.features.fiberOptic && (
+                  <div className="flex items-center space-x-2 bg-sky-50 p-3 rounded-2xl text-xs font-bold text-sky-900 border border-sky-200">
+                    <span>📶 Fibra Óptica</span>
                   </div>
                 )}
                 {property.features.oseWater && (
@@ -188,8 +217,8 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                   <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Garantías de Alquiler Aceptadas</h4>
                   <div className="flex flex-wrap gap-2">
                     {property.guarantees.map((g) => (
-                      <span key={g} className="bg-emerald-100 text-emerald-900 font-extrabold text-xs px-3 py-1.5 rounded-xl border border-emerald-200">
-                        🛡️ {g}
+                      <span key={g} className="bg-emerald-100 text-emerald-950 font-black text-xs px-3 py-1.5 rounded-xl border border-emerald-300">
+                        🛡️ Garantía {g}
                       </span>
                     ))}
                   </div>

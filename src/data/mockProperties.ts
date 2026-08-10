@@ -36,6 +36,10 @@ export const MOCK_PROPERTIES: Property[] = [
       phRegime: true,
       oseWater: true,
       sanitation: true,
+      frontMeters: 10,
+      fiberOptic: true,
+      woodStoveOrAC: true,
+      titlesUpToDate: true,
     },
     images: [
       {
@@ -82,6 +86,11 @@ export const MOCK_PROPERTIES: Property[] = [
       garage: true,
       oseWater: true,
       perimeterFence: true,
+      coneatIndex: 125,
+      frontMeters: 60,
+      waterWellOrPond: true,
+      shedOrCorral: true,
+      titlesUpToDate: true,
     },
     images: [
       {
@@ -303,9 +312,13 @@ export const MOCK_PROPERTIES: Property[] = [
     },
     features: {
       plotAreaM2: 500,
+      frontMeters: 15,
+      pavedStreet: true,
       bankCreditEligible: true,
       oseWater: true,
       sanitation: true,
+      titlesUpToDate: true,
+      acceptsTradeIn: true,
     },
     images: [
       {

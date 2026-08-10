@@ -19,7 +19,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
   };
 
   return (
-    <footer id="contacto" className="bg-[#191024] text-slate-300 border-t border-[#2D1D42] scroll-mt-20 sm:scroll-mt-24">
+    <footer id="contacto" className="bg-[#191024] text-slate-300 border-t border-[#2D1D42] scroll-mt-28 sm:scroll-mt-32">
       
       {/* Main Footer Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-20 sm:pb-16">

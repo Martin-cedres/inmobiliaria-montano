@@ -41,6 +41,18 @@ export default function NuevaPropiedadPage() {
   const [oseWater, setOseWater] = useState<boolean>(true);
   const [phRegime, setPhRegime] = useState<boolean>(false);
 
+  // Category & Operation Specific Adaptive States
+  const [coneatIndex, setConeatIndex] = useState<number | undefined>(undefined);
+  const [frontMeters, setFrontMeters] = useState<number | undefined>(undefined);
+  const [waterWellOrPond, setWaterWellOrPond] = useState<boolean>(false);
+  const [fiberOptic, setFiberOptic] = useState<boolean>(false);
+  const [pavedStreet, setPavedStreet] = useState<boolean>(false);
+  const [woodStoveOrAC, setWoodStoveOrAC] = useState<boolean>(false);
+  const [titlesUpToDate, setTitlesUpToDate] = useState<boolean>(true);
+  const [acceptsTradeIn, setAcceptsTradeIn] = useState<boolean>(false);
+  const [shedOrCorral, setShedOrCorral] = useState<boolean>(false);
+  const [selectedGuarantees, setSelectedGuarantees] = useState<GuaranteeType[]>(['ANDA', 'Porto']);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
@@ -138,7 +150,7 @@ export default function NuevaPropiedadPage() {
                   >
                     <option value="venta">🏡 En Venta</option>
                     <option value="alquiler">🔑 Alquiler</option>
-                    <option value="proyecto">🏗️ Proyecto en Pozo</option>
+                    <option value="proyecto">🏗️ Proyecto</option>
                   </select>
                 </div>
 
@@ -151,8 +163,10 @@ export default function NuevaPropiedadPage() {
                   >
                     <option value="casa">🏡 Casa</option>
                     <option value="apartamento">🏢 Apartamento</option>
+                    <option value="terreno">📐 Terreno / Solar</option>
                     <option value="chacra">🌾 Chacra / Campo</option>
                     <option value="deposito">📦 Depósito / Galpón</option>
+                    <option value="local">🏪 Local Comercial</option>
                     <option value="proyecto">🏗️ Proyecto</option>
                   </select>
                 </div>
@@ -272,93 +286,237 @@ export default function NuevaPropiedadPage() {
               </div>
             </div>
 
-            {/* Section 3: Features & Services */}
-            <div className="space-y-4 pt-4 border-t border-slate-100">
-              <h3 className="text-sm font-extrabold text-[#5E1754] uppercase tracking-wider">
-                3. Características & Badges
-              </h3>
+            {/* Section 3: Adaptive Features & Category Specific Badges */}
+            <div className="space-y-6 pt-4 border-t border-slate-100">
+              
+              <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+                <h3 className="text-sm font-extrabold text-[#5E1754] uppercase tracking-wider">
+                  3. Características Adaptativas & Badges
+                </h3>
+                <span className="text-[11px] font-bold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full">
+                  Campos adaptados a {category.toUpperCase()} ({operation.toUpperCase()})
+                </span>
+              </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <div>
-                  <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Dormitorios</label>
-                  <input
-                    type="number"
-                    value={bedrooms}
-                    onChange={(e) => setBedrooms(Number(e.target.value))}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
-                  />
+              {/* Adaptativo: Terrenos & Solares */}
+              {category === 'terreno' && (
+                <div className="bg-amber-50/60 border border-amber-200/80 rounded-2xl p-4 space-y-4">
+                  <h4 className="text-xs font-black uppercase text-amber-900 flex items-center space-x-1.5">
+                    <span>📐 Atributos Específicos para Terreno / Solar</span>
+                  </h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Superficie Total (m²)</label>
+                      <input
+                        type="number"
+                        value={plotAreaM2}
+                        onChange={(e) => setPlotAreaM2(Number(e.target.value))}
+                        className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs font-bold"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Metros de Frente (m)</label>
+                      <input
+                        type="number"
+                        placeholder="ej. 15"
+                        value={frontMeters || ''}
+                        onChange={(e) => setFrontMeters(Number(e.target.value))}
+                        className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs font-bold"
+                      />
+                    </div>
+                    <div className="flex items-center pt-5">
+                      <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={pavedStreet}
+                          onChange={(e) => setPavedStreet(e.target.checked)}
+                          className="w-4 h-4 text-[#5E1754] rounded"
+                        />
+                        <span>🛣️ Frente a Asfalto / Hormigón</span>
+                      </label>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Baños</label>
-                  <input
-                    type="number"
-                    value={bathrooms}
-                    onChange={(e) => setBathrooms(Number(e.target.value))}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
-                  />
+              )}
+
+              {/* Adaptativo: Chacras & Campos */}
+              {category === 'chacra' && (
+                <div className="bg-amber-50/60 border border-amber-200/80 rounded-2xl p-4 space-y-4">
+                  <h4 className="text-xs font-black uppercase text-amber-900 flex items-center space-x-1.5">
+                    <span>🌾 Atributos Rurales para Chacra / Campo</span>
+                  </h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Superficie (m² o Ha)</label>
+                      <input
+                        type="number"
+                        value={plotAreaM2}
+                        onChange={(e) => setPlotAreaM2(Number(e.target.value))}
+                        className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs font-bold"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Índice CONEAT (ej. 120)</label>
+                      <input
+                        type="number"
+                        placeholder="ej. 125"
+                        value={coneatIndex || ''}
+                        onChange={(e) => setConeatIndex(Number(e.target.value))}
+                        className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs font-bold"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Metros de Frente (m)</label>
+                      <input
+                        type="number"
+                        placeholder="ej. 50"
+                        value={frontMeters || ''}
+                        onChange={(e) => setFrontMeters(Number(e.target.value))}
+                        className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs font-bold"
+                      />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
+                    <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={waterWellOrPond}
+                        onChange={(e) => setWaterWellOrPond(e.target.checked)}
+                        className="w-4 h-4 text-[#5E1754] rounded"
+                      />
+                      <span>💧 Pozo de Agua / Tajamar</span>
+                    </label>
+                    <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={shedOrCorral}
+                        onChange={(e) => setShedOrCorral(e.target.checked)}
+                        className="w-4 h-4 text-[#5E1754] rounded"
+                      />
+                      <span>🛖 Galpón / Embarcadero</span>
+                    </label>
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-xs font-bold uppercase text-slate-600 mb-1">m² Edificados</label>
-                  <input
-                    type="number"
-                    value={builtAreaM2}
-                    onChange={(e) => setBuiltAreaM2(Number(e.target.value))}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
-                  />
+              )}
+
+              {/* Adaptativo: Alquileres (Garantías) */}
+              {operation === 'alquiler' && (
+                <div className="bg-emerald-50/60 border border-emerald-200/80 rounded-2xl p-4 space-y-3">
+                  <h4 className="text-xs font-black uppercase text-emerald-900">
+                    🛡️ Garantías de Alquiler Aceptadas
+                  </h4>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                    {(['ANDA', 'CGN', 'Porto', 'Sura', 'Mapfre', 'Depósito'] as GuaranteeType[]).map((g) => (
+                      <label key={g} className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={selectedGuarantees.includes(g)}
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setSelectedGuarantees([...selectedGuarantees, g]);
+                            } else {
+                              setSelectedGuarantees(selectedGuarantees.filter((x) => x !== g));
+                            }
+                          }}
+                          className="w-4 h-4 text-emerald-600 rounded"
+                        />
+                        <span>🛡️ {g}</span>
+                      </label>
+                    ))}
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-xs font-bold uppercase text-slate-600 mb-1">m² Terreno</label>
-                  <input
-                    type="number"
-                    value={plotAreaM2}
-                    onChange={(e) => setPlotAreaM2(Number(e.target.value))}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
-                  />
+              )}
+
+              {/* Atributos Residenciales & Urbanos (Casas / Aptos) */}
+              {(category === 'casa' || category === 'apartamento' || category === 'proyecto' || category === 'deposito') && (
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Dormitorios</label>
+                    <input
+                      type="number"
+                      value={bedrooms}
+                      onChange={(e) => setBedrooms(Number(e.target.value))}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Baños</label>
+                    <input
+                      type="number"
+                      value={bathrooms}
+                      onChange={(e) => setBathrooms(Number(e.target.value))}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold uppercase text-slate-600 mb-1">m² Edificados</label>
+                    <input
+                      type="number"
+                      value={builtAreaM2}
+                      onChange={(e) => setBuiltAreaM2(Number(e.target.value))}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold uppercase text-slate-600 mb-1">m² Terreno</label>
+                    <input
+                      type="number"
+                      value={plotAreaM2}
+                      onChange={(e) => setPlotAreaM2(Number(e.target.value))}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Certeza Legal & Servicios Básicos General */}
+              <div className="bg-purple-50/50 border border-purple-100 rounded-2xl p-4 space-y-3">
+                <h4 className="text-xs font-black uppercase text-[#5E1754]">
+                  📜 Certeza Legal & Servicios Básicos
+                </h4>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={titlesUpToDate}
+                      onChange={(e) => setTitlesUpToDate(e.target.checked)}
+                      className="w-4 h-4 text-[#5E1754] rounded"
+                    />
+                    <span>📜 Títulos al Día</span>
+                  </label>
+
+                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={bankCreditEligible}
+                      onChange={(e) => setBankCreditEligible(e.target.checked)}
+                      className="w-4 h-4 text-[#5E1754] rounded"
+                    />
+                    <span>🏛️ Apta Crédito Bancario</span>
+                  </label>
+
+                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={acceptsTradeIn}
+                      onChange={(e) => setAcceptsTradeIn(e.target.checked)}
+                      className="w-4 h-4 text-[#5E1754] rounded"
+                    />
+                    <span>🔄 Acepta Permuta</span>
+                  </label>
+
+                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={fiberOptic}
+                      onChange={(e) => setFiberOptic(e.target.checked)}
+                      className="w-4 h-4 text-[#5E1754] rounded"
+                    />
+                    <span>📶 Fibra Óptica</span>
+                  </label>
                 </div>
               </div>
 
-              {/* Checkbox Badges */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-                <label className="flex items-center space-x-2 text-xs font-bold text-slate-700 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={bankCreditEligible}
-                    onChange={(e) => setBankCreditEligible(e.target.checked)}
-                    className="w-4 h-4 text-[#5E1754] rounded focus:ring-[#5E1754]"
-                  />
-                  <span>🏛️ Apta Crédito</span>
-                </label>
-
-                <label className="flex items-center space-x-2 text-xs font-bold text-slate-700 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={oseWater}
-                    onChange={(e) => setOseWater(e.target.checked)}
-                    className="w-4 h-4 text-[#5E1754] rounded focus:ring-[#5E1754]"
-                  />
-                  <span>💧 Agua OSE</span>
-                </label>
-
-                <label className="flex items-center space-x-2 text-xs font-bold text-slate-700 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={phRegime}
-                    onChange={(e) => setPhRegime(e.target.checked)}
-                    className="w-4 h-4 text-[#5E1754] rounded focus:ring-[#5E1754]"
-                  />
-                  <span>📜 Régimen PH</span>
-                </label>
-
-                <label className="flex items-center space-x-2 text-xs font-bold text-slate-700 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={garage}
-                    onChange={(e) => setGarage(e.target.checked)}
-                    className="w-4 h-4 text-[#5E1754] rounded focus:ring-[#5E1754]"
-                  />
-                  <span>🚗 Garage</span>
-                </label>
-              </div>
             </div>
 
             {/* Submit Button */}

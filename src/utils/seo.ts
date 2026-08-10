@@ -90,7 +90,8 @@ export function generatePropertyJsonLd(property: Property) {
  */
 export function generatePropertyMetadata(property: Property): Metadata {
   const mainImage = property.images.find((img) => img.isMain) || property.images[0];
-  const imageUrl = mainImage?.webpUrl || mainImage?.blobUrl || `${BASE_URL}/og-default.jpg`;
+  const rawImg = mainImage?.webpUrl || mainImage?.blobUrl || '/logo.png';
+  const imageUrl = rawImg.startsWith('http') ? rawImg : `${BASE_URL}${rawImg}`;
   const canonicalUrl = `${BASE_URL}/propiedad/${property.slug}`;
   const opStr = property.operation === 'alquiler' ? 'Alquiler' : 'Venta';
   const priceStr = `${property.price.currency} $${property.price.amount.toLocaleString()}`;

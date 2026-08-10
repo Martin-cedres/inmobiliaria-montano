@@ -67,6 +67,15 @@ export interface Property {
     oseWater?: boolean;          // Agua de OSE
     sanitation?: boolean;         // Saneamiento
     commonExpensesAmount?: number; // Gastos comunes
+    coneatIndex?: number;          // Índice CONEAT (ej. 110)
+    frontMeters?: number;          // Metros de frente (ej. 15m)
+    waterWellOrPond?: boolean;     // Pozo de Agua / Tajamar
+    fiberOptic?: boolean;          // Fibra Óptica
+    pavedStreet?: boolean;         // Frente a Asfalto / Hormigón
+    woodStoveOrAC?: boolean;       // Estufa a Leña / Aire Acondicionado
+    titlesUpToDate?: boolean;      // Títulos al Día / Verificado Notarialmente
+    acceptsTradeIn?: boolean;      // Acepta Permuta
+    shedOrCorral?: boolean;        // Galpón / Embarcadero
   };
   guarantees?: GuaranteeType[];
   images: ImageAsset[];
