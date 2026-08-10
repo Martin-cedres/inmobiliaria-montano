@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Header } from '@/components/Header';
 import { HeroSearch } from '@/components/HeroSearch';
 import { CategoryChips } from '@/components/CategoryChips';
@@ -8,16 +8,34 @@ import { PropertyCard } from '@/components/PropertyCard';
 import { OwnerLeadSection } from '@/components/OwnerLeadSection';
 import { Footer } from '@/components/Footer';
 import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
-import { MOCK_PROPERTIES } from '@/data/mockProperties';
-import { PropertyCategory } from '@/types/property';
-import { Building2, SearchX, RotateCcw } from 'lucide-react';
+import { Property, PropertyCategory } from '@/types/property';
+import { Building2, SearchX, RotateCcw, Loader2 } from 'lucide-react';
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<PropertyCategory>('todos');
+  const [properties, setProperties] = useState<Property[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadLiveProperties() {
+      try {
+        const response = await fetch('/api/properties');
+        const result = await response.json();
+        if (result.success && Array.isArray(result.data)) {
+          setProperties(result.data);
+        }
+      } catch (error) {
+        console.warn('Error al cargar propiedades:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    loadLiveProperties();
+  }, []);
 
   // Filter properties based ONLY on Category Chips
   const filteredProperties = useMemo(() => {
-    return MOCK_PROPERTIES.filter((prop) => {
+    return properties.filter((prop) => {
       if (selectedCategory !== 'todos') {
         if (selectedCategory === 'apartamento' && (prop.category === 'apartamento' || prop.operation === 'alquiler')) {
           return true;
@@ -26,7 +44,7 @@ export default function Home() {
       }
       return true;
     });
-  }, [selectedCategory]);
+  }, [properties, selectedCategory]);
 
   const handleFooterFilterSelect = (category: PropertyCategory) => {
     setSelectedCategory(category);
@@ -64,7 +82,12 @@ export default function Home() {
           </div>
 
           {/* Property Grid */}
-          {filteredProperties.length > 0 ? (
+          {isLoading ? (
+            <div className="py-20 text-center text-slate-500 font-bold text-sm flex items-center justify-center space-x-3">
+              <Loader2 className="w-8 h-8 animate-spin text-[#5E1754]" />
+              <span>Cargando catálogo de propiedades...</span>
+            </div>
+          ) : filteredProperties.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {filteredProperties.map((property) => (
                 <PropertyCard key={property.id} property={property} />

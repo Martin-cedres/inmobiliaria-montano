@@ -40,13 +40,12 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
               Compromiso real, eficiencia comprobada. Tu referencia inmobiliaria en el departamento de San José. Asesoramiento honesto y profesional en ventas, alquileres y tasaciones.
             </p>
 
-            <div className="flex items-center space-x-2 text-xs text-amber-400 font-semibold pt-1">
-              <Award className="w-4 h-4 text-amber-400" />
-              <span>San José de Mayo, Uruguay</span>
-            </div>
+            <p className="text-xs text-amber-400 font-semibold pt-1">
+              San José de Mayo, Uruguay
+            </p>
           </div>
 
-          {/* Column 2: Categorías Frecuentes (Con Iconos Vectoriales) */}
+          {/* Column 2: Categorías Frecuentes (Con Iconos Vectoriales Unificados en Púrpura) */}
           <div className="space-y-3">
             <h4 className="text-white font-bold text-sm uppercase tracking-wider">Búsquedas Frecuentes</h4>
             <ul className="space-y-2.5 text-xs">
@@ -54,9 +53,9 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
                 <a
                   href="#catalogo"
                   onClick={() => handleFilterClick('casa', 'venta')}
-                  className="hover:text-amber-400 transition-colors flex items-center space-x-2 text-slate-300"
+                  className="hover:text-purple-300 transition-colors flex items-center space-x-2 text-slate-300"
                 >
-                  <Home className="w-3.5 h-3.5 text-[#E85D04]" />
+                  <Home className="w-3.5 h-3.5 text-purple-400" />
                   <span>Casas en Venta en San José</span>
                 </a>
               </li>
@@ -64,9 +63,9 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
                 <a
                   href="#catalogo"
                   onClick={() => handleFilterClick('todos', 'alquiler')}
-                  className="hover:text-amber-400 transition-colors flex items-center space-x-2 text-slate-300"
+                  className="hover:text-purple-300 transition-colors flex items-center space-x-2 text-slate-300"
                 >
-                  <Key className="w-3.5 h-3.5 text-sky-400" />
+                  <Key className="w-3.5 h-3.5 text-purple-400" />
                   <span>Alquileres en San José</span>
                 </a>
               </li>
@@ -74,9 +73,9 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
                 <a
                   href="#catalogo"
                   onClick={() => handleFilterClick('chacra')}
-                  className="hover:text-amber-400 transition-colors flex items-center space-x-2 text-slate-300"
+                  className="hover:text-purple-300 transition-colors flex items-center space-x-2 text-slate-300"
                 >
-                  <Trees className="w-3.5 h-3.5 text-emerald-400" />
+                  <Trees className="w-3.5 h-3.5 text-purple-400" />
                   <span>Chacras y Campos</span>
                 </a>
               </li>
@@ -84,9 +83,9 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
                 <a
                   href="#catalogo"
                   onClick={() => handleFilterClick('deposito')}
-                  className="hover:text-amber-400 transition-colors flex items-center space-x-2 text-slate-300"
+                  className="hover:text-purple-300 transition-colors flex items-center space-x-2 text-slate-300"
                 >
-                  <Warehouse className="w-3.5 h-3.5 text-amber-400" />
+                  <Warehouse className="w-3.5 h-3.5 text-purple-400" />
                   <span>Galpones y Depósitos</span>
                 </a>
               </li>
@@ -94,7 +93,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
                 <a
                   href="#catalogo"
                   onClick={() => handleFilterClick('todos')}
-                  className="hover:text-amber-400 transition-colors flex items-center space-x-2 text-slate-300"
+                  className="hover:text-purple-300 transition-colors flex items-center space-x-2 text-slate-300"
                 >
                   <Landmark className="w-3.5 h-3.5 text-purple-400" />
                   <span>Propiedades Aptas Crédito</span>
@@ -108,27 +107,27 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
             <h4 className="text-white font-bold text-sm uppercase tracking-wider">Servicios & Propietarios</h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <a href="#tasaciones" className="hover:text-amber-400 transition-colors text-amber-300 font-semibold flex items-center space-x-2">
-                  <Calculator className="w-3.5 h-3.5 text-amber-400" />
+                <a href="#tasaciones" className="hover:text-purple-300 transition-colors text-slate-300 flex items-center space-x-2">
+                  <Calculator className="w-3.5 h-3.5 text-purple-400" />
                   <span>Solicitud de Tasación Profesional</span>
                 </a>
               </li>
               <li>
-                <a href="#tasaciones" className="hover:text-amber-400 transition-colors flex items-center space-x-2 text-slate-300">
-                  <Home className="w-3.5 h-3.5 text-[#E85D04]" />
-                  <span>Publicar mi Inmueble con Montaño</span>
+                <a href="#tasaciones" className="hover:text-purple-300 transition-colors flex items-center space-x-2 text-slate-300">
+                  <Home className="w-3.5 h-3.5 text-purple-400" />
+                  <span>Publicar mi Inmueble</span>
                 </a>
               </li>
               <li>
-                <a href="#catalogo" onClick={() => handleFilterClick('proyecto')} className="hover:text-amber-400 transition-colors flex items-center space-x-2 text-slate-300">
+                <a href="#catalogo" onClick={() => handleFilterClick('proyecto')} className="hover:text-purple-300 transition-colors flex items-center space-x-2 text-slate-300">
                   <Building2 className="w-3.5 h-3.5 text-purple-400" />
-                  <span>Proyectos Residenciales en Pozo</span>
+                  <span>Proyectos</span>
                 </a>
               </li>
               <li>
-                <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="hover:text-amber-400 transition-colors flex items-center space-x-2 text-slate-300">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Asesoramiento Notarial / Legal</span>
+                <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="hover:text-purple-300 transition-colors flex items-center space-x-2 text-slate-300">
+                  <ShieldCheck className="w-3.5 h-3.5 text-purple-400" />
+                  <span>Asesoramiento Notarial</span>
                 </a>
               </li>
             </ul>
@@ -142,19 +141,19 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center space-x-2 text-white hover:text-emerald-400 transition-colors font-bold"
+                className="flex items-center space-x-2 text-white hover:text-purple-300 transition-colors font-bold"
               >
-                <MessageCircle className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                <span>+598 92 776 715 (WhatsApp)</span>
+                <MessageCircle className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                <span>WhatsApp</span>
               </a>
 
               <div className="flex items-center space-x-2 text-slate-300">
-                <Mail className="w-4 h-4 text-[#E85D04] flex-shrink-0" />
+                <Mail className="w-4 h-4 text-purple-400 flex-shrink-0" />
                 <span className="truncate">{MONTAÑO_OFFICIAL_EMAIL}</span>
               </div>
 
               <div className="flex items-center space-x-2 text-slate-300">
-                <MapPin className="w-4 h-4 text-[#E85D04] flex-shrink-0" />
+                <MapPin className="w-4 h-4 text-purple-400 flex-shrink-0" />
                 <span>San José de Mayo, Uruguay</span>
               </div>
 
@@ -177,7 +176,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
         {/* Bottom Copyright & Credit Bar */}
         <div className="mt-12 pt-6 border-t border-[#2D1D42] text-center text-xs text-slate-500 flex flex-col md:flex-row justify-between items-center gap-4 pr-0 sm:pr-48 lg:pr-56">
           <div className="flex items-center space-x-2">
-            <p>© {new Date().getFullYear()} Inmobiliaria Montaño. San José de Mayo, Uruguay.</p>
+            <p>© {new Date().getFullYear()} Inmobiliaria Montaño. Todos los derechos reservados. San José de Mayo, Uruguay.</p>
             <Link
               href="/admin"
               className="text-slate-600 hover:text-slate-400 transition-colors p-1"

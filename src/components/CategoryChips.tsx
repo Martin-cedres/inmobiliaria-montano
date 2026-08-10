@@ -2,23 +2,25 @@
 
 import React from 'react';
 import { PropertyCategory } from '@/types/property';
-import { LayoutGrid, Home, Key, Trees, Building2, Warehouse, MapPin, Store, ChevronDown } from 'lucide-react';
+import { LayoutGrid, Home, Key, Trees, Building2, Warehouse, MapPin, Store, Box, ChevronDown } from 'lucide-react';
 
 interface CategoryChipItem {
   id: PropertyCategory;
   label: string;
+  shortLabel?: string;
   IconComponent: React.ElementType;
 }
 
 const CATEGORY_CHIPS: CategoryChipItem[] = [
-  { id: 'todos', label: 'Todas las Propiedades', IconComponent: LayoutGrid },
-  { id: 'casa', label: 'Casas en Venta', IconComponent: Home },
-  { id: 'apartamento', label: 'Alquileres', IconComponent: Key },
-  { id: 'terreno', label: 'Terrenos & Solares', IconComponent: MapPin },
-  { id: 'chacra', label: 'Chacras & Campos', IconComponent: Trees },
-  { id: 'local', label: 'Locales Comerciales', IconComponent: Store },
-  { id: 'proyecto', label: 'Proyectos', IconComponent: Building2 },
-  { id: 'deposito', label: 'Depósitos & Galpones', IconComponent: Warehouse },
+  { id: 'todos', label: 'Todas las Propiedades', shortLabel: 'Todas', IconComponent: LayoutGrid },
+  { id: 'casa', label: 'Casas en Venta', shortLabel: 'Casas', IconComponent: Home },
+  { id: 'apartamento', label: 'Alquileres', shortLabel: 'Alquileres', IconComponent: Key },
+  { id: 'terreno', label: 'Terrenos & Solares', shortLabel: 'Terrenos', IconComponent: MapPin },
+  { id: 'chacra', label: 'Chacras & Campos', shortLabel: 'Chacras', IconComponent: Trees },
+  { id: 'local', label: 'Locales Comerciales', shortLabel: 'Locales', IconComponent: Store },
+  { id: 'proyecto', label: 'Proyectos', shortLabel: 'Proyectos', IconComponent: Building2 },
+  { id: 'modulo', label: 'Módulos Habitacionales', shortLabel: 'Módulos', IconComponent: Box },
+  { id: 'deposito', label: 'Depósitos & Galpones', shortLabel: 'Depósitos', IconComponent: Warehouse },
 ];
 
 interface CategoryChipsProps {
@@ -45,7 +47,7 @@ export const CategoryChips: React.FC<CategoryChipsProps> = ({
     /* Contenedor padre de altura reservada fija para evitar el sticky jump al hacer scroll */
     <div className="w-full min-h-[58px] sm:min-h-[64px]">
       <div className="w-full py-2.5 bg-white/95 backdrop-blur-md border-b border-[#5e1754]/15 sticky top-16 sm:top-18 z-40 shadow-md shadow-[#5e1754]/5 transition-all">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
         
         {/* VISTA MÓVIL (<640px): Dropdown Nativo Estilizado en 1 sola fila */}
         <div className="block sm:hidden relative">
@@ -75,8 +77,8 @@ export const CategoryChips: React.FC<CategoryChipsProps> = ({
           </select>
         </div>
 
-        {/* VISTA ESCRITORIO (>=640px): Fila horizontal limpia de píldoras */}
-        <div className="hidden sm:flex flex-wrap items-center justify-center gap-2">
+        {/* VISTA ESCRITORIO (>=640px): Fila horizontal estricta 100% visible sin scroll ni recortes */}
+        <div className="hidden sm:flex items-center justify-between lg:justify-center gap-1 sm:gap-1.5 lg:gap-2">
           {CATEGORY_CHIPS.map((chip) => {
             const isSelected = selectedCategory === chip.id;
             const Icon = chip.IconComponent;
@@ -84,14 +86,17 @@ export const CategoryChips: React.FC<CategoryChipsProps> = ({
               <button
                 key={chip.id}
                 onClick={() => handleSelectChange(chip.id)}
-                className={`px-4 py-2 rounded-full font-bold text-xs sm:text-sm flex items-center space-x-2 transition-all border ${
+                className={`px-2 sm:px-2.5 lg:px-3.5 py-1.5 rounded-full font-bold text-xs flex items-center space-x-1 sm:space-x-1.5 whitespace-nowrap transition-all border ${
                   isSelected
                     ? 'bg-[#5e1754] text-white border-[#5e1754] shadow-xs ring-2 ring-[#e85d04]'
                     : 'bg-white text-slate-700 border-slate-200 hover:border-[#5e1754]/50 hover:bg-purple-50/40'
                 }`}
               >
-                <Icon className={`w-4 h-4 ${isSelected ? 'text-amber-300' : 'text-[#5e1754]'}`} />
-                <span>{chip.label}</span>
+                <Icon className={`w-3.5 h-3.5 flex-shrink-0 ${isSelected ? 'text-amber-300' : 'text-[#5e1754]'}`} />
+                <span>
+                  <span className="hidden xl:inline">{chip.label}</span>
+                  <span className="xl:hidden">{chip.shortLabel || chip.label}</span>
+                </span>
               </button>
             );
           })}

@@ -1,0 +1,195 @@
+import fs from 'fs/promises';
+import path from 'path';
+import { Property, PropertyStatus } from '@/types/property';
+import { MOCK_PROPERTIES } from '@/data/mockProperties';
+import { getDbClient } from './db';
+
+const LOCAL_DB_PATH = path.join(process.cwd(), 'src', 'db', 'properties.json');
+
+/**
+ * Carga las propiedades desde Neon Postgres (si está configurado) 
+ * o desde el archivo local JSON persistente usando fs.promises.
+ */
+export async function getAllProperties(): Promise<Property[]> {
+  try {
+    const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL;
+    
+    // Si existe conexión remota a Neon Postgres, consultar DB
+    if (connectionString) {
+      const sql = getDbClient();
+      const rows = await sql`SELECT * FROM properties ORDER BY created_at DESC;`;
+      if (rows && rows.length > 0) {
+        return rows.map((row: any) => ({
+          id: row.id,
+          codeRef: row.code_ref,
+          title: row.title,
+          slug: row.slug,
+          description: row.description,
+          operation: row.operation,
+          category: row.category,
+          status: row.status,
+          price: {
+            amount: Number(row.price_amount),
+            currency: row.price_currency,
+            period: row.price_period,
+            priceDrop: row.price_drop,
+            originalAmount: row.original_amount ? Number(row.original_amount) : undefined,
+          },
+          location: {
+            department: row.department,
+            city: row.city,
+            neighborhood: row.neighborhood,
+            address: row.address,
+            lat: row.lat ? Number(row.lat) : -34.3375,
+            lng: row.lng ? Number(row.lng) : -56.7136,
+            isExactLocation: row.is_exact_location ?? false,
+            radiusMeters: row.radius_meters ? Number(row.radius_meters) : 300,
+          },
+          features: {
+            bedrooms: row.bedrooms,
+            bathrooms: row.bathrooms,
+            floors: row.floors,
+            builtAreaM2: row.built_area_m2 ? Number(row.built_area_m2) : undefined,
+            plotAreaM2: row.plot_area_m2 ? Number(row.plot_area_m2) : undefined,
+            isHectares: row.is_hectares,
+            garage: row.garage,
+            barbecue: row.barbecue,
+            pool: row.pool,
+            perimeterFence: row.perimeter_fence,
+            bankCreditEligible: row.bank_credit_eligible,
+            phRegime: row.ph_regime,
+            oseWater: row.ose_water,
+            sanitation: row.sanitation,
+          },
+          guarantees: Array.isArray(row.guarantees) ? row.guarantees : [],
+          images: Array.isArray(row.images) ? row.images : [],
+          featured: row.featured,
+          createdAt: row.created_at,
+          updatedAt: row.updated_at,
+        }));
+      }
+    }
+
+    // Fallback: Leer usando fs.promises.readFile (asíncrono no bloqueante)
+    const fileContent = await fs.readFile(LOCAL_DB_PATH, 'utf-8');
+    const rawProperties: any[] = JSON.parse(fileContent);
+    const properties: Property[] = rawProperties.map((p) => ({
+      ...p,
+      images: Array.isArray(p.images)
+        ? p.images.map((img: any, idx: number) =>
+            typeof img === 'string'
+              ? { id: `img-${idx}`, blobUrl: img, webpUrl: img, thumbnailUrl: img, altText: p.title || 'Propiedad Inmobiliaria Montaño', isMain: idx === 0 }
+              : img
+          )
+        : [],
+    }));
+    return properties;
+  } catch (error) {
+    console.warn('Cargando mockProperties como fallback debido a:', error);
+    return MOCK_PROPERTIES;
+  }
+}
+
+/**
+ * Guarda una nueva propiedad en la base de datos o en properties.json
+ */
+export async function saveProperty(property: Property): Promise<Property> {
+  const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL;
+
+  if (connectionString) {
+    const sql = getDbClient();
+    await sql`
+      INSERT INTO properties (
+        id, code_ref, title, slug, description, operation, category, status,
+        price_amount, price_currency, price_period, price_drop, original_amount,
+        department, city, neighborhood, address,
+        bedrooms, bathrooms, floors, built_area_m2, plot_area_m2,
+        garage, barbecue, bank_credit_eligible, ph_regime, ose_water, sanitation,
+        guarantees, featured
+      ) VALUES (
+        ${property.id}, ${property.codeRef}, ${property.title}, ${property.slug}, ${property.description}, ${property.operation}, ${property.category}, ${property.status},
+        ${property.price.amount}, ${property.price.currency}, ${property.price.period || null}, ${property.price.priceDrop || false}, ${property.price.originalAmount || null},
+        ${property.location.department}, ${property.location.city}, ${property.location.neighborhood}, ${property.location.address || null},
+        ${property.features.bedrooms || null}, ${property.features.bathrooms || null}, ${property.features.floors || null}, ${property.features.builtAreaM2 || null}, ${property.features.plotAreaM2 || null},
+        ${property.features.garage || false}, ${property.features.barbecue || false}, ${property.features.bankCreditEligible || false}, ${property.features.phRegime || false}, ${property.features.oseWater || false}, ${property.features.sanitation || false},
+        ${JSON.stringify(property.guarantees || [])}, ${property.featured}
+      ) ON CONFLICT (id) DO UPDATE SET
+        title = EXCLUDED.title,
+        status = EXCLUDED.status,
+        price_amount = EXCLUDED.price_amount,
+        updated_at = CURRENT_TIMESTAMP;
+    `;
+    return property;
+  }
+
+  // Fallback Local JSON: Leer, actualizar y escribir con fs.promises.writeFile
+  const properties = await getAllProperties();
+  const existingIndex = properties.findIndex((p) => p.id === property.id);
+
+  if (existingIndex >= 0) {
+    properties[existingIndex] = { ...properties[existingIndex], ...property, updatedAt: new Date().toISOString() };
+  } else {
+    properties.unshift(property);
+  }
+
+  await fs.writeFile(LOCAL_DB_PATH, JSON.stringify(properties, null, 2), 'utf-8');
+  return property;
+}
+
+/**
+ * Actualiza el estado de una propiedad (ej. disponible -> reservado -> vendido)
+ */
+export async function updatePropertyStatus(id: string, status: PropertyStatus): Promise<Property | null> {
+  const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL;
+
+  if (connectionString) {
+    const sql = getDbClient();
+    await sql`
+      UPDATE properties 
+      SET status = ${status}, updated_at = CURRENT_TIMESTAMP 
+      WHERE id = ${id};
+    `;
+  }
+
+  const properties = await getAllProperties();
+  const index = properties.findIndex((p) => p.id === id);
+  if (index === -1) return null;
+
+  properties[index].status = status;
+  properties[index].updatedAt = new Date().toISOString();
+
+  if (!connectionString) {
+    await fs.writeFile(LOCAL_DB_PATH, JSON.stringify(properties, null, 2), 'utf-8');
+  }
+
+  return properties[index];
+}
+
+/**
+ * Elimina una propiedad por ID
+ */
+export async function deletePropertyById(id: string): Promise<boolean> {
+  const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL;
+
+  if (connectionString) {
+    const sql = getDbClient();
+    await sql`DELETE FROM properties WHERE id = ${id};`;
+  }
+
+  const properties = await getAllProperties();
+  const filtered = properties.filter((p) => p.id !== id);
+
+  if (!connectionString) {
+    await fs.writeFile(LOCAL_DB_PATH, JSON.stringify(filtered, null, 2), 'utf-8');
+  }
+
+  return true;
+}
+
+/**
+ * Obtiene una propiedad por ID
+ */
+export async function getPropertyById(id: string): Promise<Property | null> {
+  const properties = await getAllProperties();
+  return properties.find((p) => p.id === id) || null;
+}

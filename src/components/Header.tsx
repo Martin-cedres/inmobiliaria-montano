@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Calculator, Menu, X, Building2, Phone } from 'lucide-react';
+import { Calculator, Menu, X, Building2, Phone, Home } from 'lucide-react';
 import { buildGeneralWhatsAppLink } from '@/utils/whatsapp';
 
 export const Header: React.FC = () => {
@@ -10,21 +10,21 @@ export const Header: React.FC = () => {
   const whatsappLink = buildGeneralWhatsAppLink('general');
 
   return (
-    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100 shadow-xs transition-all">
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-18 sm:h-22">
+        <div className="flex items-center justify-between h-16 sm:h-18">
           
           {/* Logo Destacado de Inmobiliaria Montaño (Mayor Presencia Visual) */}
           <Link href="/" className="flex items-center space-x-2 group py-1 flex-shrink-0">
             <img
               src="/logo.png"
               alt="Inmobiliaria Montaño"
-              className="h-12 sm:h-15 w-auto object-contain group-hover:scale-102 transition-transform duration-300"
+              className="h-10 sm:h-12 w-auto object-contain group-hover:scale-102 transition-transform duration-300"
             />
           </Link>
 
           {/* Menú Central Limpio (Desktop) */}
-          <nav className="hidden md:flex items-center space-x-8 text-sm font-semibold text-slate-700">
+          <nav className="hidden md:flex items-center space-x-8 text-sm font-semibold text-slate-600">
             <Link
               href="#catalogo"
               className="hover:text-[#5e1754] transition-colors relative py-1.5 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#5e1754] hover:after:w-full after:transition-all duration-300"
@@ -45,14 +45,13 @@ export const Header: React.FC = () => {
             </Link>
           </nav>
 
-          {/* Botón CTA Naranja Institucional Diferenciado (Solicitar Tasación) */}
+          {/* Botón CTA Naranja Institucional (Imán de Captación: Publicar mi Inmueble) */}
           <div className="hidden sm:flex items-center">
             <a
               href="#tasaciones"
-              className="bg-[#e85d04] hover:bg-[#ff7518] active:scale-95 text-white px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-xs hover:shadow-orange-500/20 transition-all flex items-center space-x-2 border border-orange-400/20"
+              className="bg-[#e85d04] hover:bg-[#ff7518] active:scale-95 text-white px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-xs hover:shadow-orange-500/20 transition-all border border-orange-400/20"
             >
-              <Calculator className="w-4 h-4 text-amber-200" />
-              <span>Solicitar Tasación</span>
+              Publicar mi Inmueble
             </a>
           </div>
 
@@ -77,7 +76,7 @@ export const Header: React.FC = () => {
             onClick={() => setMobileMenuOpen(false)}
             className="flex items-center space-x-3 p-3 rounded-xl hover:bg-purple-50 text-slate-800 font-bold text-sm"
           >
-            <Building2 className="w-5 h-5 text-[#5e1754]" />
+            <Home className="w-5 h-5 text-[#5e1754]" />
             <span>Ver Catálogo de Propiedades</span>
           </Link>
 
@@ -103,10 +102,9 @@ export const Header: React.FC = () => {
             <a
               href="#tasaciones"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full bg-[#e85d04] hover:bg-[#ff7518] text-white py-3 rounded-xl font-black text-center flex items-center justify-center space-x-2 shadow-md text-sm"
+              className="w-full bg-[#e85d04] hover:bg-[#ff7518] text-white py-3 rounded-xl font-black text-center shadow-md text-sm block"
             >
-              <Calculator className="w-4 h-4 text-amber-200" />
-              <span>Solicitar Tasación Profesional</span>
+              Publicar mi Inmueble
             </a>
           </div>
         </div>

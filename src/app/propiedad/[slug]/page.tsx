@@ -3,12 +3,13 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
-import { MOCK_PROPERTIES } from '@/data/mockProperties';
+import { getAllProperties } from '@/lib/propertiesStore';
 import { generatePropertyMetadata, generatePropertyJsonLd } from '@/utils/seo';
 import { buildPropertyWhatsAppLink } from '@/utils/whatsapp';
-import { MapPin, Bed, Bath, Maximize2, Car, Building, CheckCircle2, MessageCircle, ArrowLeft, ShieldCheck, Share2 } from 'lucide-react';
+import { MapPin, Bed, Bath, Maximize2, Car, Building, CheckCircle2, MessageCircle, ArrowLeft, ShieldCheck, Share2, Compass, Trees, Droplets, FileCheck, Landmark, ArrowLeftRight, Wifi } from 'lucide-react';
 import { PropertyMapWrapper } from '@/components/PropertyMapWrapper';
 import { SharePropertyModal } from '@/components/SharePropertyModal';
+import { PropertyGallery } from '@/components/PropertyGallery';
 
 interface PropertyDetailPageProps {
   params: Promise<{
@@ -19,14 +20,16 @@ interface PropertyDetailPageProps {
 // Generación automática de Metadata SEO para Google y Redes Sociales
 export async function generateMetadata({ params }: PropertyDetailPageProps) {
   const resolvedParams = await params;
-  const property = MOCK_PROPERTIES.find((p) => p.slug === resolvedParams.slug);
+  const allProperties = await getAllProperties();
+  const property = allProperties.find((p) => p.slug === resolvedParams.slug);
   if (!property) return {};
   return generatePropertyMetadata(property);
 }
 
 export default async function PropertyDetailPage({ params }: PropertyDetailPageProps) {
   const resolvedParams = await params;
-  const property = MOCK_PROPERTIES.find((p) => p.slug === resolvedParams.slug);
+  const allProperties = await getAllProperties();
+  const property = allProperties.find((p) => p.slug === resolvedParams.slug);
 
   if (!property) {
     notFound();
@@ -65,25 +68,8 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
           {/* Left Column: Gallery & Description */}
           <div className="lg:col-span-8 space-y-6">
             
-            {/* Main Image Frame */}
-            <div className="relative h-80 sm:h-96 lg:h-[480px] bg-slate-900 rounded-3xl overflow-hidden shadow-xl border border-purple-100">
-              <img
-                src={mainImage?.webpUrl || mainImage?.blobUrl || 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=800&q=80'}
-                alt={property.title}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute top-4 left-4 flex gap-2">
-                <span className="bg-[#E85D04] text-white text-xs font-black uppercase px-3.5 py-1.5 rounded-full shadow">
-                  {property.operation === 'alquiler' ? 'Alquiler' : property.operation === 'proyecto' ? 'Proyecto' : 'En Venta'}
-                </span>
-                <span className="bg-[#350A2F]/90 text-amber-300 text-xs font-bold uppercase px-3 py-1.5 rounded-full border border-amber-400/30">
-                  Ref. #{property.codeRef}
-                </span>
-              </div>
-              <div className="absolute top-4 right-4">
-                <SharePropertyModal property={property} variant="icon" />
-              </div>
-            </div>
+            {/* Interactive Image Gallery */}
+            <PropertyGallery property={property} />
 
             {/* Title & Location Header */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-purple-100 shadow-sm space-y-4 text-left">
@@ -119,8 +105,8 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
               </p>
             </div>
 
-            {/* Interactive Map Section */}
-            {property.location.coordinates && (
+            {/* Interactive Map Section (Opcional - Oculto si hasLocation es false) */}
+            {property.location.hasLocation !== false && property.location.coordinates && (
               <div className="bg-white rounded-3xl p-6 sm:p-8 border border-purple-100 shadow-sm space-y-4 text-left">
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-black text-[#5E1754] flex items-center space-x-2">
@@ -133,8 +119,8 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                 </div>
 
                 <PropertyMapWrapper
-                  lat={property.location.coordinates.lat}
-                  lng={property.location.coordinates.lng}
+                  lat={property.location.coordinates?.lat ?? (property.location as any).lat ?? -34.3375}
+                  lng={property.location.coordinates?.lng ?? (property.location as any).lng ?? -56.7136}
                   title={property.title}
                   neighborhood={property.location.neighborhood}
                   isExactLocation={property.location.isExactLocation}
@@ -146,79 +132,115 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
             {/* Quantitative Features & Badges */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-purple-100 shadow-sm space-y-4 text-left">
               <h3 className="text-lg font-black text-[#5E1754]">Características & Comodidades</h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-2">
-                {property.features.bedrooms !== undefined && (
-                  <div className="flex items-center space-x-2 bg-purple-50 p-3 rounded-2xl text-xs font-bold text-slate-800">
-                    <Bed className="w-5 h-5 text-[#5E1754]" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 pt-2">
+                {!!property.features.bedrooms && property.features.bedrooms > 0 && (
+                  <div className="flex items-center space-x-3 bg-slate-50 border border-slate-200/80 p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <Bed className="w-5 h-5" />
+                    </span>
                     <span>{property.features.bedrooms} Dormitorios</span>
                   </div>
                 )}
-                {property.features.bathrooms !== undefined && (
-                  <div className="flex items-center space-x-2 bg-purple-50 p-3 rounded-2xl text-xs font-bold text-slate-800">
-                    <Bath className="w-5 h-5 text-[#5E1754]" />
+                {!!property.features.bathrooms && property.features.bathrooms > 0 && (
+                  <div className="flex items-center space-x-3 bg-slate-50 border border-slate-200/80 p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <Bath className="w-5 h-5" />
+                    </span>
                     <span>{property.features.bathrooms} Baño/s</span>
                   </div>
                 )}
-                {property.features.builtAreaM2 !== undefined && (
-                  <div className="flex items-center space-x-2 bg-purple-50 p-3 rounded-2xl text-xs font-bold text-slate-800">
-                    <Maximize2 className="w-5 h-5 text-[#E85D04]" />
+                {!!property.features.builtAreaM2 && property.features.builtAreaM2 > 0 && (
+                  <div className="flex items-center space-x-3 bg-slate-50 border border-slate-200/80 p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <Building className="w-5 h-5" />
+                    </span>
                     <span>{property.features.builtAreaM2} m² Construidos</span>
                   </div>
                 )}
-                {property.features.plotAreaM2 !== undefined && (
-                  <div className="flex items-center space-x-2 bg-amber-50 p-3 rounded-2xl text-xs font-bold text-amber-900 border border-amber-200">
-                    <span>📐 {property.features.plotAreaM2} m² Terreno</span>
+                {!!property.features.plotAreaM2 && property.features.plotAreaM2 > 0 && (
+                  <div className="flex items-center space-x-3 bg-slate-50 border border-slate-200/80 p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <Maximize2 className="w-5 h-5" />
+                    </span>
+                    <span>{property.features.plotAreaM2} m² Terreno</span>
                   </div>
                 )}
-                {property.features.frontMeters !== undefined && (
-                  <div className="flex items-center space-x-2 bg-amber-50 p-3 rounded-2xl text-xs font-bold text-amber-900 border border-amber-200">
-                    <span>📐 {property.features.frontMeters}m de Frente</span>
+                {!!property.features.frontMeters && property.features.frontMeters > 0 && (
+                  <div className="flex items-center space-x-3 bg-slate-50 border border-slate-200/80 p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <Compass className="w-5 h-5" />
+                    </span>
+                    <span>{property.features.frontMeters}m de Frente</span>
                   </div>
                 )}
-                {property.features.coneatIndex !== undefined && (
-                  <div className="flex items-center space-x-2 bg-amber-100 p-3 rounded-2xl text-xs font-bold text-amber-950 border border-amber-300">
-                    <span>🌾 CONEAT {property.features.coneatIndex}</span>
+                {!!property.features.coneatIndex && property.features.coneatIndex > 0 && (
+                  <div className="flex items-center space-x-3 bg-slate-50 border border-slate-200/80 p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <Trees className="w-5 h-5" />
+                    </span>
+                    <span>CONEAT {property.features.coneatIndex}</span>
                   </div>
                 )}
                 {property.features.waterWellOrPond && (
-                  <div className="flex items-center space-x-2 bg-amber-100 p-3 rounded-2xl text-xs font-bold text-amber-950 border border-amber-300">
-                    <span>💧 Pozo de Agua / Tajamar</span>
+                  <div className="flex items-center space-x-3 bg-slate-50 border border-slate-200/80 p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <Droplets className="w-5 h-5" />
+                    </span>
+                    <span>Pozo de Agua / Tajamar</span>
                   </div>
                 )}
                 {property.features.titlesUpToDate && (
-                  <div className="flex items-center space-x-2 bg-purple-100 p-3 rounded-2xl text-xs font-bold text-purple-950 border border-purple-300">
-                    <span>📜 Títulos al Día</span>
+                  <div className="flex items-center space-x-3 bg-slate-50 border border-slate-200/80 p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <FileCheck className="w-5 h-5" />
+                    </span>
+                    <span>Títulos al Día</span>
                   </div>
                 )}
                 {property.features.bankCreditEligible && (
-                  <div className="flex items-center space-x-2 bg-purple-50 p-3 rounded-2xl text-xs font-bold text-purple-900 border border-purple-200">
-                    <span>🏛️ Apta Crédito Bancario</span>
+                  <div className="flex items-center space-x-3 bg-slate-50 border border-slate-200/80 p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <Landmark className="w-5 h-5" />
+                    </span>
+                    <span>Apta Crédito Bancario</span>
                   </div>
                 )}
                 {property.features.acceptsTradeIn && (
-                  <div className="flex items-center space-x-2 bg-purple-50 p-3 rounded-2xl text-xs font-bold text-purple-900 border border-purple-200">
-                    <span>🔄 Acepta Permuta</span>
+                  <div className="flex items-center space-x-3 bg-slate-50 border border-slate-200/80 p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <ArrowLeftRight className="w-5 h-5" />
+                    </span>
+                    <span>Acepta Permuta</span>
                   </div>
                 )}
                 {property.features.fiberOptic && (
-                  <div className="flex items-center space-x-2 bg-sky-50 p-3 rounded-2xl text-xs font-bold text-sky-900 border border-sky-200">
-                    <span>📶 Fibra Óptica</span>
+                  <div className="flex items-center space-x-3 bg-slate-50 border border-slate-200/80 p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <Wifi className="w-5 h-5" />
+                    </span>
+                    <span>Fibra Óptica</span>
                   </div>
                 )}
                 {property.features.oseWater && (
-                  <div className="flex items-center space-x-2 bg-sky-50 p-3 rounded-2xl text-xs font-bold text-sky-900 border border-sky-200">
-                    <span>💧 Agua Potable de OSE</span>
+                  <div className="flex items-center space-x-3 bg-slate-50 border border-slate-200/80 p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <Droplets className="w-5 h-5" />
+                    </span>
+                    <span>Agua Potable de OSE</span>
                   </div>
                 )}
               </div>
 
               {property.guarantees && property.guarantees.length > 0 && (
                 <div className="pt-4 border-t border-slate-100">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Garantías de Alquiler Aceptadas</h4>
+                  <h4 className="text-xs font-extrabold uppercase tracking-wider text-slate-500 mb-3.5">
+                    Garantías de Alquiler Aceptadas
+                  </h4>
                   <div className="flex flex-wrap gap-2">
                     {property.guarantees.map((g) => (
-                      <span key={g} className="bg-emerald-100 text-emerald-950 font-black text-xs px-3 py-1.5 rounded-xl border border-emerald-300">
-                        🛡️ Garantía {g}
+                      <span key={g} className="bg-slate-50 text-slate-800 font-extrabold text-xs px-3.5 py-2 rounded-xl border border-slate-200/80 shadow-2xs flex items-center space-x-2">
+                        <ShieldCheck className="w-4 h-4 text-[#5E1754]" />
+                        <span>Garantía {g}</span>
                       </span>
                     ))}
                   </div>

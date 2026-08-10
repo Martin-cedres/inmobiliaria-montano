@@ -8,7 +8,8 @@ export type PropertyCategory =
   | 'deposito' 
   | 'proyecto' 
   | 'terreno' 
-  | 'local';
+  | 'local'
+  | 'modulo';
 
 export type PropertyStatus = 'disponible' | 'nuevo' | 'reservado' | 'vendido' | 'alquilado' | 'oportunidad';
 
@@ -50,6 +51,7 @@ export interface Property {
     };
     isExactLocation?: boolean; // false por defecto -> dibuja círculo de zona aproximada
     radiusMeters?: number;     // por defecto 300 metros
+    hasLocation?: boolean;     // false -> oculta el mapa por completo (ej. Módulos Habitacionales / Construcciones Transportables)
   };
   features: {
     bedrooms?: number;
@@ -78,6 +80,11 @@ export interface Property {
     shedOrCorral?: boolean;        // Galpón / Embarcadero
   };
   guarantees?: GuaranteeType[];
+  legalCertainties?: {
+    titlesUpToDate?: boolean;
+    bankCreditEligible?: boolean;
+    acceptsTradeIn?: boolean;
+  };
   images: ImageAsset[];
   featured: boolean;
   createdAt: string;
