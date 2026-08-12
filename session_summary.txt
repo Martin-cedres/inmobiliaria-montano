@@ -151,4 +151,5 @@
   - **Homogeneización de Íconos:** Renderizados todos los íconos de las listas y la columna de contacto en un tono pastel claro **`text-purple-300`**.
   - **Interacción Unificada (Hover):** Al pasar el cursor sobre cualquier enlace del pie de página, **tanto el texto como el ícono transicionan simultáneamente al naranja corporativo (`hover:text-[#E85D04]`)**, reforzando la identidad de la marca.
 - Removido el botón secundario redundante *"O chatear directamente por WhatsApp"* en la tarjeta móvil de [`OwnerLeadSection.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/OwnerLeadSection.tsx), simplificando el llamado a la acción con un único botón principal naranja **`[ Solicitar Tasación por Formulario ]`**.
-- Verificada la compilación limpia de producción (`npm run build`, 0 errores) y la ejecución del servidor local en http://localhost:3000.
+- Verificada la compilación limpia de producción (`npm run build`, 0 errores).
+- Realizado el commit y envío oficial a GitHub en la rama principal (`git push origin main` -> `https://github.com/Martin-cedres/inmobiliaria-montano.git`), disparando la actualización automática en Vercel.
