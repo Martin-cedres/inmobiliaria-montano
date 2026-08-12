@@ -9,8 +9,9 @@ import { PropertyCard } from '@/components/PropertyCard';
 import { OwnerLeadSection } from '@/components/OwnerLeadSection';
 import { Footer } from '@/components/Footer';
 import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
+import { CatalogMapWrapper } from '@/components/CatalogMapWrapper';
 import { Property, PropertyCategory } from '@/types/property';
-import { Building2, SearchX, RotateCcw, Loader2 } from 'lucide-react';
+import { Building2, SearchX, RotateCcw, Loader2, LayoutGrid, MapPin, Map as MapIcon, List } from 'lucide-react';
 
 function SearchCategoryHandler({ onCategoryFound }: { onCategoryFound: (cat: PropertyCategory) => void }) {
   const searchParams = useSearchParams();
@@ -33,6 +34,7 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<PropertyCategory>('todos');
   const [properties, setProperties] = useState<Property[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [viewMode, setViewMode] = useState<'grid' | 'map'>('grid');
 
   useEffect(() => {
     async function loadLiveProperties() {
@@ -69,7 +71,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50">
+    <div className="min-h-screen flex flex-col bg-slate-50 relative">
       <Suspense fallback={null}>
         <SearchCategoryHandler onCategoryFound={setSelectedCategory} />
       </Suspense>
@@ -91,29 +93,63 @@ export default function Home() {
 
         <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
           
-          {/* Section Title */}
-          <div className="mb-8 text-left">
-            <div className="flex items-center space-x-2 text-[#5E1754] font-bold text-xs uppercase tracking-wider mb-1.5">
-              <Building2 className="w-4 h-4 text-[#E85D04]" />
-              <span>Catálogo Inmobiliario</span>
+          {/* Section Title & View Switcher Header */}
+          <div className="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4 text-left">
+            <div>
+              <div className="flex items-center space-x-2 text-[#5E1754] font-bold text-xs uppercase tracking-wider mb-1.5">
+                <Building2 className="w-4 h-4 text-[#E85D04]" />
+                <span>Catálogo Inmobiliario</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
+                Propiedades en San José de Mayo
+              </h2>
             </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
-              Propiedades en San José de Mayo
-            </h2>
+
+            {/* View Mode Toggle Button Pill (Desktop & Tablet) */}
+            <div className="inline-flex items-center space-x-1 bg-slate-200/80 p-1 rounded-2xl border border-slate-300 shadow-inner self-start sm:self-auto">
+              <button
+                type="button"
+                onClick={() => setViewMode('grid')}
+                className={`px-3.5 py-1.5 rounded-xl font-black text-xs transition-all flex items-center space-x-1.5 ${
+                  viewMode === 'grid'
+                    ? 'bg-[#5E1754] text-white shadow-md'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-300/50'
+                }`}
+              >
+                <LayoutGrid className="w-3.5 h-3.5" />
+                <span>Tarjetas</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setViewMode('map')}
+                className={`px-3.5 py-1.5 rounded-xl font-black text-xs transition-all flex items-center space-x-1.5 ${
+                  viewMode === 'map'
+                    ? 'bg-[#E85D04] text-white shadow-md'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-300/50'
+                }`}
+              >
+                <MapPin className="w-3.5 h-3.5 text-amber-300" />
+                <span>Mapa Interactivo</span>
+              </button>
+            </div>
           </div>
 
-          {/* Property Grid */}
+          {/* Property Catalog Content (Grid or Interactive Map) */}
           {isLoading ? (
             <div className="py-20 text-center text-slate-500 font-bold text-sm flex items-center justify-center space-x-3">
               <Loader2 className="w-8 h-8 animate-spin text-[#5E1754]" />
               <span>Cargando catálogo de propiedades...</span>
             </div>
           ) : filteredProperties.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-              {filteredProperties.map((property) => (
-                <PropertyCard key={property.id} property={property} />
-              ))}
-            </div>
+            viewMode === 'grid' ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                {filteredProperties.map((property) => (
+                  <PropertyCard key={property.id} property={property} />
+                ))}
+              </div>
+            ) : (
+              <CatalogMapWrapper properties={filteredProperties} />
+            )
           ) : (
             /* Clean Vector Empty Search State */
             <div className="bg-white rounded-3xl p-10 sm:p-14 text-center border border-slate-200 shadow-xs max-w-md mx-auto my-8 space-y-4">
@@ -135,6 +171,26 @@ export default function Home() {
           )}
 
         </main>
+      </div>
+
+      {/* Floating Action Button for Mobile View Switcher (Estilo Airbnb < sm) */}
+      <div className="sm:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-40 pointer-events-auto">
+        <button
+          onClick={() => setViewMode((prev) => (prev === 'grid' ? 'map' : 'grid'))}
+          className="bg-[#191024]/95 text-white backdrop-blur-md px-5 py-3 rounded-full font-black text-xs shadow-2xl border border-amber-400/30 flex items-center space-x-2 transition-all active:scale-95 text-amber-300"
+        >
+          {viewMode === 'grid' ? (
+            <>
+              <MapIcon className="w-4 h-4 text-[#E85D04]" />
+              <span>Ver Mapa Interactivo</span>
+            </>
+          ) : (
+            <>
+              <List className="w-4 h-4 text-amber-400" />
+              <span>Ver Lista de Tarjetas</span>
+            </>
+          )}
+        </button>
       </div>
 
       {/* 5. Owner Lead & Appraisals Section */}
