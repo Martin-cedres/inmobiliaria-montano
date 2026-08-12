@@ -59,8 +59,8 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
       for (const file of fileList) {
         try {
           const dataUrl = await compressImageToWebP(file, {
-            maxWidth: 1600,
-            quality: 0.82,
+            maxWidth: 1200,
+            quality: 0.75,
             maxSizeBytes: 10 * 1024 * 1024,
           });
           compressedDataUrls.push(dataUrl);

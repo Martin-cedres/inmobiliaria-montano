@@ -33,11 +33,13 @@ export async function POST(request: Request) {
         const buffer = Buffer.from(base64Data, 'base64');
 
         // 1. Si Vercel Blob Token está configurado (Vercel Cloud CDN)
-        if (process.env.BLOB_READ_WRITE_TOKEN) {
+        const blobToken = process.env.BLOB_READ_WRITE_TOKEN || process.env.VERCEL_BLOB_READ_WRITE_TOKEN;
+        if (blobToken) {
           try {
             const blob = await put(`properties/${fileName}`, buffer, {
               access: 'public',
               contentType,
+              token: blobToken,
             });
             finalUrl = blob.url;
           } catch (blobErr) {
@@ -53,7 +55,9 @@ export async function POST(request: Request) {
             await fs.writeFile(filePath, buffer);
             finalUrl = `/uploads/properties/${fileName}`;
           } catch (fileErr) {
-            console.warn('Usando Data URL directa debido a entorno serverless sin Vercel Blob:', fileErr);
+            console.warn('Disco local en solo lectura en Vercel Serverless. Generando URL segura:', fileErr);
+            // Evitar desbordar la carga util de Vercel (Serverless Payload Limit)
+            finalUrl = imgData;
           }
         }
       }

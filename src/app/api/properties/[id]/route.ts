@@ -125,7 +125,7 @@ export async function PUT(
   } catch (error: any) {
     console.error('Error updating property:', error);
     return NextResponse.json(
-      { success: false, error: 'Error al actualizar la propiedad' },
+      { success: false, error: error?.message || 'Error al actualizar la propiedad' },
       { status: 500 }
     );
   }

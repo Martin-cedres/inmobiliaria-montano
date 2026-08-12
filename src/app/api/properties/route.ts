@@ -128,7 +128,7 @@ export async function POST(request: Request) {
   } catch (error: any) {
     console.error('Error saving property:', error);
     return NextResponse.json(
-      { success: false, error: 'Error al publicar la propiedad' },
+      { success: false, error: error?.message || 'Error al publicar la propiedad' },
       { status: 500 }
     );
   }
