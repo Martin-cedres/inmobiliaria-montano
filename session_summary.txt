@@ -158,4 +158,10 @@
   - Agregada captura inteligente de excepciones al intentar escribir en disco cuando se corre en serverless read-only.
   - Implementado fallback en memoria para mutaciones de propiedades en vivo.
   - Incluida la columna e información de `images` en la consulta SQL de inserción y actualización para Neon DB Postgres.
-- Subido el fix a GitHub (`git push origin main` -> commit `3efc1ed`), permitiendo guardar y editar propiedades sin errores en Vercel.
+- Realizada la verificación integral de todos los endpoints y métodos del panel de administración (`/admin`):
+  - **Publicar Nueva (`POST /api/properties`):** Generación automática de Slug SEO (`/propiedad/slug-ref`), asignación de código `MON-XXX`, cálculo de precio/moneda y asignación de imágenes.
+  - **Editar Propiedad (`PUT /api/properties/[id]`):** Actualización completa de datos, imágenes, estado y revalidación automática de rutas (`revalidatePath('/')`).
+  - **Cambio de Estado Rápido (`PATCH /api/properties/[id]`):** Transición fluida entre `Disponible`, `Reservado`, `Vendido` y `Alquilado` con toast en tiempo real.
+  - **Eliminar Propiedad (`DELETE /api/properties/[id]`):** Eliminación limpia de registro y purga de caché.
+  - **Subida de Imágenes (`POST /api/upload`):** Procesamiento de imágenes con soporte Vercel Blob CDN y disco local.
+- Verificada la compilación completa de producción (`npm run build`, 0 errores).

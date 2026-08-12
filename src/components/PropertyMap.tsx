@@ -22,23 +22,26 @@ const createCustomPin = (titleText: string) => {
   return L.divIcon({
     className: 'custom-leaflet-marker',
     html: `
-      <div style="
-        background-color: #5E1754;
-        border: 2.5px solid #E85D04;
-        color: white;
-        border-radius: 9999px;
-        padding: 6px 12px;
-        font-weight: 800;
-        font-size: 11px;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        white-space: nowrap;
-        transform: translate(-50%, -100%);
-      ">
-        <span style="width: 8px; height: 8px; background-color: #E85D04; border-radius: 9999px; display: inline-block;"></span>
-        <span>${titleText}</span>
+      <div style="position: relative; display: inline-flex; align-items: center; justify-content: center; transform: translate(-50%, -100%);">
+        <span style="position: absolute; width: 44px; height: 44px; background-color: rgba(232, 93, 4, 0.25); border-radius: 9999px; animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;"></span>
+        <div style="
+          background: linear-gradient(135deg, #5E1754 0%, #350A2F 100%);
+          border: 2.5px solid #E85D04;
+          color: white;
+          border-radius: 9999px;
+          padding: 6px 14px;
+          font-weight: 900;
+          font-size: 11px;
+          letter-spacing: 0.025em;
+          box-shadow: 0 10px 20px -3px rgba(94, 23, 84, 0.6), 0 4px 10px rgba(232, 93, 4, 0.4);
+          display: flex;
+          align-items: center;
+          gap: 7px;
+          white-space: nowrap;
+        ">
+          <span style="width: 8px; height: 8px; background-color: #E85D04; border-radius: 9999px; display: inline-block; box-shadow: 0 0 8px #E85D04;"></span>
+          <span>${titleText}</span>
+        </div>
       </div>
     `,
     iconSize: [0, 0],
