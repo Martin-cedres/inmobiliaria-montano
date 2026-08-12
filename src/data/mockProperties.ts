@@ -44,9 +44,9 @@ export const MOCK_PROPERTIES: Property[] = [
     images: [
       {
         id: 'img-101-1',
-        blobUrl: '/images/sample-house-1.jpg',
-        webpUrl: '/images/sample-house-1.jpg',
-        thumbnailUrl: '/images/sample-house-1.jpg',
+        blobUrl: '/images/sample-house-1.webp',
+        webpUrl: '/images/sample-house-1.webp',
+        thumbnailUrl: '/images/sample-house-1.webp',
         altText: 'Frente de casa en régimen de PH Zona Plaza Arriaga',
         isMain: true,
       },
@@ -95,9 +95,9 @@ export const MOCK_PROPERTIES: Property[] = [
     images: [
       {
         id: 'img-102-1',
-        blobUrl: '/images/sample-chacra-1.jpg',
-        webpUrl: '/images/sample-chacra-1.jpg',
-        thumbnailUrl: '/images/sample-chacra-1.jpg',
+        blobUrl: '/images/sample-chacra-1.webp',
+        webpUrl: '/images/sample-chacra-1.webp',
+        thumbnailUrl: '/images/sample-chacra-1.webp',
         altText: 'Vista de la chacra y galpón en San José',
         isMain: true,
       },
@@ -141,9 +141,9 @@ export const MOCK_PROPERTIES: Property[] = [
     images: [
       {
         id: 'img-103-1',
-        blobUrl: '/images/sample-apto-1.jpg',
-        webpUrl: '/images/sample-apto-1.jpg',
-        thumbnailUrl: '/images/sample-apto-1.jpg',
+        blobUrl: '/images/sample-apto-1.webp',
+        webpUrl: '/images/sample-apto-1.webp',
+        thumbnailUrl: '/images/sample-apto-1.webp',
         altText: 'Apartamento en alquiler Centro San José',
         isMain: true,
       },
@@ -187,9 +187,9 @@ export const MOCK_PROPERTIES: Property[] = [
     images: [
       {
         id: 'img-104-1',
-        blobUrl: '/images/sample-deposito-1.jpg',
-        webpUrl: '/images/sample-deposito-1.jpg',
-        thumbnailUrl: '/images/sample-deposito-1.jpg',
+        blobUrl: '/images/sample-deposito-1.webp',
+        webpUrl: '/images/sample-deposito-1.webp',
+        thumbnailUrl: '/images/sample-deposito-1.webp',
         altText: 'Galpón depósito en San José de Mayo',
         isMain: true,
       },
@@ -232,9 +232,9 @@ export const MOCK_PROPERTIES: Property[] = [
     images: [
       {
         id: 'img-105-1',
-        blobUrl: '/images/sample-proyecto-1.jpg',
-        webpUrl: '/images/sample-proyecto-1.jpg',
-        thumbnailUrl: '/images/sample-proyecto-1.jpg',
+        blobUrl: '/images/sample-proyecto-1.webp',
+        webpUrl: '/images/sample-proyecto-1.webp',
+        thumbnailUrl: '/images/sample-proyecto-1.webp',
         altText: 'Proyecto Residencial Don Bosco',
         isMain: true,
       },
@@ -278,9 +278,9 @@ export const MOCK_PROPERTIES: Property[] = [
     images: [
       {
         id: 'img-106-1',
-        blobUrl: '/images/sample-house-2.jpg',
-        webpUrl: '/images/sample-house-2.jpg',
-        thumbnailUrl: '/images/sample-house-2.jpg',
+        blobUrl: '/images/sample-house-2.webp',
+        webpUrl: '/images/sample-house-2.webp',
+        thumbnailUrl: '/images/sample-house-2.webp',
         altText: 'Casa reservada Barrio Centro',
         isMain: true,
       },
@@ -323,9 +323,9 @@ export const MOCK_PROPERTIES: Property[] = [
     images: [
       {
         id: 'img-107-1',
-        blobUrl: '/images/sample-terreno-1.jpg',
-        webpUrl: '/images/sample-terreno-1.jpg',
-        thumbnailUrl: '/images/sample-terreno-1.jpg',
+        blobUrl: '/images/sample-terreno-1.webp',
+        webpUrl: '/images/sample-terreno-1.webp',
+        thumbnailUrl: '/images/sample-terreno-1.webp',
         altText: 'Terreno solar en venta en San José de Mayo',
         isMain: true,
       },
