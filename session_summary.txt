@@ -158,11 +158,10 @@
   - Agregada captura inteligente de excepciones al intentar escribir en disco cuando se corre en serverless read-only.
   - Implementado fallback en memoria para mutaciones de propiedades en vivo.
   - Incluida la columna e información de `images` en la consulta SQL de inserción y actualización para Neon DB Postgres.
-- Implementada con éxito la Búsqueda por Mapa Interactivo en el Catálogo de la Home ([`CatalogMap.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/CatalogMap.tsx) y [`page.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/page.tsx)):
-  - **Conmutador de Vista Dual (Grid / Mapa):** Pastilla intuitiva `[ 📇 Tarjetas ]` | `[ 🗺️ Mapa Interactivo ]` totalmente sincronizada con las categorías.
-  - **Cluster de Marcadores (`react-leaflet-cluster`):** Agrupación inteligente de pins cercanos en San José con contador dinámico y expansión al hacer zoom para evitar superposición.
-  - **Pins con Distintivo de Precio:** Marcadores de marca Montaño (`#5E1754` con borde naranja/verde) con precio exacto (`USD` / `UYU $`).
-  - **Popups de Previsualización:** Tarjeta flotante al hacer clic en un pin con foto WebP, detalles (dormitorios, baños, m²) y botón directo `[ Ver Ficha Completa ➔ ]`.
-  - **Optimización UX Móvil:** Botón flotante al estilo Airbnb (`[ 🗺️ Ver Mapa Interactivo ]` / `[ 📋 Ver Lista ]`) fijado en la parte inferior para prevenir bloqueos de scroll táctil en smartphones.
+- Optimizado el Mapa Interactivo con Diseño Split View (Estilo Airbnb / Idealista) ([`CatalogMap.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/CatalogMap.tsx) y [`page.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/page.tsx)):
+  - **Pins Compactos Ultra-Limpios:** Formato abreviado inteligente (`U$S 145k`, `$ 16.5k`) en pastillas redondeadas de alta legibilidad que no se amontonan.
+  - **Dispersión Espacial (Spiderfy & Zoom Uncluster):** Ajustado `spiderfyDistanceMultiplier` y `disableClusteringAtZoom: 15` para que los inmuebles en la misma manzana se dispersen limpiamente en abanico.
+  - **Layout Dividido (Split View):** En pantallas grandes, el mapa ocupa el 60% izquierdo y la derecha muestra una lista vertical desplazable de mini-tarjetas.
+  - **Interactividad Bidireccional:** Al pasar el cursor o hacer clic en una mini-tarjeta de la lista, el pin correspondiente en el mapa se agranda y resplandece en naranja (`#E85D04`). Al tocar un pin en el mapa, la lista lateral se desplaza automáticamente hasta esa propiedad.
 - Verificada la compilación completa de producción (`npm run build`, 0 errores).
-- Subidos todos los cambios a GitHub (`git push origin main` -> commit `248b40a`), habilitando la funcionalidad en producción en Vercel.
+- Subidos todos los cambios a GitHub (`git push origin main` -> commit `25bb80b`), habilitando la funcionalidad 100% libre de amontonamiento en Vercel.

@@ -27,6 +27,22 @@ function formatCompactPrice(amount: number, currency: string) {
   return `${currency === 'USD' ? 'U$S' : '$'} ${amount}`;
 }
 
+// Generar desfasaje determinístico suave (~120m) para propiedades con ubicación confidencial
+function getJitteredCoords(id: string, lat: number, lng: number, isExact?: boolean): [number, number] {
+  if (isExact !== false) return [lat, lng];
+  
+  let hash = 0;
+  for (let i = 0; i < id.length; i++) {
+    hash = (hash << 5) - hash + id.charCodeAt(i);
+    hash |= 0;
+  }
+  // Generar desfasaje entre -0.0012 y +0.0012 grados (~100-140 metros)
+  const latOffset = (((Math.abs(hash) % 100) / 100) - 0.5) * 0.0024;
+  const lngOffset = ((((Math.abs(hash >> 3)) % 100) / 100) - 0.5) * 0.0024;
+  
+  return [lat + latOffset, lng + lngOffset];
+}
+
 // Function to generate compact Leaflet Pin in Montaño Brand Colors
 const createCompactPricePin = (priceText: string, isRent: boolean, isActive: boolean) => {
   const badgeBg = isActive ? '#E85D04' : isRent ? '#10B981' : '#5E1754';
@@ -99,7 +115,6 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
   activePropertyId,
   onSelectProperty,
 }) => {
-  // Centro por defecto: San José de Mayo, Uruguay
   const defaultCenter: [number, number] = [-34.3375, -56.7136];
 
   // Calcular centro dinámico basado en propiedades
@@ -139,11 +154,12 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
           maxClusterRadius={35}
         >
           {properties.map((prop) => {
-            const coords = prop.location.coordinates || {
+            const rawCoords = prop.location.coordinates || {
               lat: -34.3375,
               lng: -56.7136,
             };
 
+            const [lat, lng] = getJitteredCoords(prop.id, rawCoords.lat, rawCoords.lng, prop.location.isExactLocation);
             const isRent = prop.operation === 'alquiler';
             const compactPrice = formatCompactPrice(prop.price.amount, prop.price.currency);
             const fullPriceText = `${prop.price.currency === 'USD' ? 'USD' : 'UYU $'} ${prop.price.amount.toLocaleString('es-UY')}`;
@@ -152,146 +168,109 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
 
             return (
               <React.Fragment key={prop.id}>
-                {prop.location.isExactLocation !== false ? (
-                  /* Marker Exacto con desplegable */
-                  <Marker
-                    position={[coords.lat, coords.lng]}
-                    icon={createCompactPricePin(compactPrice, isRent, isActive)}
-                    zIndexOffset={isActive ? 1000 : 0}
-                    eventHandlers={{
-                      click: () => {
-                        if (onSelectProperty) onSelectProperty(prop.id);
-                      },
-                    }}
-                  >
-                    <Popup className="catalog-map-popup" maxWidth={280} minWidth={250}>
-                      <div className="overflow-hidden rounded-2xl text-left bg-white font-sans">
-                        {/* Img Header */}
-                        <div className="relative h-32 w-full overflow-hidden bg-slate-100">
-                          <img
-                            src={mainImg}
-                            alt={prop.title}
-                            className="w-full h-full object-cover"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).src = '/logo.png';
-                            }}
-                          />
-                          <div className="absolute top-2 left-2">
-                            <span className="bg-[#5E1754] text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full tracking-wider shadow">
-                              {prop.category}
-                            </span>
-                          </div>
-                          <div className="absolute bottom-2 left-2 right-2 flex justify-between items-end text-white drop-shadow-md">
-                            <span className="text-sm font-black bg-slate-900/80 backdrop-blur-md px-2 py-0.5 rounded-lg text-amber-300">
-                              {fullPriceText}
-                            </span>
-                          </div>
+                {/* Marker Compacto */}
+                <Marker
+                  position={[lat, lng]}
+                  icon={createCompactPricePin(compactPrice, isRent, isActive)}
+                  zIndexOffset={isActive ? 1000 : 0}
+                  eventHandlers={{
+                    click: () => {
+                      if (onSelectProperty) onSelectProperty(prop.id);
+                    },
+                    mouseover: () => {
+                      if (onSelectProperty) onSelectProperty(prop.id);
+                    },
+                  }}
+                >
+                  <Popup className="catalog-map-popup" maxWidth={280} minWidth={250}>
+                    <div className="overflow-hidden rounded-2xl text-left bg-white font-sans">
+                      {/* Img Header */}
+                      <div className="relative h-32 w-full overflow-hidden bg-slate-100">
+                        <img
+                          src={mainImg}
+                          alt={prop.title}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = '/logo.png';
+                          }}
+                        />
+                        <div className="absolute top-2 left-2">
+                          <span className="bg-[#5E1754] text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full tracking-wider shadow">
+                            {prop.category}
+                          </span>
                         </div>
-
-                        {/* Card Content */}
-                        <div className="p-3 space-y-2">
-                          <h4 className="font-bold text-slate-900 text-xs sm:text-sm leading-snug line-clamp-2">
-                            {prop.title}
-                          </h4>
-
-                          <div className="flex items-center space-x-1 text-[11px] text-slate-500 font-medium">
-                            <MapPin className="w-3 h-3 text-[#E85D04] flex-shrink-0" />
-                            <span className="truncate">{prop.location.neighborhood}, San José</span>
+                        {prop.location.isExactLocation === false && (
+                          <div className="absolute top-2 right-2 bg-[#191024]/90 backdrop-blur-md text-amber-300 text-[10px] px-2 py-0.5 rounded-full font-bold flex items-center space-x-1 border border-purple-500/30">
+                            <ShieldCheck className="w-3 h-3 text-emerald-400" />
+                            <span>Zona Aproximada</span>
                           </div>
-
-                          {/* Quick Stats */}
-                          <div className="flex items-center space-x-3 text-[11px] text-slate-600 font-semibold pt-1 border-t border-slate-100">
-                            {!!prop.features.bedrooms && prop.features.bedrooms > 0 && (
-                              <div className="flex items-center space-x-1">
-                                <Bed className="w-3 h-3 text-[#5E1754]" />
-                                <span>{prop.features.bedrooms} Dorm</span>
-                              </div>
-                            )}
-                            {!!prop.features.bathrooms && prop.features.bathrooms > 0 && (
-                              <div className="flex items-center space-x-1">
-                                <Bath className="w-3 h-3 text-[#5E1754]" />
-                                <span>{prop.features.bathrooms} Baño</span>
-                              </div>
-                            )}
-                            {!!prop.features.builtAreaM2 && prop.features.builtAreaM2 > 0 && (
-                              <div className="flex items-center space-x-1">
-                                <Building2 className="w-3 h-3 text-[#5E1754]" />
-                                <span>{prop.features.builtAreaM2} m²</span>
-                              </div>
-                            )}
-                          </div>
-
-                          {/* CTA Button */}
-                          <Link
-                            href={`/propiedad/${prop.slug}`}
-                            className="w-full bg-[#E85D04] hover:bg-[#FF8500] text-white font-bold py-2 px-3 rounded-xl flex items-center justify-center space-x-1.5 text-xs transition-colors mt-2 shadow-md"
-                          >
-                            <span>Ver Ficha Completa</span>
-                            <ArrowRight className="w-3.5 h-3.5" />
-                          </Link>
+                        )}
+                        <div className="absolute bottom-2 left-2 right-2 flex justify-between items-end text-white drop-shadow-md">
+                          <span className="text-sm font-black bg-slate-900/80 backdrop-blur-md px-2 py-0.5 rounded-lg text-amber-300">
+                            {fullPriceText}
+                          </span>
                         </div>
                       </div>
-                    </Popup>
-                  </Marker>
-                ) : (
-                  /* Círculo de Zona Aproximada por Privacidad */
-                  <>
-                    <Marker
-                      position={[coords.lat, coords.lng]}
-                      icon={createCompactPricePin(compactPrice, isRent, isActive)}
-                      zIndexOffset={isActive ? 1000 : 0}
-                      eventHandlers={{
-                        click: () => {
-                          if (onSelectProperty) onSelectProperty(prop.id);
-                        },
-                      }}
-                    >
-                      <Popup className="catalog-map-popup" maxWidth={280} minWidth={250}>
-                        <div className="overflow-hidden rounded-2xl text-left bg-white font-sans">
-                          <div className="relative h-32 w-full overflow-hidden bg-slate-100">
-                            <img
-                              src={mainImg}
-                              alt={prop.title}
-                              className="w-full h-full object-cover"
-                              onError={(e) => {
-                                (e.target as HTMLImageElement).src = '/logo.png';
-                              }}
-                            />
-                            <div className="absolute top-2 left-2 bg-[#191024]/90 backdrop-blur-md text-amber-300 text-[10px] px-2 py-0.5 rounded-full font-bold flex items-center space-x-1 border border-purple-500/30">
-                              <ShieldCheck className="w-3 h-3 text-emerald-400" />
-                              <span>Zona Aproximada</span>
-                            </div>
-                          </div>
 
-                          <div className="p-3 space-y-2">
-                            <h4 className="font-bold text-slate-900 text-xs sm:text-sm leading-snug line-clamp-2">
-                              {prop.title}
-                            </h4>
-                            <p className="text-xs font-black text-[#5E1754]">{fullPriceText}</p>
+                      {/* Card Content */}
+                      <div className="p-3 space-y-2">
+                        <h4 className="font-bold text-slate-900 text-xs sm:text-sm leading-snug line-clamp-2">
+                          {prop.title}
+                        </h4>
 
-                            <Link
-                              href={`/propiedad/${prop.slug}`}
-                              className="w-full bg-[#E85D04] hover:bg-[#FF8500] text-white font-bold py-2 px-3 rounded-xl flex items-center justify-center space-x-1.5 text-xs transition-colors mt-2 shadow-md"
-                            >
-                              <span>Ver Ficha Completa</span>
-                              <ArrowRight className="w-3.5 h-3.5" />
-                            </Link>
-                          </div>
+                        <div className="flex items-center space-x-1 text-[11px] text-slate-500 font-medium">
+                          <MapPin className="w-3 h-3 text-[#E85D04] flex-shrink-0" />
+                          <span className="truncate">{prop.location.neighborhood}, San José</span>
                         </div>
-                      </Popup>
-                    </Marker>
-                    <Circle
-                      center={[coords.lat, coords.lng]}
-                      radius={prop.location.radiusMeters || 350}
-                      pathOptions={{
-                        color: '#5E1754',
-                        fillColor: '#E85D04',
-                        fillOpacity: 0.2,
-                        weight: 1.5,
-                        dashArray: '5, 5',
-                      }}
-                    />
-                  </>
+
+                        {/* Quick Stats */}
+                        <div className="flex items-center space-x-3 text-[11px] text-slate-600 font-semibold pt-1 border-t border-slate-100">
+                          {!!prop.features.bedrooms && prop.features.bedrooms > 0 && (
+                            <div className="flex items-center space-x-1">
+                              <Bed className="w-3 h-3 text-[#5E1754]" />
+                              <span>{prop.features.bedrooms} Dorm</span>
+                            </div>
+                          )}
+                          {!!prop.features.bathrooms && prop.features.bathrooms > 0 && (
+                            <div className="flex items-center space-x-1">
+                              <Bath className="w-3 h-3 text-[#5E1754]" />
+                              <span>{prop.features.bathrooms} Baño</span>
+                            </div>
+                          )}
+                          {!!prop.features.builtAreaM2 && prop.features.builtAreaM2 > 0 && (
+                            <div className="flex items-center space-x-1">
+                              <Building2 className="w-3 h-3 text-[#5E1754]" />
+                              <span>{prop.features.builtAreaM2} m²</span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* CTA Button */}
+                        <Link
+                          href={`/propiedad/${prop.slug}`}
+                          className="w-full bg-[#E85D04] hover:bg-[#FF8500] text-white font-bold py-2 px-3 rounded-xl flex items-center justify-center space-x-1.5 text-xs transition-colors mt-2 shadow-md"
+                        >
+                          <span>Ver Ficha Completa</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </Link>
+                      </div>
+                    </div>
+                  </Popup>
+                </Marker>
+
+                {/* Círculo de Zona Aproximada ÚNICAMENTE visible cuando la propiedad está seleccionada o en Hover */}
+                {isActive && prop.location.isExactLocation === false && (
+                  <Circle
+                    center={[lat, lng]}
+                    radius={180}
+                    pathOptions={{
+                      color: '#E85D04',
+                      fillColor: '#5E1754',
+                      fillOpacity: 0.12,
+                      weight: 1.5,
+                      dashArray: '4, 4',
+                    }}
+                  />
                 )}
               </React.Fragment>
             );
