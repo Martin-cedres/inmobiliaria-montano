@@ -47,12 +47,22 @@ async function ensureTablesExist(sql: any) {
         sanitation BOOLEAN DEFAULT FALSE,
         guarantees JSONB DEFAULT '[]'::jsonb,
         images JSONB DEFAULT '[]'::jsonb,
+        lat NUMERIC(10, 6),
+        lng NUMERIC(10, 6),
+        is_exact_location BOOLEAN DEFAULT FALSE,
+        radius_meters INT DEFAULT 300,
+        has_location BOOLEAN DEFAULT TRUE,
         featured BOOLEAN DEFAULT FALSE,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       );
     `;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS images JSONB DEFAULT '[]'::jsonb;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS lat NUMERIC(10, 6);`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS lng NUMERIC(10, 6);`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS is_exact_location BOOLEAN DEFAULT FALSE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS radius_meters INT DEFAULT 300;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS has_location BOOLEAN DEFAULT TRUE;`;
     tablesInitialized = true;
   } catch (err) {
     console.warn('Error al auto-crear tablas en Neon Postgres:', err);
@@ -72,54 +82,61 @@ export async function getAllProperties(): Promise<Property[]> {
       await ensureTablesExist(sql);
       const rows = await sql`SELECT * FROM properties ORDER BY created_at DESC;`;
       if (rows && rows.length > 0) {
-        return rows.map((row: any) => ({
-          id: row.id,
-          codeRef: row.code_ref,
-          title: row.title,
-          slug: row.slug,
-          description: row.description,
-          operation: row.operation,
-          category: row.category,
-          status: row.status,
-          price: {
-            amount: Number(row.price_amount),
-            currency: row.price_currency,
-            period: row.price_period,
-            priceDrop: row.price_drop,
-            originalAmount: row.original_amount ? Number(row.original_amount) : undefined,
-          },
-          location: {
-            department: row.department,
-            city: row.city,
-            neighborhood: row.neighborhood,
-            address: row.address,
-            lat: row.lat ? Number(row.lat) : -34.3375,
-            lng: row.lng ? Number(row.lng) : -56.7136,
-            isExactLocation: row.is_exact_location ?? false,
-            radiusMeters: row.radius_meters ? Number(row.radius_meters) : 300,
-          },
-          features: {
-            bedrooms: row.bedrooms,
-            bathrooms: row.bathrooms,
-            floors: row.floors,
-            builtAreaM2: row.built_area_m2 ? Number(row.built_area_m2) : undefined,
-            plotAreaM2: row.plot_area_m2 ? Number(row.plot_area_m2) : undefined,
-            isHectares: row.is_hectares,
-            garage: row.garage,
-            barbecue: row.barbecue,
-            pool: row.pool,
-            perimeterFence: row.perimeter_fence,
-            bankCreditEligible: row.bank_credit_eligible,
-            phRegime: row.ph_regime,
-            oseWater: row.ose_water,
-            sanitation: row.sanitation,
-          },
-          guarantees: Array.isArray(row.guarantees) ? row.guarantees : [],
-          images: Array.isArray(row.images) ? row.images : [],
-          featured: row.featured,
-          createdAt: row.created_at,
-          updatedAt: row.updated_at,
-        }));
+        return rows.map((row: any) => {
+          const latVal = row.lat ? Number(row.lat) : -34.3375;
+          const lngVal = row.lng ? Number(row.lng) : -56.7136;
+
+          return {
+            id: row.id,
+            codeRef: row.code_ref,
+            title: row.title,
+            slug: row.slug,
+            description: row.description,
+            operation: row.operation,
+            category: row.category,
+            status: row.status,
+            price: {
+              amount: Number(row.price_amount),
+              currency: row.price_currency,
+              period: row.price_period,
+              priceDrop: row.price_drop,
+              originalAmount: row.original_amount ? Number(row.original_amount) : undefined,
+            },
+            location: {
+              department: row.department || 'San José',
+              city: row.city || 'San José de Mayo',
+              neighborhood: row.neighborhood || 'Centro',
+              address: row.address,
+              lat: latVal,
+              lng: lngVal,
+              coordinates: { lat: latVal, lng: lngVal },
+              isExactLocation: row.is_exact_location ?? false,
+              radiusMeters: row.radius_meters ? Number(row.radius_meters) : 300,
+              hasLocation: row.has_location !== false,
+            },
+            features: {
+              bedrooms: row.bedrooms,
+              bathrooms: row.bathrooms,
+              floors: row.floors,
+              builtAreaM2: row.built_area_m2 ? Number(row.built_area_m2) : undefined,
+              plotAreaM2: row.plot_area_m2 ? Number(row.plot_area_m2) : undefined,
+              isHectares: row.is_hectares,
+              garage: row.garage,
+              barbecue: row.barbecue,
+              pool: row.pool,
+              perimeterFence: row.perimeter_fence,
+              bankCreditEligible: row.bank_credit_eligible,
+              phRegime: row.ph_regime,
+              oseWater: row.ose_water,
+              sanitation: row.sanitation,
+            },
+            guarantees: Array.isArray(row.guarantees) ? row.guarantees : [],
+            images: Array.isArray(row.images) ? row.images : [],
+            featured: row.featured,
+            createdAt: row.created_at,
+            updatedAt: row.updated_at,
+          };
+        });
       }
     } catch (dbErr: any) {
       console.warn('Error al consultar Neon Postgres, usando fallback local/memoria:', dbErr?.message || dbErr);
@@ -166,11 +183,15 @@ export async function saveProperty(property: Property): Promise<Property> {
     const sql = getDbClient();
     try {
       await ensureTablesExist(sql);
+      const latVal = property.location.coordinates?.lat ?? (property.location as any).lat ?? -34.3375;
+      const lngVal = property.location.coordinates?.lng ?? (property.location as any).lng ?? -56.7136;
+
       await sql`
         INSERT INTO properties (
           id, code_ref, title, slug, description, operation, category, status,
           price_amount, price_currency, price_period, price_drop, original_amount,
           department, city, neighborhood, address,
+          lat, lng, is_exact_location, radius_meters, has_location,
           bedrooms, bathrooms, floors, built_area_m2, plot_area_m2,
           garage, barbecue, bank_credit_eligible, ph_regime, ose_water, sanitation,
           guarantees, images, featured
@@ -178,6 +199,7 @@ export async function saveProperty(property: Property): Promise<Property> {
           ${property.id}, ${property.codeRef}, ${property.title}, ${property.slug}, ${property.description}, ${property.operation}, ${property.category}, ${property.status},
           ${property.price.amount}, ${property.price.currency}, ${property.price.period || null}, ${property.price.priceDrop || false}, ${property.price.originalAmount || null},
           ${property.location.department}, ${property.location.city}, ${property.location.neighborhood}, ${property.location.address || null},
+          ${latVal}, ${lngVal}, ${property.location.isExactLocation ?? false}, ${property.location.radiusMeters || 300}, ${property.location.hasLocation !== false},
           ${property.features.bedrooms || null}, ${property.features.bathrooms || null}, ${property.features.floors || null}, ${property.features.builtAreaM2 || null}, ${property.features.plotAreaM2 || null},
           ${property.features.garage || false}, ${property.features.barbecue || false}, ${property.features.bankCreditEligible || false}, ${property.features.phRegime || false}, ${property.features.oseWater || false}, ${property.features.sanitation || false},
           ${JSON.stringify(property.guarantees || [])}, ${JSON.stringify(property.images || [])}, ${property.featured}
@@ -187,6 +209,11 @@ export async function saveProperty(property: Property): Promise<Property> {
           price_amount = EXCLUDED.price_amount,
           description = EXCLUDED.description,
           images = EXCLUDED.images,
+          lat = EXCLUDED.lat,
+          lng = EXCLUDED.lng,
+          is_exact_location = EXCLUDED.is_exact_location,
+          radius_meters = EXCLUDED.radius_meters,
+          has_location = EXCLUDED.has_location,
           updated_at = CURRENT_TIMESTAMP;
       `;
       return property;

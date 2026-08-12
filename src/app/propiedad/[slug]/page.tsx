@@ -122,8 +122,8 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
               </p>
             </div>
 
-            {/* Interactive Map Section (Opcional - Oculto si hasLocation es false) */}
-            {property.location.hasLocation !== false && property.location.coordinates && (
+            {/* Interactive Map Section (Opcional - Oculto únicamente si hasLocation es false) */}
+            {property.location.hasLocation !== false && (
               <div className="bg-white rounded-3xl p-6 sm:p-8 border border-purple-100 shadow-sm space-y-4 text-left">
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-black text-[#5E1754] flex items-center space-x-2">
@@ -136,8 +136,8 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                 </div>
 
                 <PropertyMapWrapper
-                  lat={property.location.coordinates?.lat ?? (property.location as any).lat ?? -34.3375}
-                  lng={property.location.coordinates?.lng ?? (property.location as any).lng ?? -56.7136}
+                  lat={property.location.coordinates?.lat ?? -34.3375}
+                  lng={property.location.coordinates?.lng ?? -56.7136}
                   title={property.title}
                   neighborhood={property.location.neighborhood}
                   isExactLocation={property.location.isExactLocation}
