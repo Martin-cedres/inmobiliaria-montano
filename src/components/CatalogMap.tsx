@@ -12,34 +12,50 @@ import { Bed, Bath, ArrowRight, MapPin, Building2, ShieldCheck } from 'lucide-re
 interface CatalogMapProps {
   properties: Property[];
   heightClass?: string;
+  activePropertyId?: string | null;
+  onSelectProperty?: (propertyId: string) => void;
 }
 
-// Function to generate custom Leaflet Pin with Property Price in Montaño Brand Colors
-const createPricePin = (priceText: string, operation: string) => {
-  const isRent = operation === 'alquiler';
-  const badgeBg = isRent ? '#25D366' : '#E85D04'; // Green for rent, Orange for sale
+// Formatear precio compacto estilo Airbnb/Zillow (ej. U$S 145k / $ 16.5k)
+function formatCompactPrice(amount: number, currency: string) {
+  if (amount >= 1000) {
+    const kValue = (amount / 1000).toLocaleString('es-UY', {
+      maximumFractionDigits: amount % 1000 === 0 ? 0 : 1,
+    });
+    return currency === 'USD' ? `U$S ${kValue}k` : `$ ${kValue}k`;
+  }
+  return `${currency === 'USD' ? 'U$S' : '$'} ${amount}`;
+}
+
+// Function to generate compact Leaflet Pin in Montaño Brand Colors
+const createCompactPricePin = (priceText: string, isRent: boolean, isActive: boolean) => {
+  const badgeBg = isActive ? '#E85D04' : isRent ? '#10B981' : '#5E1754';
+  const borderColor = isActive ? '#FF8500' : isRent ? '#059669' : '#E85D04';
+  const scale = isActive ? 'scale(1.2)' : 'scale(1)';
+  const zIndex = isActive ? 9999 : 1;
 
   return L.divIcon({
     className: 'custom-catalog-pin',
     html: `
-      <div style="position: relative; display: inline-flex; align-items: center; justify-content: center; transform: translate(-50%, -100%);">
+      <div style="position: relative; display: inline-flex; align-items: center; justify-content: center; transform: translate(-50%, -100%); transition: all 0.2s ease; z-index: ${zIndex};">
         <div style="
-          background: linear-gradient(135deg, #5E1754 0%, #2D0B28 100%);
-          border: 2px solid ${badgeBg};
+          background: ${badgeBg};
+          border: 2px solid ${borderColor};
           color: white;
           border-radius: 9999px;
-          padding: 5px 11px;
+          padding: 4px 9px;
           font-weight: 900;
           font-size: 11px;
-          letter-spacing: 0.025em;
-          box-shadow: 0 10px 20px -3px rgba(94, 23, 84, 0.6), 0 4px 10px rgba(0, 0, 0, 0.3);
+          letter-spacing: -0.01em;
+          box-shadow: ${isActive ? '0 0 18px rgba(232, 93, 4, 0.9)' : '0 4px 12px rgba(0, 0, 0, 0.3)'};
           display: flex;
           align-items: center;
-          gap: 6px;
+          gap: 5px;
           white-space: nowrap;
           cursor: pointer;
+          transform: ${scale};
         ">
-          <span style="width: 7px; height: 7px; background-color: ${badgeBg}; border-radius: 9999px; display: inline-block; box-shadow: 0 0 6px ${badgeBg};"></span>
+          <span style="width: 6px; height: 6px; background-color: ${borderColor}; border-radius: 9999px; display: inline-block;"></span>
           <span>${priceText}</span>
         </div>
       </div>
@@ -56,34 +72,37 @@ const createCustomClusterIcon = (cluster: any) => {
     html: `
       <div style="
         background: linear-gradient(135deg, #5E1754 0%, #350A2F 100%);
-        border: 3px solid #E85D04;
+        border: 2.5px solid #E85D04;
         color: white;
-        width: 44px;
-        height: 44px;
+        width: 38px;
+        height: 38px;
         border-radius: 9999px;
         display: flex;
         align-items: center;
         justify-content: center;
         font-weight: 900;
-        font-size: 13px;
-        box-shadow: 0 10px 25px rgba(94, 23, 84, 0.7), 0 4px 10px rgba(232, 93, 4, 0.5);
+        font-size: 12px;
+        box-shadow: 0 8px 20px rgba(94, 23, 84, 0.6);
+        cursor: pointer;
       ">
         <span>${count}</span>
       </div>
     `,
     className: 'custom-cluster-icon',
-    iconSize: [44, 44],
+    iconSize: [38, 38],
   });
 };
 
 export const CatalogMap: React.FC<CatalogMapProps> = ({
   properties,
-  heightClass = 'h-[500px] sm:h-[620px]',
+  heightClass = 'h-[500px] lg:h-[650px]',
+  activePropertyId,
+  onSelectProperty,
 }) => {
   // Centro por defecto: San José de Mayo, Uruguay
   const defaultCenter: [number, number] = [-34.3375, -56.7136];
 
-  // Calcular centro dinamico basado en las propiedades filtradas
+  // Calcular centro dinámico basado en propiedades
   const validCoords = properties
     .map((p) => p.location.coordinates)
     .filter((c): c is { lat: number; lng: number } => !!c && typeof c.lat === 'number' && typeof c.lng === 'number');
@@ -97,10 +116,10 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
       : defaultCenter;
 
   return (
-    <div className={`relative w-full ${heightClass} rounded-3xl overflow-hidden shadow-2xl border border-slate-200 bg-slate-900`}>
+    <div className={`relative w-full ${heightClass} rounded-3xl overflow-hidden shadow-xl border border-slate-200 bg-slate-900`}>
       <MapContainer
         center={center}
-        zoom={13}
+        zoom={14}
         scrollWheelZoom={false}
         className="w-full h-full"
       >
@@ -115,6 +134,9 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
           iconCreateFunction={createCustomClusterIcon}
           showCoverageOnHover={false}
           spiderfyOnMaxZoom
+          spiderfyDistanceMultiplier={1.6}
+          disableClusteringAtZoom={15}
+          maxClusterRadius={35}
         >
           {properties.map((prop) => {
             const coords = prop.location.coordinates || {
@@ -122,8 +144,11 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
               lng: -56.7136,
             };
 
-            const priceText = `${prop.price.currency === 'USD' ? 'USD' : 'UYU $'} ${prop.price.amount.toLocaleString('es-UY')}`;
+            const isRent = prop.operation === 'alquiler';
+            const compactPrice = formatCompactPrice(prop.price.amount, prop.price.currency);
+            const fullPriceText = `${prop.price.currency === 'USD' ? 'USD' : 'UYU $'} ${prop.price.amount.toLocaleString('es-UY')}`;
             const mainImg = prop.images.find((img) => img.isMain)?.webpUrl || prop.images[0]?.webpUrl || '/logo.png';
+            const isActive = activePropertyId === prop.id;
 
             return (
               <React.Fragment key={prop.id}>
@@ -131,7 +156,13 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
                   /* Marker Exacto con desplegable */
                   <Marker
                     position={[coords.lat, coords.lng]}
-                    icon={createPricePin(priceText, prop.operation)}
+                    icon={createCompactPricePin(compactPrice, isRent, isActive)}
+                    zIndexOffset={isActive ? 1000 : 0}
+                    eventHandlers={{
+                      click: () => {
+                        if (onSelectProperty) onSelectProperty(prop.id);
+                      },
+                    }}
                   >
                     <Popup className="catalog-map-popup" maxWidth={280} minWidth={250}>
                       <div className="overflow-hidden rounded-2xl text-left bg-white font-sans">
@@ -152,7 +183,7 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
                           </div>
                           <div className="absolute bottom-2 left-2 right-2 flex justify-between items-end text-white drop-shadow-md">
                             <span className="text-sm font-black bg-slate-900/80 backdrop-blur-md px-2 py-0.5 rounded-lg text-amber-300">
-                              {priceText}
+                              {fullPriceText}
                             </span>
                           </div>
                         </div>
@@ -207,7 +238,13 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
                   <>
                     <Marker
                       position={[coords.lat, coords.lng]}
-                      icon={createPricePin(priceText, prop.operation)}
+                      icon={createCompactPricePin(compactPrice, isRent, isActive)}
+                      zIndexOffset={isActive ? 1000 : 0}
+                      eventHandlers={{
+                        click: () => {
+                          if (onSelectProperty) onSelectProperty(prop.id);
+                        },
+                      }}
                     >
                       <Popup className="catalog-map-popup" maxWidth={280} minWidth={250}>
                         <div className="overflow-hidden rounded-2xl text-left bg-white font-sans">
@@ -230,7 +267,7 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
                             <h4 className="font-bold text-slate-900 text-xs sm:text-sm leading-snug line-clamp-2">
                               {prop.title}
                             </h4>
-                            <p className="text-xs font-black text-[#5E1754]">{priceText}</p>
+                            <p className="text-xs font-black text-[#5E1754]">{fullPriceText}</p>
 
                             <Link
                               href={`/propiedad/${prop.slug}`}
@@ -249,9 +286,9 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
                       pathOptions={{
                         color: '#5E1754',
                         fillColor: '#E85D04',
-                        fillOpacity: 0.25,
-                        weight: 2,
-                        dashArray: '6, 6',
+                        fillOpacity: 0.2,
+                        weight: 1.5,
+                        dashArray: '5, 5',
                       }}
                     />
                   </>
