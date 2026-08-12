@@ -72,29 +72,29 @@ export const Header: React.FC = () => {
       {mobileMenuOpen && (
         <div className="md:hidden bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 pt-4 pb-6 space-y-3 shadow-2xl animate-in slide-in-from-top-2 duration-200">
           <Link
-            href="#catalogo"
+            href="/#catalogo"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center space-x-3 p-3 rounded-xl hover:bg-purple-50 text-slate-800 font-bold text-sm"
+            className="flex items-center space-x-3 p-3 rounded-xl hover:bg-purple-50 text-slate-800 font-bold text-sm group transition-colors"
           >
-            <Home className="w-5 h-5 text-[#5e1754]" />
+            <Home className="w-5 h-5 text-[#5E1754] group-hover:text-[#E85D04] transition-colors" />
             <span>Ver Catálogo de Propiedades</span>
           </Link>
 
           <Link
-            href="#tasaciones"
+            href="/#tasaciones"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center space-x-3 p-3 rounded-xl hover:bg-purple-50 text-slate-800 font-bold text-sm"
+            className="flex items-center space-x-3 p-3 rounded-xl hover:bg-purple-50 text-slate-800 font-bold text-sm group transition-colors"
           >
-            <Calculator className="w-5 h-5 text-[#e85d04]" />
+            <Calculator className="w-5 h-5 text-[#5E1754] group-hover:text-[#E85D04] transition-colors" />
             <span>Solicitud de Tasación</span>
           </Link>
 
           <Link
-            href="#contacto"
+            href="/#contacto"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center space-x-3 p-3 rounded-xl hover:bg-purple-50 text-slate-800 font-bold text-sm"
+            className="flex items-center space-x-3 p-3 rounded-xl hover:bg-purple-50 text-slate-800 font-bold text-sm group transition-colors"
           >
-            <Phone className="w-5 h-5 text-[#5e1754]" />
+            <Phone className="w-5 h-5 text-[#5E1754] group-hover:text-[#E85D04] transition-colors" />
             <span>Contacto Directo</span>
           </Link>
 
