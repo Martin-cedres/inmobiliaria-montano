@@ -154,4 +154,8 @@
 - Verificada la compilación limpia de producción (`npm run build`, 0 errores).
 - Convertidas y comprimidas las 7 imágenes fotográficas de muestra en `public/images/` de formato JPG (1 MB c/u) a **WebP optimizado (~150 KB c/u)** con la librería `sharp`, reduciendo el peso de carga inicial en más de un **82%**.
 - Actualizadas las rutas de [`mockProperties.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/data/mockProperties.ts) a `.webp`.
-- Realizado el commit `c1bc7a2` y subida a GitHub (`git push origin main`), actualizando Vercel con imágenes ultraligeras de carga instantánea.
+- Corregido el error de servidor `EROFS: read-only file system` en Vercel Serverless dentro de [`propertiesStore.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/lib/propertiesStore.ts):
+  - Agregada captura inteligente de excepciones al intentar escribir en disco cuando se corre en serverless read-only.
+  - Implementado fallback en memoria para mutaciones de propiedades en vivo.
+  - Incluida la columna e información de `images` en la consulta SQL de inserción y actualización para Neon DB Postgres.
+- Subido el fix a GitHub (`git push origin main` -> commit `3efc1ed`), permitiendo guardar y editar propiedades sin errores en Vercel.
