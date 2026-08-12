@@ -158,10 +158,8 @@
   - Agregada captura inteligente de excepciones al intentar escribir en disco cuando se corre en serverless read-only.
   - Implementado fallback en memoria para mutaciones de propiedades en vivo.
   - Incluida la columna e información de `images` en la consulta SQL de inserción y actualización para Neon DB Postgres.
-- Realizada la verificación integral de todos los endpoints y métodos del panel de administración (`/admin`):
-  - **Publicar Nueva (`POST /api/properties`):** Generación automática de Slug SEO (`/propiedad/slug-ref`), asignación de código `MON-XXX`, cálculo de precio/moneda y asignación de imágenes.
-  - **Editar Propiedad (`PUT /api/properties/[id]`):** Actualización completa de datos, imágenes, estado y revalidación automática de rutas (`revalidatePath('/')`).
-  - **Cambio de Estado Rápido (`PATCH /api/properties/[id]`):** Transición fluida entre `Disponible`, `Reservado`, `Vendido` y `Alquilado` con toast en tiempo real.
-  - **Eliminar Propiedad (`DELETE /api/properties/[id]`):** Eliminación limpia de registro y purga de caché.
-  - **Subida de Imágenes (`POST /api/upload`):** Procesamiento de imágenes con soporte Vercel Blob CDN y disco local.
-- Verificada la compilación completa de producción (`npm run build`, 0 errores).
+- Resuelto el error 500 al publicar propiedades en Vercel ([`POST /api/properties`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/api/properties/route.ts)):
+  - **Optimización de Peso en Cliente:** Ajustada la compresión en el navegador a `maxWidth: 1200` y `quality: 0.75` en [`ImageUploader.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/ImageUploader.tsx), reduciendo el peso de cada foto a ~80 KB para evitar desbordar el límite de payload de Vercel Serverless (4.5 MB).
+  - **Soporte de Variables Vercel Blob:** Añadida la verificación dinámica de token `VERCEL_BLOB_READ_WRITE_TOKEN` en [`/api/upload/route.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/api/upload/route.ts).
+  - **Respuestas de Diagnóstico Claras:** Actualizados los endpoints para retornar el mensaje exacto de error en lugar de mensajes genéricos.
+- Subido el fix a GitHub (`git push origin main` -> commit `0e44a7a`), dejando la publicación 100% operativa en Vercel.

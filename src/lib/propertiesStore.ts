@@ -7,18 +7,69 @@ import { getDbClient } from './db';
 const LOCAL_DB_PATH = path.join(process.cwd(), 'src', 'db', 'properties.json');
 
 let memoryProperties: Property[] | null = null;
+let tablesInitialized = false;
+
+async function ensureTablesExist(sql: any) {
+  if (tablesInitialized) return;
+  try {
+    await sql`
+      CREATE TABLE IF NOT EXISTS properties (
+        id VARCHAR(64) PRIMARY KEY,
+        code_ref VARCHAR(32) NOT NULL UNIQUE,
+        title VARCHAR(255) NOT NULL,
+        slug VARCHAR(255) NOT NULL UNIQUE,
+        description TEXT,
+        operation VARCHAR(32) NOT NULL,
+        category VARCHAR(32) NOT NULL,
+        status VARCHAR(32) NOT NULL DEFAULT 'disponible',
+        price_amount NUMERIC(12, 2) NOT NULL,
+        price_currency VARCHAR(8) NOT NULL DEFAULT 'USD',
+        price_period VARCHAR(16),
+        price_drop BOOLEAN DEFAULT FALSE,
+        original_amount NUMERIC(12, 2),
+        department VARCHAR(64) NOT NULL DEFAULT 'San José',
+        city VARCHAR(64) NOT NULL DEFAULT 'San José de Mayo',
+        neighborhood VARCHAR(64) NOT NULL,
+        address VARCHAR(255),
+        bedrooms INT,
+        bathrooms INT,
+        floors INT,
+        built_area_m2 NUMERIC(10, 2),
+        plot_area_m2 NUMERIC(10, 2),
+        is_hectares BOOLEAN DEFAULT FALSE,
+        garage BOOLEAN DEFAULT FALSE,
+        barbecue BOOLEAN DEFAULT FALSE,
+        pool BOOLEAN DEFAULT FALSE,
+        perimeter_fence BOOLEAN DEFAULT FALSE,
+        bank_credit_eligible BOOLEAN DEFAULT FALSE,
+        ph_regime BOOLEAN DEFAULT FALSE,
+        ose_water BOOLEAN DEFAULT FALSE,
+        sanitation BOOLEAN DEFAULT FALSE,
+        guarantees JSONB DEFAULT '[]'::jsonb,
+        images JSONB DEFAULT '[]'::jsonb,
+        featured BOOLEAN DEFAULT FALSE,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      );
+    `;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS images JSONB DEFAULT '[]'::jsonb;`;
+    tablesInitialized = true;
+  } catch (err) {
+    console.warn('Error al auto-crear tablas en Neon Postgres:', err);
+  }
+}
 
 /**
  * Carga las propiedades desde Neon Postgres (si está configurado) 
  * o desde el archivo local JSON persistente usando fs.promises.
  */
 export async function getAllProperties(): Promise<Property[]> {
-  try {
-    const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL;
-    
-    // Si existe conexión remota a Neon Postgres, consultar DB
-    if (connectionString) {
-      const sql = getDbClient();
+  const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL;
+
+  if (connectionString) {
+    const sql = getDbClient();
+    try {
+      await ensureTablesExist(sql);
       const rows = await sql`SELECT * FROM properties ORDER BY created_at DESC;`;
       if (rows && rows.length > 0) {
         return rows.map((row: any) => ({
@@ -70,12 +121,16 @@ export async function getAllProperties(): Promise<Property[]> {
           updatedAt: row.updated_at,
         }));
       }
+    } catch (dbErr: any) {
+      console.warn('Error al consultar Neon Postgres, usando fallback local/memoria:', dbErr?.message || dbErr);
     }
+  }
 
-    if (memoryProperties && memoryProperties.length > 0) {
-      return memoryProperties;
-    }
+  if (memoryProperties && memoryProperties.length > 0) {
+    return memoryProperties;
+  }
 
+  try {
     // Fallback: Leer usando fs.promises.readFile (asíncrono no bloqueante)
     const fileContent = await fs.readFile(LOCAL_DB_PATH, 'utf-8');
     const rawProperties: any[] = JSON.parse(fileContent);
@@ -109,30 +164,35 @@ export async function saveProperty(property: Property): Promise<Property> {
 
   if (connectionString) {
     const sql = getDbClient();
-    await sql`
-      INSERT INTO properties (
-        id, code_ref, title, slug, description, operation, category, status,
-        price_amount, price_currency, price_period, price_drop, original_amount,
-        department, city, neighborhood, address,
-        bedrooms, bathrooms, floors, built_area_m2, plot_area_m2,
-        garage, barbecue, bank_credit_eligible, ph_regime, ose_water, sanitation,
-        guarantees, images, featured
-      ) VALUES (
-        ${property.id}, ${property.codeRef}, ${property.title}, ${property.slug}, ${property.description}, ${property.operation}, ${property.category}, ${property.status},
-        ${property.price.amount}, ${property.price.currency}, ${property.price.period || null}, ${property.price.priceDrop || false}, ${property.price.originalAmount || null},
-        ${property.location.department}, ${property.location.city}, ${property.location.neighborhood}, ${property.location.address || null},
-        ${property.features.bedrooms || null}, ${property.features.bathrooms || null}, ${property.features.floors || null}, ${property.features.builtAreaM2 || null}, ${property.features.plotAreaM2 || null},
-        ${property.features.garage || false}, ${property.features.barbecue || false}, ${property.features.bankCreditEligible || false}, ${property.features.phRegime || false}, ${property.features.oseWater || false}, ${property.features.sanitation || false},
-        ${JSON.stringify(property.guarantees || [])}, ${JSON.stringify(property.images || [])}, ${property.featured}
-      ) ON CONFLICT (id) DO UPDATE SET
-        title = EXCLUDED.title,
-        status = EXCLUDED.status,
-        price_amount = EXCLUDED.price_amount,
-        description = EXCLUDED.description,
-        images = EXCLUDED.images,
-        updated_at = CURRENT_TIMESTAMP;
-    `;
-    return property;
+    try {
+      await ensureTablesExist(sql);
+      await sql`
+        INSERT INTO properties (
+          id, code_ref, title, slug, description, operation, category, status,
+          price_amount, price_currency, price_period, price_drop, original_amount,
+          department, city, neighborhood, address,
+          bedrooms, bathrooms, floors, built_area_m2, plot_area_m2,
+          garage, barbecue, bank_credit_eligible, ph_regime, ose_water, sanitation,
+          guarantees, images, featured
+        ) VALUES (
+          ${property.id}, ${property.codeRef}, ${property.title}, ${property.slug}, ${property.description}, ${property.operation}, ${property.category}, ${property.status},
+          ${property.price.amount}, ${property.price.currency}, ${property.price.period || null}, ${property.price.priceDrop || false}, ${property.price.originalAmount || null},
+          ${property.location.department}, ${property.location.city}, ${property.location.neighborhood}, ${property.location.address || null},
+          ${property.features.bedrooms || null}, ${property.features.bathrooms || null}, ${property.features.floors || null}, ${property.features.builtAreaM2 || null}, ${property.features.plotAreaM2 || null},
+          ${property.features.garage || false}, ${property.features.barbecue || false}, ${property.features.bankCreditEligible || false}, ${property.features.phRegime || false}, ${property.features.oseWater || false}, ${property.features.sanitation || false},
+          ${JSON.stringify(property.guarantees || [])}, ${JSON.stringify(property.images || [])}, ${property.featured}
+        ) ON CONFLICT (id) DO UPDATE SET
+          title = EXCLUDED.title,
+          status = EXCLUDED.status,
+          price_amount = EXCLUDED.price_amount,
+          description = EXCLUDED.description,
+          images = EXCLUDED.images,
+          updated_at = CURRENT_TIMESTAMP;
+      `;
+      return property;
+    } catch (sqlErr: any) {
+      console.error('Error guardando en Neon Postgres:', sqlErr?.message || sqlErr);
+    }
   }
 
   // Fallback Local JSON / Memory:
