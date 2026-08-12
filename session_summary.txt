@@ -158,8 +158,7 @@
   - Agregada captura inteligente de excepciones al intentar escribir en disco cuando se corre en serverless read-only.
   - Implementado fallback en memoria para mutaciones de propiedades en vivo.
   - Incluida la columna e información de `images` en la consulta SQL de inserción y actualización para Neon DB Postgres.
-- Corregido el Mapa en las Páginas de Detalle ([`propiedad/[slug]/page.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/propiedad/%5Bslug%5D/page.tsx) y [`propertiesStore.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/lib/propertiesStore.ts)):
-  - **Asignación de Coordenadas de Fallback:** Asegurada la creación automática del objeto `coordinates: { lat, lng }` al recuperar propiedades de Neon Postgres y memoria, permitiendo que la sección de Ubicación & Entorno cargue el mapa siempre de forma confiable.
-  - **Corrección de Conteo Exacto en el Cluster:** Trasladado el componente `<Circle>` de zona fuera del contenedor `<MarkerClusterGroup>` en [`CatalogMap.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/CatalogMap.tsx). Esto elimina el error donde el grupo sumaba la capa del círculo como si fuera un inmueble adicional, mostrando ahora la cantidad exacta de propiedades (ej. 7).
+- Estandarizados los Iconos del Menú Hamburguesa Móvil ([`Header.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/Header.tsx)):
+  - Todos los iconos (`Home`, `Calculator`, `Phone`) lucen ahora de forma uniforme en el tono violeta corporativo `#5E1754` con transición suave al naranja `#E85D04` en hover.
 - Verificada la compilación completa de producción (`npm run build`, 0 errores).
-- Subidos todos los cambios a GitHub (`git push origin main` -> commit `66815df`), actualizando Vercel.
+- Subidos todos los cambios a GitHub (`git push origin main` -> commit `a0857b6`), actualizando Vercel.

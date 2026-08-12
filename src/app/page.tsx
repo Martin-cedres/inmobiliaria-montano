@@ -270,26 +270,6 @@ export default function Home() {
         </main>
       </div>
 
-      {/* Floating Action Button for Mobile View Switcher (Estilo Airbnb < sm) */}
-      <div className="sm:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-40 pointer-events-auto">
-        <button
-          onClick={() => setViewMode((prev) => (prev === 'grid' ? 'map' : 'grid'))}
-          className="bg-[#191024]/95 text-white backdrop-blur-md px-5 py-3 rounded-full font-black text-xs shadow-2xl border border-amber-400/30 flex items-center space-x-2 transition-all active:scale-95 text-amber-300"
-        >
-          {viewMode === 'grid' ? (
-            <>
-              <MapIcon className="w-4 h-4 text-[#E85D04]" />
-              <span>Ver Mapa Interactivo</span>
-            </>
-          ) : (
-            <>
-              <List className="w-4 h-4 text-amber-400" />
-              <span>Ver Lista de Tarjetas</span>
-            </>
-          )}
-        </button>
-      </div>
-
       {/* 5. Owner Lead & Appraisals Section */}
       <OwnerLeadSection />
 
