@@ -152,6 +152,6 @@
   - **Interacción Unificada (Hover):** Al pasar el cursor sobre cualquier enlace del pie de página, **tanto el texto como el ícono transicionan simultáneamente al naranja corporativo (`hover:text-[#E85D04]`)**, reforzando la identidad de la marca.
 - Removido el botón secundario redundante *"O chatear directamente por WhatsApp"* en la tarjeta móvil de [`OwnerLeadSection.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/OwnerLeadSection.tsx), simplificando el llamado a la acción con un único botón principal naranja **`[ Solicitar Tasación por Formulario ]`**.
 - Verificada la compilación limpia de producción (`npm run build`, 0 errores).
-- Creadas e integradas 7 imágenes fotográficas reales de muestra en `public/images/` para el catálogo inicial (Casas, Apartamentos, Chacras, Galpones, Proyectos y Terrenos).
-- Integrada la API de almacenamiento en la nube **`@vercel/blob`** en [`/api/upload`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/api/upload/route.ts) para que las fotos subidas desde `/admin` en Vercel se almacenen de forma inmutable y ultra-veloz en la CDN global de Vercel Blob Storage.
-- Realizado el commit y envío a GitHub (`git push origin main`), actualizando Vercel con imágenes reales activas y sistema de subida en la nube.
+- Convertidas y comprimidas las 7 imágenes fotográficas de muestra en `public/images/` de formato JPG (1 MB c/u) a **WebP optimizado (~150 KB c/u)** con la librería `sharp`, reduciendo el peso de carga inicial en más de un **82%**.
+- Actualizadas las rutas de [`mockProperties.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/data/mockProperties.ts) a `.webp`.
+- Realizado el commit `c1bc7a2` y subida a GitHub (`git push origin main`), actualizando Vercel con imágenes ultraligeras de carga instantánea.

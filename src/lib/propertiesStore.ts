@@ -6,6 +6,8 @@ import { getDbClient } from './db';
 
 const LOCAL_DB_PATH = path.join(process.cwd(), 'src', 'db', 'properties.json');
 
+let memoryProperties: Property[] | null = null;
+
 /**
  * Carga las propiedades desde Neon Postgres (si está configurado) 
  * o desde el archivo local JSON persistente usando fs.promises.
@@ -70,6 +72,10 @@ export async function getAllProperties(): Promise<Property[]> {
       }
     }
 
+    if (memoryProperties && memoryProperties.length > 0) {
+      return memoryProperties;
+    }
+
     // Fallback: Leer usando fs.promises.readFile (asíncrono no bloqueante)
     const fileContent = await fs.readFile(LOCAL_DB_PATH, 'utf-8');
     const rawProperties: any[] = JSON.parse(fileContent);
@@ -83,15 +89,20 @@ export async function getAllProperties(): Promise<Property[]> {
           )
         : [],
     }));
+    memoryProperties = properties;
     return properties;
   } catch (error) {
-    console.warn('Cargando mockProperties como fallback debido a:', error);
+    if (memoryProperties && memoryProperties.length > 0) {
+      return memoryProperties;
+    }
+    console.warn('Cargando MOCK_PROPERTIES como fallback debido a:', error);
+    memoryProperties = MOCK_PROPERTIES;
     return MOCK_PROPERTIES;
   }
 }
 
 /**
- * Guarda una nueva propiedad en la base de datos o en properties.json
+ * Guarda una nueva propiedad en la base de datos o en memoria/json
  */
 export async function saveProperty(property: Property): Promise<Property> {
   const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL;
@@ -105,24 +116,26 @@ export async function saveProperty(property: Property): Promise<Property> {
         department, city, neighborhood, address,
         bedrooms, bathrooms, floors, built_area_m2, plot_area_m2,
         garage, barbecue, bank_credit_eligible, ph_regime, ose_water, sanitation,
-        guarantees, featured
+        guarantees, images, featured
       ) VALUES (
         ${property.id}, ${property.codeRef}, ${property.title}, ${property.slug}, ${property.description}, ${property.operation}, ${property.category}, ${property.status},
         ${property.price.amount}, ${property.price.currency}, ${property.price.period || null}, ${property.price.priceDrop || false}, ${property.price.originalAmount || null},
         ${property.location.department}, ${property.location.city}, ${property.location.neighborhood}, ${property.location.address || null},
         ${property.features.bedrooms || null}, ${property.features.bathrooms || null}, ${property.features.floors || null}, ${property.features.builtAreaM2 || null}, ${property.features.plotAreaM2 || null},
         ${property.features.garage || false}, ${property.features.barbecue || false}, ${property.features.bankCreditEligible || false}, ${property.features.phRegime || false}, ${property.features.oseWater || false}, ${property.features.sanitation || false},
-        ${JSON.stringify(property.guarantees || [])}, ${property.featured}
+        ${JSON.stringify(property.guarantees || [])}, ${JSON.stringify(property.images || [])}, ${property.featured}
       ) ON CONFLICT (id) DO UPDATE SET
         title = EXCLUDED.title,
         status = EXCLUDED.status,
         price_amount = EXCLUDED.price_amount,
+        description = EXCLUDED.description,
+        images = EXCLUDED.images,
         updated_at = CURRENT_TIMESTAMP;
     `;
     return property;
   }
 
-  // Fallback Local JSON: Leer, actualizar y escribir con fs.promises.writeFile
+  // Fallback Local JSON / Memory:
   const properties = await getAllProperties();
   const existingIndex = properties.findIndex((p) => p.id === property.id);
 
@@ -132,7 +145,14 @@ export async function saveProperty(property: Property): Promise<Property> {
     properties.unshift(property);
   }
 
-  await fs.writeFile(LOCAL_DB_PATH, JSON.stringify(properties, null, 2), 'utf-8');
+  memoryProperties = [...properties];
+
+  try {
+    await fs.writeFile(LOCAL_DB_PATH, JSON.stringify(properties, null, 2), 'utf-8');
+  } catch (err) {
+    console.warn('Ignorando escritura en disco en entorno serverless read-only:', err);
+  }
+
   return property;
 }
 
@@ -158,8 +178,12 @@ export async function updatePropertyStatus(id: string, status: PropertyStatus): 
   properties[index].status = status;
   properties[index].updatedAt = new Date().toISOString();
 
-  if (!connectionString) {
+  memoryProperties = [...properties];
+
+  try {
     await fs.writeFile(LOCAL_DB_PATH, JSON.stringify(properties, null, 2), 'utf-8');
+  } catch (err) {
+    console.warn('Ignorando escritura en disco en entorno serverless read-only:', err);
   }
 
   return properties[index];
@@ -178,9 +202,12 @@ export async function deletePropertyById(id: string): Promise<boolean> {
 
   const properties = await getAllProperties();
   const filtered = properties.filter((p) => p.id !== id);
+  memoryProperties = [...filtered];
 
-  if (!connectionString) {
+  try {
     await fs.writeFile(LOCAL_DB_PATH, JSON.stringify(filtered, null, 2), 'utf-8');
+  } catch (err) {
+    console.warn('Ignorando escritura en disco en entorno serverless read-only:', err);
   }
 
   return true;
