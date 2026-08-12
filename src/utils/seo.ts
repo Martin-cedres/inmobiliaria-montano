@@ -1,7 +1,7 @@
 import { Property } from '@/types/property';
 import { Metadata } from 'next';
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://inmobiliaria-montano.vercel.app';
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
 
 /**
  * Genera un slug SEO amigable a partir del título y código de referencia.

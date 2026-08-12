@@ -1,52 +1,41 @@
 'use client';
 
 import React from 'react';
-import { Building2, MessageCircle, ArrowDown } from 'lucide-react';
+import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon';
+import { Building2, ArrowDown } from 'lucide-react';
 import { buildGeneralWhatsAppLink } from '@/utils/whatsapp';
 
 export const HeroSearch: React.FC = () => {
   const whatsappUrl = buildGeneralWhatsAppLink('general');
 
   return (
-    <section
-      className="relative text-white py-12 sm:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden text-center bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: `url('/hero-bg.webp')` }}
-    >
-      {/* Capa de Superposición Corporativa (Gradient Overlay) */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#2d0b28]/85 via-[#43123c]/80 to-[#5e1754]/85 backdrop-blur-[1px]" />
+    <section className="relative bg-gradient-to-br from-[#2D0B28] via-[#43123C] to-[#5E1754] text-white pt-24 pb-14 sm:pt-32 sm:pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      
+      {/* Halo Blur radial de fondo para efecto 3D sutil */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#E85D04]/15 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Glow Sutil de Fondo (Radial Blur) */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[650px] h-[350px] sm:h-[650px] bg-gradient-to-tr from-[#e85d04]/20 via-purple-600/15 to-amber-500/15 rounded-full blur-3xl pointer-events-none" />
-
-      <div className="max-w-4xl mx-auto relative z-10 space-y-4 sm:space-y-6">
+      <div className="max-w-4xl mx-auto text-center space-y-6 relative z-10">
         
-        {/* Logo Integrado Sin Caja Rígida (Fondo Transparente en Desktop) */}
-        <div className="hidden sm:inline-block mb-1 group">
-          <img
-            src="/logo.png"
-            alt="Inmobiliaria Montaño"
-            className="h-24 sm:h-28 w-auto object-contain mx-auto filter drop-shadow-2xl group-hover:scale-105 transition-transform duration-300"
-          />
+        {/* Titular Principal Institucional */}
+        <div className="space-y-3">
+          <span className="inline-flex items-center space-x-2 bg-amber-400/10 text-amber-300 border border-amber-400/20 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider">
+            <span>Inmobiliaria Montaño • San José de Mayo</span>
+          </span>
+
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
+            Encontrá tu próximo hogar con <span className="text-amber-300">confianza real.</span>
+          </h1>
+
+          <p className="text-slate-200 text-sm sm:text-lg max-w-2xl mx-auto font-normal leading-relaxed">
+            Casas, apartamentos, chacras y terrenos en San José. Transacciones transparentes, asesoramiento personalizado e integral.
+          </p>
         </div>
 
-        {/* Headline en Blanco Puro y Ámbar Dorado Claro Sólido */}
-        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-white drop-shadow-md">
-          Tu próxima propiedad <br className="hidden sm:inline" />
-          <span className="text-amber-300 block sm:inline mt-1 sm:mt-0">
-            te está esperando
-          </span>
-        </h1>
-
-        {/* Subtítulo Oficial con Buena Respiración */}
-        <p className="text-slate-200 text-xs sm:text-base lg:text-lg max-w-2xl mx-auto font-normal leading-relaxed px-2 drop-shadow-xs">
-          Compromiso real y eficiencia comprobada. Explorá nuestro catálogo en San José y la región: casas, terrenos, campos y proyectos.
-        </p>
-
-        {/* Action Buttons: Explorar Catálogo vs Contacto Directo */}
-        <div className="pt-3 flex flex-row items-center justify-center gap-3 sm:gap-4">
+        {/* Botones de Acción Directa en el Hero (60-30-10 Regla Visual) */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 pt-2">
           <a
             href="#catalogo"
-            className="flex-1 sm:flex-initial inline-flex items-center justify-center space-x-2 bg-[#e85d04] hover:bg-[#ff7518] active:scale-95 text-white font-extrabold px-5 sm:px-8 py-3 sm:py-3.5 rounded-xl sm:rounded-full shadow-lg text-xs sm:text-sm border border-orange-400/30 transition-all"
+            className="inline-flex items-center justify-center space-x-2.5 bg-[#E85D04] hover:bg-[#FF8500] active:scale-95 text-white font-extrabold px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl sm:rounded-full shadow-lg shadow-orange-500/25 transition-all text-sm sm:text-base flex-shrink-0"
           >
             <Building2 className="w-4 h-4 text-amber-200" />
             <span>Explorar Propiedades</span>
@@ -59,7 +48,7 @@ export const HeroSearch: React.FC = () => {
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center space-x-2 bg-white/15 hover:bg-white/25 active:scale-95 text-white font-bold px-4 sm:px-6 py-3 sm:py-3.5 rounded-xl sm:rounded-full backdrop-blur-md border border-white/20 transition-all text-xs sm:text-sm flex-shrink-0"
           >
-            <MessageCircle className="w-4 h-4 text-emerald-400 fill-emerald-400" />
+            <WhatsAppIcon className="w-4 h-4 text-white" />
             <span>Contacto Directo</span>
           </a>
         </div>

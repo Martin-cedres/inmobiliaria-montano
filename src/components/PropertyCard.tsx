@@ -4,7 +4,8 @@ import React from 'react';
 import Link from 'next/link';
 import { Property } from '@/types/property';
 import { buildPropertyWhatsAppLink } from '@/utils/whatsapp';
-import { Bed, Bath, Maximize2, Car, MapPin, MessageCircle, Landmark, ShieldCheck, Sparkles, Clock, CheckCircle2, AlertCircle, FileCheck, ArrowLeftRight, Compass, Trees, Building, Ruler } from 'lucide-react';
+import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon';
+import { Bed, Bath, Maximize2, Car, MapPin, Landmark, ShieldCheck, Sparkles, Clock, CheckCircle2, AlertCircle, FileCheck, ArrowLeftRight, Compass, Trees, Building, Ruler } from 'lucide-react';
 
 interface PropertyCardProps {
   property: Property;
@@ -283,7 +284,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
           rel="noopener noreferrer"
           className="w-full bg-[#e85d04] hover:bg-[#ff7518] active:scale-98 text-white py-2.5 px-4 rounded-xl font-extrabold text-xs sm:text-sm shadow-xs flex items-center justify-center space-x-2 transition-all hover:shadow-orange-500/20"
         >
-          <MessageCircle className="w-4 h-4 fill-white text-[#e85d04]" />
+          <WhatsAppIcon className="w-4 h-4 text-white" />
           <span>Consultar por WhatsApp</span>
         </a>
       </div>

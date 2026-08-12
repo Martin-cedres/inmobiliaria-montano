@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import { MOCK_PROPERTIES } from '@/data/mockProperties';
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://inmobiliaria-montano.vercel.app';
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Static core routes

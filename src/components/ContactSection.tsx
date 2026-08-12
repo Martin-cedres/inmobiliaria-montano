@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, MessageCircle, Send, Clock, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon';
+import { Phone, Mail, MapPin, Send, Clock, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { MONTAÑO_WHATSAPP_PHONE, MONTAÑO_OFFICIAL_EMAIL } from '@/utils/whatsapp';
 
 export const ContactSection: React.FC = () => {
@@ -12,15 +13,30 @@ export const ContactSection: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const text = `Hola Inmobiliaria Montaño, consulta desde la web:\n- Nombre: ${name}\n- Teléfono: ${phone}\n- Mensaje: ${message}`;
+    const text = `Hola Inmobiliaria Montaño, mi nombre es ${name} (Tel: ${phone}).\nConsulta: ${message}`;
     const waUrl = `https://wa.me/${MONTAÑO_WHATSAPP_PHONE}?text=${encodeURIComponent(text)}`;
     window.open(waUrl, '_blank');
     setSubmitted(true);
   };
 
   return (
-    <section id="contacto" className="scroll-mt-20 sm:scroll-mt-24 py-12 sm:py-16 bg-slate-100/90 border-t border-slate-200 text-slate-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contacto" className="relative scroll-mt-28 sm:scroll-mt-32 py-16 sm:py-24 bg-slate-50 text-slate-900 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto space-y-3 mb-12">
+          <span className="inline-flex items-center space-x-2 bg-purple-100 text-[#5e1754] px-3.5 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-wider">
+            <Clock className="w-4 h-4 text-[#e85d04]" />
+            <span>Atención Directa & Personalizada</span>
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+            Estamos para asesorarte en San José
+          </h2>
+          <p className="text-slate-600 text-sm sm:text-base font-normal">
+            Escribinos directamente por WhatsApp o dejanos tu consulta y te responderemos a la brevedad.
+          </p>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Left Column: Direct Contact Info Cards */}
@@ -29,7 +45,7 @@ export const ContactSection: React.FC = () => {
             {/* Card 1: WhatsApp / Phone */}
             <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-start space-x-4">
               <div className="p-3 bg-emerald-50 text-emerald-600 rounded-xl flex-shrink-0">
-                <MessageCircle className="w-6 h-6 fill-emerald-600 text-emerald-600" />
+                <WhatsAppIcon className="w-6 h-6 text-emerald-600" />
               </div>
               <div>
                 <h4 className="font-extrabold text-sm text-slate-900">WhatsApp & Teléfono Directo</h4>

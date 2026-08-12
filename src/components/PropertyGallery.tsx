@@ -140,23 +140,19 @@ export const PropertyGallery: React.FC<PropertyGalleryProps> = ({ property }) =>
           onClick={() => !imageError && setIsLightboxOpen(true)}
         />
 
-        {/* Top Left: Operation & Ref Badges */}
-        <div className="absolute top-4 left-4 flex flex-wrap gap-2 z-10 pointer-events-none">
+        {/* Top Left: Operation Badge */}
+        <div className="absolute top-4 left-4 z-10 pointer-events-none">
           <span className="bg-[#E85D04] text-white text-xs font-black uppercase px-3.5 py-1.5 rounded-full shadow">
             {property.operation === 'alquiler' ? 'Alquiler' : property.operation === 'proyecto' ? 'Proyecto' : 'En Venta'}
           </span>
-          <span className="bg-[#350A2F]/90 text-amber-300 text-xs font-bold uppercase px-3 py-1.5 rounded-full border border-amber-400/30">
-            Ref. #{property.codeRef}
-          </span>
         </div>
 
-        {/* Top Right: Camera Counter Badge & Share Button */}
+        {/* Top Right: Camera Counter Badge */}
         <div className="absolute top-4 right-4 flex items-center space-x-2 z-10">
           <span className="bg-black/60 text-white text-xs font-extrabold px-3 py-1.5 rounded-full backdrop-blur-md border border-white/20 flex items-center space-x-1.5 shadow">
             <Camera className="w-3.5 h-3.5 text-amber-400" />
             <span>{activeIndex + 1} / {normalizedImages.length || 1}</span>
           </span>
-          <SharePropertyModal property={property} variant="icon" />
         </div>
 
         {/* Hover Navigation Arrows (⟨ ⟩) */}
@@ -199,7 +195,7 @@ export const PropertyGallery: React.FC<PropertyGalleryProps> = ({ property }) =>
 
       {/* Overflow Scrollable Thumbnail Strip with Auto-Scroll */}
       {normalizedImages.length > 1 && (
-        <div className="flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-thin scroll-smooth px-1">
+        <div className="flex items-center gap-2.5 overflow-x-auto py-2 scrollbar-thin scroll-smooth px-2.5">
           {normalizedImages.map((img, idx) => (
             <button
               key={img.id || idx}

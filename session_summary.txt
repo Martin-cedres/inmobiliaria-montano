@@ -75,3 +75,80 @@
 === Sesión 2026-08-10 ===
 - Verificada la compilación de producción con `npm run build` (0 errores).
 - Subidos todos los cambios a GitHub (`main`) desencadenando el despliegue automático en Vercel.
+
+=== Sesión 2026-08-11 ===
+- Iniciado el servidor de desarrollo de Next.js (`npm run dev`) en segundo plano escuchando localmente en el puerto 3000 (http://localhost:3000).
+- Agregado `suppressHydrationWarning` en `layout.tsx` para solucionar avisos de discrepancia de hidratación causados por extensiones del navegador (`cz-shortcut-listen`).
+- Implementada la **Barra Fija Inferior Inteligente en Móviles (`Sticky Bottom CTA Bar`)** en `propiedad/[slug]/page.tsx`: despliega en tiempo real el precio en vivo, `Ref. #` y el botón de directo a **WhatsApp** al hacer scroll en pantallas `< 1024px`.
+- Integrado el botón explícito de **X (Twitter)** en el modal corporativo `SharePropertyModal.tsx` junto a **WhatsApp**, **Instagram**, **Facebook**, **Copiar Enlace Directo** y **Email**.
+- Limpieza y unificación definitiva de la UI: eliminado el botón duplicado sobre la foto principal en `PropertyGallery.tsx` y el botón secundario de la tarjeta lateral en `page.tsx`. Se preservó **1 único botón sobrio de `Compartir Propiedad` en el encabezado del título** (junto a la ubicación).
+- Corregido el recorte del borde superior naranja en miniaturas activadas (`PropertyGallery.tsx`): reemplazado `pb-2` por `py-2` en el contenedor horizontal con scroll.
+- Rediseñada la sección de **Características & Comodidades** en `page.tsx`: modificada a **2 columnas compactas en celulares (`grid-cols-2`)**, reduciendo la altura vertical al 50% y eliminando el espacio blanco innecesario.
+- Desarrollada e integrada la sección de **"Otras propiedades que te pueden interesar"** al final de `propiedad/[slug]/page.tsx`: consulta automáticamente 3 inmuebles afines por categoría u operación, evitando callejones sin salida y manteniendo la navegación continua de los usuarios.
+- Implementadas las **Optimizaciones de Conversión y UX en el Pie de Página (`Footer.tsx` & `whatsapp.ts`)**:
+  1. **Mensajes Contextualizados de WhatsApp:** Mensajes específicos pre-redactados para *Solicitud de Tasación*, *Publicar mi Inmueble* y *Asesoramiento Notarial*.
+  2. **Navegación Pre-filtrada:** La columna de *Búsquedas Frecuentes* dirige a URLs con filtro directo (`/?category=casa#catalogo`, `/?category=apartamento#catalogo`, `/?category=terreno#catalogo`, etc.).
+  3. **Manejo Dinámico de Parámetros URL (`page.tsx`):** Soporte con `<Suspense>` para leer `/?category=proyecto` y pre-seleccionar la categoría y auto-desplazar hacia `#catalogo`.
+  4. **Dirección e Email Intermediarios Interactivos:** Enlace directo a Google Maps para *San José de Mayo, Uruguay* y `mailto:` interactivo para el correo oficial.
+  5. **Simplificación de Contacto & Accesibilidad WCAG:** Eliminada duplicidad de botones en la columna de contacto y ajustado el tono de texto a `text-slate-200` para alto contraste.
+- Configurada la preparación del nuevo dominio oficial **`https://www.inmobiliariamontano.uy`**:
+  1. Creados `.env.local` y `.env.production` con `NEXT_PUBLIC_SITE_URL=https://www.inmobiliariamontano.uy`.
+  2. Actualizados los fallbacks por defecto en `layout.tsx`, `sitemap.ts`, `seo.ts` y `SharePropertyModal.tsx` apuntando nativamente al nuevo dominio oficial.
+  3. El mapa del sitio (`/sitemap.xml`), las metaetiquetas OpenGraph y los enlaces para compartir en WhatsApp/redes usan automáticamente la URL oficial `.uy`.
+- Simplificada la tarjeta lateral derecha de contacto en `propiedad/[slug]/page.tsx` (Opción A):
+  - Eliminado el bloque de textos genéricos e íconos sobrantes de la parte inferior.
+  - Limpiado el texto secundario sin asteriscos en la marca ("Inmobiliaria Montaño").
+  - Mantenido el foco 100% en el llamado a la acción principal con el botón amplio de WhatsApp.
+- Homogeneizado el badge de **Ref. #** en la ficha de detalle (`PropertyGallery.tsx` y `page.tsx`):
+  - Eliminado el parche oscuro corporativo de `Ref. #` sobre la fotografía principal, dejando únicamente la insignia limpia de operación (`EN VENTA` / `ALQUILER`).
+  - Reubicado el código `Ref. #` dentro de la tarjeta de título junto a la ubicación, con estilo sobrio `bg-slate-100 border-slate-200 text-slate-500 font-mono`, 100% idéntico al catálogo (`PropertyCard.tsx`).
+- Diseñado e integrado el componente flotante de **Asesor Inmobiliario Directo (Daniel Montaño)** en `propiedad/[slug]/page.tsx`:
+  - **Fotografía de Perfil Optimizada:** Procesada en formato WebP liviano (`public/daniel-montano.webp`) con corte circular (`rounded-full`), aro naranja corporativo (`ring-4 ring-[#E85D04]/20 border-2 border-[#E85D04]`) e indicador de estado `🟢 Atención personalizada` con punto verde pulsante.
+  - **Información del Asesor:** *Daniel Montaño — Director & Asesor Inmobiliario*.
+  - **CTA Prominente a WhatsApp:** Botón corporativo amplio `"Consultar a Daniel por WhatsApp"` con mensaje contextual preconfigurado con Ref. # y título de la propiedad.
+  - **Respaldo Secundario:** Botón sobrio neutral de `Compartir Propiedad` integrado en la base del componente.
+  - **Integración Móvil (`Sticky Bottom Bar`):** Incluida la mini foto de perfil de Daniel junto al precio, referencia y botón directo de WhatsApp.
+- Ajustado el encuadre y tamaño de la foto de Daniel Montaño en `propiedad/[slug]/page.tsx`:
+  - Incrementado el diámetro del contenedor a `w-28 h-28 sm:w-32 sm:h-32`.
+  - Aplicado zoom de encuadre profesional (`scale-125 object-[center_18%]`), eliminando el espacio gris vacío superior y centrando de forma prominente el rostro de Daniel al estilo *Executive Headshot*.
+- Aplicados los 2 ajustes finos en la tarjeta de Daniel Montaño (`propiedad/[slug]/page.tsx`):
+  1. **Separación Vertical Amplia:** Agregada separación `pt-5 mt-2` sobre la línea divisoria para dar respiro suficiente (`mb-4`) al botón naranja de WhatsApp.
+  2. **Ícono Vectorial Oficial de WhatsApp:** Reemplazada la burbuja genérica por el SVG oficial de WhatsApp con la silueta interna del teléfono.
+- Removido el punto verde animado de dentro de la píldora de *Atención personalizada*, preservando intacta únicamente la luz verde pulsante de estado en vivo del avatar de Daniel Montaño.
+- Integrada la tarjeta ejecutiva de compromiso personal de **Daniel Montaño** en la sección de Propietarios/Tasaciones del Home ([`OwnerLeadSection.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/OwnerLeadSection.tsx)):
+  - **Tarjeta con Glassmorphism (`bg-white/10 backdrop-blur-md`):** Foto circular con aro naranja (`ring-2 ring-[#E85D04]`), indicador de luz verde activa y la cita de garantía: *"Me comprometo personalmente a brindarte una tasación justa, honesta y sin falsas expectativas para defender el verdadero valor de tu propiedad."* — Daniel Montaño • Director & Asesor.
+- Ajustado el tamaño de la foto y remoción del indicador en `OwnerLeadSection.tsx`:
+  - Incrementado el avatar a un diámetro prominente (`w-20 h-20 sm:w-24 sm:h-24`) con aro de resplandor naranja (`ring-4 ring-[#E85D04]/30`).
+  - Removida la luz verde animada de esta tarjeta para mantener una estética ejecutiva sobria e impecable.
+- Corregida la estética tipográfica y alineación en la tarjeta de compromiso personal (`OwnerLeadSection.tsx`):
+  - Reemplazado el color amarillo por texto **blanco limpio (`text-white font-black`)** para mantener armonía visual con la tarjeta de cristal.
+  - Aplicado `items-baseline` con guion sobrio (`— Director & Asesor Inmobiliario`) logrando una alineación perfecta de la línea de texto.
+- Ajustada la firma de la cita en `OwnerLeadSection.tsx` a un bloque de 2 líneas apiladas verticales (`Daniel Montaño` en línea 1, `Director & Asesor Inmobiliario` en línea 2):
+  - Resuelto el corte/salto de línea incómodo con guion en pantallas estrechas de celulares (`< 420px`).
+- Implementada la optimización adaptativa de Experiencia Móvil (UX/CRO) en `OwnerLeadSection.tsx`:
+  - **Escritorio (`lg:` en adelante):** Mantiene el formulario completo incrustado en la columna derecha de forma fluida.
+  - **Móviles (`< lg`):** Reemplazado el bloque largo incrustado por una tarjeta compacta de llamado a la acción con dos atajos de alta conversión:
+    1. **Botón Principal:** Abre un **Modal Emergente limpio y enfocado (`AppraisalModal`)** con efecto *backdrop-blur* donde el usuario completa los datos sin empujar la página.
+    2. **Botón Secundario:** Enlace directo a chatear con Daniel por WhatsApp sin completar campos.
+  - Reducida la altura vertical del scroll en celulares en un **70%**.
+- Modificado el estilo de la píldora de *Atención personalizada* en la tarjeta de Daniel Montaño ([`propiedad/[slug]/page.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/propiedad/%5Bslug%5D/page.tsx)):
+  - Reemplazado el tono verde por **Violeta Soft Neutro (`bg-[#5E1754]/8 border border-[#5E1754]/15 text-[#5E1754]`)**, logrando perfecta armonía cromática con la identidad corporativa y una jerarquía tranquila.
+- Creado el componente reutilizable [`WhatsAppIcon.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/icons/WhatsAppIcon.tsx) con el logotipo vectorial oficial de WhatsApp (con silueta interna del teléfono).
+- Unificado el ícono oficial de WhatsApp en **todos** los puntos de contacto de la web:
+  - Tarjetas de propiedad ([`PropertyCard.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/PropertyCard.tsx))
+  - Botón flotante ([`FloatingWhatsApp.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/FloatingWhatsApp.tsx))
+  - Encabezado principal ([`HeroSearch.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/HeroSearch.tsx))
+  - Pie de página ([`Footer.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/Footer.tsx))
+  - Sección de contacto ([`ContactSection.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/ContactSection.tsx))
+  - Modal de compartir ([`SharePropertyModal.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/SharePropertyModal.tsx))
+- Actualizado el ícono de WhatsApp del botón secundario en el Hero ([`HeroSearch.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/HeroSearch.tsx)):
+  - Reemplazado el verde neón por **blanco puro (`text-white`)**, integrándolo en una píldora de cristal traslúcida (*Glassmorphism*) 100% armónica con el fondo púrpura institucional.
+- Optimizado el botón flotante de WhatsApp ([`FloatingWhatsApp.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/FloatingWhatsApp.tsx)):
+  - **Estado por Defecto (Móvil y Escritorio):** Círculo compacto perfecto (56x56 px en PC / 48x48 px en móvil) con el logo oficial de WhatsApp, 0% de invasión visual al contenido.
+  - **Efecto al Posicionar el Cursor (*Hover* en Escritorio):** Expansión fluida animada con deslizamiento suave (`group-hover:max-w-xs transition-all duration-300`) que revela el texto *"WhatsApp Directo"*, retornando al círculo compacto al mover el mouse.
+- Aplicadas todas las recomendaciones de accesibilidad (WCAG) y armonía cromática en [`Footer.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/Footer.tsx):
+  - **Estado Normal (Reposo):** Elevado el contraste de todo el texto secundario y descripciones a **`text-slate-200`** para lectura fácil sin esfuerzo visual.
+  - **Homogeneización de Íconos:** Renderizados todos los íconos de las listas y la columna de contacto en un tono pastel claro **`text-purple-300`**.
+  - **Interacción Unificada (Hover):** Al pasar el cursor sobre cualquier enlace del pie de página, **tanto el texto como el ícono transicionan simultáneamente al naranja corporativo (`hover:text-[#E85D04]`)**, reforzando la identidad de la marca.
+- Removido el botón secundario redundante *"O chatear directamente por WhatsApp"* en la tarjeta móvil de [`OwnerLeadSection.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/OwnerLeadSection.tsx), simplificando el llamado a la acción con un único botón principal naranja **`[ Solicitar Tasación por Formulario ]`**.
+- Verificada la compilación limpia de producción (`npm run build`, 0 errores) y la ejecución del servidor local en http://localhost:3000.

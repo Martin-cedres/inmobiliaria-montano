@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Header } from '@/components/Header';
 import { HeroSearch } from '@/components/HeroSearch';
 import { CategoryChips } from '@/components/CategoryChips';
@@ -10,6 +11,23 @@ import { Footer } from '@/components/Footer';
 import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
 import { Property, PropertyCategory } from '@/types/property';
 import { Building2, SearchX, RotateCcw, Loader2 } from 'lucide-react';
+
+function SearchCategoryHandler({ onCategoryFound }: { onCategoryFound: (cat: PropertyCategory) => void }) {
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams.get('category') as PropertyCategory | null;
+
+  useEffect(() => {
+    if (categoryParam) {
+      onCategoryFound(categoryParam);
+      setTimeout(() => {
+        const el = document.getElementById('catalogo');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+  }, [categoryParam, onCategoryFound]);
+
+  return null;
+}
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<PropertyCategory>('todos');
@@ -52,6 +70,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50">
+      <Suspense fallback={null}>
+        <SearchCategoryHandler onCategoryFound={setSelectedCategory} />
+      </Suspense>
       
       {/* 1. Sticky Header Navbar */}
       <Header />

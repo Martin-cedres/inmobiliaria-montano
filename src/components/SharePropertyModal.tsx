@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import { Property } from '@/types/property';
-import { Share2, Copy, Check, MessageCircle, Mail, Printer, X, Sparkles, ExternalLink, Image as ImageIcon } from 'lucide-react';
+import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon';
+import { Share2, Copy, Check, Mail, Printer, X, Sparkles, ExternalLink, Image as ImageIcon } from 'lucide-react';
 
 interface SharePropertyModalProps {
   property: Property;
@@ -10,7 +11,7 @@ interface SharePropertyModalProps {
   variant?: 'button' | 'icon' | 'sticky-bar';
 }
 
-const PRODUCTION_BASE_URL = 'https://inmobiliaria-montano.vercel.app';
+const PRODUCTION_BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
 
 export const SharePropertyModal: React.FC<SharePropertyModalProps> = ({
   property,
@@ -43,24 +44,7 @@ export const SharePropertyModal: React.FC<SharePropertyModalProps> = ({
   // Redacción comercial optimizada con foto y tarjeta rica en WhatsApp
   const shareText = `🏡 Mirá esta propiedad ${operationText} en Inmobiliaria Montaño:\n\n*${property.title}*\n💰 *Precio:* ${formattedPrice}\n📍 *Ubicación:* ${property.location.neighborhood}, ${property.location.city}\n🔖 *Ref:* #${property.codeRef}\n\n🔗 *Ver fotos y detalles:* ${prodShareUrl}`;
 
-  const handleShareClick = async () => {
-    // Web Share API para móviles (iOS/Android)
-    if (typeof navigator !== 'undefined' && navigator.share) {
-      try {
-        await navigator.share({
-          title: property.title,
-          text: `Inmobiliaria Montaño: ${property.title} - ${formattedPrice}`,
-          url: prodShareUrl,
-        });
-        return;
-      } catch (err) {
-        if ((err as Error).name !== 'AbortError') {
-          setIsOpen(true);
-        }
-        return;
-      }
-    }
-
+  const handleShareClick = () => {
     setIsOpen(true);
   };
 
@@ -133,10 +117,10 @@ export const SharePropertyModal: React.FC<SharePropertyModalProps> = ({
         <button
           type="button"
           onClick={handleShareClick}
-          className={`w-full bg-[#191024] hover:bg-[#350A2F] text-amber-300 font-extrabold text-xs py-3 px-4 rounded-xl shadow-lg border border-purple-500/30 flex items-center justify-center space-x-2 transition-all active:scale-98 ${className}`}
+          className={`w-full bg-slate-100 hover:bg-purple-50 text-slate-700 hover:text-[#5E1754] font-extrabold text-xs py-3 px-4 rounded-2xl border border-slate-200/80 shadow-2xs flex items-center justify-center space-x-2 transition-all active:scale-98 ${className}`}
         >
           <Share2 className="w-4 h-4 text-[#E85D04]" />
-          <span>Compartir en Redes Sociales</span>
+          <span>Compartir esta propiedad</span>
         </button>
       )}
 
@@ -213,8 +197,8 @@ export const SharePropertyModal: React.FC<SharePropertyModalProps> = ({
                 Seleccioná la Red Social o Canal:
               </p>
 
-              {/* Grid 3 Botones Principales de Redes Sociales: WhatsApp, Instagram, Facebook */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {/* Grid 4 Botones Principales de Redes Sociales: WhatsApp, Instagram, Facebook, X (Twitter) */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
                 
                 {/* 1. Botón WhatsApp Oficial (Verde) */}
                 <a
@@ -222,24 +206,24 @@ export const SharePropertyModal: React.FC<SharePropertyModalProps> = ({
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setIsOpen(false)}
-                  className="bg-[#25D366] hover:bg-[#20bd5a] active:scale-95 text-white p-3.5 rounded-2xl font-extrabold text-xs flex flex-col items-center justify-center space-y-1.5 shadow-md hover:shadow-emerald-500/20 transition-all text-center"
+                  className="bg-[#25D366] hover:bg-[#20bd5a] active:scale-95 text-white p-3 rounded-2xl font-extrabold text-xs flex flex-col items-center justify-center space-y-1 shadow-md hover:shadow-emerald-500/20 transition-all text-center"
                 >
-                  <MessageCircle className="w-6 h-6 fill-white text-[#25D366]" />
+                  <WhatsAppIcon className="w-5 h-5 text-white" />
                   <span>WhatsApp</span>
-                  <span className="text-[10px] font-normal text-emerald-100">Con Tarjeta de Foto</span>
+                  <span className="text-[9px] font-normal text-emerald-100">Directo</span>
                 </a>
 
                 {/* 2. Botón Instagram Oficial (Gradiente Rosa/Púrpura) */}
                 <button
                   type="button"
                   onClick={handleInstagramShare}
-                  className="bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] hover:opacity-90 active:scale-95 text-white p-3.5 rounded-2xl font-extrabold text-xs flex flex-col items-center justify-center space-y-1.5 shadow-md hover:shadow-pink-500/20 transition-all text-center"
+                  className="bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] hover:opacity-90 active:scale-95 text-white p-3 rounded-2xl font-extrabold text-xs flex flex-col items-center justify-center space-y-1 shadow-md hover:shadow-pink-500/20 transition-all text-center"
                 >
-                  <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
                     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                   </svg>
                   <span>Instagram</span>
-                  <span className="text-[10px] font-normal text-pink-100">DM / Historias</span>
+                  <span className="text-[9px] font-normal text-pink-100">DM / Story</span>
                 </button>
 
                 {/* 3. Botón Facebook Oficial (Azul) */}
@@ -248,13 +232,28 @@ export const SharePropertyModal: React.FC<SharePropertyModalProps> = ({
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setIsOpen(false)}
-                  className="bg-[#1877F2] hover:bg-[#166fe5] active:scale-95 text-white p-3.5 rounded-2xl font-extrabold text-xs flex flex-col items-center justify-center space-y-1.5 shadow-md hover:shadow-blue-500/20 transition-all text-center"
+                  className="bg-[#1877F2] hover:bg-[#166fe5] active:scale-95 text-white p-3 rounded-2xl font-extrabold text-xs flex flex-col items-center justify-center space-y-1 shadow-md hover:shadow-blue-500/20 transition-all text-center"
                 >
-                  <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                   </svg>
                   <span>Facebook</span>
-                  <span className="text-[10px] font-normal text-blue-100">Grupos / Muro</span>
+                  <span className="text-[9px] font-normal text-blue-100">Muro/Grupos</span>
+                </a>
+
+                {/* 4. Botón X (Twitter) Oficial (Negro) */}
+                <a
+                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`🏡 Mirá esta propiedad en Inmobiliaria Montaño: ${property.title} - ${formattedPrice}`)}&url=${encodeURIComponent(prodShareUrl)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setIsOpen(false)}
+                  className="bg-slate-900 hover:bg-black active:scale-95 text-white p-3 rounded-2xl font-extrabold text-xs flex flex-col items-center justify-center space-y-1 shadow-md hover:shadow-slate-500/20 transition-all text-center"
+                >
+                  <svg className="w-5 h-5 fill-current text-white" viewBox="0 0 24 24">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                  </svg>
+                  <span>X (Twitter)</span>
+                  <span className="text-[9px] font-normal text-slate-300">Publicación</span>
                 </a>
 
               </div>
@@ -279,30 +278,18 @@ export const SharePropertyModal: React.FC<SharePropertyModalProps> = ({
                 </span>
               </button>
 
-              {/* Acciones Secundarias: Email & Ficha PDF */}
-              <div className="grid grid-cols-2 gap-3 pt-2">
+              {/* Acción Secundaria: Email */}
+              <div className="pt-2">
                 <a
                   href={emailUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setIsOpen(false)}
-                  className="bg-slate-50 hover:bg-slate-800 text-slate-700 hover:text-white p-3 rounded-2xl font-bold text-xs flex items-center justify-center space-x-2 border border-slate-200 transition-all"
+                  className="w-full bg-slate-50 hover:bg-slate-800 text-slate-700 hover:text-white p-3 rounded-2xl font-bold text-xs flex items-center justify-center space-x-2 border border-slate-200 transition-all"
                 >
-                  <Mail className="w-4 h-4" />
-                  <span>Enviar por Email</span>
+                  <Mail className="w-4 h-4 text-[#E85D04]" />
+                  <span>Enviar por Correo Electrónico</span>
                 </a>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsOpen(false);
-                    handlePrint();
-                  }}
-                  className="bg-amber-50 hover:bg-amber-500 text-amber-800 hover:text-white p-3 rounded-2xl font-bold text-xs flex items-center justify-center space-x-2 border border-amber-200 transition-all"
-                >
-                  <Printer className="w-4 h-4" />
-                  <span>Imprimir Ficha PDF</span>
-                </button>
               </div>
 
             </div>

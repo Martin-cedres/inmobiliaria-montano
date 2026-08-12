@@ -26,19 +26,19 @@ export const Header: React.FC = () => {
           {/* Menú Central Limpio (Desktop) */}
           <nav className="hidden md:flex items-center space-x-8 text-sm font-semibold text-slate-600">
             <Link
-              href="#catalogo"
+              href="/#catalogo"
               className="hover:text-[#5e1754] transition-colors relative py-1.5 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#5e1754] hover:after:w-full after:transition-all duration-300"
             >
               Propiedades
             </Link>
             <Link
-              href="#tasaciones"
+              href="/#tasaciones"
               className="hover:text-[#5e1754] transition-colors relative py-1.5 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#5e1754] hover:after:w-full after:transition-all duration-300"
             >
               Tasaciones
             </Link>
             <Link
-              href="#contacto"
+              href="/#contacto"
               className="hover:text-[#5e1754] transition-colors relative py-1.5 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#5e1754] hover:after:w-full after:transition-all duration-300"
             >
               Contacto
@@ -48,7 +48,7 @@ export const Header: React.FC = () => {
           {/* Botón CTA Naranja Institucional (Imán de Captación: Publicar mi Inmueble) */}
           <div className="hidden sm:flex items-center">
             <a
-              href="#tasaciones"
+              href="/#tasaciones"
               className="bg-[#e85d04] hover:bg-[#ff7518] active:scale-95 text-white px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-xs hover:shadow-orange-500/20 transition-all border border-orange-400/20"
             >
               Publicar mi Inmueble

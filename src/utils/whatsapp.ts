@@ -18,19 +18,23 @@ export function buildPropertyWhatsAppLink(
   return `https://wa.me/${customPhone}?text=${encodeURIComponent(text)}`;
 }
 
+export type WhatsAppServiceSubject = 'tasacion' | 'publicar' | 'notarial' | 'general';
+
 /**
- * Genera un enlace a WhatsApp para consultas generales de tasación o captación.
+ * Genera un enlace a WhatsApp para consultas generales de tasación, captación o asesoramiento notarial.
  */
 export function buildGeneralWhatsAppLink(
-  subject: 'tasacion' | 'publicar' | 'general' = 'general',
+  subject: WhatsAppServiceSubject = 'general',
   customPhone: string = MONTAÑO_WHATSAPP_PHONE
 ): string {
   let text = 'Hola Inmobiliaria Montaño, me comunico a través de la web para hacer una consulta.';
   
   if (subject === 'tasacion') {
-    text = 'Hola Inmobiliaria Montaño, me gustaría solicitar una tasación para mi propiedad en San José.';
+    text = 'Hola Inmobiliaria Montaño, me gustaría solicitar una tasación profesional para mi propiedad en San José.';
   } else if (subject === 'publicar') {
-    text = 'Hola Inmobiliaria Montaño, deseo publicar mi propiedad con ustedes para venta/alquiler.';
+    text = 'Hola Inmobiliaria Montaño, quisiera consultar requisitos para publicar mi inmueble con ustedes en venta o alquiler.';
+  } else if (subject === 'notarial') {
+    text = 'Hola Inmobiliaria Montaño, quisiera solicitar información sobre Asesoramiento Notarial para una operación inmobiliaria.';
   }
   
   return `https://wa.me/${customPhone}?text=${encodeURIComponent(text)}`;
