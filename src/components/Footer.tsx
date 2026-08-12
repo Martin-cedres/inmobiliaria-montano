@@ -31,13 +31,21 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
           
           {/* Column 1: Brand & Bio */}
           <div className="space-y-4 md:col-span-1">
-            {/* Official Brand Logo (PNG Transparente) */}
+            {/* Official Brand Logo (PNG Transparente + Tipografía de Marca) */}
             <div className="flex items-center space-x-3">
               <img
                 src="/logo.png"
                 alt="Inmobiliaria Montaño Logo"
-                className="h-14 w-auto object-contain filter drop-shadow-md"
+                className="h-14 sm:h-16 w-auto object-contain filter drop-shadow-md"
               />
+              <div className="flex flex-col text-left justify-center">
+                <span className="text-xs font-black uppercase tracking-widest text-[#E85D04]">
+                  Inmobiliaria
+                </span>
+                <span className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                  MONTAÑO
+                </span>
+              </div>
             </div>
 
             <p className="text-xs text-slate-200 leading-relaxed">

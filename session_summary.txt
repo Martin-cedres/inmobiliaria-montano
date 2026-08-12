@@ -158,7 +158,6 @@
   - Agregada captura inteligente de excepciones al intentar escribir en disco cuando se corre en serverless read-only.
   - Implementado fallback en memoria para mutaciones de propiedades en vivo.
   - Incluida la columna e información de `images` en la consulta SQL de inserción y actualización para Neon DB Postgres.
-- Estandarizados los Iconos del Menú Hamburguesa Móvil ([`Header.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/Header.tsx)):
-  - Todos los iconos (`Home`, `Calculator`, `Phone`) lucen ahora de forma uniforme en el tono violeta corporativo `#5E1754` con transición suave al naranja `#E85D04` en hover.
+- Removido el botón flotante móvil de conmutación de mapa/lista por solicitud explícita del usuario en [`page.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/page.tsx). La conmutación de vista permanece limpia a través de los botones superiores `[ 📇 Tarjetas ]` | `[ 🗺️ Mapa Interactivo ]`.
 - Verificada la compilación completa de producción (`npm run build`, 0 errores).
-- Subidos todos los cambios a GitHub (`git push origin main` -> commit `a0857b6`), actualizando Vercel.
+- Subidos los cambios a GitHub (`git push origin main` -> commit `a005a86`), actualizando el sitio en Vercel.

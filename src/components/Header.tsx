@@ -14,13 +14,21 @@ export const Header: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-18">
           
-          {/* Logo Destacado de Inmobiliaria Montaño (Mayor Presencia Visual) */}
-          <Link href="/" className="flex items-center space-x-2 group py-1 flex-shrink-0">
+          {/* Logo Destacado de Inmobiliaria Montaño (Mayor Presencia Visual y Legibilidad) */}
+          <Link href="/" className="flex items-center space-x-2.5 sm:space-x-3 group py-1 flex-shrink-0">
             <img
               src="/logo.png"
               alt="Inmobiliaria Montaño"
-              className="h-10 sm:h-12 w-auto object-contain group-hover:scale-102 transition-transform duration-300"
+              className="h-12 sm:h-14 lg:h-15 w-auto object-contain group-hover:scale-102 transition-transform duration-300 drop-shadow-xs"
             />
+            <div className="flex flex-col text-left justify-center">
+              <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-widest text-[#E85D04] leading-none">
+                Inmobiliaria
+              </span>
+              <span className="text-base sm:text-lg lg:text-xl font-black tracking-tight text-[#5E1754] leading-tight">
+                MONTAÑO
+              </span>
+            </div>
           </Link>
 
           {/* Menú Central Limpio (Desktop) */}
