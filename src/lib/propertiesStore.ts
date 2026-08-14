@@ -62,7 +62,9 @@ async function ensureTablesExist(sql: any) {
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS lng NUMERIC(10, 6);`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS is_exact_location BOOLEAN DEFAULT FALSE;`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS radius_meters INT DEFAULT 300;`;
-    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS has_location BOOLEAN DEFAULT TRUE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS floors INT DEFAULT 1;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS built_area_m2 NUMERIC(10, 2);`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS plot_area_m2 NUMERIC(10, 2);`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS front_meters NUMERIC(10, 2);`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS car_access BOOLEAN DEFAULT FALSE;`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS garden BOOLEAN DEFAULT FALSE;`;
@@ -240,18 +242,59 @@ export async function saveProperty(property: Property): Promise<Property> {
           ${property.features.waterWellOrPond || false}, ${property.features.titlesUpToDate || false}, ${property.features.acceptsTradeIn || false}, ${property.features.securitySystem || false}, ${property.features.pavedStreet || false}, ${property.features.shedOrCorral || false}, ${property.features.coneatIndex || null},
           ${JSON.stringify(property.guarantees || [])}, ${JSON.stringify(property.images || [])}, ${property.seoTitle || null}, ${property.seoDescription || null}, ${property.featured}
         ) ON CONFLICT (id) DO UPDATE SET
+          code_ref = EXCLUDED.code_ref,
           title = EXCLUDED.title,
+          slug = EXCLUDED.slug,
+          description = EXCLUDED.description,
+          operation = EXCLUDED.operation,
+          category = EXCLUDED.category,
           status = EXCLUDED.status,
           price_amount = EXCLUDED.price_amount,
-          description = EXCLUDED.description,
-          images = EXCLUDED.images,
-          seo_title = EXCLUDED.seo_title,
-          seo_description = EXCLUDED.seo_description,
+          price_currency = EXCLUDED.price_currency,
+          price_period = EXCLUDED.price_period,
+          price_drop = EXCLUDED.price_drop,
+          original_amount = EXCLUDED.original_amount,
+          department = EXCLUDED.department,
+          city = EXCLUDED.city,
+          neighborhood = EXCLUDED.neighborhood,
+          address = EXCLUDED.address,
           lat = EXCLUDED.lat,
           lng = EXCLUDED.lng,
           is_exact_location = EXCLUDED.is_exact_location,
           radius_meters = EXCLUDED.radius_meters,
           has_location = EXCLUDED.has_location,
+          bedrooms = EXCLUDED.bedrooms,
+          bathrooms = EXCLUDED.bathrooms,
+          floors = EXCLUDED.floors,
+          built_area_m2 = EXCLUDED.built_area_m2,
+          plot_area_m2 = EXCLUDED.plot_area_m2,
+          front_meters = EXCLUDED.front_meters,
+          car_access = EXCLUDED.car_access,
+          garage = EXCLUDED.garage,
+          barbecue = EXCLUDED.barbecue,
+          pool = EXCLUDED.pool,
+          garden = EXCLUDED.garden,
+          wood_stove_or_ac = EXCLUDED.wood_stove_or_ac,
+          pet_friendly = EXCLUDED.pet_friendly,
+          perimeter_fence = EXCLUDED.perimeter_fence,
+          bank_credit_eligible = EXCLUDED.bank_credit_eligible,
+          ph_regime = EXCLUDED.ph_regime,
+          ose_water = EXCLUDED.ose_water,
+          ute_electric = EXCLUDED.ute_electric,
+          sanitation = EXCLUDED.sanitation,
+          fiber_optic = EXCLUDED.fiber_optic,
+          water_well_or_pond = EXCLUDED.water_well_or_pond,
+          titles_up_to_date = EXCLUDED.titles_up_to_date,
+          accepts_trade_in = EXCLUDED.accepts_trade_in,
+          security_system = EXCLUDED.security_system,
+          paved_street = EXCLUDED.paved_street,
+          shed_or_corral = EXCLUDED.shed_or_corral,
+          coneat_index = EXCLUDED.coneat_index,
+          guarantees = EXCLUDED.guarantees,
+          images = EXCLUDED.images,
+          seo_title = EXCLUDED.seo_title,
+          seo_description = EXCLUDED.seo_description,
+          featured = EXCLUDED.featured,
           updated_at = CURRENT_TIMESTAMP;
       `;
       return property;

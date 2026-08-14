@@ -118,10 +118,10 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
 
             {/* Exact Human Description Written by User */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-purple-100 shadow-sm space-y-4 text-left">
-              <h3 className="text-lg font-black text-[#5E1754]">Descripción de la Propiedad</h3>
-              <p className="text-slate-700 text-sm sm:text-base leading-relaxed whitespace-pre-line">
+              <h3 className="text-lg sm:text-xl font-black text-[#5E1754]">Descripción de la Propiedad</h3>
+              <div className="text-slate-800 text-base sm:text-lg leading-relaxed font-normal tracking-normal whitespace-pre-line space-y-3">
                 {property.description}
-              </p>
+              </div>
             </div>
 
             {/* Interactive Map Section (Opcional - Oculto únicamente si hasLocation es false) */}
