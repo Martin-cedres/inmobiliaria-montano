@@ -93,6 +93,9 @@ export interface Property {
   images: ImageAsset[];
   seoTitle?: string;
   seoDescription?: string;
+  viewsCount?: number;
+  whatsappClicksCount?: number;
+  sharesCount?: number;
   featured: boolean;
   createdAt: string;
   updatedAt: string;

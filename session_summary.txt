@@ -179,6 +179,9 @@
 - Corregido el bug crítico en [`src/lib/propertiesStore.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/lib/propertiesStore.ts) en la cláusula SQL `ON CONFLICT (id) DO UPDATE SET`: se incluyeron absolutamente todas las columnas de características (`floors`, `car_access`, `garage`, `barbecue`, `pool`, `garden`, `wood_stove_or_ac`, `pet_friendly`, `perimeter_fence`, `bank_credit_eligible`, `ph_regime`, `ose_water`, `ute_electric`, `sanitation`, `fiber_optic`, `water_well_or_pond`, `titles_up_to_date`, `accepts_trade_in`, `security_system`, `paved_street`, `shed_or_corral`, `coneat_index`, `guarantees`) para que la base de datos Neon Postgres persista todos los checkboxes al crear y editar publicaciones.
 - Optimizado el parsing de atributos planos e interactivos en [`src/app/api/properties/[id]/route.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/api/properties/%5Bid%5D/route.ts) y [`src/app/api/properties/route.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/api/properties/route.ts).
 - Verificada la compilación limpia local (`npm run build`, 0 errores).
+- Creado el plan de acción [`implementation_plan.md`](file:///C:/Users/LENOVO/.gemini/antigravity/brain/2e2b657d-1dbc-4283-acc6-6f6d49a2e95b/implementation_plan.md) para la implementación del Panel de Métricas Comerciales & Seguimiento de Leads (Vistas de fichas, Clics a WhatsApp, Tasa de Conversión, Propiedad más popular) con tracking 100% independiente del dominio.
+
+
 
 
 

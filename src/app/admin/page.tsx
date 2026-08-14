@@ -5,12 +5,13 @@ import Link from 'next/link';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Property, PropertyStatus } from '@/types/property';
-import { Plus, Trash2, Eye, Edit3, CheckCircle2, Sparkles, Search, RefreshCw, AlertCircle, Building2, Key, Tag, Check } from 'lucide-react';
+import { Plus, Trash2, Eye, Edit3, CheckCircle2, Sparkles, Search, RefreshCw, AlertCircle, Building2, Key, Tag, MessageCircle, Flame, TrendingUp, ArrowUpDown } from 'lucide-react';
 
 export default function AdminDashboardPage() {
   const [properties, setProperties] = useState<Property[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [sortBy, setSortBy] = useState<'recent' | 'views' | 'whatsapp' | 'conversion'>('recent');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
 
@@ -87,14 +88,19 @@ export default function AdminDashboardPage() {
     }
   };
 
-  // Metrics KPIs
+  // Executive Metrics KPIs
   const totalCount = properties.length;
-  const ventaCount = properties.filter((p) => p.operation === 'venta').length;
-  const alquilerCount = properties.filter((p) => p.operation === 'alquiler').length;
-  const reservadoVendidoCount = properties.filter((p) => ['reservado', 'vendido', 'alquilado'].includes(p.status)).length;
+  const totalViews = properties.reduce((acc, p) => acc + (p.viewsCount || 0), 0);
+  const totalWhatsAppClicks = properties.reduce((acc, p) => acc + (p.whatsappClicksCount || 0), 0);
+  
+  // Top Property calculation
+  const sortedByInterests = [...properties].sort(
+    (a, b) => (b.whatsappClicksCount || 0) - (a.whatsappClicksCount || 0) || (b.viewsCount || 0) - (a.viewsCount || 0)
+  );
+  const topProperty = sortedByInterests.length > 0 && (sortedByInterests[0].whatsappClicksCount || 0) > 0 ? sortedByInterests[0] : null;
 
-  // Filtered properties
-  const filteredProperties = properties.filter((p) => {
+  // Filtered & Sorted properties
+  let filteredProperties = properties.filter((p) => {
     const query = searchQuery.toLowerCase();
     return (
       p.codeRef.toLowerCase().includes(query) ||
@@ -105,11 +111,23 @@ export default function AdminDashboardPage() {
     );
   });
 
+  if (sortBy === 'views') {
+    filteredProperties.sort((a, b) => (b.viewsCount || 0) - (a.viewsCount || 0));
+  } else if (sortBy === 'whatsapp') {
+    filteredProperties.sort((a, b) => (b.whatsappClicksCount || 0) - (a.whatsappClicksCount || 0));
+  } else if (sortBy === 'conversion') {
+    filteredProperties.sort((a, b) => {
+      const convA = (a.viewsCount || 0) > 0 ? ((a.whatsappClicksCount || 0) / (a.viewsCount || 1)) : 0;
+      const convB = (b.viewsCount || 0) > 0 ? ((b.whatsappClicksCount || 0) / (b.viewsCount || 1)) : 0;
+      return convB - convA;
+    });
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 relative">
       <Header />
 
-      {/* Floating Toast Notification (Recomendación Técnica #3) */}
+      {/* Floating Toast Notification */}
       {toastMessage && (
         <div className="fixed bottom-6 right-6 z-50 bg-[#350A2F] text-amber-300 px-5 py-3.5 rounded-2xl shadow-2xl border border-purple-400/30 flex items-center space-x-3 text-xs sm:text-sm font-bold animate-in slide-in-from-bottom-4 duration-300">
           <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0" />
@@ -124,13 +142,13 @@ export default function AdminDashboardPage() {
           <div>
             <div className="flex items-center space-x-2 text-[#E85D04] font-bold text-xs uppercase tracking-wider mb-1">
               <Sparkles className="w-4 h-4 text-amber-500" />
-              <span>Panel de Administración Montaño</span>
+              <span>Panel de Administración & Analítica Comercial</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
-              Gestión de Propiedades
+              Gestión de Propiedades & Leads
             </h1>
             <p className="text-xs text-slate-500 mt-1">
-              Administrá los inmuebles en tiempo real. Al modificar el estado o publicar una nueva propiedad, **Next.js purga la caché e inyecta los cambios al instante en el Home**.
+              Monitoreá visualizaciones en tiempo real y consultas enviadas a Daniel por WhatsApp.
             </p>
           </div>
 
@@ -152,7 +170,7 @@ export default function AdminDashboardPage() {
           </div>
         </div>
 
-        {/* KPI Cards */}
+        {/* Commercial Executive KPI Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <div className="bg-white p-5 rounded-2xl border border-purple-100 shadow-xs flex items-center justify-between">
             <div>
@@ -166,31 +184,42 @@ export default function AdminDashboardPage() {
 
           <div className="bg-white p-5 rounded-2xl border border-purple-100 shadow-xs flex items-center justify-between">
             <div>
-              <p className="text-xs text-slate-400 font-bold uppercase">En Venta</p>
-              <p className="text-2xl font-black text-slate-900">{ventaCount}</p>
-            </div>
-            <div className="p-3 bg-amber-50 rounded-xl text-[#E85D04]">
-              <Tag className="w-5 h-5" />
-            </div>
-          </div>
-
-          <div className="bg-white p-5 rounded-2xl border border-purple-100 shadow-xs flex items-center justify-between">
-            <div>
-              <p className="text-xs text-slate-400 font-bold uppercase">Alquileres</p>
-              <p className="text-2xl font-black text-slate-900">{alquilerCount}</p>
+              <p className="text-xs text-slate-400 font-bold uppercase">Fichas Vistas</p>
+              <p className="text-2xl font-black text-slate-900">{totalViews.toLocaleString('es-UY')}</p>
             </div>
             <div className="p-3 bg-blue-50 rounded-xl text-blue-600">
-              <Key className="w-5 h-5" />
+              <Eye className="w-5 h-5" />
             </div>
           </div>
 
           <div className="bg-white p-5 rounded-2xl border border-purple-100 shadow-xs flex items-center justify-between">
             <div>
-              <p className="text-xs text-slate-400 font-bold uppercase">Reservadas / Vendidas</p>
-              <p className="text-2xl font-black text-slate-900">{reservadoVendidoCount}</p>
+              <p className="text-xs text-slate-400 font-bold uppercase">Leads WhatsApp</p>
+              <p className="text-2xl font-black text-emerald-600">{totalWhatsAppClicks.toLocaleString('es-UY')}</p>
             </div>
             <div className="p-3 bg-emerald-50 rounded-xl text-emerald-600">
-              <CheckCircle2 className="w-5 h-5" />
+              <MessageCircle className="w-5 h-5" />
+            </div>
+          </div>
+
+          <div className="bg-white p-5 rounded-2xl border border-purple-100 shadow-xs flex items-center justify-between">
+            <div className="min-w-0 pr-2">
+              <p className="text-xs text-slate-400 font-bold uppercase">Más Consultada</p>
+              {topProperty ? (
+                <div>
+                  <p className="text-sm font-black text-slate-900 truncate" title={topProperty.title}>
+                    Ref. #{topProperty.codeRef}
+                  </p>
+                  <p className="text-[11px] font-bold text-amber-600">
+                    {topProperty.whatsappClicksCount} clics WhatsApp
+                  </p>
+                </div>
+              ) : (
+                <p className="text-xs font-bold text-slate-400">Sin datos aún</p>
+              )}
+            </div>
+            <div className="p-3 bg-amber-50 rounded-xl text-amber-600 flex-shrink-0">
+              <Flame className="w-5 h-5" />
             </div>
           </div>
         </div>
@@ -198,16 +227,48 @@ export default function AdminDashboardPage() {
         {/* Properties Management Table */}
         <div className="bg-white rounded-3xl border border-purple-100 shadow-xs overflow-hidden text-left">
           
-          {/* Table Toolbar & Search */}
-          <div className="p-5 sm:p-6 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <h3 className="font-extrabold text-slate-900 text-base flex items-center space-x-2">
-              <span>Propiedades Registradas</span>
-              <span className="bg-purple-100 text-[#5E1754] text-xs font-black px-2.5 py-0.5 rounded-full">
-                {filteredProperties.length}
-              </span>
-            </h3>
+          {/* Table Toolbar, Search & Sort */}
+          <div className="p-5 sm:p-6 border-b border-slate-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div className="flex flex-wrap items-center gap-3">
+              <h3 className="font-extrabold text-slate-900 text-base flex items-center space-x-2">
+                <span>Propiedades Registradas</span>
+                <span className="bg-purple-100 text-[#5E1754] text-xs font-black px-2.5 py-0.5 rounded-full">
+                  {filteredProperties.length}
+                </span>
+              </h3>
 
-            <div className="relative w-full sm:w-72">
+              {/* Quick Sort Filter Buttons */}
+              <div className="flex items-center space-x-1.5 bg-slate-100 p-1 rounded-xl text-[11px] font-extrabold">
+                <button
+                  onClick={() => setSortBy('recent')}
+                  className={`px-3 py-1 rounded-lg transition-all ${
+                    sortBy === 'recent' ? 'bg-white text-slate-900 shadow-2xs' : 'text-slate-500 hover:text-slate-800'
+                  }`}
+                >
+                  Recientes
+                </button>
+                <button
+                  onClick={() => setSortBy('whatsapp')}
+                  className={`px-3 py-1 rounded-lg transition-all flex items-center space-x-1 ${
+                    sortBy === 'whatsapp' ? 'bg-white text-emerald-700 shadow-2xs' : 'text-slate-500 hover:text-slate-800'
+                  }`}
+                >
+                  <MessageCircle className="w-3 h-3 text-emerald-600" />
+                  <span>Más Consultadas</span>
+                </button>
+                <button
+                  onClick={() => setSortBy('views')}
+                  className={`px-3 py-1 rounded-lg transition-all flex items-center space-x-1 ${
+                    sortBy === 'views' ? 'bg-white text-blue-700 shadow-2xs' : 'text-slate-500 hover:text-slate-800'
+                  }`}
+                >
+                  <Eye className="w-3 h-3 text-blue-600" />
+                  <span>Más Vistas</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="relative w-full md:w-72">
               <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
@@ -237,6 +298,7 @@ export default function AdminDashboardPage() {
                     <th className="py-3 px-3 sm:px-4">Ref. & Propiedad</th>
                     <th className="py-3 px-2 hidden sm:table-cell">Tipo</th>
                     <th className="py-3 px-2">Precio</th>
+                    <th className="py-3 px-2">Rendimiento (Leads & Vistas)</th>
                     <th className="py-3 px-2">Estado</th>
                     <th className="py-3 px-2 text-right">Acciones</th>
                   </tr>
@@ -253,16 +315,20 @@ export default function AdminDashboardPage() {
                       : prop.category === 'modulo' ? 'Módulo'
                       : 'Inmueble';
 
+                    const views = prop.viewsCount || 0;
+                    const waClicks = prop.whatsappClicksCount || 0;
+                    const isHighDemand = waClicks >= 3 || (views >= 20 && waClicks >= 2);
+
                     return (
                     <tr key={prop.id} className="hover:bg-purple-50/20 transition-colors">
-                      {/* Col 1: Ref + Título + Categoría (compactado) */}
+                      {/* Col 1: Ref + Título + Categoría */}
                       <td className="py-3 px-3 sm:px-4">
                         <div className="flex items-center space-x-2">
                           <span className="bg-[#350A2F] text-amber-300 font-extrabold text-[9px] px-1.5 py-0.5 rounded flex-shrink-0">
                             #{prop.codeRef}
                           </span>
                           <div className="min-w-0">
-                            <p className="font-bold text-slate-900 text-xs truncate max-w-[180px] sm:max-w-[280px] lg:max-w-none">{prop.title}</p>
+                            <p className="font-bold text-slate-900 text-xs truncate max-w-[180px] sm:max-w-[240px] lg:max-w-none">{prop.title}</p>
                             <p className="text-[10px] text-slate-400 font-medium">
                               {prop.location.neighborhood} · <span className="text-[#5E1754] font-bold">{prop.operation.toUpperCase()}</span> · <span className="sm:hidden">{categoryLabel}</span>
                             </p>
@@ -270,7 +336,7 @@ export default function AdminDashboardPage() {
                         </div>
                       </td>
 
-                      {/* Col 2: Categoría (oculta en móvil, visible en sm+) */}
+                      {/* Col 2: Categoría */}
                       <td className="py-3 px-2 hidden sm:table-cell">
                         <span className="text-[10px] font-bold uppercase text-slate-600 bg-slate-100 px-2 py-1 rounded-full">
                           {categoryLabel}
@@ -282,7 +348,29 @@ export default function AdminDashboardPage() {
                         {prop.price.currency} {prop.price.currency === 'UYU' ? '$ ' : ''}{prop.price.amount.toLocaleString('es-UY')}
                       </td>
 
-                      {/* Col 4: Estado (En Vivo) */}
+                      {/* Col 4: Rendimiento Comercial & Badges */}
+                      <td className="py-3 px-2 whitespace-nowrap">
+                        <div className="flex items-center space-x-2">
+                          <span className="inline-flex items-center space-x-1 text-[11px] font-bold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-lg" title="Fichas vistas por usuarios">
+                            <Eye className="w-3.5 h-3.5 text-blue-500" />
+                            <span>{views}</span>
+                          </span>
+
+                          <span className="inline-flex items-center space-x-1 text-[11px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-lg" title="Consultas a WhatsApp recibidas">
+                            <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
+                            <span>{waClicks}</span>
+                          </span>
+
+                          {isHighDemand && (
+                            <span className="inline-flex items-center space-x-1 text-[10px] font-black text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full" title="Propiedad con alta tracción comercial">
+                              <Flame className="w-3 h-3 text-amber-500 animate-pulse" />
+                              <span>Alta Demanda</span>
+                            </span>
+                          )}
+                        </div>
+                      </td>
+
+                      {/* Col 5: Estado (En Vivo) */}
                       <td className="py-3 px-2">
                         <select
                           value={prop.status}
@@ -311,35 +399,35 @@ export default function AdminDashboardPage() {
                         </select>
                       </td>
 
-                      {/* Col 5: Acciones (siempre visible) */}
+                      {/* Col 6: Acciones */}
                       <td className="py-3 px-2 text-right">
                         <div className="flex items-center justify-end space-x-0.5">
                           <Link
                             href={`/propiedad/${prop.slug}`}
                             target="_blank"
                             className="p-1.5 text-slate-500 hover:text-[#5E1754] hover:bg-purple-50 rounded-lg transition-colors"
-                            title="Ver Ficha"
+                            title="Ver en vivo"
                           >
-                            <Eye className="w-3.5 h-3.5" />
+                            <Eye className="w-4 h-4" />
                           </Link>
                           <Link
                             href={`/admin/editar/${prop.id}`}
-                            className="p-1.5 text-[#E85D04] hover:bg-orange-50 rounded-lg transition-colors"
-                            title="Editar"
+                            className="p-1.5 text-slate-500 hover:text-[#E85D04] hover:bg-orange-50 rounded-lg transition-colors"
+                            title="Editar propiedad"
                           >
-                            <Edit3 className="w-3.5 h-3.5" />
+                            <Edit3 className="w-4 h-4" />
                           </Link>
                           <button
                             onClick={() => handleDelete(prop.id, prop.codeRef)}
-                            className="p-1.5 text-rose-500 hover:bg-rose-50 rounded-lg transition-colors"
+                            className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                             title="Eliminar"
                           >
-                            <Trash2 className="w-3.5 h-3.5" />
+                            <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
                       </td>
                     </tr>
-                  );
+                    );
                   })}
                 </tbody>
               </table>
@@ -353,4 +441,3 @@ export default function AdminDashboardPage() {
     </div>
   );
 }
-

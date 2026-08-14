@@ -81,6 +81,9 @@ async function ensureTablesExist(sql: any) {
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS coneat_index INT;`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS seo_title TEXT;`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS seo_description TEXT;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS views_count INT DEFAULT 0;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS whatsapp_clicks_count INT DEFAULT 0;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS shares_count INT DEFAULT 0;`;
     tablesInitialized = true;
   } catch (err) {
     console.warn('Error al auto-crear tablas en Neon Postgres:', err);
@@ -166,6 +169,9 @@ export async function getAllProperties(): Promise<Property[]> {
             images: Array.isArray(row.images) ? row.images : [],
             seoTitle: row.seo_title || undefined,
             seoDescription: row.seo_description || undefined,
+            viewsCount: Number(row.views_count || 0),
+            whatsappClicksCount: Number(row.whatsapp_clicks_count || 0),
+            sharesCount: Number(row.shares_count || 0),
             featured: row.featured,
             createdAt: row.created_at,
             updatedAt: row.updated_at,
@@ -387,4 +393,64 @@ export async function deletePropertyById(id: string): Promise<boolean> {
 export async function getPropertyById(id: string): Promise<Property | null> {
   const properties = await getAllProperties();
   return properties.find((p) => p.id === id) || null;
+}
+
+/**
+ * Incrementa atómicamente la métrica indicada ('view', 'whatsapp_click', 'share_click')
+ */
+export async function incrementPropertyMetric(
+  identifier: string,
+  eventType: 'view' | 'whatsapp_click' | 'share_click'
+): Promise<boolean> {
+  const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL;
+
+  const keyMap = {
+    view: 'viewsCount',
+    whatsapp_click: 'whatsappClicksCount',
+    share_click: 'sharesCount',
+  } as const;
+
+  if (connectionString) {
+    const sql = getDbClient();
+    try {
+      if (eventType === 'view') {
+        await sql`
+          UPDATE properties 
+          SET views_count = COALESCE(views_count, 0) + 1 
+          WHERE id = ${identifier} OR slug = ${identifier};
+        `;
+      } else if (eventType === 'whatsapp_click') {
+        await sql`
+          UPDATE properties 
+          SET whatsapp_clicks_count = COALESCE(whatsapp_clicks_count, 0) + 1 
+          WHERE id = ${identifier} OR slug = ${identifier};
+        `;
+      } else if (eventType === 'share_click') {
+        await sql`
+          UPDATE properties 
+          SET shares_count = COALESCE(shares_count, 0) + 1 
+          WHERE id = ${identifier} OR slug = ${identifier};
+        `;
+      }
+    } catch (dbErr) {
+      console.warn('Error incrementando métrica en Neon Postgres:', dbErr);
+    }
+  }
+
+  const properties = await getAllProperties();
+  const index = properties.findIndex((p) => p.id === identifier || p.slug === identifier);
+  if (index >= 0) {
+    const field = keyMap[eventType];
+    properties[index][field] = (properties[index][field] || 0) + 1;
+    memoryProperties = [...properties];
+
+    try {
+      await fs.writeFile(LOCAL_DB_PATH, JSON.stringify(properties, null, 2), 'utf-8');
+    } catch (err) {
+      // Ignorar en serverless read-only
+    }
+    return true;
+  }
+
+  return false;
 }
