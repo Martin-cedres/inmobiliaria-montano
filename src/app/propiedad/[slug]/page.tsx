@@ -11,6 +11,7 @@ import { PropertyMapWrapper } from '@/components/PropertyMapWrapper';
 import { SharePropertyModal } from '@/components/SharePropertyModal';
 import { PropertyGallery } from '@/components/PropertyGallery';
 import { PropertyCard } from '@/components/PropertyCard';
+import JsonLdProperty from '@/components/seo/JsonLdProperty';
 
 interface PropertyDetailPageProps {
   params: Promise<{
@@ -62,6 +63,7 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
       <Header />
 
       <main className="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 pb-24 lg:pb-8">
+        <JsonLdProperty property={property} />
         
         {/* Navigation Back Button */}
         <div className="mb-6">
@@ -166,6 +168,14 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                     <span className="truncate">{property.features.bathrooms} Baño/s</span>
                   </div>
                 )}
+                {!!property.features.floors && property.features.floors > 0 && (
+                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <Building className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </span>
+                    <span className="truncate">{property.features.floors} Planta{property.features.floors > 1 ? 's' : ''}</span>
+                  </div>
+                )}
                 {!!property.features.builtAreaM2 && property.features.builtAreaM2 > 0 && (
                   <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
                     <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
@@ -190,12 +200,84 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                     <span className="truncate">{property.features.frontMeters}m de Frente</span>
                   </div>
                 )}
-                {!!property.features.coneatIndex && property.features.coneatIndex > 0 && (
+                {property.features.carAccess && (
                   <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
                     <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
-                      <Trees className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <Car className="w-4 h-4 sm:w-5 sm:h-5" />
                     </span>
-                    <span className="truncate">CONEAT {property.features.coneatIndex}</span>
+                    <span className="truncate">Entrada de Auto</span>
+                  </div>
+                )}
+                {property.features.garage && (
+                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <Car className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </span>
+                    <span className="truncate">Garage Techado</span>
+                  </div>
+                )}
+                {property.features.barbecue && (
+                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-amber-500/10 text-amber-600 flex-shrink-0">
+                      🍖
+                    </span>
+                    <span className="truncate">Parrillero / Barbacoa</span>
+                  </div>
+                )}
+                {property.features.woodStoveOrAC && (
+                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-amber-500/10 text-amber-600 flex-shrink-0">
+                      🪵
+                    </span>
+                    <span className="truncate">Estufa a Leña / AC</span>
+                  </div>
+                )}
+                {property.features.garden && (
+                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-emerald-500/10 text-emerald-600 flex-shrink-0">
+                      🌳
+                    </span>
+                    <span className="truncate">Jardín / Fondo Verde</span>
+                  </div>
+                )}
+                {property.features.petFriendly && (
+                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-amber-500/10 text-amber-600 flex-shrink-0">
+                      🐾
+                    </span>
+                    <span className="truncate">Acepta Mascotas</span>
+                  </div>
+                )}
+                {property.features.oseWater && (
+                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-sky-500/10 text-sky-600 flex-shrink-0">
+                      <Droplets className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </span>
+                    <span className="truncate">Agua Corriente (OSE)</span>
+                  </div>
+                )}
+                {property.features.uteElectric && (
+                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-amber-500/10 text-amber-600 flex-shrink-0">
+                      ⚡
+                    </span>
+                    <span className="truncate">Luz Eléctrica (UTE)</span>
+                  </div>
+                )}
+                {property.features.sanitation && (
+                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-sky-500/10 text-sky-600 flex-shrink-0">
+                      🚽
+                    </span>
+                    <span className="truncate">Saneamiento</span>
+                  </div>
+                )}
+                {property.features.fiberOptic && (
+                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-indigo-500/10 text-indigo-600 flex-shrink-0">
+                      <Wifi className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </span>
+                    <span className="truncate">Fibra Óptica</span>
                   </div>
                 )}
                 {property.features.waterWellOrPond && (
@@ -230,20 +312,36 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                     <span className="truncate">Acepta Permuta</span>
                   </div>
                 )}
-                {property.features.fiberOptic && (
+                {property.features.phRegime && (
                   <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
                     <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
-                      <Wifi className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <Building className="w-4 h-4 sm:w-5 sm:h-5" />
                     </span>
-                    <span className="truncate">Fibra Óptica</span>
+                    <span className="truncate">Régimen de PH</span>
                   </div>
                 )}
-                {property.features.oseWater && (
+                {property.features.perimeterFence && (
                   <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
                     <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
-                      <Droplets className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" />
                     </span>
-                    <span className="truncate">Agua de OSE</span>
+                    <span className="truncate">Cerco Perimetral / Rejas</span>
+                  </div>
+                )}
+                {property.features.securitySystem && (
+                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </span>
+                    <span className="truncate">Alarma / Seguridad</span>
+                  </div>
+                )}
+                {!!property.features.coneatIndex && property.features.coneatIndex > 0 && (
+                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <Trees className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </span>
+                    <span className="truncate">CONEAT {property.features.coneatIndex}</span>
                   </div>
                 )}
               </div>

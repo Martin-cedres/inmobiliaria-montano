@@ -207,6 +207,14 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
                   <span>{property.features.bathrooms} Baño</span>
                 </div>
               )}
+              {!!property.features.floors && property.features.floors > 1 && (
+                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Plantas / Pisos">
+                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
+                    <Building className="w-3.5 h-3.5" />
+                  </span>
+                  <span>{property.features.floors} Plantas</span>
+                </div>
+              )}
               {!!property.features.builtAreaM2 && property.features.builtAreaM2 > 0 && (
                 <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Superficie Edificada">
                   <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
@@ -223,12 +231,44 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
                   <span>{property.features.plotAreaM2} m² terr.</span>
                 </div>
               )}
-              {property.features.garage && !property.features.builtAreaM2 && (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Garage">
+              {!!property.features.frontMeters && property.features.frontMeters > 0 && (
+                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Metros de Frente">
+                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
+                    <Compass className="w-3.5 h-3.5" />
+                  </span>
+                  <span>{property.features.frontMeters}m Frente</span>
+                </div>
+              )}
+              {property.features.carAccess && (
+                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Entrada de Auto">
                   <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
                     <Car className="w-3.5 h-3.5" />
                   </span>
-                  <span>1 Garage</span>
+                  <span>Entrada Auto</span>
+                </div>
+              )}
+              {property.features.garage && (
+                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Garage Techado">
+                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
+                    <Car className="w-3.5 h-3.5" />
+                  </span>
+                  <span>Garage</span>
+                </div>
+              )}
+              {property.features.barbecue && (
+                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Parrillero">
+                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
+                    🍖
+                  </span>
+                  <span>Parrillero</span>
+                </div>
+              )}
+              {property.features.oseWater && (
+                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Agua de OSE">
+                  <span className="p-0.5 rounded-md bg-sky-500/10 text-sky-600">
+                    🚰
+                  </span>
+                  <span>Agua OSE</span>
                 </div>
               )}
               {!!property.features.coneatIndex && property.features.coneatIndex > 0 && (
@@ -237,14 +277,6 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
                     <Trees className="w-3.5 h-3.5" />
                   </span>
                   <span>CONEAT {property.features.coneatIndex}</span>
-                </div>
-              )}
-              {!!property.features.frontMeters && property.features.frontMeters > 0 && (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Metros de Frente">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <Compass className="w-3.5 h-3.5" />
-                  </span>
-                  <span>{property.features.frontMeters}m Frente</span>
                 </div>
               )}
               {property.guarantees && property.guarantees.length > 0 && (

@@ -56,28 +56,33 @@ export interface Property {
   features: {
     bedrooms?: number;
     bathrooms?: number;
-    floors?: number;            // Cantidad de plantas
+    floors?: number;            // Cantidad de plantas / pisos de la vivienda
     builtAreaM2?: number;       // m² edificados
     plotAreaM2?: number;        // m² de terreno
+    frontMeters?: number;       // Metros de frente (ej. 15m)
     isHectares?: boolean;       // Medida en ha
-    garage?: boolean;
-    barbecue?: boolean;
-    pool?: boolean;
-    perimeterFence?: boolean;
-    bankCreditEligible?: boolean; // Apta crédito bancario
-    phRegime?: boolean;           // Régimen de PH
-    oseWater?: boolean;          // Agua de OSE
-    sanitation?: boolean;         // Saneamiento
-    commonExpensesAmount?: number; // Gastos comunes
-    coneatIndex?: number;          // Índice CONEAT (ej. 110)
-    frontMeters?: number;          // Metros de frente (ej. 15m)
-    waterWellOrPond?: boolean;     // Pozo de Agua / Tajamar
-    fiberOptic?: boolean;          // Fibra Óptica
-    pavedStreet?: boolean;         // Frente a Asfalto / Hormigón
-    woodStoveOrAC?: boolean;       // Estufa a Leña / Aire Acondicionado
-    titlesUpToDate?: boolean;      // Títulos al Día / Verificado Notarialmente
-    acceptsTradeIn?: boolean;      // Acepta Permuta
-    shedOrCorral?: boolean;        // Galpón / Embarcadero
+    carAccess?: boolean;        // Entrada de Auto / Acceso Vehicular
+    garage?: boolean;           // Garage Techado / Cochera
+    barbecue?: boolean;         // Parrillero / Barbacoa
+    pool?: boolean;             // Piscina
+    garden?: boolean;           // Jardín / Fondo Verde / Patio
+    woodStoveOrAC?: boolean;    // Estufa a Leña / Aire Acondicionado
+    petFriendly?: boolean;      // Acepta Mascotas / Pet Friendly
+    oseWater?: boolean;         // Agua Corriente (OSE)
+    uteElectric?: boolean;      // Luz Eléctrica (UTE)
+    sanitation?: boolean;       // Saneamiento / Alcantarillado
+    fiberOptic?: boolean;       // Fibra Óptica / Internet
+    waterWellOrPond?: boolean;  // Pozo de Agua / Tajamar
+    titlesUpToDate?: boolean;   // Títulos al Día / Escriturable
+    bankCreditEligible?: boolean; // Apta Crédito Bancario
+    acceptsTradeIn?: boolean;   // Acepta Permuta
+    phRegime?: boolean;         // Régimen de Propiedad Horizontal (PH)
+    perimeterFence?: boolean;   // Cerco Perimetral / Rejas / Muro
+    securitySystem?: boolean;   // Alarma / Cámaras / Seguridad
+    pavedStreet?: boolean;      // Frente a Asfalto / Hormigón
+    shedOrCorral?: boolean;     // Galpón / Embarcadero / Depósito
+    coneatIndex?: number;       // Índice CONEAT (ej. 110)
+    commonExpensesAmount?: number; // Gastos comunes (Monto)
   };
   guarantees?: GuaranteeType[];
   legalCertainties?: {
@@ -86,6 +91,8 @@ export interface Property {
     acceptsTradeIn?: boolean;
   };
   images: ImageAsset[];
+  seoTitle?: string;
+  seoDescription?: string;
   featured: boolean;
   createdAt: string;
   updatedAt: string;

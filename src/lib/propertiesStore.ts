@@ -63,6 +63,22 @@ async function ensureTablesExist(sql: any) {
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS is_exact_location BOOLEAN DEFAULT FALSE;`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS radius_meters INT DEFAULT 300;`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS has_location BOOLEAN DEFAULT TRUE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS front_meters NUMERIC(10, 2);`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS car_access BOOLEAN DEFAULT FALSE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS garden BOOLEAN DEFAULT FALSE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS wood_stove_or_ac BOOLEAN DEFAULT FALSE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS pet_friendly BOOLEAN DEFAULT FALSE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS ute_electric BOOLEAN DEFAULT FALSE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS fiber_optic BOOLEAN DEFAULT FALSE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS water_well_or_pond BOOLEAN DEFAULT FALSE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS titles_up_to_date BOOLEAN DEFAULT TRUE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS accepts_trade_in BOOLEAN DEFAULT FALSE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS security_system BOOLEAN DEFAULT FALSE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS paved_street BOOLEAN DEFAULT FALSE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS shed_or_corral BOOLEAN DEFAULT FALSE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS coneat_index INT;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS seo_title TEXT;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS seo_description TEXT;`;
     tablesInitialized = true;
   } catch (err) {
     console.warn('Error al auto-crear tablas en Neon Postgres:', err);
@@ -120,18 +136,34 @@ export async function getAllProperties(): Promise<Property[]> {
               floors: row.floors,
               builtAreaM2: row.built_area_m2 ? Number(row.built_area_m2) : undefined,
               plotAreaM2: row.plot_area_m2 ? Number(row.plot_area_m2) : undefined,
+              frontMeters: row.front_meters ? Number(row.front_meters) : undefined,
               isHectares: row.is_hectares,
+              carAccess: row.car_access,
               garage: row.garage,
               barbecue: row.barbecue,
               pool: row.pool,
+              garden: row.garden,
+              woodStoveOrAC: row.wood_stove_or_ac,
+              petFriendly: row.pet_friendly,
               perimeterFence: row.perimeter_fence,
               bankCreditEligible: row.bank_credit_eligible,
               phRegime: row.ph_regime,
               oseWater: row.ose_water,
+              uteElectric: row.ute_electric,
               sanitation: row.sanitation,
+              fiberOptic: row.fiber_optic,
+              waterWellOrPond: row.water_well_or_pond,
+              titlesUpToDate: row.titles_up_to_date,
+              acceptsTradeIn: row.accepts_trade_in,
+              securitySystem: row.security_system,
+              pavedStreet: row.paved_street,
+              shedOrCorral: row.shed_or_corral,
+              coneatIndex: row.coneat_index ? Number(row.coneat_index) : undefined,
             },
             guarantees: Array.isArray(row.guarantees) ? row.guarantees : [],
             images: Array.isArray(row.images) ? row.images : [],
+            seoTitle: row.seo_title || undefined,
+            seoDescription: row.seo_description || undefined,
             featured: row.featured,
             createdAt: row.created_at,
             updatedAt: row.updated_at,
@@ -192,23 +224,29 @@ export async function saveProperty(property: Property): Promise<Property> {
           price_amount, price_currency, price_period, price_drop, original_amount,
           department, city, neighborhood, address,
           lat, lng, is_exact_location, radius_meters, has_location,
-          bedrooms, bathrooms, floors, built_area_m2, plot_area_m2,
-          garage, barbecue, bank_credit_eligible, ph_regime, ose_water, sanitation,
-          guarantees, images, featured
+          bedrooms, bathrooms, floors, built_area_m2, plot_area_m2, front_meters,
+          car_access, garage, barbecue, pool, garden, wood_stove_or_ac, pet_friendly,
+          perimeter_fence, bank_credit_eligible, ph_regime, ose_water, ute_electric, sanitation, fiber_optic,
+          water_well_or_pond, titles_up_to_date, accepts_trade_in, security_system, paved_street, shed_or_corral, coneat_index,
+          guarantees, images, seo_title, seo_description, featured
         ) VALUES (
           ${property.id}, ${property.codeRef}, ${property.title}, ${property.slug}, ${property.description}, ${property.operation}, ${property.category}, ${property.status},
           ${property.price.amount}, ${property.price.currency}, ${property.price.period || null}, ${property.price.priceDrop || false}, ${property.price.originalAmount || null},
           ${property.location.department}, ${property.location.city}, ${property.location.neighborhood}, ${property.location.address || null},
           ${latVal}, ${lngVal}, ${property.location.isExactLocation ?? false}, ${property.location.radiusMeters || 300}, ${property.location.hasLocation !== false},
-          ${property.features.bedrooms || null}, ${property.features.bathrooms || null}, ${property.features.floors || null}, ${property.features.builtAreaM2 || null}, ${property.features.plotAreaM2 || null},
-          ${property.features.garage || false}, ${property.features.barbecue || false}, ${property.features.bankCreditEligible || false}, ${property.features.phRegime || false}, ${property.features.oseWater || false}, ${property.features.sanitation || false},
-          ${JSON.stringify(property.guarantees || [])}, ${JSON.stringify(property.images || [])}, ${property.featured}
+          ${property.features.bedrooms || null}, ${property.features.bathrooms || null}, ${property.features.floors || null}, ${property.features.builtAreaM2 || null}, ${property.features.plotAreaM2 || null}, ${property.features.frontMeters || null},
+          ${property.features.carAccess || false}, ${property.features.garage || false}, ${property.features.barbecue || false}, ${property.features.pool || false}, ${property.features.garden || false}, ${property.features.woodStoveOrAC || false}, ${property.features.petFriendly || false},
+          ${property.features.perimeterFence || false}, ${property.features.bankCreditEligible || false}, ${property.features.phRegime || false}, ${property.features.oseWater || false}, ${property.features.uteElectric || false}, ${property.features.sanitation || false}, ${property.features.fiberOptic || false},
+          ${property.features.waterWellOrPond || false}, ${property.features.titlesUpToDate || false}, ${property.features.acceptsTradeIn || false}, ${property.features.securitySystem || false}, ${property.features.pavedStreet || false}, ${property.features.shedOrCorral || false}, ${property.features.coneatIndex || null},
+          ${JSON.stringify(property.guarantees || [])}, ${JSON.stringify(property.images || [])}, ${property.seoTitle || null}, ${property.seoDescription || null}, ${property.featured}
         ) ON CONFLICT (id) DO UPDATE SET
           title = EXCLUDED.title,
           status = EXCLUDED.status,
           price_amount = EXCLUDED.price_amount,
           description = EXCLUDED.description,
           images = EXCLUDED.images,
+          seo_title = EXCLUDED.seo_title,
+          seo_description = EXCLUDED.seo_description,
           lat = EXCLUDED.lat,
           lng = EXCLUDED.lng,
           is_exact_location = EXCLUDED.is_exact_location,
