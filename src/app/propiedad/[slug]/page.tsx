@@ -6,7 +6,7 @@ import { Footer } from '@/components/Footer';
 import { getAllProperties } from '@/lib/propertiesStore';
 import { generatePropertyMetadata, generatePropertyJsonLd } from '@/utils/seo';
 import { buildPropertyWhatsAppLink } from '@/utils/whatsapp';
-import { MapPin, Bed, Bath, Maximize2, Car, Building, CheckCircle2, MessageCircle, ArrowLeft, ShieldCheck, Share2, Compass, Trees, Droplets, FileCheck, Landmark, ArrowLeftRight, Wifi } from 'lucide-react';
+import { MapPin, Bed, Bath, Maximize2, Car, Building, CheckCircle2, MessageCircle, ArrowLeft, ShieldCheck, Share2, Compass, Trees, Droplets, FileCheck, Landmark, ArrowLeftRight, Wifi, Flame, Zap, Dog, Waves } from 'lucide-react';
 import { PropertyMapWrapper } from '@/components/PropertyMapWrapper';
 import { SharePropertyModal } from '@/components/SharePropertyModal';
 import { PropertyGallery } from '@/components/PropertyGallery';
@@ -221,39 +221,47 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                 )}
                 {property.features.barbecue && (
                   <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
-                    <span className="p-1.5 sm:p-2 rounded-xl bg-amber-500/10 text-amber-600 flex-shrink-0">
-                      🍖
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <Flame className="w-4 h-4 sm:w-5 sm:h-5" />
                     </span>
                     <span className="truncate">Parrillero / Barbacoa</span>
                   </div>
                 )}
                 {property.features.woodStoveOrAC && (
                   <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
-                    <span className="p-1.5 sm:p-2 rounded-xl bg-amber-500/10 text-amber-600 flex-shrink-0">
-                      🪵
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <Flame className="w-4 h-4 sm:w-5 sm:h-5" />
                     </span>
                     <span className="truncate">Estufa a Leña / AC</span>
                   </div>
                 )}
+                {property.features.pool && (
+                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <Waves className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </span>
+                    <span className="truncate">Piscina</span>
+                  </div>
+                )}
                 {property.features.garden && (
                   <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
-                    <span className="p-1.5 sm:p-2 rounded-xl bg-emerald-500/10 text-emerald-600 flex-shrink-0">
-                      🌳
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <Trees className="w-4 h-4 sm:w-5 sm:h-5" />
                     </span>
                     <span className="truncate">Fondo</span>
                   </div>
                 )}
                 {property.features.petFriendly && (
                   <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
-                    <span className="p-1.5 sm:p-2 rounded-xl bg-amber-500/10 text-amber-600 flex-shrink-0">
-                      🐾
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <Dog className="w-4 h-4 sm:w-5 sm:h-5" />
                     </span>
                     <span className="truncate">Acepta Mascotas</span>
                   </div>
                 )}
                 {property.features.oseWater && (
                   <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
-                    <span className="p-1.5 sm:p-2 rounded-xl bg-sky-500/10 text-sky-600 flex-shrink-0">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
                       <Droplets className="w-4 h-4 sm:w-5 sm:h-5" />
                     </span>
                     <span className="truncate">Agua Corriente (OSE)</span>
@@ -261,23 +269,23 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                 )}
                 {property.features.uteElectric && (
                   <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
-                    <span className="p-1.5 sm:p-2 rounded-xl bg-amber-500/10 text-amber-600 flex-shrink-0">
-                      ⚡
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
                     </span>
                     <span className="truncate">Luz Eléctrica (UTE)</span>
                   </div>
                 )}
                 {property.features.sanitation && (
                   <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
-                    <span className="p-1.5 sm:p-2 rounded-xl bg-sky-500/10 text-sky-600 flex-shrink-0">
-                      🚽
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <Droplets className="w-4 h-4 sm:w-5 sm:h-5" />
                     </span>
                     <span className="truncate">Saneamiento</span>
                   </div>
                 )}
                 {property.features.fiberOptic && (
                   <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
-                    <span className="p-1.5 sm:p-2 rounded-xl bg-indigo-500/10 text-indigo-600 flex-shrink-0">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
                       <Wifi className="w-4 h-4 sm:w-5 sm:h-5" />
                     </span>
                     <span className="truncate">Fibra Óptica</span>

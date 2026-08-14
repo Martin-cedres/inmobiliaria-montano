@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Property } from '@/types/property';
 import { buildPropertyWhatsAppLink } from '@/utils/whatsapp';
 import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon';
-import { Bed, Bath, Maximize2, Car, MapPin, Landmark, ShieldCheck, Sparkles, Clock, CheckCircle2, AlertCircle, FileCheck, ArrowLeftRight, Compass, Trees, Building, Ruler } from 'lucide-react';
+import { Bed, Bath, Maximize2, Car, MapPin, Landmark, ShieldCheck, Sparkles, Clock, CheckCircle2, AlertCircle, FileCheck, ArrowLeftRight, Compass, Trees, Building, Ruler, Flame, Droplets } from 'lucide-react';
 
 interface PropertyCardProps {
   property: Property;
@@ -258,15 +258,23 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
               {property.features.barbecue && (
                 <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Parrillero">
                   <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    🍖
+                    <Flame className="w-3.5 h-3.5" />
                   </span>
                   <span>Parrillero</span>
                 </div>
               )}
+              {property.features.garden && (
+                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Fondo">
+                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
+                    <Trees className="w-3.5 h-3.5" />
+                  </span>
+                  <span>Fondo</span>
+                </div>
+              )}
               {property.features.oseWater && (
                 <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Agua de OSE">
-                  <span className="p-0.5 rounded-md bg-sky-500/10 text-sky-600">
-                    🚰
+                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
+                    <Droplets className="w-3.5 h-3.5" />
                   </span>
                   <span>Agua OSE</span>
                 </div>

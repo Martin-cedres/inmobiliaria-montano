@@ -6,6 +6,9 @@
 - Creados los tipos TypeScript (src/types/property.ts), utilidades de WhatsApp contextual (src/utils/whatsapp.ts), datos de prueba (src/data/mockProperties.ts) y los componentes UI Header, HeroSearch, CategoryChips, PropertyCard, OwnerLeadSection y Footer.
 - Subidos todos los cambios limpios a GitHub (solicitado explícitamente por el usuario) en https://github.com/Martin-cedres/inmobiliaria-montano, disparando el despliegue automático en Vercel.
 - Verificada la compilación limpia con `npm run build` (0 errores).
+- Armonizado el ícono y badge de **"Fondo"** y demás comodidades en la ficha de detalle pública ([`propiedad/[slug]/page.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/propiedad/%5Bslug%5D/page.tsx)) y tarjetas ([`PropertyCard.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/PropertyCard.tsx)): reemplazado el emoji de árbol y el color verde neón estridente por el ícono vectorial de Lucide (`Trees`) montado sobre el contenedor de micro-badge institucional con opacidad púrpura corporativa (`bg-[#5E1754]/10 text-[#5E1754]`).
+- Estandarizadas todas las comodidades y características (`barbecue`, `woodStoveOrAC`, `garden`, `petFriendly`, `oseWater`, `uteElectric`, `sanitation`, `fiberOptic`, `pool`) para que utilicen 100% íconos vectoriales Lucide (`Flame`, `Trees`, `Dog`, `Droplets`, `Zap`, `Wifi`, `Waves`) bajo la misma paleta y estilo visual corporativo unificado.
+- Limpiadas las etiquetas de los formularios Admin ([`admin/nueva`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/admin/nueva/page.tsx) y [`admin/editar/[id]`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/admin/editar/%5Bid%5D/page.tsx)).
 - Servidor de desarrollo Next.js activo en http://localhost:3000.
 
 === Sesión 2026-08-08 ===
@@ -190,6 +193,13 @@
 - Verificada la compilación limpia local (`npm run build`, 0 errores).
 - Subidos los cambios a GitHub (`git push origin main` -> commit `21bb20c`), actualizando el sitio en Vercel.
 - Creado el plan de acción mejorado [`implementation_plan.md`](file:///C:/Users/LENOVO/.gemini/antigravity/brain/2e2b657d-1dbc-4283-acc6-6f6d49a2e95b/implementation_plan.md) para la implementación de la **Indexación Instantánea en Google (Google Indexing API & IndexNow)**, Sitemap XML y Robots.txt dinámicos, notificaciones forzadas `URL_UPDATED`/`URL_DELETED`, trazabilidad `lastGoogleNotifiedAt`, botón de indexación en 1-clic y enlace directo de inspección en Google Search Console.
+- Creado el módulo de notificación instantánea [`src/lib/googleIndexing.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/lib/googleIndexing.ts) y la ruta API [`src/app/api/admin/google-index/route.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/api/admin/google-index/route.ts).
+- Creados los generadores dinámicos de Next.js App Router [`src/app/sitemap.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/sitemap.ts) y [`src/app/robots.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/robots.ts).
+- Integrado el panel de trazabilidad de indexación en [`SeoEditorSection.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/admin/SeoEditorSection.tsx) con fecha de notificación `lastGoogleNotifiedAt`, botón `[ 🚀 Forzar Indexación en Google ]`, enlace directo `[ Search Console ↗ ]` y el cartel recordatorio informativo para cuando el usuario configure las variables `GOOGLE_CLIENT_EMAIL` y `GOOGLE_PRIVATE_KEY` en Vercel.
+- Mapeadas las columnas `last_google_notified_at` y `google_indexing_status` en Neon DB Postgres en [`src/lib/propertiesStore.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/lib/propertiesStore.ts) y badges en la tabla principal ([`src/app/admin/page.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/admin/page.tsx)).
+- Verificada la compilación limpia local (`npm run build`, 0 errores).
+- Subidos los cambios a GitHub (`git push origin main` -> commit `6006ef3`), disparando el despliegue automático en Vercel.
+
 
 
 

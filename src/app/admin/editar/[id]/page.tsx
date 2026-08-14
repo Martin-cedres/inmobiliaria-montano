@@ -699,7 +699,7 @@ export default function EditarPropiedadPage() {
                       onChange={(e) => setCarAccess(e.target.checked)}
                       className="w-4 h-4 text-amber-600 rounded"
                     />
-                    <span>🚘 Entrada de Auto</span>
+                    <span>Entrada de Auto</span>
                   </label>
                   <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/60 shadow-2xs hover:border-amber-300">
                     <input
@@ -708,7 +708,7 @@ export default function EditarPropiedadPage() {
                       onChange={(e) => setGarage(e.target.checked)}
                       className="w-4 h-4 text-amber-600 rounded"
                     />
-                    <span>🚗 Garage</span>
+                    <span>Garage</span>
                   </label>
                   <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/60 shadow-2xs hover:border-amber-300">
                     <input
@@ -717,7 +717,7 @@ export default function EditarPropiedadPage() {
                       onChange={(e) => setBarbecue(e.target.checked)}
                       className="w-4 h-4 text-amber-600 rounded"
                     />
-                    <span>🍖 Parrillero / Barbacoa</span>
+                    <span>Parrillero / Barbacoa</span>
                   </label>
                   <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/60 shadow-2xs hover:border-amber-300">
                     <input
@@ -726,7 +726,7 @@ export default function EditarPropiedadPage() {
                       onChange={(e) => setWoodStoveOrAC(e.target.checked)}
                       className="w-4 h-4 text-amber-600 rounded"
                     />
-                    <span>🪵 Estufa a Leña / AC</span>
+                    <span>Estufa a Leña / AC</span>
                   </label>
                   <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/60 shadow-2xs hover:border-amber-300">
                     <input
@@ -735,16 +735,16 @@ export default function EditarPropiedadPage() {
                       onChange={(e) => setPool(e.target.checked)}
                       className="w-4 h-4 text-amber-600 rounded"
                     />
-                    <span>🏊 Piscina</span>
+                    <span>Piscina</span>
                   </label>
                   <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/60 shadow-2xs hover:border-amber-300">
                     <input
                       type="checkbox"
                       checked={garden}
                       onChange={(e) => setGarden(e.target.checked)}
-                      className="w-4 h-4 text-emerald-600 rounded"
+                      className="w-4 h-4 text-[#5E1754] rounded"
                     />
-                    <span>🌳 Fondo</span>
+                    <span>Fondo</span>
                   </label>
                   <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/60 shadow-2xs hover:border-amber-300">
                     <input
@@ -753,7 +753,7 @@ export default function EditarPropiedadPage() {
                       onChange={(e) => setPetFriendly(e.target.checked)}
                       className="w-4 h-4 text-amber-600 rounded"
                     />
-                    <span>🐾 Acepta Mascotas</span>
+                    <span>Acepta Mascotas</span>
                   </label>
                 </div>
               </div>
