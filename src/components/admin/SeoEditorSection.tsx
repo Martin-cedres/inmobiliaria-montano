@@ -24,6 +24,9 @@ interface SeoEditorSectionProps {
   setSeoTitle: (val: string) => void;
   seoDescription: string;
   setSeoDescription: (val: string) => void;
+  propertyId?: string;
+  lastGoogleNotifiedAt?: string;
+  googleIndexingStatus?: 'notified' | 'pending' | 'error';
 }
 
 export function SeoEditorSection({
@@ -45,10 +48,16 @@ export function SeoEditorSection({
   setSeoTitle,
   seoDescription,
   setSeoDescription,
+  propertyId,
+  lastGoogleNotifiedAt,
+  googleIndexingStatus = 'pending',
 }: SeoEditorSectionProps) {
   const [showAiModal, setShowAiModal] = useState(false);
   const [isGeneratingAi, setIsGeneratingAi] = useState(false);
   const [aiVariants, setAiVariants] = useState<any[]>([]);
+  const [isNotifyingGoogle, setIsNotifyingGoogle] = useState(false);
+  const [localNotifiedAt, setLocalNotifiedAt] = useState<string | undefined>(lastGoogleNotifiedAt);
+  const [indexingState, setIndexingState] = useState<'notified' | 'pending' | 'error'>(googleIndexingStatus);
 
   // Reglas de semáforo
   const titleLen = seoTitle.length;
@@ -122,6 +131,43 @@ export function SeoEditorSection({
   const generatedSlug = generatePropertySlug(title || 'propiedad', codeRef, category, operation, neighborhood);
   const mainImg = images.find((i) => i.isMain)?.webpUrl || images[0]?.webpUrl || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80';
   const priceFormatted = `${priceCurrency === 'USD' ? 'USD' : 'UYU $'} ${priceAmount.toLocaleString()}`;
+
+  const handleForceGoogleIndexing = async () => {
+    setIsNotifyingGoogle(true);
+    try {
+      const siteOrigin = typeof window !== 'undefined' ? window.location.origin : 'https://inmobiliariamontano.uy';
+      const targetUrl = `${siteOrigin}/propiedad/${generatedSlug}`;
+
+      const res = await fetch('/api/admin/google-index', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          propertyId,
+          url: targetUrl,
+          type: 'URL_UPDATED',
+        }),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        setIndexingState('notified');
+        setLocalNotifiedAt(data.timestamp || new Date().toISOString());
+      } else {
+        setIndexingState('error');
+      }
+    } catch (err) {
+      console.error('Error forzando indexación:', err);
+      setIndexingState('error');
+    } finally {
+      setIsNotifyingGoogle(false);
+    }
+  };
+
+  const formattedNotifiedDate = localNotifiedAt
+    ? new Date(localNotifiedAt).toLocaleString('es-UY', { dateStyle: 'short', timeStyle: 'short' })
+    : null;
+
+  const searchConsoleInspectUrl = `https://search.google.com/search-console/inspect?resource_id=${encodeURIComponent('https://inmobiliariamontano.uy')}&url=${encodeURIComponent(`https://inmobiliariamontano.uy/propiedad/${generatedSlug}`)}`;
 
   return (
     <div className="space-y-6 pt-6 border-t border-slate-100">
@@ -335,6 +381,79 @@ export function SeoEditorSection({
             </div>
           </div>
 
+        </div>
+
+      </div>
+
+      {/* 🟢 Panel de Indexación Instantánea en Google & Recordatorio Vercel */}
+      <div className="bg-white rounded-3xl p-5 sm:p-6 border border-purple-100 shadow-xs space-y-4 text-left">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div>
+            <h4 className="text-sm font-extrabold text-slate-900 flex items-center space-x-2">
+              <span>🚀 Notificación & Indexación Instantánea (Google & IndexNow)</span>
+            </h4>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Notificá a Google y Bing inmediatamente para que rastreen y posicionen esta publicación en minutos.
+            </p>
+          </div>
+
+          <div className="flex items-center space-x-2 w-full sm:w-auto">
+            <button
+              type="button"
+              onClick={handleForceGoogleIndexing}
+              disabled={isNotifyingGoogle}
+              className="flex-1 sm:flex-initial bg-[#5E1754] hover:bg-purple-900 active:scale-95 text-white font-extrabold text-xs px-4 py-2.5 rounded-xl transition-all shadow-md flex items-center justify-center space-x-2 cursor-pointer"
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${isNotifyingGoogle ? 'animate-spin' : ''}`} />
+              <span>{isNotifyingGoogle ? 'Notificando...' : 'Forzar Indexación en Google'}</span>
+            </button>
+
+            <a
+              href={searchConsoleInspectUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs px-3 py-2.5 rounded-xl transition-all flex items-center space-x-1.5"
+              title="Abrir en Google Search Console para auditar"
+            >
+              <Search className="w-3.5 h-3.5 text-blue-600" />
+              <span className="hidden sm:inline">Search Console ↗</span>
+            </a>
+          </div>
+        </div>
+
+        {/* Estado Visual de la Notificación */}
+        <div className="flex items-center justify-between bg-slate-50 p-3 rounded-2xl border border-slate-100 text-xs">
+          <div className="flex items-center space-x-2">
+            <span className="text-slate-500 font-bold">Estado de Indexación:</span>
+            {indexingState === 'notified' ? (
+              <span className="bg-emerald-100 text-emerald-800 font-black px-2.5 py-0.5 rounded-full flex items-center space-x-1">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                <span>🟢 Notificado a Google & IndexNow</span>
+              </span>
+            ) : (
+              <span className="bg-amber-100 text-amber-900 font-bold px-2.5 py-0.5 rounded-full flex items-center space-x-1">
+                <AlertCircle className="w-3.5 h-3.5 text-amber-600" />
+                <span>🟡 Pendiente de envío</span>
+              </span>
+            )}
+          </div>
+
+          {formattedNotifiedDate && (
+            <span className="text-[11px] text-slate-400 font-semibold">
+              Última notificación: {formattedNotifiedDate}
+            </span>
+          )}
+        </div>
+
+        {/* 💡 Recordatorio Especial de Vercel y Dominio Oficial Solicitado por el Usuario */}
+        <div className="bg-amber-50/90 border border-amber-200/80 rounded-2xl p-4 flex items-start space-x-3 text-xs">
+          <span className="p-2 bg-amber-500/10 text-amber-600 rounded-xl font-bold flex-shrink-0 text-base">💡</span>
+          <div className="space-y-1">
+            <p className="font-extrabold text-amber-950">Recordatorio para cuando tengas el dominio oficial:</p>
+            <p className="text-amber-900 leading-relaxed font-medium">
+              Cuando esté activo tu dominio oficial (ej. <code className="bg-amber-100/80 px-1.5 py-0.5 rounded text-amber-950 font-mono font-bold">inmobiliariamontano.uy</code>), agregá en el panel de Vercel las variables de entorno <code className="bg-amber-100/80 px-1.5 py-0.5 rounded text-amber-950 font-mono font-bold">GOOGLE_CLIENT_EMAIL</code> y <code className="bg-amber-100/80 px-1.5 py-0.5 rounded text-amber-950 font-mono font-bold">GOOGLE_PRIVATE_KEY</code> para que el sistema pase a utilizar la <strong>Service Account privada de Google Indexing API</strong> automáticamente.
+            </p>
+          </div>
         </div>
 
       </div>

@@ -367,6 +367,12 @@ export default function AdminDashboardPage() {
                               <span>Alta Demanda</span>
                             </span>
                           )}
+
+                          {prop.googleIndexingStatus === 'notified' && (
+                            <span className="inline-flex items-center space-x-1 text-[10px] font-extrabold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full" title="Google Indexing Notificado">
+                              <span>🟢 Google</span>
+                            </span>
+                          )}
                         </div>
                       </td>
 

@@ -96,6 +96,8 @@ export interface Property {
   viewsCount?: number;
   whatsappClicksCount?: number;
   sharesCount?: number;
+  lastGoogleNotifiedAt?: string;
+  googleIndexingStatus?: 'notified' | 'pending' | 'error';
   featured: boolean;
   createdAt: string;
   updatedAt: string;

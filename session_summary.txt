@@ -186,6 +186,12 @@
 - Mapeadas las columnas `views_count`, `whatsapp_clicks_count` y `shares_count` en Neon DB Postgres en [`src/lib/propertiesStore.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/lib/propertiesStore.ts) e interfaces de TypeScript en [`src/types/property.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/types/property.ts).
 - Verificada la compilación limpia local (`npm run build`, 0 errores).
 - Subidos los cambios a GitHub (`git push origin main` -> commit `71c47df`), disparando el despliegue automático en Vercel.
+- Simplificadas las etiquetas de características: "Garage Techado / Cochera" a **"Garage"** y "Jardín / Fondo Verde" a **"Fondo"** en los formularios Admin ([`admin/nueva`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/admin/nueva/page.tsx), [`admin/editar/[id]`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/admin/editar/%5Bid%5D/page.tsx)), en las tarjetas ([`PropertyCard.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/PropertyCard.tsx)) y en la ficha de detalle pública ([`propiedad/[slug]/page.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/propiedad/%5Bslug%5D/page.tsx)).
+- Verificada la compilación limpia local (`npm run build`, 0 errores).
+- Subidos los cambios a GitHub (`git push origin main` -> commit `21bb20c`), actualizando el sitio en Vercel.
+- Creado el plan de acción mejorado [`implementation_plan.md`](file:///C:/Users/LENOVO/.gemini/antigravity/brain/2e2b657d-1dbc-4283-acc6-6f6d49a2e95b/implementation_plan.md) para la implementación de la **Indexación Instantánea en Google (Google Indexing API & IndexNow)**, Sitemap XML y Robots.txt dinámicos, notificaciones forzadas `URL_UPDATED`/`URL_DELETED`, trazabilidad `lastGoogleNotifiedAt`, botón de indexación en 1-clic y enlace directo de inspección en Google Search Console.
+
+
 
 
 

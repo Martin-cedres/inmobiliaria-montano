@@ -84,6 +84,8 @@ async function ensureTablesExist(sql: any) {
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS views_count INT DEFAULT 0;`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS whatsapp_clicks_count INT DEFAULT 0;`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS shares_count INT DEFAULT 0;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS last_google_notified_at TIMESTAMP WITH TIME ZONE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS google_indexing_status TEXT DEFAULT 'pending';`;
     tablesInitialized = true;
   } catch (err) {
     console.warn('Error al auto-crear tablas en Neon Postgres:', err);
@@ -172,6 +174,8 @@ export async function getAllProperties(): Promise<Property[]> {
             viewsCount: Number(row.views_count || 0),
             whatsappClicksCount: Number(row.whatsapp_clicks_count || 0),
             sharesCount: Number(row.shares_count || 0),
+            lastGoogleNotifiedAt: row.last_google_notified_at || undefined,
+            googleIndexingStatus: row.google_indexing_status || 'pending',
             featured: row.featured,
             createdAt: row.created_at,
             updatedAt: row.updated_at,
@@ -442,6 +446,49 @@ export async function incrementPropertyMetric(
   if (index >= 0) {
     const field = keyMap[eventType];
     properties[index][field] = (properties[index][field] || 0) + 1;
+    memoryProperties = [...properties];
+
+    try {
+      await fs.writeFile(LOCAL_DB_PATH, JSON.stringify(properties, null, 2), 'utf-8');
+    } catch (err) {
+      // Ignorar en serverless read-only
+    }
+    return true;
+  }
+
+  return false;
+}
+
+/**
+ * Actualiza el estado de la notificación de indexación en Google
+ */
+export async function updateGoogleIndexingStatus(
+  identifier: string,
+  status: 'notified' | 'pending' | 'error',
+  notifiedAt: string = new Date().toISOString()
+): Promise<boolean> {
+  const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL;
+
+  if (connectionString) {
+    const sql = getDbClient();
+    try {
+      await sql`
+        UPDATE properties 
+        SET 
+          google_indexing_status = ${status},
+          last_google_notified_at = ${notifiedAt}
+        WHERE id = ${identifier} OR slug = ${identifier};
+      `;
+    } catch (dbErr) {
+      console.warn('Error actualizando estado de indexación en Neon Postgres:', dbErr);
+    }
+  }
+
+  const properties = await getAllProperties();
+  const index = properties.findIndex((p) => p.id === identifier || p.slug === identifier);
+  if (index >= 0) {
+    properties[index].googleIndexingStatus = status;
+    properties[index].lastGoogleNotifiedAt = notifiedAt;
     memoryProperties = [...properties];
 
     try {

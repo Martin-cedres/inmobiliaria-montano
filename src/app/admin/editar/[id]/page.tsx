@@ -81,6 +81,9 @@ export default function EditarPropiedadPage() {
 
   const [selectedGuarantees, setSelectedGuarantees] = useState<GuaranteeType[]>([]);
 
+  const [lastGoogleNotifiedAt, setLastGoogleNotifiedAt] = useState<string | undefined>(undefined);
+  const [googleIndexingStatus, setGoogleIndexingStatus] = useState<'notified' | 'pending' | 'error'>('pending');
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
@@ -148,6 +151,8 @@ export default function EditarPropiedadPage() {
 
           setSeoTitle(p.seoTitle || '');
           setSeoDescription(p.seoDescription || '');
+          setLastGoogleNotifiedAt(p.lastGoogleNotifiedAt);
+          setGoogleIndexingStatus(p.googleIndexingStatus || 'pending');
 
           setImages(Array.isArray(p.images) ? p.images : []);
         } else {
@@ -888,6 +893,9 @@ export default function EditarPropiedadPage() {
               setSeoTitle={setSeoTitle}
               seoDescription={seoDescription}
               setSeoDescription={setSeoDescription}
+              propertyId={propertyId}
+              lastGoogleNotifiedAt={lastGoogleNotifiedAt}
+              googleIndexingStatus={googleIndexingStatus}
             />
 
             {/* Section 5: Gallery & Main Cover Photo */}
