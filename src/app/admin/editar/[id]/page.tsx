@@ -703,7 +703,7 @@ export default function EditarPropiedadPage() {
                       onChange={(e) => setGarage(e.target.checked)}
                       className="w-4 h-4 text-amber-600 rounded"
                     />
-                    <span>🚗 Garage / Cochera</span>
+                    <span>🚗 Garage</span>
                   </label>
                   <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/60 shadow-2xs hover:border-amber-300">
                     <input
@@ -739,7 +739,7 @@ export default function EditarPropiedadPage() {
                       onChange={(e) => setGarden(e.target.checked)}
                       className="w-4 h-4 text-emerald-600 rounded"
                     />
-                    <span>🌳 Jardín / Fondo Verde</span>
+                    <span>🌳 Fondo</span>
                   </label>
                   <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/60 shadow-2xs hover:border-amber-300">
                     <input

@@ -248,7 +248,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
                 </div>
               )}
               {property.features.garage && (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Garage Techado">
+                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Garage">
                   <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
                     <Car className="w-3.5 h-3.5" />
                   </span>

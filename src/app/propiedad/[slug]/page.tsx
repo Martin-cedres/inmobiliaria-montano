@@ -216,7 +216,7 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                     <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
                       <Car className="w-4 h-4 sm:w-5 sm:h-5" />
                     </span>
-                    <span className="truncate">Garage Techado</span>
+                    <span className="truncate">Garage</span>
                   </div>
                 )}
                 {property.features.barbecue && (
@@ -240,7 +240,7 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                     <span className="p-1.5 sm:p-2 rounded-xl bg-emerald-500/10 text-emerald-600 flex-shrink-0">
                       🌳
                     </span>
-                    <span className="truncate">Jardín / Fondo Verde</span>
+                    <span className="truncate">Fondo</span>
                   </div>
                 )}
                 {property.features.petFriendly && (

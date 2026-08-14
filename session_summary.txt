@@ -180,6 +180,13 @@
 - Optimizado el parsing de atributos planos e interactivos en [`src/app/api/properties/[id]/route.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/api/properties/%5Bid%5D/route.ts) y [`src/app/api/properties/route.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/api/properties/route.ts).
 - Verificada la compilación limpia local (`npm run build`, 0 errores).
 - Creado el plan de acción [`implementation_plan.md`](file:///C:/Users/LENOVO/.gemini/antigravity/brain/2e2b657d-1dbc-4283-acc6-6f6d49a2e95b/implementation_plan.md) para la implementación del Panel de Métricas Comerciales & Seguimiento de Leads (Vistas de fichas, Clics a WhatsApp, Tasa de Conversión, Propiedad más popular) con tracking 100% independiente del dominio.
+- Creada la utilidad de tracking asíncrono [`src/utils/analytics.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/utils/analytics.ts) y el endpoint API [`src/app/api/analytics/track/route.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/api/analytics/track/route.ts).
+- Creados e inyectados los componentes de rastreo de cliente [`PropertyTracker.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/analytics/PropertyTracker.tsx) y [`WhatsAppTrackButton.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/analytics/WhatsAppTrackButton.tsx) en [`src/app/propiedad/[slug]/page.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/propiedad/%5Bslug%5D/page.tsx).
+- Rediseñado el Panel de Administración ([`src/app/admin/page.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/admin/page.tsx)) con 4 KPIs comerciales ejecutivos (Total Inmuebles, Fichas Vistas, Leads WhatsApp, Propiedad Más Consultada), botonera de ordenamiento (*Más Consultadas*, *Más Vistas*, *Recientes*) y badges en tiempo real por propiedad (`👁️ Vistas`, `💬 Leads`, `🔥 Alta Demanda`).
+- Mapeadas las columnas `views_count`, `whatsapp_clicks_count` y `shares_count` en Neon DB Postgres en [`src/lib/propertiesStore.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/lib/propertiesStore.ts) e interfaces de TypeScript en [`src/types/property.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/types/property.ts).
+- Verificada la compilación limpia local (`npm run build`, 0 errores).
+- Subidos los cambios a GitHub (`git push origin main` -> commit `71c47df`), disparando el despliegue automático en Vercel.
+
 
 
 
