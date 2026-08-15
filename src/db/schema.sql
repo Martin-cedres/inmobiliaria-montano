@@ -74,9 +74,24 @@ CREATE TABLE IF NOT EXISTS owner_leads (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- 4. Índices para Búsquedas Ultra Rápidas en San José
+-- 4. Tabla de Usuarios e Integración Google OAuth
+CREATE TABLE IF NOT EXISTS users (
+  id VARCHAR(64) PRIMARY KEY,
+  email VARCHAR(128) NOT NULL UNIQUE,
+  name VARCHAR(128) NOT NULL,
+  image TEXT,
+  role VARCHAR(32) NOT NULL DEFAULT 'admin', -- 'superadmin', 'admin', 'agente'
+  status VARCHAR(32) NOT NULL DEFAULT 'activo', -- 'activo', 'inactivo'
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  last_login_at TIMESTAMP WITH TIME ZONE
+);
+
+-- 5. Índices para Búsquedas Ultra Rápidas en San José
 CREATE INDEX IF NOT EXISTS idx_properties_operation ON properties(operation);
 CREATE INDEX IF NOT EXISTS idx_properties_category ON properties(category);
 CREATE INDEX IF NOT EXISTS idx_properties_status ON properties(status);
 CREATE INDEX IF NOT EXISTS idx_properties_neighborhood ON properties(neighborhood);
 CREATE INDEX IF NOT EXISTS idx_property_images_property_id ON property_images(property_id);
+CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
+

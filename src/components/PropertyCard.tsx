@@ -1,7 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Property } from '@/types/property';
 import { buildPropertyWhatsAppLink } from '@/utils/whatsapp';
 import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon';
@@ -9,9 +10,11 @@ import { Bed, Bath, Maximize2, Car, MapPin, Landmark, ShieldCheck, Sparkles, Clo
 
 interface PropertyCardProps {
   property: Property;
+  index?: number;
 }
 
-export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
+export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) => {
+  const [imageError, setImageError] = useState<boolean>(false);
   const whatsappUrl = buildPropertyWhatsAppLink(property);
 
   // Status Badge
@@ -124,15 +127,18 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
         <div className="relative aspect-[4/3] bg-slate-900 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a]/90 via-[#0f172a]/25 to-transparent z-10 pointer-events-none" />
 
-          <img
-            src={mainImage || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80'}
+          <Image
+            src={imageError || !mainImage ? '/logo.png' : mainImage}
             alt={property.title}
-            onError={(e) => {
-              (e.target as HTMLImageElement).src = '/logo.png';
-              (e.target as HTMLImageElement).className = 'w-full h-full object-contain p-6 bg-[#350A2F]';
-            }}
-            className="w-full h-full object-cover group-hover/link:scale-105 transition-transform duration-500"
-            loading="lazy"
+            fill
+            unoptimized={true}
+            priority={index !== undefined && index < 2}
+            loading={index !== undefined && index < 2 ? 'eager' : 'lazy'}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className={`object-cover w-full h-full group-hover/link:scale-105 transition-transform duration-500 ${
+              imageError ? 'object-contain p-6 bg-[#350A2F]' : ''
+            }`}
+            onError={() => setImageError(true)}
           />
 
           {/* Top Dominant Operation Badge (Upper Left) */}

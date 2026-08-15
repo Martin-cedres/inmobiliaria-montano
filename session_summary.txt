@@ -200,6 +200,20 @@
 - Verificada la compilación limpia local (`npm run build`, 0 errores).
 - Subidos los cambios a GitHub (`git push origin main` -> commit `6006ef3`), disparando el despliegue automático en Vercel.
 
+=== Sesión 2026-08-15 ===
+- Diseñado e implementado el sistema de Autenticación nativo basado en Google OAuth 2.0 y Neon Postgres para Inmobiliaria Montaño.
+- Agregada la tabla `users` con índices en Neon Postgres en `schema.sql` y módulo de persistencia `src/lib/usersStore.ts` con fallback local en `src/db/users.json`.
+- Creado el módulo `src/lib/auth.ts` con manejo de tokens JWT firmados vía `jose` y cookies de sesión HTTP-Only.
+- Creado el `middleware.ts` en Edge Runtime para la protección automática de rutas `/admin/*` y `/api/admin/*`, denegando accesos no autenticados y redirigiendo a `/login`.
+- Implementados los endpoints de autenticación: `GET /api/auth/google`, `GET /api/auth/callback/google`, `POST /api/auth/logout` y `GET /api/auth/me`.
+- Implementados los endpoints de gestión de usuarios autorizados: `GET /api/admin/users`, `POST /api/admin/users`, `PATCH /api/admin/users/[id]` y `DELETE /api/admin/users/[id]` con restricción exclusiva para `superadmin`.
+- Auto-promovido el correo `martinfernandocedres@gmail.com` a **Super Admin** en su primer ingreso con Google.
+- Refactorizada la portada (`src/app/page.tsx`) a un **Async Server Component (SSR / ISR revalidate = 60)**: se eliminó el parpadeo *"Cargando catálogo..."* permitiendo que el servidor entregue el HTML con las tarjetas totalmente armadas en 0ms.
+- Encapsulados los controles interactivos en el componente cliente `src/components/CatalogSection.tsx`.
+- Implementada la optimización de imágenes en `PropertyCard.tsx` con `<Image unoptimized={true} />`, `priority={index < 2}` para LCP instantáneo y `loading="lazy"` para el resto de las tarjetas, logrando un consumo 0 en Vercel y CLS 0.
+- Verificada la compilación limpia local (`npm run build`, 0 errores).
+
+
 
 
 

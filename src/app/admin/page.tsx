@@ -2,18 +2,34 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Property, PropertyStatus } from '@/types/property';
-import { Plus, Trash2, Eye, Edit3, CheckCircle2, Sparkles, Search, RefreshCw, AlertCircle, Building2, Key, Tag, MessageCircle, Flame, TrendingUp, ArrowUpDown } from 'lucide-react';
+import { UserSessionPayload } from '@/types/user';
+import { 
+  Plus, Trash2, Eye, Edit3, CheckCircle2, Sparkles, Search, 
+  RefreshCw, AlertCircle, Building2, Key, Tag, MessageCircle, 
+  Flame, TrendingUp, ArrowUpDown, Users, LogOut, ShieldCheck, Shield 
+} from 'lucide-react';
 
 export default function AdminDashboardPage() {
+  const router = useRouter();
   const [properties, setProperties] = useState<Property[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sortBy, setSortBy] = useState<'recent' | 'views' | 'whatsapp' | 'conversion'>('recent');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
+  const [currentUser, setCurrentUser] = useState<UserSessionPayload | null>(null);
+  const [isAuthChecking, setIsAuthChecking] = useState<boolean>(true);
+
+  const showToast = (message: string) => {
+    setToastMessage(message);
+    setTimeout(() => {
+      setToastMessage(null);
+    }, 3500);
+  };
 
   const fetchProperties = async () => {
     setIsLoading(true);
@@ -32,15 +48,42 @@ export default function AdminDashboardPage() {
   };
 
   useEffect(() => {
-    fetchProperties();
-  }, []);
+    // Cargar datos de usuario autenticado
+    fetch('/api/auth/me')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && data.user) {
+          setCurrentUser(data.user);
+          setIsAuthChecking(false);
+          fetchProperties();
+        } else {
+          router.replace('/login');
+        }
+      })
+      .catch(() => {
+        router.replace('/login');
+      });
+  }, [router]);
 
-  const showToast = (message: string) => {
-    setToastMessage(message);
-    setTimeout(() => {
-      setToastMessage(null);
-    }, 3500);
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+      router.replace('/login');
+    } catch (err) {
+      window.location.href = '/login';
+    }
   };
+
+  if (isAuthChecking) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex flex-col justify-center items-center p-4">
+        <div className="w-10 h-10 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mb-4" />
+        <p className="text-slate-400 text-sm font-medium">Verificando sesión...</p>
+      </div>
+    );
+  }
+
+
 
   const handleStatusChange = async (id: string, codeRef: string, newStatus: PropertyStatus) => {
     setUpdatingId(id);
@@ -137,8 +180,63 @@ export default function AdminDashboardPage() {
 
       <main className="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10">
         
+        {/* User Session Bar */}
+        {currentUser && (
+          <div className="mb-6 bg-slate-900 text-white p-4 rounded-2xl flex flex-wrap items-center justify-between gap-4 border border-slate-800 shadow-md">
+            <div className="flex items-center gap-3">
+              {currentUser.image ? (
+                <img
+                  src={currentUser.image}
+                  alt={currentUser.name}
+                  className="w-10 h-10 rounded-full object-cover border border-amber-500/40"
+                />
+              ) : (
+                <div className="w-10 h-10 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center font-bold text-sm">
+                  {currentUser.name.charAt(0).toUpperCase()}
+                </div>
+              )}
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-sm">{currentUser.name}</span>
+                  <span
+                    className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                      currentUser.role === 'superadmin'
+                        ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
+                        : 'bg-blue-500/20 text-blue-300 border border-blue-500/40'
+                    }`}
+                  >
+                    <ShieldCheck className="w-3 h-3" />
+                    {currentUser.role}
+                  </span>
+                </div>
+                <div className="text-xs text-slate-400 font-mono">{currentUser.email}</div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              {currentUser.role === 'superadmin' && (
+                <Link
+                  href="/admin/usuarios"
+                  className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all"
+                >
+                  <Users className="w-4 h-4 text-amber-400" />
+                  <span>Gestionar Usuarios</span>
+                </Link>
+              )}
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 bg-red-950/60 hover:bg-red-900/80 text-red-300 border border-red-800/40 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer"
+              >
+                <LogOut className="w-4 h-4" />
+                <span>Cerrar Sesión</span>
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Header Admin & Action CTA */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 bg-white p-6 sm:p-8 rounded-3xl border border-purple-100 shadow-xs">
+
           <div>
             <div className="flex items-center space-x-2 text-[#E85D04] font-bold text-xs uppercase tracking-wider mb-1">
               <Sparkles className="w-4 h-4 text-amber-500" />

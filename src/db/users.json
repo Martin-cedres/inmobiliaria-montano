@@ -1,0 +1,13 @@
+[
+  {
+    "id": "usr_1786836384232_bjh2kd",
+    "email": "martinfernandocedres@gmail.com",
+    "name": "Martín Cedrés",
+    "image": "https://lh3.googleusercontent.com/a/ACg8ocKxPG_lcxEvp5fNxLAkR1ZSbXgCzsxyuqGzCc-T_VO76jnyEp-6=s96-c",
+    "role": "superadmin",
+    "status": "activo",
+    "created_at": "2026-08-15T23:26:24.230Z",
+    "updated_at": "2026-08-15T23:26:24.230Z",
+    "last_login_at": "2026-08-15T23:26:24.230Z"
+  }
+]
