@@ -21,6 +21,9 @@ interface PropertyDetailPageProps {
   }>;
 }
 
+// ISR (Incremental Static Regeneration): Revalida en Edge cada 60 segundos
+export const revalidate = 60;
+
 // Generación automática de Metadata SEO para Google y Redes Sociales
 export async function generateMetadata({ params }: PropertyDetailPageProps) {
   const resolvedParams = await params;

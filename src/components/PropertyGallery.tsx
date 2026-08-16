@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import Image from 'next/image';
 import { Property } from '@/types/property';
 import { SharePropertyModal } from '@/components/SharePropertyModal';
 import { Maximize2, X, ChevronLeft, ChevronRight, Camera, Play } from 'lucide-react';
@@ -95,11 +96,13 @@ export const PropertyGallery: React.FC<PropertyGalleryProps> = ({ property }) =>
     const nextIdx = (activeIndex + 1) % normalizedImages.length;
     const prevIdx = (activeIndex - 1 + normalizedImages.length) % normalizedImages.length;
 
-    const imgNext = new Image();
-    imgNext.src = normalizedImages[nextIdx].url;
+    if (typeof window !== 'undefined') {
+      const imgNext = new window.Image();
+      imgNext.src = normalizedImages[nextIdx].url;
 
-    const imgPrev = new Image();
-    imgPrev.src = normalizedImages[prevIdx].url;
+      const imgPrev = new window.Image();
+      imgPrev.src = normalizedImages[prevIdx].url;
+    }
   }, [activeIndex, normalizedImages]);
 
   // Touch Swipe Handlers for Mobile
@@ -132,9 +135,13 @@ export const PropertyGallery: React.FC<PropertyGalleryProps> = ({ property }) =>
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <img
+        <Image
           src={imageError ? '/logo.png' : currentImage.url}
           alt={`${property.title} - Foto ${activeIndex + 1}`}
+          fill
+          unoptimized={true}
+          priority={true}
+          sizes="(max-width: 1024px) 100vw, 800px"
           onError={() => setImageError(true)}
           className={`w-full h-full ${imageError ? 'object-contain p-12 bg-[#350A2F]' : 'object-cover'} transition-opacity duration-150 ease-in-out ${isFading ? 'opacity-30' : 'opacity-100'} cursor-pointer`}
           onClick={() => !imageError && setIsLightboxOpen(true)}
@@ -207,9 +214,13 @@ export const PropertyGallery: React.FC<PropertyGalleryProps> = ({ property }) =>
                   : 'border-slate-200/80 opacity-70 hover:opacity-100 hover:border-slate-300'
               }`}
             >
-              <img
+              <Image
                 src={img.url}
                 alt={`Miniatura ${idx + 1}`}
+                fill
+                unoptimized={true}
+                loading="lazy"
+                sizes="96px"
                 className="w-full h-full object-cover"
               />
               {img.isMain && (
