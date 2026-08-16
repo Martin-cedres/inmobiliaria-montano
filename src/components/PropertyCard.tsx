@@ -177,18 +177,16 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
 
             {/* Price Header */}
             <div className="flex items-baseline space-x-1.5 mb-1.5 min-h-[2rem]">
-              {property.price.priceMode === 'consultar' ? (
+              {property.price.priceMode === 'consultar' || property.price.amount === 0 ? (
                 <a
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-black text-white tracking-tight bg-gradient-to-r from-[#5e1754] to-[#7a226e] hover:from-[#45103e] hover:to-[#5e1754] px-3 py-1.5 rounded-xl shadow-xs hover:shadow-md transition-all cursor-pointer group/wappbtn"
-                  title="Consultar precio directamente por WhatsApp"
+                  className="inline-flex items-center justify-center text-xs sm:text-sm font-black text-white bg-[#5e1754] hover:bg-[#45103e] active:scale-95 px-3.5 py-1.5 rounded-xl shadow-xs hover:shadow-md transition-all cursor-pointer"
+                  title="Consultar precio"
                 >
-                  <WhatsAppIcon className="w-3.5 h-3.5 text-emerald-400 group-hover/wappbtn:scale-110 transition-transform flex-shrink-0" />
-                  <span>Consultar Precio</span>
-                  <span className="text-[10px] text-purple-200 font-semibold ml-0.5">→ WhatsApp</span>
+                  Consultar Precio
                 </a>
               ) : property.price.priceMode === 'reservado' ? (
                 <a
@@ -196,12 +194,10 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-black text-slate-800 tracking-tight bg-slate-100 hover:bg-slate-200 border border-slate-200 px-3 py-1.5 rounded-xl shadow-2xs hover:shadow-xs transition-all cursor-pointer group/wappbtn"
-                  title="Solicitar información confidencial por WhatsApp"
+                  className="inline-flex items-center justify-center text-xs sm:text-sm font-black text-slate-800 bg-slate-100 hover:bg-slate-200 border border-slate-200 px-3.5 py-1.5 rounded-xl shadow-2xs hover:shadow-xs transition-all cursor-pointer"
+                  title="Precio Reservado"
                 >
-                  <span className="text-xs">🔒</span>
-                  <span>Precio Reservado</span>
-                  <WhatsAppIcon className="w-3.5 h-3.5 text-[#25D366] ml-1 group-hover/wappbtn:scale-110 transition-transform flex-shrink-0" />
+                  Precio Reservado
                 </a>
               ) : (
                 <>
