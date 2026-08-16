@@ -32,6 +32,7 @@ export default function EditarPropiedadPage() {
   const [status, setStatus] = useState<PropertyStatus>('disponible');
   const [priceAmount, setPriceAmount] = useState<number>(0);
   const [priceCurrency, setPriceCurrency] = useState<'USD' | 'UYU'>('USD');
+  const [priceMode, setPriceMode] = useState<'visible' | 'consultar' | 'reservado' | 'desde'>('visible');
   const [neighborhood, setNeighborhood] = useState('Centro');
   const [address, setAddress] = useState('');
   
@@ -58,6 +59,14 @@ export default function EditarPropiedadPage() {
   const [garden, setGarden] = useState<boolean>(false);
   const [woodStoveOrAC, setWoodStoveOrAC] = useState<boolean>(false);
   const [petFriendly, setPetFriendly] = useState<boolean>(false);
+
+  // Badges Destacados (Etiquetas Principales)
+  const [fondo, setFondo] = useState<boolean>(false);
+  const [patio, setPatio] = useState<boolean>(false);
+  const [barbacoa, setBarbacoa] = useState<boolean>(false);
+  const [parrillero, setParrillero] = useState<boolean>(false);
+  const [cochera, setCochera] = useState<boolean>(false);
+  const [cocheraTechada, setCocheraTechada] = useState<boolean>(false);
 
   // Servicios Básicos
   const [oseWater, setOseWater] = useState<boolean>(true);
@@ -107,6 +116,7 @@ export default function EditarPropiedadPage() {
           setStatus(p.status || 'disponible');
           setPriceAmount(p.price?.amount || 0);
           setPriceCurrency(p.price?.currency || 'USD');
+          setPriceMode(p.price?.priceMode || 'visible');
           setNeighborhood(p.location?.neighborhood || 'Centro');
           setAddress(p.location?.address || '');
           
@@ -130,6 +140,13 @@ export default function EditarPropiedadPage() {
           setGarden(!!p.features?.garden);
           setWoodStoveOrAC(!!p.features?.woodStoveOrAC);
           setPetFriendly(!!p.features?.petFriendly);
+
+          setFondo(!!(p.features?.fondo ?? p.features?.garden));
+          setPatio(!!p.features?.patio);
+          setBarbacoa(!!p.features?.barbacoa);
+          setParrillero(!!(p.features?.parrillero ?? p.features?.barbecue));
+          setCochera(!!(p.features?.cochera ?? p.features?.carAccess));
+          setCocheraTechada(!!(p.features?.cocheraTechada ?? p.features?.garage));
 
           setOseWater(p.features?.oseWater ?? true);
           setUteElectric(p.features?.uteElectric ?? true);
@@ -189,6 +206,7 @@ export default function EditarPropiedadPage() {
           status,
           priceAmount,
           priceCurrency,
+          priceMode,
           neighborhood,
           address,
           hasLocation,
@@ -204,9 +222,15 @@ export default function EditarPropiedadPage() {
           frontMeters,
           carAccess,
           garage,
+          cochera,
+          cocheraTechada,
           barbecue,
+          barbacoa,
+          parrillero,
           pool,
           garden,
+          fondo,
+          patio,
           woodStoveOrAC,
           petFriendly,
           oseWater,
@@ -414,9 +438,92 @@ export default function EditarPropiedadPage() {
                 2. Ubicación & Precio Comercial
               </h3>
 
+              {/* Modalidad de Visualización del Precio */}
+              <div className="bg-purple-50/60 border border-purple-200/80 rounded-2xl p-4 space-y-3">
+                <div className="flex flex-wrap items-center justify-between gap-1">
+                  <label className="text-xs font-black uppercase text-[#5E1754] flex items-center gap-1.5">
+                    💵 Modalidad de Precio / Publicación
+                  </label>
+                  <span className="text-[11px] text-purple-700 font-semibold">Define cómo lo ve el cliente en la web</span>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                  <button
+                    type="button"
+                    onClick={() => setPriceMode('visible')}
+                    className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
+                      priceMode === 'visible'
+                        ? 'bg-[#5E1754] text-white border-[#5E1754] shadow-md'
+                        : 'bg-white text-slate-700 border-slate-200 hover:border-purple-300'
+                    }`}
+                  >
+                    <div className="font-extrabold text-xs">💵 Precio Fijo</div>
+                    <div className={`text-[10px] mt-0.5 ${priceMode === 'visible' ? 'text-purple-200' : 'text-slate-400'}`}>Monto visible</div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setPriceMode('consultar')}
+                    className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
+                      priceMode === 'consultar'
+                        ? 'bg-[#5E1754] text-white border-[#5E1754] shadow-md'
+                        : 'bg-white text-slate-700 border-slate-200 hover:border-purple-300'
+                    }`}
+                  >
+                    <div className="font-extrabold text-xs">💬 Consultar Precio</div>
+                    <div className={`text-[10px] mt-0.5 ${priceMode === 'consultar' ? 'text-purple-200' : 'text-slate-400'}`}>Oculta el monto</div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setPriceMode('reservado')}
+                    className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
+                      priceMode === 'reservado'
+                        ? 'bg-[#5E1754] text-white border-[#5E1754] shadow-md'
+                        : 'bg-white text-slate-700 border-slate-200 hover:border-purple-300'
+                    }`}
+                  >
+                    <div className="font-extrabold text-xs">🔒 Precio Reservado</div>
+                    <div className={`text-[10px] mt-0.5 ${priceMode === 'reservado' ? 'text-purple-200' : 'text-slate-400'}`}>Confidencial</div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setPriceMode('desde')}
+                    className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
+                      priceMode === 'desde'
+                        ? 'bg-[#5E1754] text-white border-[#5E1754] shadow-md'
+                        : 'bg-white text-slate-700 border-slate-200 hover:border-purple-300'
+                    }`}
+                  >
+                    <div className="font-extrabold text-xs">📈 Precio "Desde..."</div>
+                    <div className={`text-[10px] mt-0.5 ${priceMode === 'desde' ? 'text-purple-200' : 'text-slate-400'}`}>Para proyectos/lotes</div>
+                  </button>
+                </div>
+
+                {/* Mensaje Informativo Contextual */}
+                {priceMode === 'consultar' && (
+                  <p className="text-[11px] text-purple-900 font-medium bg-purple-100/70 p-2.5 rounded-xl border border-purple-200">
+                    💡 La tarjeta y ficha mostrarán <strong>"Consultar Precio"</strong>. El monto abajo queda guardado como referencia interna.
+                  </p>
+                )}
+                {priceMode === 'reservado' && (
+                  <p className="text-[11px] text-purple-900 font-medium bg-purple-100/70 p-2.5 rounded-xl border border-purple-200">
+                    🔒 La tarjeta y ficha mostrarán <strong>"🔒 Precio Reservado"</strong> para propiedades de alta confidencialidad.
+                  </p>
+                )}
+                {priceMode === 'desde' && (
+                  <p className="text-[11px] text-purple-900 font-medium bg-purple-100/70 p-2.5 rounded-xl border border-purple-200">
+                    📈 La tarjeta y ficha mostrarán <strong>"Desde {priceCurrency} {priceAmount.toLocaleString('es-UY')}"</strong>.
+                  </p>
+                )}
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Monto del Precio</label>
+                  <label className="block text-xs font-bold uppercase text-slate-600 mb-1">
+                    {priceMode === 'desde' ? 'Monto Base ("Desde...")' : priceMode === 'visible' ? 'Monto del Precio' : 'Monto de Referencia Interno'}
+                  </label>
                   <input
                     type="number"
                     required
@@ -686,72 +793,111 @@ export default function EditarPropiedadPage() {
                 </div>
               </div>
 
-              {/* Grupo 3: Comodidades Residenciales & Accesibilidad */}
-              <div className="bg-amber-50/50 border border-amber-100 rounded-2xl p-4 space-y-3">
-                <h4 className="text-xs font-black uppercase text-amber-900">
-                  🏡 Comodidades & Equipamiento Residencial
+              {/* Grupo 3: Badges Destacados (Etiquetas Clave) */}
+              <div className="bg-amber-50/70 border-2 border-amber-300/80 rounded-2xl p-4 space-y-3">
+                <div className="flex flex-wrap items-center justify-between gap-1">
+                  <h4 className="text-xs font-black uppercase text-amber-950 flex items-center gap-1.5">
+                    🏷️ Badges Destacados (Etiquetas Visibles en Portada y Ficha)
+                  </h4>
+                  <span className="text-[11px] text-amber-800 font-bold">Resaltan en la tarjeta de la propiedad</span>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/80 shadow-2xs hover:border-amber-400">
+                    <input
+                      type="checkbox"
+                      checked={fondo}
+                      onChange={(e) => setFondo(e.target.checked)}
+                      className="w-4 h-4 text-[#5E1754] rounded"
+                    />
+                    <span>🌳 Fondo</span>
+                  </label>
+                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/80 shadow-2xs hover:border-amber-400">
+                    <input
+                      type="checkbox"
+                      checked={patio}
+                      onChange={(e) => setPatio(e.target.checked)}
+                      className="w-4 h-4 text-[#5E1754] rounded"
+                    />
+                    <span>🏡 Patio</span>
+                  </label>
+                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/80 shadow-2xs hover:border-amber-400">
+                    <input
+                      type="checkbox"
+                      checked={barbacoa}
+                      onChange={(e) => setBarbacoa(e.target.checked)}
+                      className="w-4 h-4 text-[#E85D04] rounded"
+                    />
+                    <span>🥩 Barbacoa</span>
+                  </label>
+                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/80 shadow-2xs hover:border-amber-400">
+                    <input
+                      type="checkbox"
+                      checked={parrillero}
+                      onChange={(e) => setParrillero(e.target.checked)}
+                      className="w-4 h-4 text-[#E85D04] rounded"
+                    />
+                    <span>🔥 Parrillero</span>
+                  </label>
+                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/80 shadow-2xs hover:border-amber-400">
+                    <input
+                      type="checkbox"
+                      checked={cochera}
+                      onChange={(e) => setCochera(e.target.checked)}
+                      className="w-4 h-4 text-[#5E1754] rounded"
+                    />
+                    <span>🚗 Cochera</span>
+                  </label>
+                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/80 shadow-2xs hover:border-amber-400">
+                    <input
+                      type="checkbox"
+                      checked={cocheraTechada}
+                      onChange={(e) => setCocheraTechada(e.target.checked)}
+                      className="w-4 h-4 text-[#5E1754] rounded"
+                    />
+                    <span>🛡️ Cochera Techada</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Grupo 4: Otras Comodidades & Equipamiento */}
+              <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 space-y-3">
+                <h4 className="text-xs font-black uppercase text-slate-700">
+                  🏡 Otras Comodidades & Equipamiento
                 </h4>
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/60 shadow-2xs hover:border-amber-300">
+                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-slate-200 shadow-2xs hover:border-slate-400">
                     <input
                       type="checkbox"
                       checked={carAccess}
                       onChange={(e) => setCarAccess(e.target.checked)}
-                      className="w-4 h-4 text-amber-600 rounded"
+                      className="w-4 h-4 text-slate-700 rounded"
                     />
                     <span>Entrada de Auto</span>
                   </label>
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/60 shadow-2xs hover:border-amber-300">
-                    <input
-                      type="checkbox"
-                      checked={garage}
-                      onChange={(e) => setGarage(e.target.checked)}
-                      className="w-4 h-4 text-amber-600 rounded"
-                    />
-                    <span>Garage</span>
-                  </label>
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/60 shadow-2xs hover:border-amber-300">
-                    <input
-                      type="checkbox"
-                      checked={barbecue}
-                      onChange={(e) => setBarbecue(e.target.checked)}
-                      className="w-4 h-4 text-amber-600 rounded"
-                    />
-                    <span>Parrillero / Barbacoa</span>
-                  </label>
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/60 shadow-2xs hover:border-amber-300">
+                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-slate-200 shadow-2xs hover:border-slate-400">
                     <input
                       type="checkbox"
                       checked={woodStoveOrAC}
                       onChange={(e) => setWoodStoveOrAC(e.target.checked)}
-                      className="w-4 h-4 text-amber-600 rounded"
+                      className="w-4 h-4 text-slate-700 rounded"
                     />
                     <span>Estufa a Leña / AC</span>
                   </label>
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/60 shadow-2xs hover:border-amber-300">
+                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-slate-200 shadow-2xs hover:border-slate-400">
                     <input
                       type="checkbox"
                       checked={pool}
                       onChange={(e) => setPool(e.target.checked)}
-                      className="w-4 h-4 text-amber-600 rounded"
+                      className="w-4 h-4 text-slate-700 rounded"
                     />
                     <span>Piscina</span>
                   </label>
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/60 shadow-2xs hover:border-amber-300">
-                    <input
-                      type="checkbox"
-                      checked={garden}
-                      onChange={(e) => setGarden(e.target.checked)}
-                      className="w-4 h-4 text-[#5E1754] rounded"
-                    />
-                    <span>Fondo</span>
-                  </label>
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/60 shadow-2xs hover:border-amber-300">
+                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-slate-200 shadow-2xs hover:border-slate-400">
                     <input
                       type="checkbox"
                       checked={petFriendly}
                       onChange={(e) => setPetFriendly(e.target.checked)}
-                      className="w-4 h-4 text-amber-600 rounded"
+                      className="w-4 h-4 text-slate-700 rounded"
                     />
                     <span>Acepta Mascotas</span>
                   </label>

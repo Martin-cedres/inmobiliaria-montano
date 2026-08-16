@@ -39,6 +39,7 @@ export interface Property {
     period?: 'mensual' | 'total';
     priceDrop?: boolean;
     originalAmount?: number;
+    priceMode?: 'visible' | 'consultar' | 'reservado' | 'desde';
   };
   location: {
     department: string;   // "San José"
@@ -63,9 +64,15 @@ export interface Property {
     isHectares?: boolean;       // Medida en ha
     carAccess?: boolean;        // Entrada de Auto / Acceso Vehicular
     garage?: boolean;           // Garage Techado / Cochera
+    cochera?: boolean;          // Cochera
+    cocheraTechada?: boolean;   // Cochera Techada
     barbecue?: boolean;         // Parrillero / Barbacoa
+    barbacoa?: boolean;         // Barbacoa
+    parrillero?: boolean;       // Parrillero
     pool?: boolean;             // Piscina
     garden?: boolean;           // Jardín / Fondo Verde / Patio
+    fondo?: boolean;            // Fondo
+    patio?: boolean;            // Patio
     woodStoveOrAC?: boolean;    // Estufa a Leña / Aire Acondicionado
     petFriendly?: boolean;      // Acepta Mascotas / Pet Friendly
     oseWater?: boolean;         // Agua Corriente (OSE)

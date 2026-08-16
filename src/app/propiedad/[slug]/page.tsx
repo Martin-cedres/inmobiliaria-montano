@@ -113,12 +113,23 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
 
               {/* Price & Operation Status */}
               <div className="flex items-baseline space-x-2 pt-2 border-t border-slate-100">
-                <span className="text-3xl sm:text-4xl font-black text-[#5E1754]">
-                  {property.price.currency === 'USD' ? 'USD' : 'UYU $'} {property.price.amount.toLocaleString('es-UY')}
-                  {property.operation === 'alquiler' && property.price.period && property.price.period !== 'total' && (
-                    <span className="text-sm font-semibold text-slate-500"> / {property.price.period}</span>
-                  )}
-                </span>
+                {property.price.priceMode === 'consultar' ? (
+                  <span className="text-2xl sm:text-3xl font-black text-[#5E1754] bg-purple-50 px-4 py-1.5 rounded-xl border border-purple-200">
+                    Consultar Precio
+                  </span>
+                ) : property.price.priceMode === 'reservado' ? (
+                  <span className="text-2xl sm:text-3xl font-black text-[#5E1754] bg-slate-100 px-4 py-1.5 rounded-xl border border-slate-200">
+                    🔒 Precio Reservado
+                  </span>
+                ) : (
+                  <span className="text-3xl sm:text-4xl font-black text-[#5E1754]">
+                    {property.price.priceMode === 'desde' && <span className="text-lg font-extrabold text-slate-500 mr-2">Desde</span>}
+                    {property.price.currency === 'USD' ? 'USD' : 'UYU $'} {property.price.amount.toLocaleString('es-UY')}
+                    {property.operation === 'alquiler' && property.price.period && property.price.period !== 'total' && (
+                      <span className="text-sm font-semibold text-slate-500"> / {property.price.period}</span>
+                    )}
+                  </span>
+                )}
               </div>
             </div>
 
@@ -206,52 +217,52 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                     <span className="truncate">{property.features.frontMeters}m de Frente</span>
                   </div>
                 )}
-                {property.features.carAccess && (
-                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
-                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
-                      <Car className="w-4 h-4 sm:w-5 sm:h-5" />
-                    </span>
-                    <span className="truncate">Entrada de Auto</span>
-                  </div>
-                )}
-                {property.features.garage && (
-                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
-                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
-                      <Car className="w-4 h-4 sm:w-5 sm:h-5" />
-                    </span>
-                    <span className="truncate">Garage</span>
-                  </div>
-                )}
-                {property.features.barbecue && (
-                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
-                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
-                      <Flame className="w-4 h-4 sm:w-5 sm:h-5" />
-                    </span>
-                    <span className="truncate">Parrillero / Barbacoa</span>
-                  </div>
-                )}
-                {property.features.woodStoveOrAC && (
-                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
-                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
-                      <Flame className="w-4 h-4 sm:w-5 sm:h-5" />
-                    </span>
-                    <span className="truncate">Estufa a Leña / AC</span>
-                  </div>
-                )}
-                {property.features.pool && (
-                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
-                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
-                      <Waves className="w-4 h-4 sm:w-5 sm:h-5" />
-                    </span>
-                    <span className="truncate">Piscina</span>
-                  </div>
-                )}
-                {property.features.garden && (
+                {(property.features.fondo || property.features.garden) && (
                   <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
                     <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
                       <Trees className="w-4 h-4 sm:w-5 sm:h-5" />
                     </span>
                     <span className="truncate">Fondo</span>
+                  </div>
+                )}
+                {property.features.patio && (
+                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <Trees className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </span>
+                    <span className="truncate">Patio</span>
+                  </div>
+                )}
+                {property.features.barbacoa && (
+                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#E85D04]/10 text-[#E85D04] flex-shrink-0">
+                      <Flame className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </span>
+                    <span className="truncate">Barbacoa</span>
+                  </div>
+                )}
+                {(property.features.parrillero || property.features.barbecue) && (
+                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#E85D04]/10 text-[#E85D04] flex-shrink-0">
+                      <Flame className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </span>
+                    <span className="truncate">Parrillero</span>
+                  </div>
+                )}
+                {(property.features.cochera || (property.features.carAccess && !property.features.cocheraTechada && !property.features.garage)) && (
+                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <Car className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </span>
+                    <span className="truncate">Cochera</span>
+                  </div>
+                )}
+                {(property.features.cocheraTechada || property.features.garage) && (
+                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <Car className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </span>
+                    <span className="truncate">Cochera Techada</span>
                   </div>
                 )}
                 {property.features.petFriendly && (

@@ -62,6 +62,7 @@ export async function PUT(
         period: body.pricePeriod || existing.price.period || (body.operation === 'alquiler' ? 'mensual' : 'total'),
         priceDrop: body.priceDrop !== undefined ? body.priceDrop : existing.price.priceDrop,
         originalAmount: body.originalAmount ? Number(body.originalAmount) : existing.price.originalAmount,
+        priceMode: body.priceMode || body.price?.priceMode || existing.price.priceMode || 'visible',
       },
       location: {
         department: body.department || existing.location.department || 'San José',

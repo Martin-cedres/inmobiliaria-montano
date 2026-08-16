@@ -57,6 +57,7 @@ async function ensureTablesExist(sql: any) {
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       );
     `;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS price_mode VARCHAR(32) DEFAULT 'visible';`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS images JSONB DEFAULT '[]'::jsonb;`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS lat NUMERIC(10, 6);`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS lng NUMERIC(10, 6);`;
@@ -68,6 +69,12 @@ async function ensureTablesExist(sql: any) {
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS front_meters NUMERIC(10, 2);`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS car_access BOOLEAN DEFAULT FALSE;`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS garden BOOLEAN DEFAULT FALSE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS fondo BOOLEAN DEFAULT FALSE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS patio BOOLEAN DEFAULT FALSE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS barbacoa BOOLEAN DEFAULT FALSE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS parrillero BOOLEAN DEFAULT FALSE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS cochera BOOLEAN DEFAULT FALSE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS cochera_techada BOOLEAN DEFAULT FALSE;`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS wood_stove_or_ac BOOLEAN DEFAULT FALSE;`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS pet_friendly BOOLEAN DEFAULT FALSE;`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS ute_electric BOOLEAN DEFAULT FALSE;`;
@@ -124,6 +131,7 @@ export async function getAllProperties(): Promise<Property[]> {
               period: row.price_period,
               priceDrop: row.price_drop,
               originalAmount: row.original_amount ? Number(row.original_amount) : undefined,
+              priceMode: row.price_mode || 'visible',
             },
             location: {
               department: row.department || 'San José',
@@ -144,12 +152,17 @@ export async function getAllProperties(): Promise<Property[]> {
               builtAreaM2: row.built_area_m2 ? Number(row.built_area_m2) : undefined,
               plotAreaM2: row.plot_area_m2 ? Number(row.plot_area_m2) : undefined,
               frontMeters: row.front_meters ? Number(row.front_meters) : undefined,
-              isHectares: row.is_hectares,
               carAccess: row.car_access,
               garage: row.garage,
+              cochera: row.cochera ?? row.car_access,
+              cocheraTechada: row.cochera_techada ?? row.garage,
               barbecue: row.barbecue,
+              barbacoa: row.barbacoa,
+              parrillero: row.parrillero ?? row.barbecue,
               pool: row.pool,
               garden: row.garden,
+              fondo: row.fondo ?? row.garden,
+              patio: row.patio,
               woodStoveOrAC: row.wood_stove_or_ac,
               petFriendly: row.pet_friendly,
               perimeterFence: row.perimeter_fence,
@@ -233,21 +246,21 @@ export async function saveProperty(property: Property): Promise<Property> {
       await sql`
         INSERT INTO properties (
           id, code_ref, title, slug, description, operation, category, status,
-          price_amount, price_currency, price_period, price_drop, original_amount,
+          price_amount, price_currency, price_period, price_drop, original_amount, price_mode,
           department, city, neighborhood, address,
           lat, lng, is_exact_location, radius_meters, has_location,
           bedrooms, bathrooms, floors, built_area_m2, plot_area_m2, front_meters,
-          car_access, garage, barbecue, pool, garden, wood_stove_or_ac, pet_friendly,
+          car_access, garage, cochera, cochera_techada, barbecue, barbacoa, parrillero, pool, garden, fondo, patio, wood_stove_or_ac, pet_friendly,
           perimeter_fence, bank_credit_eligible, ph_regime, ose_water, ute_electric, sanitation, fiber_optic,
           water_well_or_pond, titles_up_to_date, accepts_trade_in, security_system, paved_street, shed_or_corral, coneat_index,
           guarantees, images, seo_title, seo_description, featured
         ) VALUES (
           ${property.id}, ${property.codeRef}, ${property.title}, ${property.slug}, ${property.description}, ${property.operation}, ${property.category}, ${property.status},
-          ${property.price.amount}, ${property.price.currency}, ${property.price.period || null}, ${property.price.priceDrop || false}, ${property.price.originalAmount || null},
+          ${property.price.amount}, ${property.price.currency}, ${property.price.period || null}, ${property.price.priceDrop || false}, ${property.price.originalAmount || null}, ${property.price.priceMode || 'visible'},
           ${property.location.department}, ${property.location.city}, ${property.location.neighborhood}, ${property.location.address || null},
           ${latVal}, ${lngVal}, ${property.location.isExactLocation ?? false}, ${property.location.radiusMeters || 300}, ${property.location.hasLocation !== false},
           ${property.features.bedrooms || null}, ${property.features.bathrooms || null}, ${property.features.floors || null}, ${property.features.builtAreaM2 || null}, ${property.features.plotAreaM2 || null}, ${property.features.frontMeters || null},
-          ${property.features.carAccess || false}, ${property.features.garage || false}, ${property.features.barbecue || false}, ${property.features.pool || false}, ${property.features.garden || false}, ${property.features.woodStoveOrAC || false}, ${property.features.petFriendly || false},
+          ${property.features.carAccess || false}, ${property.features.garage || false}, ${property.features.cochera || false}, ${property.features.cocheraTechada || false}, ${property.features.barbecue || false}, ${property.features.barbacoa || false}, ${property.features.parrillero || false}, ${property.features.pool || false}, ${property.features.garden || false}, ${property.features.fondo || false}, ${property.features.patio || false}, ${property.features.woodStoveOrAC || false}, ${property.features.petFriendly || false},
           ${property.features.perimeterFence || false}, ${property.features.bankCreditEligible || false}, ${property.features.phRegime || false}, ${property.features.oseWater || false}, ${property.features.uteElectric || false}, ${property.features.sanitation || false}, ${property.features.fiberOptic || false},
           ${property.features.waterWellOrPond || false}, ${property.features.titlesUpToDate || false}, ${property.features.acceptsTradeIn || false}, ${property.features.securitySystem || false}, ${property.features.pavedStreet || false}, ${property.features.shedOrCorral || false}, ${property.features.coneatIndex || null},
           ${JSON.stringify(property.guarantees || [])}, ${JSON.stringify(property.images || [])}, ${property.seoTitle || null}, ${property.seoDescription || null}, ${property.featured}
@@ -264,6 +277,7 @@ export async function saveProperty(property: Property): Promise<Property> {
           price_period = EXCLUDED.price_period,
           price_drop = EXCLUDED.price_drop,
           original_amount = EXCLUDED.original_amount,
+          price_mode = EXCLUDED.price_mode,
           department = EXCLUDED.department,
           city = EXCLUDED.city,
           neighborhood = EXCLUDED.neighborhood,
@@ -281,9 +295,15 @@ export async function saveProperty(property: Property): Promise<Property> {
           front_meters = EXCLUDED.front_meters,
           car_access = EXCLUDED.car_access,
           garage = EXCLUDED.garage,
+          cochera = EXCLUDED.cochera,
+          cochera_techada = EXCLUDED.cochera_techada,
           barbecue = EXCLUDED.barbecue,
+          barbacoa = EXCLUDED.barbacoa,
+          parrillero = EXCLUDED.parrillero,
           pool = EXCLUDED.pool,
           garden = EXCLUDED.garden,
+          fondo = EXCLUDED.fondo,
+          patio = EXCLUDED.patio,
           wood_stove_or_ac = EXCLUDED.wood_stove_or_ac,
           pet_friendly = EXCLUDED.pet_friendly,
           perimeter_fence = EXCLUDED.perimeter_fence,

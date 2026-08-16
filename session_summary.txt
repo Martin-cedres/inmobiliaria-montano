@@ -212,6 +212,27 @@
 - Encapsulados los controles interactivos en el componente cliente `src/components/CatalogSection.tsx`.
 - Implementada la optimización de imágenes en `PropertyCard.tsx` con `<Image unoptimized={true} />`, `priority={index < 2}` para LCP instantáneo y `loading="lazy"` para el resto de las tarjetas, logrando un consumo 0 en Vercel y CLS 0.
 - Verificada la compilación limpia local (`npm run build`, 0 errores).
+- Extendida la optimización de alto rendimiento `<Image unoptimized={true} priority={true} />` e ISR (`revalidate = 60`) a las fichas de detalle públicas (`src/app/propiedad/[slug]/page.tsx`) y a la galería interactiva (`src/components/PropertyGallery.tsx`).
+- Creados e integrados los **Badges Destacados (Etiquetas Clave)** en el panel de administración (`admin/nueva` y `admin/editar/[id]`), tarjetas de catálogo (`PropertyCard.tsx`) y fichas de detalle (`propiedad/[slug]/page.tsx`):
+  - **Fondo** (🌳)
+  - **Patio** (🏡)
+  - **Barbacoa** (🥩)
+  - **Parrillero** (🔥)
+  - **Cochera** (🚗)
+  - **Cochera Techada** (🛡️)
+- Actualizada la capa de persistencia y esquema SQL en `src/lib/propertiesStore.ts` y tipos en `src/types/property.ts` para persistir estos badges de forma compatible tanto en Neon Postgres como en local.
+- Diseñado e implementado el sistema de **Modalidades de Precio Flexibles** en todo el ciclo de publicación:
+  - **💵 Precio Fijo (Visible)**: Monto público estándar (`USD 117.000` / `UYU $ 25.000`).
+  - **💬 Consultar Precio**: Oculta el monto al público y muestra la etiqueta destacada; conserva el monto internamente para control administrativo.
+  - **🔒 Precio Reservado**: Para inmuebles exclusivos de alta confidencialidad o campos.
+  - **📈 Precio "Desde..."**: Para proyectos en pozo, módulos habitacionales o fraccionamientos de terrenos.
+- Actualizados los selectores visuales en el panel Admin (`admin/nueva` y `admin/editar/[id]`), las tarjetas (`PropertyCard.tsx`), la ficha de detalle (`propiedad/[slug]/page.tsx`) y los mensajes automáticos personalizados de WhatsApp (`whatsapp.ts`).
+- Verificada la compilación limpia local (`npm run build`, 0 errores).
+- Integrado el enlace canónico de publicación en todos los mensajes predefinidos de WhatsApp (`src/utils/whatsapp.ts`), permitiendo que WhatsApp genere automáticamente la **tarjeta interactiva con la foto miniatura de la propiedad**.
+- Convertido el badge **"💬 Consultar Precio"** y **"🔒 Precio Reservado"** en las tarjetas del catálogo (`PropertyCard.tsx`) en botones interactivos de WhatsApp directo con aislamiento de clic (`e.stopPropagation()`).
+
+
+
 
 
 

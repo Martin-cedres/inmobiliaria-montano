@@ -50,6 +50,7 @@ export async function POST(request: Request) {
         period: body.pricePeriod || body.price?.period || (body.operation === 'alquiler' ? 'mensual' : 'total'),
         priceDrop: body.priceDrop || false,
         originalAmount: body.originalAmount ? Number(body.originalAmount) : undefined,
+        priceMode: body.priceMode || body.price?.priceMode || 'visible',
       },
       location: {
         department: body.department || 'San José',

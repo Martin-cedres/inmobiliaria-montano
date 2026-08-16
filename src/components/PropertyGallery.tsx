@@ -130,7 +130,7 @@ export const PropertyGallery: React.FC<PropertyGalleryProps> = ({ property }) =>
     <div className="space-y-4 select-none">
       {/* Main Image Viewport with Touch Swipe & Hover Arrows */}
       <div 
-        className="relative h-80 sm:h-96 lg:h-[480px] bg-[#350A2F] rounded-3xl overflow-hidden shadow-xl border border-purple-100 group"
+        className="relative h-80 sm:h-96 lg:h-[480px] bg-slate-100 rounded-3xl overflow-hidden shadow-xl border border-purple-100 group"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}

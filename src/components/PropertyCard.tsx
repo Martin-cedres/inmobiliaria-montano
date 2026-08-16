@@ -124,8 +124,8 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
       <Link href={`/propiedad/${property.slug}`} className="flex flex-col flex-1 text-left cursor-pointer group/link">
         
         {/* Aspect Ratio 4:3 Image Container */}
-        <div className="relative aspect-[4/3] bg-slate-900 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a]/90 via-[#0f172a]/25 to-transparent z-10 pointer-events-none" />
+        <div className="relative aspect-[4/3] bg-slate-100 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent z-10 pointer-events-none" />
 
           <Image
             src={imageError || !mainImage ? '/logo.png' : mainImage}
@@ -176,17 +176,48 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
             </div>
 
             {/* Price Header */}
-            <div className="flex items-baseline space-x-1.5 mb-1.5">
-              <span className="text-2xl font-black text-[#5e1754]">
-                {property.price.currency === 'USD' ? 'USD' : 'UYU $'} {property.price.amount.toLocaleString('es-UY')}
-                {property.operation === 'alquiler' && property.price.period && property.price.period !== 'total' && (
-                  <span className="text-xs text-slate-500 font-bold"> / {property.price.period}</span>
-                )}
-              </span>
-              {property.price.priceDrop && property.price.originalAmount && (
-                <span className="text-xs line-through text-slate-400 ml-2 font-semibold">
-                  {property.price.currency === 'USD' ? 'USD' : 'UYU $'} {property.price.originalAmount.toLocaleString('es-UY')}
-                </span>
+            <div className="flex items-baseline space-x-1.5 mb-1.5 min-h-[2rem]">
+              {property.price.priceMode === 'consultar' ? (
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-black text-white tracking-tight bg-gradient-to-r from-[#5e1754] to-[#7a226e] hover:from-[#45103e] hover:to-[#5e1754] px-3 py-1.5 rounded-xl shadow-xs hover:shadow-md transition-all cursor-pointer group/wappbtn"
+                  title="Consultar precio directamente por WhatsApp"
+                >
+                  <WhatsAppIcon className="w-3.5 h-3.5 text-emerald-400 group-hover/wappbtn:scale-110 transition-transform flex-shrink-0" />
+                  <span>Consultar Precio</span>
+                  <span className="text-[10px] text-purple-200 font-semibold ml-0.5">→ WhatsApp</span>
+                </a>
+              ) : property.price.priceMode === 'reservado' ? (
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-black text-slate-800 tracking-tight bg-slate-100 hover:bg-slate-200 border border-slate-200 px-3 py-1.5 rounded-xl shadow-2xs hover:shadow-xs transition-all cursor-pointer group/wappbtn"
+                  title="Solicitar información confidencial por WhatsApp"
+                >
+                  <span className="text-xs">🔒</span>
+                  <span>Precio Reservado</span>
+                  <WhatsAppIcon className="w-3.5 h-3.5 text-[#25D366] ml-1 group-hover/wappbtn:scale-110 transition-transform flex-shrink-0" />
+                </a>
+              ) : (
+                <>
+                  <span className="text-2xl font-black text-[#5e1754]">
+                    {property.price.priceMode === 'desde' && <span className="text-sm font-extrabold text-slate-500 mr-1.5">Desde</span>}
+                    {property.price.currency === 'USD' ? 'USD' : 'UYU $'} {property.price.amount.toLocaleString('es-UY')}
+                    {property.operation === 'alquiler' && property.price.period && property.price.period !== 'total' && (
+                      <span className="text-xs text-slate-500 font-bold"> / {property.price.period}</span>
+                    )}
+                  </span>
+                  {property.price.priceDrop && property.price.originalAmount && (
+                    <span className="text-xs line-through text-slate-400 ml-2 font-semibold">
+                      {property.price.currency === 'USD' ? 'USD' : 'UYU $'} {property.price.originalAmount.toLocaleString('es-UY')}
+                    </span>
+                  )}
+                </>
               )}
             </div>
 
@@ -245,36 +276,52 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
                   <span>{property.features.frontMeters}m Frente</span>
                 </div>
               )}
-              {property.features.carAccess && (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Entrada de Auto">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <Car className="w-3.5 h-3.5" />
-                  </span>
-                  <span>Entrada Auto</span>
-                </div>
-              )}
-              {property.features.garage && (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Garage">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <Car className="w-3.5 h-3.5" />
-                  </span>
-                  <span>Garage</span>
-                </div>
-              )}
-              {property.features.barbecue && (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Parrillero">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <Flame className="w-3.5 h-3.5" />
-                  </span>
-                  <span>Parrillero</span>
-                </div>
-              )}
-              {property.features.garden && (
+              {(property.features.fondo || property.features.garden) && (
                 <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Fondo">
                   <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
                     <Trees className="w-3.5 h-3.5" />
                   </span>
                   <span>Fondo</span>
+                </div>
+              )}
+              {property.features.patio && (
+                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Patio">
+                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
+                    <Trees className="w-3.5 h-3.5" />
+                  </span>
+                  <span>Patio</span>
+                </div>
+              )}
+              {property.features.barbacoa && (
+                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Barbacoa">
+                  <span className="p-0.5 rounded-md bg-[#E85D04]/10 text-[#E85D04]">
+                    <Flame className="w-3.5 h-3.5" />
+                  </span>
+                  <span>Barbacoa</span>
+                </div>
+              )}
+              {(property.features.parrillero || property.features.barbecue) && (
+                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Parrillero">
+                  <span className="p-0.5 rounded-md bg-[#E85D04]/10 text-[#E85D04]">
+                    <Flame className="w-3.5 h-3.5" />
+                  </span>
+                  <span>Parrillero</span>
+                </div>
+              )}
+              {(property.features.cochera || (property.features.carAccess && !property.features.cocheraTechada && !property.features.garage)) && (
+                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Cochera">
+                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
+                    <Car className="w-3.5 h-3.5" />
+                  </span>
+                  <span>Cochera</span>
+                </div>
+              )}
+              {(property.features.cocheraTechada || property.features.garage) && (
+                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Cochera Techada">
+                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
+                    <Car className="w-3.5 h-3.5" />
+                  </span>
+                  <span>Cochera Techada</span>
                 </div>
               )}
               {property.features.oseWater && (
