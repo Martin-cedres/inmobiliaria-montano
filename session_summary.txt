@@ -231,6 +231,9 @@
 - Integrado el enlace canónico de publicación en todos los mensajes predefinidos de WhatsApp (`src/utils/whatsapp.ts`), permitiendo que WhatsApp genere automáticamente la **tarjeta interactiva con la foto miniatura de la propiedad**.
 - Convertido el badge **"💬 Consultar Precio"** y **"🔒 Precio Reservado"** en las tarjetas del catálogo (`PropertyCard.tsx`) en botones interactivos de WhatsApp directo con aislamiento de clic (`e.stopPropagation()`).
 - Despliegue completado a GitHub (`main` -> commit `dbded75`), disparando el build y despliegue automático en producción en Vercel.
+- Corregida la visualización en la tabla del panel Admin (`src/app/admin/page.tsx`), tarjetas laterales del catálogo (`CatalogSection.tsx`), pines y popups del mapa (`CatalogMap.tsx`), modal de compartir (`SharePropertyModal.tsx`) y metadatos OpenGraph para miniaturas de redes (`seo.ts`) para que muestren **"💬 Consultar Precio"** o **"🔒 Reservado"** en lugar de `USD 0`.
+- Desplegado commit `b9c82b2` a producción.
+
 
 
 
