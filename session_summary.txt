@@ -253,6 +253,22 @@
   6. **Botón de Purga Manual en Admin (`src/app/admin/page.tsx`):** Añadido botón interactivo con icono `Zap` en el panel de administración para revalidar el caché perimetral en cualquier momento con un clic.
 - Verificada la compilación de producción exitosa con `npm run build` (24 páginas pre-renderizadas como estáticas/SSG).
 - Subidos los cambios a GitHub (`git push origin main` -> commit `3f7b571`), disparando el despliegue automático en Vercel.
+- Optimización y Corrección de Visualización en Mapas Interactivos (Ficha de Propiedad y Catálogo con Clusters):
+  1. **Resolución de Colisión en Pantallas Móviles (`src/components/PropertyMap.tsx`):**
+     - Se unificó la barra flotante superior en un contenedor `flex` responsivo con `justify-between` y `pointer-events-none` (hijos interactivos).
+     - El badge de ubicación aproximada ahora es compacto en móviles (`Zona Aprox. (~500m)`) y extendido en desktop, evitando colisiones con los botones de capa ("Mapa" / "Satelital").
+     - Se reubicó el control de zoom de Leaflet (`ZoomControl`) a `bottomright` desactivando el control por defecto en `topleft`, eliminando por completo el solapamiento visual que tapaba los botones `+` y `-`.
+  2. **Estabilidad y Apertura de Tarjetas en Propiedades Agrupadas / Clusters (`src/components/CatalogMap.tsx`):**
+     - Se aisló la capa de marcadores de Leaflet en el sub-componente memoizado `ClusteredMarkersLayer` con `React.memo` para desvincular el árbol de capas de los re-renders del estado `activePropertyId` del padre (`CatalogSection`). Esto previene que Leaflet fuerce el cierre inesperado (unspiderfy) de la araña y el desmonte de las ventanas emergentes (`Popup`) al seleccionar el precio.
+     - Se añadió `L.DomEvent.stopPropagation(e.originalEvent)` en los clicks de los pines para evitar propagaciones al mapa que cerraran la tarjeta.
+     - Se eliminó `disableClusteringAtZoom: 15` para permitir que propiedades con coordenadas coincidentes o muy cercanas se puedan desplegar limpiamente mediante `spiderfy` a cualquier nivel de zoom.
+     - Se incrementó el multiplicador de separación `spiderfyDistanceMultiplier: 2` para que los badges de precio no se tapen entre sí al expandirse.
+     - Se aplicaron estilos CSS de alta gama a `.catalog-map-popup` con bordes redondeados y sin padding sobrante de Leaflet.
+     - Se filtraron propiedades sin ubicación (`hasLocation === false`) para evitar pines no deseados en coordenadas por defecto.
+  3. **Consistencia en Selector de Administración (`src/components/AdminLocationPicker.tsx`):**
+     - Ajustado `ZoomControl` a `bottomright` para consistencia en todos los mapas del sistema.
+  4. **Verificación de Build:**
+     - Ejecutado `npm run build` con 100% de éxito y cero errores de TypeScript/Turbopack.
 
 
 

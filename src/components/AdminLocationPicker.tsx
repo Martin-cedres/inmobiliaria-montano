@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { MapContainer, TileLayer, Marker, Circle, useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Circle, useMapEvents, ZoomControl } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { MapPin, ShieldCheck, Eye, Compass } from 'lucide-react';
@@ -213,12 +213,14 @@ export const AdminLocationPicker: React.FC<AdminLocationPickerProps> = ({
           center={[lat, lng]}
           zoom={15}
           scrollWheelZoom={false}
+          zoomControl={false}
           className="w-full h-full"
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
             url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
           />
+          <ZoomControl position="bottomright" />
           <LocationMarker
             lat={lat}
             lng={lng}
