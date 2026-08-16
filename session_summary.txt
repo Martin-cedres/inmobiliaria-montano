@@ -267,8 +267,9 @@
      - Se filtraron propiedades sin ubicación (`hasLocation === false`) para evitar pines no deseados en coordenadas por defecto.
   3. **Consistencia en Selector de Administración (`src/components/AdminLocationPicker.tsx`):**
      - Ajustado `ZoomControl` a `bottomright` para consistencia en todos los mapas del sistema.
-  4. **Verificación de Build:**
+  4. **Verificación de Build y Despliegue:**
      - Ejecutado `npm run build` con 100% de éxito y cero errores de TypeScript/Turbopack.
+     - Cambios subidos a GitHub (`git push origin main` -> commit `ae45659`), disparando el despliegue automático en Vercel.
 
 
 
