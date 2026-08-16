@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
-import { getAllProperties } from '@/lib/propertiesStore';
+import { getAllProperties, getCachedProperties, getCachedPropertyBySlug } from '@/lib/propertiesStore';
 import { generatePropertyMetadata, generatePropertyJsonLd } from '@/utils/seo';
 import { buildPropertyWhatsAppLink } from '@/utils/whatsapp';
 import { MapPin, Bed, Bath, Maximize2, Car, Building, CheckCircle2, MessageCircle, ArrowLeft, ShieldCheck, Share2, Compass, Trees, Droplets, FileCheck, Landmark, ArrowLeftRight, Wifi, Flame, Zap, Dog, Waves } from 'lucide-react';
@@ -21,21 +21,29 @@ interface PropertyDetailPageProps {
   }>;
 }
 
-// ISR (Incremental Static Regeneration): Revalida en Edge cada 60 segundos
-export const revalidate = 60;
+// ISR (Incremental Static Regeneration): Revalida en Edge cada 24 horas (86.400s)
+// y de forma inmediata ante modificaciones vía On-Demand Tag/Path Revalidation
+export const revalidate = 86400;
 
-// Generación automática de Metadata SEO para Google y Redes Sociales
+// Pre-renderizado estático completo durante el build de GitHub / Vercel
+export async function generateStaticParams() {
+  const properties = await getAllProperties();
+  return properties.map((p) => ({
+    slug: p.slug,
+  }));
+}
+
+// Generación automática de Metadata SEO para Google y Redes Sociales desde Data Cache
 export async function generateMetadata({ params }: PropertyDetailPageProps) {
   const resolvedParams = await params;
-  const allProperties = await getAllProperties();
-  const property = allProperties.find((p) => p.slug === resolvedParams.slug);
+  const property = await getCachedPropertyBySlug(resolvedParams.slug);
   if (!property) return {};
   return generatePropertyMetadata(property);
 }
 
 export default async function PropertyDetailPage({ params }: PropertyDetailPageProps) {
   const resolvedParams = await params;
-  const allProperties = await getAllProperties();
+  const allProperties = await getCachedProperties();
   const property = allProperties.find((p) => p.slug === resolvedParams.slug);
 
   if (!property) {

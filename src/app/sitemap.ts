@@ -1,9 +1,11 @@
 import { MetadataRoute } from 'next';
-import { getAllProperties } from '@/lib/propertiesStore';
+import { getCachedProperties } from '@/lib/propertiesStore';
+
+export const revalidate = 86400; // 24 horas
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://inmobiliariamontano.uy';
-  const properties = await getAllProperties();
+  const properties = await getCachedProperties();
 
   const propertyUrls: MetadataRoute.Sitemap = properties.map((p) => ({
     url: `${baseUrl}/propiedad/${p.slug}`,

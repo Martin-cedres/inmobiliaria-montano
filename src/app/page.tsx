@@ -5,14 +5,15 @@ import { CatalogSection } from '@/components/CatalogSection';
 import { OwnerLeadSection } from '@/components/OwnerLeadSection';
 import { Footer } from '@/components/Footer';
 import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
-import { getAllProperties } from '@/lib/propertiesStore';
+import { getCachedProperties } from '@/lib/propertiesStore';
 
-// ISR (Incremental Static Regeneration): Revalida automáticamente en el servidor cada 60 segundos
-export const revalidate = 60;
+// ISR (Incremental Static Regeneration): Revalida en segundo plano cada 24 horas (86.400s)
+// y de forma inmediata ante cambios vía On-Demand Tag Revalidation (revalidateTag('properties'))
+export const revalidate = 86400;
 
 export default async function Home() {
-  // Carga directa en el Servidor (SSR/ISR) - 0ms de espera en cliente
-  const initialProperties = await getAllProperties();
+  // Carga perimetral ultra-rápida (Edge ISR Cache) - 0ms de espera y costo cero
+  const initialProperties = await getCachedProperties();
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 relative">

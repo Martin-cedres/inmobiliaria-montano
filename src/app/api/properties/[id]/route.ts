@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { updatePropertyStatus, deletePropertyById, getAllProperties, getPropertyById, saveProperty } from '@/lib/propertiesStore';
 import { PropertyStatus } from '@/types/property';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET(
   request: Request,
@@ -122,10 +124,18 @@ export async function PUT(
 
     const saved = await saveProperty(updatedProperty);
 
+    // Invalidación On-Demand de Edge Data Cache y Rutas Estáticas
+    revalidateTag('properties', { expire: 0 });
     revalidatePath('/');
     revalidatePath('/admin');
+    revalidatePath('/sitemap.xml');
     if (saved.slug) {
+      revalidateTag(`property-${saved.slug}`, { expire: 0 });
       revalidatePath(`/propiedad/${saved.slug}`);
+    }
+    if (existing.slug && existing.slug !== saved.slug) {
+      revalidateTag(`property-${existing.slug}`, { expire: 0 });
+      revalidatePath(`/propiedad/${existing.slug}`);
     }
 
     return NextResponse.json({
@@ -166,10 +176,13 @@ export async function PATCH(
       );
     }
 
-    // Revalidación explícita del caché de Next.js (Recomendación Técnica #1)
+    // Invalidación On-Demand de Edge Data Cache y Rutas Estáticas
+    revalidateTag('properties', { expire: 0 });
     revalidatePath('/');
     revalidatePath('/admin');
+    revalidatePath('/sitemap.xml');
     if (updated.slug) {
+      revalidateTag(`property-${updated.slug}`, { expire: 0 });
       revalidatePath(`/propiedad/${updated.slug}`);
     }
 
@@ -198,10 +211,13 @@ export async function DELETE(
 
     await deletePropertyById(id);
 
-    // Revalidación explícita del caché de Next.js (Recomendación Técnica #1)
+    // Invalidación On-Demand de Edge Data Cache y Rutas Estáticas
+    revalidateTag('properties', { expire: 0 });
     revalidatePath('/');
     revalidatePath('/admin');
+    revalidatePath('/sitemap.xml');
     if (targetProp?.slug) {
+      revalidateTag(`property-${targetProp.slug}`, { expire: 0 });
       revalidatePath(`/propiedad/${targetProp.slug}`);
     }
 

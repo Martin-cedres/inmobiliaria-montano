@@ -244,6 +244,14 @@
   3. Eliminado el evento destructivo `mouseover` sobre los pines y configurada la selección en `click` y `popupopen`.
   4. Añadido `popupAnchor: [0, -32]` para posicionar con precisión la ventana emergente sobre la píldora de precio.
 - Verificada la compilación limpia de producción con `npm run build` (0 errores).
+- Diseñada e implementada la arquitectura completa de **Incremental Static Regeneration (ISR) 24 horas (86.400s) + Invalidación On-Demand por Tags (`revalidateTag`) + Pre-renderizado en Build (`generateStaticParams`)**:
+  1. **Data Cache con Tags (`src/lib/propertiesStore.ts`):** Creados `getCachedProperties` y `getCachedPropertyBySlug` encapsulados con `unstable_cache` de Next.js, asignados a los tags `'properties'` y `property-${slug}` con ciclo de 86.400 segundos.
+  2. **Pre-renderizado en Build (`src/app/propiedad/[slug]/page.tsx`):** Añadido `generateStaticParams()` para generar estáticamente en tiempo de build de GitHub/Vercel el 100% de las fichas de inmuebles (`● SSG`), reduciendo a cero el tiempo de respuesta inicial (TTFB) y el consumo de base de datos Neon.
+  3. **Revalidación 24h en Páginas Públicas:** Actualizadas la portada (`src/app/page.tsx`), fichas (`src/app/propiedad/[slug]/page.tsx`) y sitemap (`src/app/sitemap.ts`) a `export const revalidate = 86400;`.
+  4. **Invalidación On-Demand Inmediata en Mutaciones (`POST`, `PUT`, `PATCH`, `DELETE`):** Actualizadas las rutas API `src/app/api/properties/route.ts` y `src/app/api/properties/[id]/route.ts` para purgar de inmediato los tags `properties`, `property-${slug}` y las rutas `/`, `/admin`, `/sitemap.xml` y `/propiedad/${slug}` al crear, editar, cambiar estado o eliminar inmuebles.
+  5. **Endpoint Webhook On-Demand (`src/app/api/revalidate/route.ts`):** Implementado endpoint seguro protegido por `REVALIDATE_SECRET_TOKEN` para purga selectiva o global de caché por Tag o Path.
+  6. **Botón de Purga Manual en Admin (`src/app/admin/page.tsx`):** Añadido botón interactivo con icono `Zap` en el panel de administración para revalidar el caché perimetral en cualquier momento con un clic.
+- Verificada la compilación de producción exitosa con `npm run build` (24 páginas pre-renderizadas como estáticas/SSG).
 
 
 

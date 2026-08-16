@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { getAllProperties, saveProperty } from '@/lib/propertiesStore';
 import { generatePropertySlug } from '@/utils/seo';
 import { Property } from '@/types/property';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
@@ -126,9 +128,15 @@ export async function POST(request: Request) {
 
     const saved = await saveProperty(newProperty);
 
-    // Revalidación explícita del caché de Next.js (Recomendación Técnica #1)
+    // Invalidación On-Demand de Edge Data Cache y Rutas Estáticas
+    revalidateTag('properties', { expire: 0 });
     revalidatePath('/');
     revalidatePath('/admin');
+    revalidatePath('/sitemap.xml');
+    if (saved.slug) {
+      revalidateTag(`property-${saved.slug}`, { expire: 0 });
+      revalidatePath(`/propiedad/${saved.slug}`);
+    }
 
     return NextResponse.json({
       success: true,

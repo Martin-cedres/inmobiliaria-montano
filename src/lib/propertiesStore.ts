@@ -1,5 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { unstable_cache } from 'next/cache';
 import { Property, PropertyStatus } from '@/types/property';
 import { MOCK_PROPERTIES } from '@/data/mockProperties';
 import { getDbClient } from './db';
@@ -228,6 +229,42 @@ export async function getAllProperties(): Promise<Property[]> {
     memoryProperties = MOCK_PROPERTIES;
     return MOCK_PROPERTIES;
   }
+}
+
+/**
+ * ISR & Data Cache: Obtiene todas las propiedades con almacenamiento en caché perimetral (Edge/Data Cache)
+ * Revalidación automática periódica: 24 horas (86.400 segundos)
+ * Invalidación On-Demand: revalidateTag('properties')
+ */
+export const getCachedProperties = unstable_cache(
+  async (): Promise<Property[]> => {
+    return getAllProperties();
+  },
+  ['properties-all'],
+  {
+    revalidate: 86400, // 24 horas
+    tags: ['properties'],
+  }
+);
+
+/**
+ * ISR & Data Cache: Obtiene una propiedad específica por su slug
+ * Revalidación automática periódica: 24 horas (86.400 segundos)
+ * Invalidación On-Demand: revalidateTag('properties') o revalidateTag(`property-${slug}`)
+ */
+export async function getCachedPropertyBySlug(slug: string): Promise<Property | null> {
+  const getCached = unstable_cache(
+    async () => {
+      const all = await getAllProperties();
+      return all.find((p) => p.slug === slug) || null;
+    },
+    [`property-slug-${slug}`],
+    {
+      revalidate: 86400, // 24 horas
+      tags: ['properties', `property-${slug}`],
+    }
+  );
+  return getCached();
 }
 
 /**

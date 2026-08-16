@@ -10,13 +10,14 @@ import { UserSessionPayload } from '@/types/user';
 import { 
   Plus, Trash2, Eye, Edit3, CheckCircle2, Sparkles, Search, 
   RefreshCw, AlertCircle, Building2, Key, Tag, MessageCircle, 
-  Flame, TrendingUp, ArrowUpDown, Users, LogOut, ShieldCheck, Shield 
+  Flame, TrendingUp, ArrowUpDown, Users, LogOut, ShieldCheck, Shield, Zap 
 } from 'lucide-react';
 
 export default function AdminDashboardPage() {
   const router = useRouter();
   const [properties, setProperties] = useState<Property[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isRevalidating, setIsRevalidating] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sortBy, setSortBy] = useState<'recent' | 'views' | 'whatsapp' | 'conversion'>('recent');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -29,6 +30,28 @@ export default function AdminDashboardPage() {
     setTimeout(() => {
       setToastMessage(null);
     }, 3500);
+  };
+
+  const handleRevalidateCache = async () => {
+    setIsRevalidating(true);
+    try {
+      const response = await fetch('/api/revalidate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ secret: 'montano_revalidate_secret_2026' }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        showToast('⚡ Caché Edge (Vercel) e ISR revalidados con éxito');
+        fetchProperties();
+      } else {
+        showToast('Error al revalidar caché');
+      }
+    } catch {
+      showToast('Error de red al revalidar caché');
+    } finally {
+      setIsRevalidating(false);
+    }
   };
 
   const fetchProperties = async () => {
@@ -252,8 +275,16 @@ export default function AdminDashboardPage() {
 
           <div className="flex items-center space-x-3 w-full sm:w-auto">
             <button
+              onClick={handleRevalidateCache}
+              disabled={isRevalidating}
+              className="p-3 bg-purple-50 hover:bg-purple-100 text-[#350A2F] border border-purple-200/60 rounded-full transition-all flex items-center justify-center cursor-pointer"
+              title="Purgar Caché Edge (Vercel On-Demand)"
+            >
+              <Zap className={`w-4 h-4 text-purple-800 ${isRevalidating ? 'animate-bounce text-amber-500' : ''}`} />
+            </button>
+            <button
               onClick={fetchProperties}
-              className="p-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full transition-colors"
+              className="p-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full transition-colors cursor-pointer"
               title="Recargar datos"
             >
               <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
