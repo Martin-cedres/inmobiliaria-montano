@@ -252,6 +252,7 @@
   5. **Endpoint Webhook On-Demand (`src/app/api/revalidate/route.ts`):** Implementado endpoint seguro protegido por `REVALIDATE_SECRET_TOKEN` para purga selectiva o global de caché por Tag o Path.
   6. **Botón de Purga Manual en Admin (`src/app/admin/page.tsx`):** Añadido botón interactivo con icono `Zap` en el panel de administración para revalidar el caché perimetral en cualquier momento con un clic.
 - Verificada la compilación de producción exitosa con `npm run build` (24 páginas pre-renderizadas como estáticas/SSG).
+- Subidos los cambios a GitHub (`git push origin main` -> commit `3f7b571`), disparando el despliegue automático en Vercel.
 
 
 
