@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Circle, Popup } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import L from 'leaflet';
@@ -44,17 +44,15 @@ function getJitteredCoords(id: string, lat: number, lng: number, isExact?: boole
 }
 
 // Function to generate compact Leaflet Pin in Montaño Brand Colors
-const createCompactPricePin = (priceText: string, isRent: boolean, isActive: boolean) => {
-  const badgeBg = isActive ? '#E85D04' : isRent ? '#10B981' : '#5E1754';
-  const borderColor = isActive ? '#FF8500' : isRent ? '#059669' : '#E85D04';
-  const scale = isActive ? 'scale(1.2)' : 'scale(1)';
-  const zIndex = isActive ? 9999 : 1;
+const createCompactPricePin = (priceText: string, isRent: boolean, propId: string) => {
+  const badgeBg = isRent ? '#10B981' : '#5E1754';
+  const borderColor = isRent ? '#059669' : '#E85D04';
 
   return L.divIcon({
-    className: 'custom-catalog-pin',
+    className: `custom-catalog-pin pin-${propId}`,
     html: `
-      <div style="position: relative; display: inline-flex; align-items: center; justify-content: center; transform: translate(-50%, -100%); transition: all 0.2s ease; z-index: ${zIndex};">
-        <div style="
+      <div class="pin-pill-wrapper" style="position: relative; display: inline-flex; align-items: center; justify-content: center; transform: translate(-50%, -100%); transition: all 0.2s ease;">
+        <div class="pin-pill" style="
           background: ${badgeBg};
           border: 2px solid ${borderColor};
           color: white;
@@ -63,13 +61,13 @@ const createCompactPricePin = (priceText: string, isRent: boolean, isActive: boo
           font-weight: 900;
           font-size: 11px;
           letter-spacing: -0.01em;
-          box-shadow: ${isActive ? '0 0 18px rgba(232, 93, 4, 0.9)' : '0 4px 12px rgba(0, 0, 0, 0.3)'};
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
           display: flex;
           align-items: center;
           gap: 5px;
           white-space: nowrap;
           cursor: pointer;
-          transform: ${scale};
+          transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
         ">
           <span style="width: 6px; height: 6px; background-color: ${borderColor}; border-radius: 9999px; display: inline-block;"></span>
           <span>${priceText}</span>
@@ -78,6 +76,7 @@ const createCompactPricePin = (priceText: string, isRent: boolean, isActive: boo
     `,
     iconSize: [0, 0],
     iconAnchor: [0, 0],
+    popupAnchor: [0, -32],
   });
 };
 
@@ -130,8 +129,49 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
         ]
       : defaultCenter;
 
+  // Memoizar iconos estables para evitar que Leaflet unspiderfique en re-renders
+  const pinsMap = useMemo(() => {
+    const map = new Map<string, L.DivIcon>();
+    properties.forEach((prop) => {
+      const isRent = prop.operation === 'alquiler';
+      const priceMode = prop.price.priceMode || (prop.price.amount === 0 ? 'consultar' : 'visible');
+      const compactPrice =
+        priceMode === 'consultar' ? 'Consultar' :
+        priceMode === 'reservado' ? 'Reservado' :
+        formatCompactPrice(prop.price.amount, prop.price.currency);
+      map.set(prop.id, createCompactPricePin(compactPrice, isRent, prop.id));
+    });
+    return map;
+  }, [properties]);
+
+  // Actualizar el pin resaltado mediante clases CSS en el DOM sin recrear los objetos Leaflet
+  useEffect(() => {
+    document.querySelectorAll('.custom-catalog-pin.is-active').forEach((el) => {
+      el.classList.remove('is-active');
+    });
+
+    if (activePropertyId) {
+      document.querySelectorAll(`.pin-${activePropertyId}`).forEach((el) => {
+        el.classList.add('is-active');
+      });
+    }
+  }, [activePropertyId]);
+
   return (
     <div className={`relative w-full ${heightClass} rounded-3xl overflow-hidden shadow-xl border border-slate-200 bg-slate-900`}>
+      {/* Estilos CSS para el pin activo */}
+      <style>{`
+        .custom-catalog-pin.is-active {
+          z-index: 9999 !important;
+        }
+        .custom-catalog-pin.is-active .pin-pill {
+          background: #E85D04 !important;
+          border-color: #FF8500 !important;
+          transform: scale(1.18) !important;
+          box-shadow: 0 0 18px rgba(232, 93, 4, 0.9) !important;
+        }
+      `}</style>
+
       <MapContainer
         center={center}
         zoom={14}
@@ -160,30 +200,24 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
             };
 
             const [lat, lng] = getJitteredCoords(prop.id, rawCoords.lat, rawCoords.lng, prop.location.isExactLocation);
-            const isRent = prop.operation === 'alquiler';
             const priceMode = prop.price.priceMode || (prop.price.amount === 0 ? 'consultar' : 'visible');
-            const compactPrice =
-              priceMode === 'consultar' ? 'Consultar' :
-              priceMode === 'reservado' ? 'Reservado' :
-              formatCompactPrice(prop.price.amount, prop.price.currency);
             const fullPriceText =
               priceMode === 'consultar' ? 'Consultar Precio' :
               priceMode === 'reservado' ? 'Precio Reservado' :
               `${priceMode === 'desde' ? 'Desde ' : ''}${prop.price.currency === 'USD' ? 'USD' : 'UYU $'} ${prop.price.amount.toLocaleString('es-UY')}`;
             const mainImg = prop.images.find((img) => img.isMain)?.webpUrl || prop.images[0]?.webpUrl || '/logo.png';
-            const isActive = activePropertyId === prop.id;
+            const icon = pinsMap.get(prop.id) || createCompactPricePin('...', false, prop.id);
 
             return (
               <Marker
                 key={prop.id}
                 position={[lat, lng]}
-                icon={createCompactPricePin(compactPrice, isRent, isActive)}
-                zIndexOffset={isActive ? 1000 : 0}
+                icon={icon}
                 eventHandlers={{
                   click: () => {
                     if (onSelectProperty) onSelectProperty(prop.id);
                   },
-                  mouseover: () => {
+                  popupopen: () => {
                     if (onSelectProperty) onSelectProperty(prop.id);
                   },
                 }}
@@ -294,3 +328,4 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
 };
 
 export default CatalogMap;
+

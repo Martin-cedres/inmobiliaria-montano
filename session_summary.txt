@@ -234,7 +234,17 @@
 - Corregida la visualización en la tabla del panel Admin (`src/app/admin/page.tsx`), tarjetas laterales del catálogo (`CatalogSection.tsx`), pines y popups del mapa (`CatalogMap.tsx`), modal de compartir (`SharePropertyModal.tsx`) y metadatos OpenGraph para miniaturas de redes (`seo.ts`) para que muestren **"💬 Consultar Precio"** o **"🔒 Reservado"** en lugar de `USD 0`.
 - Desplegado commit `b9c82b2` a producción.
 - Ajustado el botón de **"Consultar Precio"** tanto en las tarjetas del catálogo (`PropertyCard.tsx`) como en la cabecera y llamadas a la acción de la ficha de detalle (`src/app/propiedad/[slug]/page.tsx`) para que muestre de forma limpia y exclusiva el texto **"Consultar Precio"** (sin logos ni menciones de WhatsApp).
-- Desplegado commit `c02e384` a producción en Vercel.
+
+=== Sesión 2026-08-16 ===
+- Diagnosticado y resuelto el bug de interacción en el mapa interactivo del catálogo (`CatalogMap.tsx`) donde al hacer clic en los pines desplegados de un grupo (cluster spiderfied), el mapa colapsaba la vista sin abrir la ventana de detalles ni resaltar la tarjeta lateral.
+- Causa raíz: `mouseover` y recreación de instancias `L.divIcon` en cada render de React al actualizar `activePropertyId`, lo que provocaba que Leaflet forzara `unspiderfy()` de forma inmediata.
+- Solución aplicada:
+  1. Estabilizados y memoizados los objetos `L.divIcon` con `useMemo` para evitar que Leaflet reinicie capas.
+  2. Implementado el resaltado del pin activo (`is-active`) mediante clases CSS y manipulación directa de `classList` en el DOM sin alterar el árbol de capas de Leaflet.
+  3. Eliminado el evento destructivo `mouseover` sobre los pines y configurada la selección en `click` y `popupopen`.
+  4. Añadido `popupAnchor: [0, -32]` para posicionar con precisión la ventana emergente sobre la píldora de precio.
+- Verificada la compilación limpia de producción con `npm run build` (0 errores).
+
 
 
 
