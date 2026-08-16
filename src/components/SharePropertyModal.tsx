@@ -31,7 +31,11 @@ export const SharePropertyModal: React.FC<SharePropertyModalProps> = ({
   const mainImage = property.images.find((img) => img.isMain) || property.images[0];
   const photoUrl = mainImage?.webpUrl || mainImage?.blobUrl || '/images/sample-house-1.jpg';
 
-  const formattedPrice = `${property.price.currency === 'USD' ? 'USD' : 'UYU $'}` +
+  const priceMode = property.price.priceMode || (property.price.amount === 0 ? 'consultar' : 'visible');
+  const formattedPrice =
+    priceMode === 'consultar' ? 'Consultar Precio' :
+    priceMode === 'reservado' ? 'Precio Reservado' :
+    `${priceMode === 'desde' ? 'Desde ' : ''}${property.price.currency === 'USD' ? 'USD' : 'UYU $'}` +
     ` ${property.price.amount.toLocaleString('es-UY')}` +
     `${property.operation === 'alquiler' && property.price.period && property.price.period !== 'total' ? ` / ${property.price.period}` : ''}`;
 

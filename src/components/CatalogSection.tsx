@@ -150,7 +150,11 @@ export function CatalogSection({ initialProperties }: CatalogSectionProps) {
                   {filteredProperties.map((property, index) => {
                     const isActive = activePropertyId === property.id;
                     const mainImg = property.images.find((img) => img.isMain)?.webpUrl || property.images[0]?.webpUrl || '/logo.png';
-                    const priceText = `${property.price.currency === 'USD' ? 'USD' : 'UYU $'} ${property.price.amount.toLocaleString('es-UY')}`;
+                    const priceMode = property.price.priceMode || (property.price.amount === 0 ? 'consultar' : 'visible');
+                    const priceText =
+                      priceMode === 'consultar' ? 'Consultar Precio' :
+                      priceMode === 'reservado' ? '🔒 Reservado' :
+                      `${priceMode === 'desde' ? 'Desde ' : ''}${property.price.currency === 'USD' ? 'USD' : 'UYU $'} ${property.price.amount.toLocaleString('es-UY')}`;
 
                     return (
                       <div

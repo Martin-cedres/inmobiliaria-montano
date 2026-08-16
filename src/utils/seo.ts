@@ -64,7 +64,12 @@ export function generateSmartSeoDescription(p: Partial<Property>): string {
   const hood = p.location?.neighborhood || 'San José de Mayo';
   const city = p.location?.city || 'San José de Mayo';
   const dorms = p.features?.bedrooms ? `${p.features.bedrooms} dorms` : '';
-  const priceFormatted = p.price?.amount ? `${p.price.currency === 'USD' ? 'USD' : 'UYU $'} ${p.price.amount.toLocaleString()}` : '';
+  const priceMode = p.price?.priceMode || (p.price?.amount === 0 ? 'consultar' : 'visible');
+  const priceFormatted =
+    priceMode === 'consultar' ? 'Precio a Consultar' :
+    priceMode === 'reservado' ? 'Precio Reservado' :
+    priceMode === 'desde' && p.price?.amount ? `Desde ${p.price.currency === 'USD' ? 'USD' : 'UYU $'} ${p.price.amount.toLocaleString('es-UY')}` :
+    p.price?.amount ? `${p.price.currency === 'USD' ? 'USD' : 'UYU $'} ${p.price.amount.toLocaleString('es-UY')}` : '';
 
   let keyAttr = '';
   if (p.features?.garage) keyAttr = 'con garage';
@@ -73,7 +78,7 @@ export function generateSmartSeoDescription(p: Partial<Property>): string {
   else if (p.features?.bankCreditEligible) keyAttr = 'apta crédito bancario';
 
   const attrStr = keyAttr ? ` ${keyAttr}` : '';
-  const priceStr = priceFormatted ? ` por ${priceFormatted}` : '';
+  const priceStr = priceFormatted ? ` (${priceFormatted})` : '';
 
   return `Oportunidad en ${hood}, ${city}: ${category} ${dorms}${attrStr}${priceStr}. Coordiná tu visita con Daniel Montaño.`.substring(0, 155);
 }
@@ -157,7 +162,13 @@ export function generatePropertyMetadata(property: Property): Metadata {
   const imageUrl = rawImg.startsWith('http') ? rawImg : `${BASE_URL}${rawImg}`;
   const canonicalUrl = `${BASE_URL}/propiedad/${property.slug}`;
 
-  const defaultPriceStr = `${property.price?.currency} $${property.price?.amount?.toLocaleString()}`;
+  const priceMode = property.price?.priceMode || (property.price?.amount === 0 ? 'consultar' : 'visible');
+  const defaultPriceStr =
+    priceMode === 'consultar' ? 'Consultar Precio' :
+    priceMode === 'reservado' ? 'Precio Reservado' :
+    priceMode === 'desde' ? `Desde ${property.price?.currency} $${property.price?.amount?.toLocaleString('es-UY')}` :
+    `${property.price?.currency} $${property.price?.amount?.toLocaleString('es-UY')}`;
+
   const titleStr = property.seoTitle || `${property.title} — ${defaultPriceStr} | Inmobiliaria Montaño`;
   const descriptionStr = property.seoDescription || `Oportunidad en ${property.location?.neighborhood}, San José de Mayo. Ref. #${property.codeRef}. ${property.description.substring(0, 140)}...`;
 

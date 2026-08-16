@@ -443,7 +443,24 @@ export default function AdminDashboardPage() {
 
                       {/* Col 3: Precio */}
                       <td className="py-3 px-2 font-extrabold text-[#5E1754] text-xs whitespace-nowrap">
-                        {prop.price.currency} {prop.price.currency === 'UYU' ? '$ ' : ''}{prop.price.amount.toLocaleString('es-UY')}
+                        {prop.price.priceMode === 'consultar' || prop.price.amount === 0 ? (
+                          <span className="inline-flex items-center gap-1 text-[11px] font-black text-purple-800 bg-purple-100/80 px-2 py-0.5 rounded-md border border-purple-200">
+                            💬 Consultar
+                          </span>
+                        ) : prop.price.priceMode === 'reservado' ? (
+                          <span className="inline-flex items-center gap-1 text-[11px] font-black text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">
+                            🔒 Reservado
+                          </span>
+                        ) : prop.price.priceMode === 'desde' ? (
+                          <span>
+                            <span className="text-[10px] text-slate-500 font-bold mr-1">Desde</span>
+                            {prop.price.currency} {prop.price.currency === 'UYU' ? '$ ' : ''}{prop.price.amount.toLocaleString('es-UY')}
+                          </span>
+                        ) : (
+                          <span>
+                            {prop.price.currency} {prop.price.currency === 'UYU' ? '$ ' : ''}{prop.price.amount.toLocaleString('es-UY')}
+                          </span>
+                        )}
                       </td>
 
                       {/* Col 4: Rendimiento Comercial & Badges */}

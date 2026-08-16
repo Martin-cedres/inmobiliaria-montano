@@ -161,8 +161,15 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
 
             const [lat, lng] = getJitteredCoords(prop.id, rawCoords.lat, rawCoords.lng, prop.location.isExactLocation);
             const isRent = prop.operation === 'alquiler';
-            const compactPrice = formatCompactPrice(prop.price.amount, prop.price.currency);
-            const fullPriceText = `${prop.price.currency === 'USD' ? 'USD' : 'UYU $'} ${prop.price.amount.toLocaleString('es-UY')}`;
+            const priceMode = prop.price.priceMode || (prop.price.amount === 0 ? 'consultar' : 'visible');
+            const compactPrice =
+              priceMode === 'consultar' ? 'Consultar' :
+              priceMode === 'reservado' ? 'Reservado' :
+              formatCompactPrice(prop.price.amount, prop.price.currency);
+            const fullPriceText =
+              priceMode === 'consultar' ? 'Consultar Precio' :
+              priceMode === 'reservado' ? 'Precio Reservado' :
+              `${priceMode === 'desde' ? 'Desde ' : ''}${prop.price.currency === 'USD' ? 'USD' : 'UYU $'} ${prop.price.amount.toLocaleString('es-UY')}`;
             const mainImg = prop.images.find((img) => img.isMain)?.webpUrl || prop.images[0]?.webpUrl || '/logo.png';
             const isActive = activePropertyId === prop.id;
 

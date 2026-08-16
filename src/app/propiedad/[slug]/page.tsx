@@ -488,9 +488,18 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
               Ref. #{property.codeRef}
             </span>
             <span className="block text-sm sm:text-base font-black text-[#5E1754] leading-tight truncate">
-              {property.price.currency === 'USD' ? 'USD' : 'UYU $'} {property.price.amount.toLocaleString('es-UY')}
-              {property.operation === 'alquiler' && property.price.period && property.price.period !== 'total' && (
-                <span className="text-[10px] sm:text-xs font-semibold text-slate-500"> / {property.price.period}</span>
+              {property.price.priceMode === 'consultar' || property.price.amount === 0 ? (
+                'Consultar Precio'
+              ) : property.price.priceMode === 'reservado' ? (
+                '🔒 Precio Reservado'
+              ) : (
+                <>
+                  {property.price.priceMode === 'desde' && <span className="text-xs text-slate-500 font-bold mr-1">Desde</span>}
+                  {property.price.currency === 'USD' ? 'USD' : 'UYU $'} {property.price.amount.toLocaleString('es-UY')}
+                  {property.operation === 'alquiler' && property.price.period && property.price.period !== 'total' && (
+                    <span className="text-[10px] sm:text-xs font-semibold text-slate-500"> / {property.price.period}</span>
+                  )}
+                </>
               )}
             </span>
           </div>
