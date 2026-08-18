@@ -316,8 +316,9 @@
      - Declarada la sección `icons` en `metadata` con referencias explícitas a `/favicon.ico`, `/favicon-48x48.png`, `/icon.png` (512x512) y `/apple-touch-icon.png`.
   3. **Permisos en `robots.ts`:**
      - Añadida regla explícita permitiendo a `Googlebot-Image` rastrear la raíz e imágenes sin restricciones.
-  4. **Verificación:**
+  4. **Verificación y Despliegue:**
      - Compilación `npm run build` ejecutada exitosamente con pre-renderizado de todas las rutas y assets de iconos.
+     - Cambios subidos a producción vía `git push origin main` (Commit `bccf5b0`), activando el despliegue automático en Vercel.
 
 
 
