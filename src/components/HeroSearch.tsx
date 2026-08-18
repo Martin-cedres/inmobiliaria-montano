@@ -23,11 +23,11 @@ export const HeroSearch: React.FC = () => {
           </span>
 
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
-            Encontrá tu próximo hogar con <span className="text-amber-300">confianza real.</span>
+            Tu próxima propiedad <span className="text-amber-300">te está esperando.</span>
           </h1>
 
           <p className="text-slate-200 text-sm sm:text-lg max-w-2xl mx-auto font-normal leading-relaxed">
-            Casas, apartamentos, chacras y terrenos en San José. Transacciones transparentes, asesoramiento personalizado e integral.
+            Ventas, alquileres, terrenos y chacras en San José de Mayo. Tasaciones profesionales, transacciones seguras y atención directa con Daniel Montaño.
           </p>
         </div>
 

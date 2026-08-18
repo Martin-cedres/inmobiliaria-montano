@@ -175,6 +175,14 @@ export function generatePropertyMetadata(property: Property): Metadata {
   return {
     title: titleStr,
     description: descriptionStr,
+    keywords: [
+      property.title,
+      `${property.category} en ${property.location?.neighborhood || 'San José de Mayo'}`,
+      `${property.operation === 'alquiler' ? 'alquiler' : 'venta de casas'} en San José de Mayo`,
+      'Inmobiliaria Montaño San José',
+      'Daniel Montaño Inmobiliaria',
+      'Inmuebles en San José Uruguay',
+    ],
     alternates: {
       canonical: canonicalUrl,
     },
@@ -202,7 +210,9 @@ export function generatePropertyMetadata(property: Property): Metadata {
     },
     other: {
       'geo.region': 'UY-SJ',
-      'geo.placename': 'San José de Mayo',
+      'geo.placename': `${property.location?.neighborhood || 'San José de Mayo'}, San José, Uruguay`,
+      'geo.position': `${property.location?.coordinates?.lat || -34.3375};${property.location?.coordinates?.lng || -56.7136}`,
+      'ICBM': `${property.location?.coordinates?.lat || -34.3375}, ${property.location?.coordinates?.lng || -56.7136}`,
     },
   };
 }

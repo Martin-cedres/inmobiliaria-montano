@@ -295,7 +295,16 @@
   - Habilitada la API en Google Cloud y creada la Service Account `google-indexing-bot-inmob@...`.
   - Creado el módulo de generación de Access Tokens JWT OAuth2 vía `jose` (RS256) en `src/lib/googleIndexing.ts`.
   - Integrado el protocolo público IndexNow con clave estática `public/inmobiliariamontanoindexkey2026.txt`.
-- Removido el bloque recordatorio temporal de configuración de variables de dominio y Service Account en `SeoEditorSection.tsx` tras quedar 100% configurado en producción.
+- **Arquitectura Completa de Páginas Pilares SEO (Silos de Contenido de Alta Conversión):**
+  1. [`/casas-en-venta-san-jose-de-mayo`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/casas-en-venta-san-jose-de-mayo/page.tsx): Venta de viviendas urbanas y suburbanas, aptas banco, guía local y FAQ Schema.
+  2. [`/alquileres-san-jose-de-mayo`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/alquileres-san-jose-de-mayo/page.tsx): Casas, apartamentos y locales en alquiler, garantías ANDA/Porto/CGN/Sura, guía de contratos y FAQ Schema.
+  3. [`/terrenos-y-chacras-san-jose`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/terrenos-y-chacras-san-jose/page.tsx): Solares para construir y chacras de campo, servicios OSE/UTE, índice CONEAT y FAQ Schema.
+  4. [`/tasaciones-san-jose-de-mayo`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/tasaciones-san-jose-de-mayo/page.tsx): Servicio de tasación profesional con Daniel Montaño, formulario directo a WhatsApp, metodología ACM y Schema Service/LocalBusiness.
+  - Creados los Schemas JSON-LD dedicados ([`CasasEnVentaJsonLd.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/seo/CasasEnVentaJsonLd.tsx), [`AlquileresJsonLd.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/seo/AlquileresJsonLd.tsx), [`TerrenosChacrasJsonLd.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/seo/TerrenosChacrasJsonLd.tsx), [`TasacionesJsonLd.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/seo/TasacionesJsonLd.tsx)).
+  - Enlazadas las 4 páginas en el [`Footer.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/Footer.tsx) para distribución de PageRank.
+  - Actualizado [`sitemap.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/sitemap.ts) con las 4 rutas con prioridad `0.95`.
+  - Verificada la compilación limpia de producción con `npm run build` (0 errores, 28 páginas estáticas pre-renderizadas).
+
 
 
 

@@ -4,7 +4,7 @@ import { getCachedProperties } from '@/lib/propertiesStore';
 export const revalidate = 86400; // 24 horas
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://inmobiliariamontano.uy';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
   const properties = await getCachedProperties();
 
   const propertyUrls: MetadataRoute.Sitemap = properties.map((p) => ({
@@ -14,6 +14,33 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: p.featured ? 0.9 : 0.8,
   }));
 
+  const pillarUrls: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/casas-en-venta-san-jose-de-mayo`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/alquileres-san-jose-de-mayo`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/terrenos-y-chacras-san-jose`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/tasaciones-san-jose-de-mayo`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+  ];
+
   return [
     {
       url: baseUrl,
@@ -21,6 +48,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'daily',
       priority: 1.0,
     },
+    ...pillarUrls,
     ...propertyUrls,
   ];
 }

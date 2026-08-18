@@ -70,8 +70,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
             <ul className="space-y-2.5 text-xs">
               <li>
                 <Link
-                  href="/?category=casa#catalogo"
-                  onClick={() => handleFilterClick('casa', 'venta')}
+                  href="/casas-en-venta-san-jose-de-mayo"
                   className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
                 >
                   <Home className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
@@ -80,8 +79,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
               </li>
               <li>
                 <Link
-                  href="/?category=apartamento#catalogo"
-                  onClick={() => handleFilterClick('todos', 'alquiler')}
+                  href="/alquileres-san-jose-de-mayo"
                   className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
                 >
                   <Key className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
@@ -90,8 +88,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
               </li>
               <li>
                 <Link
-                  href="/?category=terreno#catalogo"
-                  onClick={() => handleFilterClick('terreno')}
+                  href="/terrenos-y-chacras-san-jose"
                   className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
                 >
                   <MapPin className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
@@ -100,8 +97,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
               </li>
               <li>
                 <Link
-                  href="/?category=chacra#catalogo"
-                  onClick={() => handleFilterClick('chacra')}
+                  href="/terrenos-y-chacras-san-jose"
                   className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
                 >
                   <Trees className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
@@ -126,15 +122,13 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
             <h4 className="text-white font-bold text-sm uppercase tracking-wider">Servicios & Propietarios</h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <a
-                  href={tasacionWhatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/tasaciones-san-jose-de-mayo"
                   className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
                 >
                   <Calculator className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
                   <span>Solicitud de Tasación Profesional</span>
-                </a>
+                </Link>
               </li>
               <li>
                 <a

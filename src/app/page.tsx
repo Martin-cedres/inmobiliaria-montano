@@ -5,6 +5,7 @@ import { CatalogSection } from '@/components/CatalogSection';
 import { OwnerLeadSection } from '@/components/OwnerLeadSection';
 import { Footer } from '@/components/Footer';
 import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
+import { RealEstateAgentJsonLd } from '@/components/seo/RealEstateAgentJsonLd';
 import { getCachedProperties } from '@/lib/propertiesStore';
 
 // ISR (Incremental Static Regeneration): Revalida en segundo plano cada 24 horas (86.400s)
@@ -17,6 +18,9 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 relative">
+      {/* 0. Inyección Schema.org Local RealEstateAgent para Google */}
+      <RealEstateAgentJsonLd />
+
       {/* 1. Sticky Header Navbar */}
       <Header />
 
