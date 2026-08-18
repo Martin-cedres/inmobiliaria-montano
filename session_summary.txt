@@ -324,6 +324,15 @@
      - Elevado el z-index de la barra inferior flotante de `z-40` a `z-50`, asegurando que permanezca siempre por encima del flujo de contenido durante el scroll en pantallas pequeñas.
   3. **Verificación:**
      - Ejecutado `npm run build` con 100% de éxito y cero errores de TypeScript/Turbopack.
+- **Autorización de Nuevo Administrador / Superadmin (Daniel Montaño):**
+  1. **Configuración de Acceso OAuth Google (`src/lib/auth.ts`):**
+     - Añadido `inmobiliariadaniel247@gmail.com` a la lista `SUPERADMIN_EMAILS` autorizada para inicio de sesión directo con Google.
+  2. **Persistencia y Permisos (`src/lib/usersStore.ts` & `src/db/users.json`):**
+     - Registrado el usuario con rol `superadmin` y estado `activo` para creación y sincronización automática en Neon Postgres y JSON local.
+     - Añadidas protecciones contra degradación de rol o eliminación accidental.
+  3. **Verificación:**
+     - Compilación `npm run build` ejecutada con 100% de éxito y cero errores.
+
 
 
 

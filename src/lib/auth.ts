@@ -3,7 +3,11 @@ import { cookies } from 'next/headers';
 import { NextRequest } from 'next/server';
 import { UserSessionPayload } from '@/types/user';
 
-export const SUPERADMIN_EMAIL = 'martinfernandocedres@gmail.com';
+export const SUPERADMIN_EMAILS = [
+  'martinfernandocedres@gmail.com',
+  'inmobiliariadaniel247@gmail.com',
+];
+export const SUPERADMIN_EMAIL = SUPERADMIN_EMAILS[0];
 export const AUTH_COOKIE_NAME = 'auth_token';
 
 function getJwtSecretKey(): Uint8Array {

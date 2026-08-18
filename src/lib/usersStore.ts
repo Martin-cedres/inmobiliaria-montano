@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { getDbClient } from '@/lib/db';
 import { User, UserRole, UserStatus } from '@/types/user';
-import { SUPERADMIN_EMAIL } from '@/lib/auth';
+import { SUPERADMIN_EMAILS, SUPERADMIN_EMAIL } from '@/lib/auth';
 
 const USERS_FILE_PATH = path.join(process.cwd(), 'src', 'db', 'users.json');
 
@@ -92,14 +92,14 @@ export async function findUserByEmail(email: string): Promise<User | null> {
 
 /**
  * Procesa el ingreso con Google:
- * 1. Si es martinfernandocedres@gmail.com, se auto-crea/actualiza como superadmin.
+ * 1. Si está en SUPERADMIN_EMAILS (Martín Cedrés o Daniel Montaño), se auto-crea/actualiza como superadmin.
  * 2. Si es otro correo, verifica si ya fue previamente autorizado por el superadmin.
  * 3. Retorna el objeto User o null si no está autorizado.
  */
 export async function upsertGoogleUser(email: string, name: string, image?: string): Promise<User | null> {
   const connectionString = getConnectionString();
   const cleanEmail = email.trim().toLowerCase();
-  const isSuperadmin = cleanEmail === SUPERADMIN_EMAIL.toLowerCase();
+  const isSuperadmin = SUPERADMIN_EMAILS.some((e) => e.toLowerCase() === cleanEmail);
   const now = new Date().toISOString();
 
   if (connectionString) {
@@ -294,7 +294,7 @@ export async function updateUserRoleOrStatus(id: string, role?: UserRole, status
     const sql = getDbClient();
 
     const userRows = await sql`SELECT email FROM users WHERE id = ${id};`;
-    if (userRows.length > 0 && userRows[0].email.toLowerCase() === SUPERADMIN_EMAIL.toLowerCase()) {
+    if (userRows.length > 0 && SUPERADMIN_EMAILS.some((e) => e.toLowerCase() === userRows[0].email.toLowerCase())) {
       role = 'superadmin';
       status = 'activo';
     }
@@ -317,7 +317,7 @@ export async function updateUserRoleOrStatus(id: string, role?: UserRole, status
   const index = users.findIndex((u) => u.id === id);
   if (index === -1) return null;
 
-  if (users[index].email.toLowerCase() === SUPERADMIN_EMAIL.toLowerCase()) {
+  if (SUPERADMIN_EMAILS.some((e) => e.toLowerCase() === users[index].email.toLowerCase())) {
     role = 'superadmin';
     status = 'activo';
   }
@@ -344,8 +344,8 @@ export async function deleteUser(id: string): Promise<boolean> {
     const sql = getDbClient();
 
     const userRows = await sql`SELECT email FROM users WHERE id = ${id};`;
-    if (userRows.length > 0 && userRows[0].email.toLowerCase() === SUPERADMIN_EMAIL.toLowerCase()) {
-      throw new Error('No es posible eliminar al Super Admin principal.');
+    if (userRows.length > 0 && SUPERADMIN_EMAILS.some((e) => e.toLowerCase() === userRows[0].email.toLowerCase())) {
+      throw new Error('No es posible eliminar a un Administrador Principal.');
     }
 
     await sql`DELETE FROM users WHERE id = ${id};`;
@@ -355,8 +355,8 @@ export async function deleteUser(id: string): Promise<boolean> {
   // JSON Local
   const users = await readLocalUsers();
   const target = users.find((u) => u.id === id);
-  if (target && target.email.toLowerCase() === SUPERADMIN_EMAIL.toLowerCase()) {
-    throw new Error('No es posible eliminar al Super Admin principal.');
+  if (target && SUPERADMIN_EMAILS.some((e) => e.toLowerCase() === target.email.toLowerCase())) {
+    throw new Error('No es posible eliminar a un Administrador Principal.');
   }
 
   const filtered = users.filter((u) => u.id !== id);
