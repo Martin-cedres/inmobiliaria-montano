@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon';
-import { Phone, Mail, MapPin, Award, Home, Key, Trees, Warehouse, Landmark, Calculator, ShieldCheck, Lock, Building2 } from 'lucide-react';
+import { Phone, Mail, MapPin, Award, Home, Key, Trees, Warehouse, Landmark, Calculator, ShieldCheck, Lock, Building2, TrendingUp } from 'lucide-react';
 import { MONTAÑO_OFFICIAL_EMAIL, buildGeneralWhatsAppLink } from '@/utils/whatsapp';
 
 interface FooterProps {
@@ -106,12 +106,20 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
               </li>
               <li>
                 <Link
-                  href="/?category=deposito#catalogo"
-                  onClick={() => handleFilterClick('deposito')}
+                  href="/locales-comerciales-y-galpones-san-jose"
                   className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
                 >
                   <Warehouse className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
-                  <span>Galpones y Depósitos</span>
+                  <span>Locales y Galpones</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/inversiones-inmobiliarias-san-jose"
+                  className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
+                >
+                  <TrendingUp className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
+                  <span>Inversiones & Renta</span>
                 </Link>
               </li>
             </ul>
@@ -127,28 +135,25 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
                   className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
                 >
                   <Calculator className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
-                  <span>Solicitud de Tasación Profesional</span>
+                  <span>Tasación Profesional</span>
                 </Link>
               </li>
               <li>
-                <a
-                  href={publicarWhatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/vender-propiedad-san-jose"
                   className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
                 >
                   <Home className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
-                  <span>Publicar mi Inmueble</span>
-                </a>
+                  <span>Vender mi Propiedad</span>
+                </Link>
               </li>
               <li>
                 <Link
-                  href="/?category=proyecto#catalogo"
-                  onClick={() => handleFilterClick('proyecto')}
+                  href="/proyectos-y-viviendas-modulares-san-jose"
                   className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
                 >
                   <Building2 className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
-                  <span>Proyectos</span>
+                  <span>Proyectos & Módulos</span>
                 </Link>
               </li>
               <li>

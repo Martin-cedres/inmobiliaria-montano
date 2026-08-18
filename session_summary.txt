@@ -295,15 +295,19 @@
   - Habilitada la API en Google Cloud y creada la Service Account `google-indexing-bot-inmob@...`.
   - Creado el módulo de generación de Access Tokens JWT OAuth2 vía `jose` (RS256) en `src/lib/googleIndexing.ts`.
   - Integrado el protocolo público IndexNow con clave estática `public/inmobiliariamontanoindexkey2026.txt`.
-- **Arquitectura Completa de Páginas Pilares SEO (Silos de Contenido de Alta Conversión):**
+- **Arquitectura Completa de las 8 Páginas Pilares SEO de Élite (Dominio Total en Google para San José):**
   1. [`/casas-en-venta-san-jose-de-mayo`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/casas-en-venta-san-jose-de-mayo/page.tsx): Venta de viviendas urbanas y suburbanas, aptas banco, guía local y FAQ Schema.
   2. [`/alquileres-san-jose-de-mayo`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/alquileres-san-jose-de-mayo/page.tsx): Casas, apartamentos y locales en alquiler, garantías ANDA/Porto/CGN/Sura, guía de contratos y FAQ Schema.
   3. [`/terrenos-y-chacras-san-jose`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/terrenos-y-chacras-san-jose/page.tsx): Solares para construir y chacras de campo, servicios OSE/UTE, índice CONEAT y FAQ Schema.
   4. [`/tasaciones-san-jose-de-mayo`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/tasaciones-san-jose-de-mayo/page.tsx): Servicio de tasación profesional con Daniel Montaño, formulario directo a WhatsApp, metodología ACM y Schema Service/LocalBusiness.
-  - Creados los Schemas JSON-LD dedicados ([`CasasEnVentaJsonLd.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/seo/CasasEnVentaJsonLd.tsx), [`AlquileresJsonLd.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/seo/AlquileresJsonLd.tsx), [`TerrenosChacrasJsonLd.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/seo/TerrenosChacrasJsonLd.tsx), [`TasacionesJsonLd.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/seo/TasacionesJsonLd.tsx)).
-  - Enlazadas las 4 páginas en el [`Footer.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/Footer.tsx) para distribución de PageRank.
-  - Actualizado [`sitemap.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/sitemap.ts) con las 4 rutas con prioridad `0.95`.
-  - Verificada la compilación limpia de producción con `npm run build` (0 errores, 28 páginas estáticas pre-renderizadas).
+  5. [`/proyectos-y-viviendas-modulares-san-jose`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/proyectos-y-viviendas-modulares-san-jose/page.tsx): Módulos habitacionales, casas modulares llave en mano, ventajas de construcción en seco y FAQ Schema.
+  6. [`/vender-propiedad-san-jose`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/vender-propiedad-san-jose/page.tsx): Imán de captación de propietarios, formulario de publicación rápida, filtro de compradores y respaldo notarial.
+  7. [`/inversiones-inmobiliarias-san-jose`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/inversiones-inmobiliarias-san-jose/page.tsx): Oportunidades con renta asegurada (ANDA/Porto), plusvalía de tierra y asesoramiento patrimonial.
+  8. [`/locales-comerciales-y-galpones-san-jose`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/locales-comerciales-y-galpones-san-jose/page.tsx): Locales comerciales céntricos y galpones logísticos sobre Ruta 3 y 11.
+  - Diseñados con encabezados Hero 100% centrados y simétricos, micro-badges vectoriales corporativos en púrpura institucional, acordeones FAQ interactivos y esquemas Schema.org dedicados.
+  - Enlazadas las 8 páginas en el [`Footer.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/Footer.tsx) para máxima distribución de autoridad interna (PageRank).
+  - Actualizado [`sitemap.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/sitemap.ts) con las 8 rutas con prioridad `0.95`.
+  - Verificada la compilación limpia de producción con `npm run build` (0 errores, 32 páginas estáticas pre-renderizadas).
 
 
 
