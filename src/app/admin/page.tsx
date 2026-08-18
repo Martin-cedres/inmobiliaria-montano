@@ -420,8 +420,8 @@ export default function AdminDashboardPage() {
               <p className="font-bold text-sm">No se encontraron propiedades que coincidan con la búsqueda.</p>
             </div>
           ) : (
-            <div>
-              <table className="w-full text-left text-xs">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs min-w-[760px]">
                 <thead className="bg-slate-50 text-slate-500 uppercase font-extrabold text-[10px] tracking-wider border-b border-slate-100">
                   <tr>
                     <th className="py-3 px-3 sm:px-4">Ref. & Propiedad</th>
@@ -429,7 +429,7 @@ export default function AdminDashboardPage() {
                     <th className="py-3 px-2">Precio</th>
                     <th className="py-3 px-2">Rendimiento (Leads & Vistas)</th>
                     <th className="py-3 px-2">Estado</th>
-                    <th className="py-3 px-2 text-right">Acciones</th>
+                    <th className="py-3 px-3 text-right">Acciones</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
@@ -457,7 +457,13 @@ export default function AdminDashboardPage() {
                             #{prop.codeRef}
                           </span>
                           <div className="min-w-0">
-                            <p className="font-bold text-slate-900 text-xs truncate max-w-[180px] sm:max-w-[240px] lg:max-w-none">{prop.title}</p>
+                            <Link
+                              href={`/admin/editar/${prop.id}`}
+                              className="font-bold text-slate-900 text-xs truncate max-w-[170px] sm:max-w-[220px] lg:max-w-[280px] block hover:text-[#E85D04] transition-colors"
+                              title="Haz clic para editar esta propiedad"
+                            >
+                              {prop.title}
+                            </Link>
                             <p className="text-[10px] text-slate-400 font-medium">
                               {prop.location.neighborhood} · <span className="text-[#5E1754] font-bold">{prop.operation.toUpperCase()}</span> · <span className="sm:hidden">{categoryLabel}</span>
                             </p>
@@ -552,27 +558,28 @@ export default function AdminDashboardPage() {
                       </td>
 
                       {/* Col 6: Acciones */}
-                      <td className="py-3 px-2 text-right">
-                        <div className="flex items-center justify-end space-x-0.5">
+                      <td className="py-3 px-3 text-right whitespace-nowrap">
+                        <div className="flex items-center justify-end space-x-1">
                           <Link
                             href={`/propiedad/${prop.slug}`}
                             target="_blank"
-                            className="p-1.5 text-slate-500 hover:text-[#5E1754] hover:bg-purple-50 rounded-lg transition-colors"
-                            title="Ver en vivo"
+                            className="p-1.5 text-slate-500 hover:text-[#5E1754] hover:bg-purple-100/60 rounded-lg transition-colors"
+                            title="Ver ficha pública en vivo"
                           >
                             <Eye className="w-4 h-4" />
                           </Link>
                           <Link
                             href={`/admin/editar/${prop.id}`}
-                            className="p-1.5 text-slate-500 hover:text-[#E85D04] hover:bg-orange-50 rounded-lg transition-colors"
+                            className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold bg-amber-50 text-[#E85D04] hover:bg-[#E85D04] hover:text-white border border-amber-200/80 rounded-lg transition-all shadow-xs"
                             title="Editar propiedad"
                           >
-                            <Edit3 className="w-4 h-4" />
+                            <Edit3 className="w-3.5 h-3.5" />
+                            <span>Editar</span>
                           </Link>
                           <button
                             onClick={() => handleDelete(prop.id, prop.codeRef)}
                             className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                            title="Eliminar"
+                            title="Eliminar propiedad"
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>
