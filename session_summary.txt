@@ -307,7 +307,18 @@
   - Diseñados con encabezados Hero 100% centrados y simétricos, micro-badges vectoriales corporativos en púrpura institucional, acordeones FAQ interactivos y esquemas Schema.org dedicados.
   - Enlazadas las 8 páginas en el [`Footer.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/Footer.tsx) para máxima distribución de autoridad interna (PageRank).
   - Actualizado [`sitemap.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/sitemap.ts) con las 8 rutas con prioridad `0.95`.
-  - Verificada la compilación limpia de producción con `npm run build` (0 errores, 32 páginas estáticas pre-renderizadas).
+  - **Corrección y Estandarización del Favicon para Google Search y Navegadores:**
+  1. **Generación de Formatos e Iconos Multi-Resolución:**
+     - Creado archivo binario multi-capa [`public/favicon.ico`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/public/favicon.ico) y [`src/app/favicon.ico`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/favicon.ico) (16x16, 32x32 y 48x48) compatible con la raíz del dominio `https://www.inmobiliariamontano.uy/favicon.ico` requerida por Googlebot.
+     - Creado [`public/favicon-48x48.png`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/public/favicon-48x48.png) cumpliendo la directiva estricta de Google Search (múltiplos de 48px cuadrado).
+     - Creados [`public/apple-touch-icon.png`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/public/apple-touch-icon.png) y [`src/app/apple-icon.png`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/apple-icon.png) (180x180), además de `public/icon-192.png` y `public/icon-512.png`.
+  2. **Configuración de Metadatos en Next.js (`src/app/layout.tsx`):**
+     - Declarada la sección `icons` en `metadata` con referencias explícitas a `/favicon.ico`, `/favicon-48x48.png`, `/icon.png` (512x512) y `/apple-touch-icon.png`.
+  3. **Permisos en `robots.ts`:**
+     - Añadida regla explícita permitiendo a `Googlebot-Image` rastrear la raíz e imágenes sin restricciones.
+  4. **Verificación:**
+     - Compilación `npm run build` ejecutada exitosamente con pre-renderizado de todas las rutas y assets de iconos.
+
 
 
 
