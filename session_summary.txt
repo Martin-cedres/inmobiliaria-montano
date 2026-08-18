@@ -295,7 +295,7 @@
   - Habilitada la API en Google Cloud y creada la Service Account `google-indexing-bot-inmob@...`.
   - Creado el módulo de generación de Access Tokens JWT OAuth2 vía `jose` (RS256) en `src/lib/googleIndexing.ts`.
   - Integrado el protocolo público IndexNow con clave estática `public/inmobiliariamontanoindexkey2026.txt`.
-  - Verificada la compilación limpia de producción con `npm run build` (0 errores, 24 páginas estáticas).
+- Removido el bloque recordatorio temporal de configuración de variables de dominio y Service Account en `SeoEditorSection.tsx` tras quedar 100% configurado en producción.
 
 
 

@@ -444,18 +444,6 @@ export function SeoEditorSection({
             </span>
           )}
         </div>
-
-        {/* 💡 Recordatorio Especial de Vercel y Dominio Oficial Solicitado por el Usuario */}
-        <div className="bg-amber-50/90 border border-amber-200/80 rounded-2xl p-4 flex items-start space-x-3 text-xs">
-          <span className="p-2 bg-amber-500/10 text-amber-600 rounded-xl font-bold flex-shrink-0 text-base">💡</span>
-          <div className="space-y-1">
-            <p className="font-extrabold text-amber-950">Recordatorio para cuando tengas el dominio oficial:</p>
-            <p className="text-amber-900 leading-relaxed font-medium">
-              Cuando esté activo tu dominio oficial (ej. <code className="bg-amber-100/80 px-1.5 py-0.5 rounded text-amber-950 font-mono font-bold">inmobiliariamontano.uy</code>), agregá en el panel de Vercel las variables de entorno <code className="bg-amber-100/80 px-1.5 py-0.5 rounded text-amber-950 font-mono font-bold">GOOGLE_CLIENT_EMAIL</code> y <code className="bg-amber-100/80 px-1.5 py-0.5 rounded text-amber-950 font-mono font-bold">GOOGLE_PRIVATE_KEY</code> para que el sistema pase a utilizar la <strong>Service Account privada de Google Indexing API</strong> automáticamente.
-            </p>
-          </div>
-        </div>
-
       </div>
 
       {/* Modal del Asistente SEO (3 Variantes) */}
