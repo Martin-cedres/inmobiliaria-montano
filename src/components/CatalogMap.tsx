@@ -315,7 +315,7 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
   }, [activePropertyId, displayProperties]);
 
   return (
-    <div className={`relative w-full ${heightClass} rounded-3xl overflow-hidden shadow-xl border border-slate-200 bg-slate-900`}>
+    <div className={`relative w-full ${heightClass} rounded-3xl overflow-hidden shadow-xl border border-slate-200 bg-slate-900 z-0 isolate`}>
       {/* Estilos CSS para el popup y pin activo */}
       <style>{`
         .catalog-map-popup .leaflet-popup-content-wrapper {

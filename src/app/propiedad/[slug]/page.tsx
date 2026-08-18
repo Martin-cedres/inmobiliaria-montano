@@ -500,7 +500,7 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
       </main>
 
       {/* Sticky Bottom CTA Bar for Mobile Screens (< 1024px / lg:hidden) */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/80 p-2.5 sm:p-3 shadow-2xl flex items-center justify-between gap-2.5 animate-slideUp">
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-200/80 p-2.5 sm:p-3 shadow-2xl flex items-center justify-between gap-2.5 animate-slideUp">
         <div className="flex items-center space-x-2.5 overflow-hidden text-left pl-1">
           <div className="w-10 h-10 rounded-full border-2 border-[#E85D04] overflow-hidden flex-shrink-0">
             <img

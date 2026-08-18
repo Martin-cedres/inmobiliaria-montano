@@ -208,7 +208,7 @@ export const AdminLocationPicker: React.FC<AdminLocationPickerProps> = ({
       </div>
 
       {/* Interactive Picker Leaflet Map */}
-      <div className="w-full h-72 rounded-xl overflow-hidden border border-slate-300 shadow-inner relative">
+      <div className="w-full h-72 rounded-xl overflow-hidden border border-slate-300 shadow-inner relative z-0 isolate">
         <MapContainer
           center={[lat, lng]}
           zoom={15}

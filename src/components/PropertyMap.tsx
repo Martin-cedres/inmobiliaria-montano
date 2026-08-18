@@ -76,7 +76,7 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
   const wazeUrl = `https://waze.com/ul?ll=${lat},${lng}&navigate=yes`;
 
   return (
-    <div className="relative w-full rounded-2xl overflow-hidden shadow-lg border border-slate-200 bg-slate-900 group">
+    <div className="relative w-full rounded-2xl overflow-hidden shadow-lg border border-slate-200 bg-slate-900 group z-0 isolate">
       
       {/* Top Map Floating Header (Barra unificada responsiva: Badge a la izquierda, Toggle a la derecha sin colisiones) */}
       <div className="absolute top-3 left-3 right-3 z-[1000] flex items-center justify-between gap-2 pointer-events-none">
