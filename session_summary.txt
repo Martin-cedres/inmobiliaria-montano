@@ -287,9 +287,15 @@
 
 
 
-
-
-
+=== Sesión 2026-08-18 ===
+- Analizado el estado del proyecto tras la activación exitosa del dominio oficial `inmobiliariamontano.uy`.
+- Verificada la propiedad del dominio y enviado el sitemap oficial (`/sitemap.xml`) en Google Search Console.
+- Actualizadas las URIs de OAuth 2.0 en Google Cloud Console para el inicio de sesión administrativo seguro.
+- Diseñada e implementada la integración completa de **Google Indexing API v3**:
+  - Habilitada la API en Google Cloud y creada la Service Account `google-indexing-bot-inmob@...`.
+  - Creado el módulo de generación de Access Tokens JWT OAuth2 vía `jose` (RS256) en `src/lib/googleIndexing.ts`.
+  - Integrado el protocolo público IndexNow con clave estática `public/inmobiliariamontanoindexkey2026.txt`.
+  - Verificada la compilación limpia de producción con `npm run build` (0 errores, 24 páginas estáticas).
 
 
 
