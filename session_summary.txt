@@ -441,3 +441,12 @@
      - `npx tsc --noEmit` completado con 0 errores (código 0).
      - `npm run build` completado exitosamente (100% de las 34 rutas generadas limpiamente en Next.js 16).
 
+- **Rediseño del Selector de Categorías Móvil con Identidad de Marca Institucional ([`CategoryChips.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/CategoryChips.tsx)):**
+  1. **Reemplazo del `<select>` Nativo del Navegador:** Se eliminó la ventana blanca genérica del sistema operativo móvil por un menú desplegable interactivo y estilizado con la identidad visual oficial de Inmobiliaria Montaño.
+  2. **Diseño & Micro-interacciones:**
+     - Botón disparador con badge del ícono activo en Púrpura Montaño (`#5E1754`), doble nivel tipográfico ("CATEGORÍA" y el nombre seleccionado) y flecha con rotación animada suave.
+     - Modal desplegable flotante con `backdrop-blur`, esquinas redondeadas suaves (`rounded-3xl`), sombra profunda `shadow-2xl shadow-purple-950/25` y cabecera "Filtrar Inmuebles" con botón de cierre `X`.
+     - Cada categoría cuenta con su ícono Lucide en contenedor distintivo, tipografía `font-extrabold`, fondo interactivo y checkmark en Naranja Montaño (`#E85D04`) para la categoría activa.
+     - Cierre automático al tocar fuera (backdrop) o presionar Escape, con autodesplazamiento suave hacia `#catalogo`.
+  3. **Verificación de Calidad:**
+     - `npx tsc --noEmit` y `npm run build` completados con **0 errores**.
