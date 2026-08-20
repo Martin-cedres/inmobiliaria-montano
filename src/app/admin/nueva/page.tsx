@@ -7,6 +7,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { ImageUploader } from '@/components/ImageUploader';
 import { SeoEditorSection } from '@/components/admin/SeoEditorSection';
+import { RichTextEditor } from '@/components/admin/RichTextEditor';
 import { generatePropertySlug } from '@/utils/seo';
 import { ArrowLeft, Save, Sparkles, Upload, CheckCircle2, ShieldCheck, Camera } from 'lucide-react';
 import { PropertyCategory, OperationType, PropertyStatus, GuaranteeType, ImageAsset } from '@/types/property';
@@ -315,17 +316,13 @@ export default function NuevaPropiedadPage() {
                 />
               </div>
 
-              <div>
-                <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Descripción Completa (Tu Redacción)</label>
-                <textarea
-                  rows={4}
-                  required
-                  placeholder="Escribí aquí todos los detalles de la propiedad..."
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
-                />
-              </div>
+              <RichTextEditor
+                value={description}
+                onChange={setDescription}
+                required
+                label="Descripción Comercial & Detalles"
+                placeholder="Describí las características, estado de conservación, orientación, luminosidad y entorno del inmueble..."
+              />
             </div>
 
             {/* Section 2: Pricing & Location */}

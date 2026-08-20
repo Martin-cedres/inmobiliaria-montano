@@ -6,12 +6,12 @@ import { Footer } from '@/components/Footer';
 import { getAllProperties, getCachedProperties, getCachedPropertyBySlug } from '@/lib/propertiesStore';
 import { generatePropertyMetadata, generatePropertyJsonLd } from '@/utils/seo';
 import { buildPropertyWhatsAppLink } from '@/utils/whatsapp';
-import { MapPin, Bed, Bath, Maximize2, Car, Building, CheckCircle2, MessageCircle, ArrowLeft, ShieldCheck, Share2, Compass, Trees, Droplets, FileCheck, Landmark, ArrowLeftRight, Wifi, Flame, Zap, Dog, Waves } from 'lucide-react';
+import { MapPin, Bed, Bath, Maximize2, Car, Building, CheckCircle2, MessageCircle, ArrowLeft, ShieldCheck, Share2, Compass, Trees, Droplets, FileCheck, Landmark, ArrowLeftRight, Wifi, Flame, Zap, Dog, Waves, LayoutGrid, Milestone, DollarSign, Layers } from 'lucide-react';
 import { PropertyMapWrapper } from '@/components/PropertyMapWrapper';
 import { SharePropertyModal } from '@/components/SharePropertyModal';
 import { PropertyGallery } from '@/components/PropertyGallery';
 import { PropertyCard } from '@/components/PropertyCard';
-import { ExecutiveMetricsGrid } from '@/components/ExecutiveMetricsGrid';
+import { PropertyDescriptionRenderer } from '@/components/PropertyDescriptionRenderer';
 import JsonLdProperty from '@/components/seo/JsonLdProperty';
 import { PropertyTracker } from '@/components/analytics/PropertyTracker';
 import { WhatsAppTrackButton } from '@/components/analytics/WhatsAppTrackButton';
@@ -152,15 +152,10 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
               </div>
             </div>
 
-            {/* Executive Key Metrics Grid (Industrial / Logistics / Investment Highlights) */}
-            <ExecutiveMetricsGrid property={property} />
-
             {/* Exact Human Description Written by User */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-purple-100 shadow-sm space-y-4 text-left">
               <h3 className="text-lg sm:text-xl font-black text-[#5E1754]">Descripción de la Propiedad</h3>
-              <div className="text-slate-800 text-base sm:text-lg leading-relaxed font-normal tracking-normal whitespace-pre-line space-y-3">
-                {property.description}
-              </div>
+              <PropertyDescriptionRenderer description={property.description} />
             </div>
 
             {/* Interactive Map Section (Opcional - Oculto únicamente si hasLocation es false) */}
@@ -228,15 +223,68 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                     <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
                       <Maximize2 className="w-4 h-4 sm:w-5 sm:h-5" />
                     </span>
-                    <span className="truncate">{property.features.plotAreaM2} m² Terreno</span>
+                    <span className="truncate">
+                      {property.features.isHectares || property.features.plotAreaM2 >= 10000
+                        ? `${(property.features.isHectares && property.features.plotAreaM2 < 1000 ? property.features.plotAreaM2 : property.features.plotAreaM2 / 10000).toLocaleString('es-UY')} Ha (${property.features.plotAreaM2.toLocaleString('es-UY')} m²)`
+                        : `${property.features.plotAreaM2.toLocaleString('es-UY')} m² Terreno`}
+                    </span>
                   </div>
                 )}
-                {!!property.features.frontMeters && property.features.frontMeters > 0 && (
+                {property.features.routeFrontage ? (
+                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#E85D04]/10 text-[#E85D04] flex-shrink-0">
+                      <Milestone className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </span>
+                    <span className="truncate">{property.features.routeFrontage}</span>
+                  </div>
+                ) : !!property.features.frontMeters && property.features.frontMeters > 0 ? (
                   <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
                     <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
                       <Compass className="w-4 h-4 sm:w-5 sm:h-5" />
                     </span>
                     <span className="truncate">{property.features.frontMeters}m de Frente</span>
+                  </div>
+                ) : null}
+                {(property.features.fractionable || property.features.minFractionM2) && (
+                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <LayoutGrid className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </span>
+                    <span className="truncate">
+                      Fraccionamiento {property.features.minFractionM2 ? `desde ${property.features.minFractionM2.toLocaleString('es-UY')} m²` : 'Adaptable'}
+                    </span>
+                  </div>
+                )}
+                {!!property.features.pricePerM2 && property.features.pricePerM2 > 0 && (
+                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-emerald-500/10 text-emerald-700 flex-shrink-0">
+                      <DollarSign className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </span>
+                    <span className="truncate">USD {property.features.pricePerM2} / m²</span>
+                  </div>
+                )}
+                {!!property.features.soilTopography && (
+                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <Layers className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </span>
+                    <span className="truncate">{property.features.soilTopography}</span>
+                  </div>
+                )}
+                {property.features.gatedPerimeter && (
+                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-blue-500/10 text-blue-700 flex-shrink-0">
+                      <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </span>
+                    <span className="truncate">Predio Cerrado / Acceso Controlado</span>
+                  </div>
+                )}
+                {property.features.pavedStreet && (
+                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                      <Milestone className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </span>
+                    <span className="truncate">Frente a Asfalto / Ruta</span>
                   </div>
                 )}
                 {(property.features.fondo || property.features.garden) && (

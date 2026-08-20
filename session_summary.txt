@@ -372,7 +372,35 @@
      - Actualizado [`src/types/property.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/types/property.ts), el esquema SQL en [`src/lib/propertiesStore.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/lib/propertiesStore.ts) y los endpoints POST/PUT en `/api/properties`.
   3. **Renderizado Dinámico:**
      - Sincronizados [`ExecutiveMetricsGrid.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/ExecutiveMetricsGrid.tsx) y [`PropertyCard.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/PropertyCard.tsx) para leer y reflejar los valores ingresados manualmente desde el panel de control.
+  4. **Verificación & Despliegue:**
+     - `npx tsc --noEmit` completado con 0 errores (código 0).
+     - Build de producción Next.js (`npm run build`) validado con 100% de éxito en 34 rutas estáticas y dinámicas.
+     - Cambios commiteados y desplegados a producción en GitHub / Vercel vía `git push origin main` (Commit `be7fe6a`).
+- **Implementación de Editor de Texto Visual y Renderizado Semántico:**
+  1. **Editor Visual en el Panel Admin ([`RichTextEditor.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/admin/RichTextEditor.tsx)):**
+     - Creado componente con barra de herramientas de formato: Negrita (**B** / `Ctrl+B`), Cursiva (*I* / `Ctrl+I`), Subtítulo (H3), Lista con viñetas, Lista numerada y Cuadro destacado.
+     - Botón inteligente para *Insertar Estructura Inmobiliaria* con 1 clic (Ubicación, Distribución, Puntos Destacados).
+     - Pestañas dobles: Modo *Editor* y *Vista Previa en Vivo* idéntica a la ficha pública, con contadores de palabras y caracteres.
+     - Integrado en [`admin/nueva`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/admin/nueva/page.tsx) y [`admin/editar/[id]`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/admin/editar/%5Bid%5D/page.tsx).
+  2. **Renderizador Semántico en la Web ([`PropertyDescriptionRenderer.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/PropertyDescriptionRenderer.tsx)):**
+     - Convierte de forma segura y accesible las marcas de formato en HTML semántico (`<strong>`, `<h4 className="text-[#5E1754]">`, `<ul><li>` con viñetas en color de acento, cuadros destacados con borde violeta).
+     - Integrado en [`src/app/propiedad/[slug]/page.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/propiedad/%5Bslug%5D/page.tsx).
+  3. **Sanitización para SEO y Redes Sociales ([`seo.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/utils/seo.ts)):**
+     - Creada función `stripMarkdown()` para limpiar marcas de texto en OpenGraph, Twitter Cards y Schema JSON-LD de Google.
   4. **Verificación:**
+     - `npx tsc --noEmit` completado con 0 errores (código 0).
+- **Unificación de Características en Etiquetas Nativas:**
+  1. **Eliminación del Bloque Standalone:** Se eliminó el bloque independiente `ExecutiveMetricsGrid`.
+  2. **Integración en "Características & Comodidades" ([`src/app/propiedad/[slug]/page.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/propiedad/%5Bslug%5D/page.tsx)):**
+     - Todas las características industriales, de campo y logísticas ahora se muestran como **etiquetas/badges integrados** con el mismo estilo visual homogéneo que el resto de comodidades:
+       - `📐 12 Ha (120.000 m²)`
+       - `🛣️ 50 Metros sobre Bypass / Ruta 3`
+       - `✂️ Fraccionamiento desde 12.000 m²`
+       - `🏷️ USD 15 / m²`
+       - `🚜 100% Nivelado`
+       - `🔒 Predio Cerrado / Acceso Controlado`
+       - `🛣️ Frente a Asfalto / Ruta`
+  3. **Verificación:**
      - `npx tsc --noEmit` completado con 0 errores (código 0).
 
 

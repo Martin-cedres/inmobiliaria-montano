@@ -85,6 +85,24 @@ export function generateSmartSeoDescription(p: Partial<Property>): string {
 }
 
 /**
+ * Limpia el formato Markdown y HTML de un texto para su uso en metaetiquetas y Schema JSON-LD.
+ */
+export function stripMarkdown(text: string): string {
+  if (!text) return '';
+  return text
+    .replace(/^#+\s+/gm, '')       // Eliminar encabezados #, ##, ###
+    .replace(/\*\*([^*]+)\*\*/g, '$1') // Eliminar negritas **texto**
+    .replace(/\*([^*]+)\*/g, '$1')     // Eliminar cursivas *texto*
+    .replace(/__([^_]+)__/g, '$1')     // Eliminar negritas __texto__
+    .replace(/^[-*•]\s+/gm, '')        // Eliminar viñetas
+    .replace(/^\d+\.\s+/gm, '')        // Eliminar listas numeradas
+    .replace(/^>\s*/gm, '')            // Eliminar citas/bloques >
+    .replace(/<[^>]*>/g, '')           // Eliminar etiquetas HTML
+    .replace(/\s+/g, ' ')              // Normalizar espacios
+    .trim();
+}
+
+/**
  * Genera automáticamente el Schema.org JSON-LD (RealEstateListing / SingleFamilyResidence / Apartment / Landform)
  */
 export function generatePropertyJsonLd(property: Property) {
@@ -97,7 +115,7 @@ export function generatePropertyJsonLd(property: Property) {
   else if (property.category === 'terreno' || property.category === 'chacra') schemaType = 'Landform';
 
   const title = property.seoTitle || property.title;
-  const description = property.seoDescription || property.description;
+  const description = stripMarkdown(property.seoDescription || property.description);
 
   return {
     '@context': 'https://schema.org',
@@ -172,7 +190,8 @@ export function generatePropertyMetadata(property: Property): Metadata {
     ` — ${property.price?.currency} $${property.price?.amount?.toLocaleString('es-UY')}`;
 
   const titleStr = property.seoTitle || `${property.title}${defaultPriceStr} | Inmobiliaria Montaño`;
-  const descriptionStr = property.seoDescription || `Oportunidad en ${property.location?.neighborhood}, San José de Mayo. Ref. #${property.codeRef}. ${property.description.substring(0, 140)}...`;
+  const cleanDesc = stripMarkdown(property.description);
+  const descriptionStr = property.seoDescription || `Oportunidad en ${property.location?.neighborhood}, San José de Mayo. Ref. #${property.codeRef}. ${cleanDesc.substring(0, 140)}...`;
 
   return {
     title: titleStr,
