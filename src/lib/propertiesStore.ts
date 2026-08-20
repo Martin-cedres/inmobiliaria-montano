@@ -91,9 +91,16 @@ async function ensureTablesExist(sql: any) {
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS seo_description TEXT;`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS views_count INT DEFAULT 0;`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS whatsapp_clicks_count INT DEFAULT 0;`;
-    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS shares_count INT DEFAULT 0;`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS last_google_notified_at TIMESTAMP WITH TIME ZONE;`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS google_indexing_status TEXT DEFAULT 'pending';`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS is_hectares BOOLEAN DEFAULT FALSE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS fractionable BOOLEAN DEFAULT FALSE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS min_fraction_m2 NUMERIC(10, 2);`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS fraction_notes TEXT;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS route_frontage TEXT;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS price_per_m2 NUMERIC(10, 2);`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS soil_topography TEXT;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS gated_perimeter BOOLEAN DEFAULT FALSE;`;
     tablesInitialized = true;
   } catch (err) {
     console.warn('Error al auto-crear tablas en Neon Postgres:', err);
@@ -180,6 +187,14 @@ export async function getAllProperties(): Promise<Property[]> {
               pavedStreet: row.paved_street,
               shedOrCorral: row.shed_or_corral,
               coneatIndex: row.coneat_index ? Number(row.coneat_index) : undefined,
+              isHectares: row.is_hectares ?? (Number(row.plot_area_m2) >= 10000),
+              fractionable: row.fractionable,
+              minFractionM2: row.min_fraction_m2 ? Number(row.min_fraction_m2) : undefined,
+              fractionNotes: row.fraction_notes || undefined,
+              routeFrontage: row.route_frontage || undefined,
+              pricePerM2: row.price_per_m2 ? Number(row.price_per_m2) : undefined,
+              soilTopography: row.soil_topography || undefined,
+              gatedPerimeter: row.gated_perimeter,
             },
             guarantees: Array.isArray(row.guarantees) ? row.guarantees : [],
             images: Array.isArray(row.images) ? row.images : [],
@@ -290,6 +305,7 @@ export async function saveProperty(property: Property): Promise<Property> {
           car_access, garage, cochera, cochera_techada, barbecue, barbacoa, parrillero, pool, garden, fondo, patio, wood_stove_or_ac, pet_friendly,
           perimeter_fence, bank_credit_eligible, ph_regime, ose_water, ute_electric, sanitation, fiber_optic,
           water_well_or_pond, titles_up_to_date, accepts_trade_in, security_system, paved_street, shed_or_corral, coneat_index,
+          is_hectares, fractionable, min_fraction_m2, fraction_notes, route_frontage, price_per_m2, soil_topography, gated_perimeter,
           guarantees, images, seo_title, seo_description, featured
         ) VALUES (
           ${property.id}, ${property.codeRef}, ${property.title}, ${property.slug}, ${property.description}, ${property.operation}, ${property.category}, ${property.status},
@@ -300,6 +316,7 @@ export async function saveProperty(property: Property): Promise<Property> {
           ${property.features.carAccess || false}, ${property.features.garage || false}, ${property.features.cochera || false}, ${property.features.cocheraTechada || false}, ${property.features.barbecue || false}, ${property.features.barbacoa || false}, ${property.features.parrillero || false}, ${property.features.pool || false}, ${property.features.garden || false}, ${property.features.fondo || false}, ${property.features.patio || false}, ${property.features.woodStoveOrAC || false}, ${property.features.petFriendly || false},
           ${property.features.perimeterFence || false}, ${property.features.bankCreditEligible || false}, ${property.features.phRegime || false}, ${property.features.oseWater || false}, ${property.features.uteElectric || false}, ${property.features.sanitation || false}, ${property.features.fiberOptic || false},
           ${property.features.waterWellOrPond || false}, ${property.features.titlesUpToDate || false}, ${property.features.acceptsTradeIn || false}, ${property.features.securitySystem || false}, ${property.features.pavedStreet || false}, ${property.features.shedOrCorral || false}, ${property.features.coneatIndex || null},
+          ${property.features.isHectares || false}, ${property.features.fractionable || false}, ${property.features.minFractionM2 || null}, ${property.features.fractionNotes || null}, ${property.features.routeFrontage || null}, ${property.features.pricePerM2 || null}, ${property.features.soilTopography || null}, ${property.features.gatedPerimeter || false},
           ${JSON.stringify(property.guarantees || [])}, ${JSON.stringify(property.images || [])}, ${property.seoTitle || null}, ${property.seoDescription || null}, ${property.featured}
         ) ON CONFLICT (id) DO UPDATE SET
           code_ref = EXCLUDED.code_ref,
@@ -357,6 +374,14 @@ export async function saveProperty(property: Property): Promise<Property> {
           paved_street = EXCLUDED.paved_street,
           shed_or_corral = EXCLUDED.shed_or_corral,
           coneat_index = EXCLUDED.coneat_index,
+          is_hectares = EXCLUDED.is_hectares,
+          fractionable = EXCLUDED.fractionable,
+          min_fraction_m2 = EXCLUDED.min_fraction_m2,
+          fraction_notes = EXCLUDED.fraction_notes,
+          route_frontage = EXCLUDED.route_frontage,
+          price_per_m2 = EXCLUDED.price_per_m2,
+          soil_topography = EXCLUDED.soil_topography,
+          gated_perimeter = EXCLUDED.gated_perimeter,
           guarantees = EXCLUDED.guarantees,
           images = EXCLUDED.images,
           seo_title = EXCLUDED.seo_title,

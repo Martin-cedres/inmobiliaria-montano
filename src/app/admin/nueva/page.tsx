@@ -83,6 +83,16 @@ export default function NuevaPropiedadPage() {
   const [pavedStreet, setPavedStreet] = useState<boolean>(false);
   const [shedOrCorral, setShedOrCorral] = useState<boolean>(false);
 
+  // Perfil Industrial, Logístico & Fraccionamiento
+  const [isHectares, setIsHectares] = useState<boolean>(false);
+  const [fractionable, setFractionable] = useState<boolean>(false);
+  const [minFractionM2, setMinFractionM2] = useState<number | undefined>(undefined);
+  const [fractionNotes, setFractionNotes] = useState<string>('');
+  const [routeFrontage, setRouteFrontage] = useState<string>('');
+  const [pricePerM2, setPricePerM2] = useState<number | undefined>(undefined);
+  const [soilTopography, setSoilTopography] = useState<string>('');
+  const [gatedPerimeter, setGatedPerimeter] = useState<boolean>(false);
+
   const [selectedGuarantees, setSelectedGuarantees] = useState<GuaranteeType[]>([]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -150,6 +160,14 @@ export default function NuevaPropiedadPage() {
           pavedStreet,
           shedOrCorral,
           coneatIndex,
+          isHectares,
+          fractionable,
+          minFractionM2,
+          fractionNotes: fractionNotes.trim() || undefined,
+          routeFrontage: routeFrontage.trim() || undefined,
+          pricePerM2,
+          soilTopography: soilTopography.trim() || undefined,
+          gatedPerimeter,
           guarantees: selectedGuarantees,
           images,
           seoTitle: seoTitle.trim() || undefined,
@@ -619,6 +637,120 @@ export default function NuevaPropiedadPage() {
                 </div>
               </div>
 
+              {/* Grupo: Perfil Industrial, Logístico & Fraccionamiento (Dossier Ejecutivo) */}
+              <div className="bg-purple-50/60 border-2 border-purple-200 rounded-2xl p-5 space-y-4">
+                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-purple-200/60 pb-3">
+                  <div>
+                    <h4 className="text-xs sm:text-sm font-black uppercase text-[#5E1754] flex items-center gap-2">
+                      <span>🏭 Perfil Industrial, Logístico & Grandes Fracciones (Tarjetas Clave)</span>
+                    </h4>
+                    <p className="text-[11px] text-slate-600 font-medium mt-0.5">
+                      Completá estos campos para generar el Dossier de 6 tarjetas en la ficha y los badges destacados en el catálogo.
+                    </p>
+                  </div>
+                  <span className="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-lg bg-[#5E1754] text-white">
+                    Tarjetas Destacadas
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {/* 1. Medida en Hectáreas */}
+                  <div className="bg-white p-3.5 rounded-xl border border-purple-100 shadow-2xs space-y-2">
+                    <label className="flex items-center space-x-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={isHectares}
+                        onChange={(e) => setIsHectares(e.target.checked)}
+                        className="w-4 h-4 text-[#5E1754] rounded"
+                      />
+                      <span className="text-xs font-bold text-slate-800">📐 Mostrar en Hectáreas (Ha)</span>
+                    </label>
+                    <p className="text-[11px] text-slate-500">
+                      Calculado: {plotAreaM2 ? (isHectares && plotAreaM2 < 1000 ? plotAreaM2 : (plotAreaM2 / 10000)).toLocaleString('es-UY') : 0} Ha ({plotAreaM2 ? plotAreaM2.toLocaleString('es-UY') : 0} m²).
+                    </p>
+                  </div>
+
+                  {/* 2. Fraccionamiento */}
+                  <div className="bg-white p-3.5 rounded-xl border border-purple-100 shadow-2xs space-y-2">
+                    <label className="flex items-center space-x-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={fractionable}
+                        onChange={(e) => setFractionable(e.target.checked)}
+                        className="w-4 h-4 text-[#5E1754] rounded"
+                      />
+                      <span className="text-xs font-bold text-slate-800">✂️ Acepta Fraccionamiento</span>
+                    </label>
+                    {fractionable ? (
+                      <div className="space-y-1 pt-1">
+                        <label className="block text-[10px] font-extrabold uppercase text-slate-500">Fracción mínima (m²)</label>
+                        <input
+                          type="number"
+                          value={minFractionM2 || ''}
+                          onChange={(e) => setMinFractionM2(e.target.value ? Number(e.target.value) : undefined)}
+                          placeholder="ej. 12000"
+                          className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold"
+                        />
+                      </div>
+                    ) : (
+                      <p className="text-[11px] text-slate-400">Activalo para indicar fraccionamiento adaptable.</p>
+                    )}
+                  </div>
+
+                  {/* 3. Frente sobre Ruta / Bypass */}
+                  <div className="bg-white p-3.5 rounded-xl border border-purple-100 shadow-2xs space-y-2">
+                    <label className="block text-xs font-bold text-slate-800">🛣️ Frente sobre Ruta / Conectividad</label>
+                    <input
+                      type="text"
+                      value={routeFrontage}
+                      onChange={(e) => setRouteFrontage(e.target.value)}
+                      placeholder="ej. 50 Metros sobre Bypass / Ruta 3"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold"
+                    />
+                  </div>
+
+                  {/* 4. Precio por m² */}
+                  <div className="bg-white p-3.5 rounded-xl border border-purple-100 shadow-2xs space-y-2">
+                    <label className="block text-xs font-bold text-slate-800">🏷️ Precio por m² (USD)</label>
+                    <input
+                      type="number"
+                      value={pricePerM2 || ''}
+                      onChange={(e) => setPricePerM2(e.target.value ? Number(e.target.value) : undefined)}
+                      placeholder="ej. 15"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold"
+                    />
+                  </div>
+
+                  {/* 5. Topografía & Suelo */}
+                  <div className="bg-white p-3.5 rounded-xl border border-purple-100 shadow-2xs space-y-2">
+                    <label className="block text-xs font-bold text-slate-800">🚜 Topografía / Nivelación del Suelo</label>
+                    <input
+                      type="text"
+                      value={soilTopography}
+                      onChange={(e) => setSoilTopography(e.target.value)}
+                      placeholder="ej. 100% Nivelado - Listo para edificar"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold"
+                    />
+                  </div>
+
+                  {/* 6. Seguridad & Predio Cerrado */}
+                  <div className="bg-white p-3.5 rounded-xl border border-purple-100 shadow-2xs space-y-2 flex flex-col justify-center">
+                    <label className="flex items-center space-x-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={gatedPerimeter}
+                        onChange={(e) => setGatedPerimeter(e.target.checked)}
+                        className="w-4 h-4 text-[#5E1754] rounded"
+                      />
+                      <span className="text-xs font-bold text-slate-800">🔒 Predio Cerrado & Acceso Controlado</span>
+                    </label>
+                    <p className="text-[11px] text-slate-500 mt-1">
+                      Perímetro delimitado y seguridad de accesos para transporte pesado.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               {/* Grupo 2: Servicios Básicos & Conectividad */}
               <div className="bg-sky-50/50 border border-sky-100 rounded-2xl p-4 space-y-3">
                 <h4 className="text-xs font-black uppercase text-sky-900">
@@ -902,6 +1034,7 @@ export default function NuevaPropiedadPage() {
               operation={operation}
               priceAmount={priceAmount}
               priceCurrency={priceCurrency}
+              priceMode={priceMode}
               neighborhood={neighborhood}
               bedrooms={bedrooms}
               builtAreaM2={builtAreaM2}

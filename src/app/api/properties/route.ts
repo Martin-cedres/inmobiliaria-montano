@@ -96,6 +96,13 @@ export async function POST(request: Request) {
         pavedStreet: body.pavedStreet ?? false,
         shedOrCorral: body.shedOrCorral ?? false,
         coneatIndex: body.coneatIndex ? Number(body.coneatIndex) : undefined,
+        fractionable: body.fractionable ?? false,
+        minFractionM2: body.minFractionM2 ? Number(body.minFractionM2) : undefined,
+        fractionNotes: body.fractionNotes || undefined,
+        routeFrontage: body.routeFrontage || undefined,
+        pricePerM2: body.pricePerM2 ? Number(body.pricePerM2) : undefined,
+        soilTopography: body.soilTopography || undefined,
+        gatedPerimeter: body.gatedPerimeter ?? false,
       },
       guarantees: Array.isArray(body.guarantees) ? body.guarantees : [],
       legalCertainties: {

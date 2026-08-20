@@ -32,8 +32,9 @@ export const SharePropertyModal: React.FC<SharePropertyModalProps> = ({
   const photoUrl = mainImage?.webpUrl || mainImage?.blobUrl || '/images/sample-house-1.jpg';
 
   const priceMode = property.price.priceMode || (property.price.amount === 0 ? 'consultar' : 'visible');
+  const hasValidPrice = Boolean(property.price.amount && property.price.amount > 0 && priceMode !== 'consultar' && priceMode !== 'reservado');
   const formattedPrice =
-    priceMode === 'consultar' ? 'Consultar Precio' :
+    priceMode === 'consultar' || !property.price.amount || property.price.amount === 0 ? 'Consultar Precio' :
     priceMode === 'reservado' ? 'Precio Reservado' :
     `${priceMode === 'desde' ? 'Desde ' : ''}${property.price.currency === 'USD' ? 'USD' : 'UYU $'}` +
     ` ${property.price.amount.toLocaleString('es-UY')}` +
@@ -45,8 +46,10 @@ export const SharePropertyModal: React.FC<SharePropertyModalProps> = ({
     ? 'en Pozo' 
     : 'en Venta';
 
+  const priceLine = hasValidPrice ? `💰 *Precio:* ${formattedPrice}\n` : '';
+
   // Redacción comercial optimizada con foto y tarjeta rica en WhatsApp
-  const shareText = `🏡 Mirá esta propiedad ${operationText} en Inmobiliaria Montaño:\n\n*${property.title}*\n💰 *Precio:* ${formattedPrice}\n📍 *Ubicación:* ${property.location.neighborhood}, ${property.location.city}\n🔖 *Ref:* #${property.codeRef}\n\n🔗 *Ver fotos y detalles:* ${prodShareUrl}`;
+  const shareText = `🏡 Mirá esta propiedad ${operationText} en Inmobiliaria Montaño:\n\n*${property.title}*\n${priceLine}📍 *Ubicación:* ${property.location.neighborhood}, ${property.location.city}\n🔖 *Ref:* #${property.codeRef}\n\n🔗 *Ver fotos y detalles:* ${prodShareUrl}`;
 
   const handleShareClick = () => {
     setIsOpen(true);
@@ -174,7 +177,11 @@ export const SharePropertyModal: React.FC<SharePropertyModalProps> = ({
                   <span>Vista previa de tarjeta visual</span>
                 </div>
                 <h4 className="text-xs font-bold text-slate-100 truncate">{property.title}</h4>
-                <p className="text-sm font-black text-amber-300">{formattedPrice}</p>
+                {hasValidPrice ? (
+                  <p className="text-sm font-black text-amber-300">{formattedPrice}</p>
+                ) : (
+                  <p className="text-xs font-bold text-slate-400">Consultar precio</p>
+                )}
                 <p className="text-[11px] text-slate-400 font-medium">{property.location.neighborhood}, San José de Mayo</p>
               </div>
             </div>
@@ -247,7 +254,7 @@ export const SharePropertyModal: React.FC<SharePropertyModalProps> = ({
 
                 {/* 4. Botón X (Twitter) Oficial (Negro) */}
                 <a
-                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`🏡 Mirá esta propiedad en Inmobiliaria Montaño: ${property.title} - ${formattedPrice}`)}&url=${encodeURIComponent(prodShareUrl)}`}
+                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`🏡 Mirá esta propiedad en Inmobiliaria Montaño: ${property.title}${hasValidPrice ? ` - ${formattedPrice}` : ''}`)}&url=${encodeURIComponent(prodShareUrl)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setIsOpen(false)}

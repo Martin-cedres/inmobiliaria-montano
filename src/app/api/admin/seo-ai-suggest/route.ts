@@ -9,6 +9,7 @@ export async function POST(request: Request) {
       operation = 'venta',
       priceAmount,
       priceCurrency = 'USD',
+      priceMode = 'visible',
       neighborhood = 'Centro',
       city = 'San José de Mayo',
       bedrooms,
@@ -20,7 +21,8 @@ export async function POST(request: Request) {
 
     const opText = operation === 'alquiler' ? 'Alquiler' : 'Venta';
     const currSym = priceCurrency === 'USD' ? 'USD' : 'UYU $';
-    const priceFormatted = priceAmount ? `${currSym} ${Number(priceAmount).toLocaleString()}` : '';
+    const hasValidPrice = Boolean(priceAmount && Number(priceAmount) > 0 && priceMode !== 'consultar' && priceMode !== 'reservado');
+    const priceFormatted = hasValidPrice ? `${currSym} ${Number(priceAmount).toLocaleString('es-UY')}` : '';
     const dormStr = bedrooms ? `${bedrooms} dorms` : '';
     const zoneStr = neighborhood ? `${neighborhood}, ${city}` : city;
 
@@ -39,7 +41,10 @@ export async function POST(request: Request) {
 
     // 📈 Variante A: Inversión / Oportunidad
     const titleA = `${opText} ${category.toUpperCase()} en ${neighborhood} | Excelente Oportunidad | Inmobiliaria Montaño`.substring(0, 60);
-    const descA = `Oportunidad en ${zoneStr}: ${category} ${dormStr} por ${priceFormatted}. ${badgeStr ? badgeStr + '. ' : ''}Coordiná tu visita con Daniel Montaño.`.substring(0, 155);
+    const descA = (hasValidPrice 
+      ? `Oportunidad en ${zoneStr}: ${category} ${dormStr} por ${priceFormatted}. ${badgeStr ? badgeStr + '. ' : ''}Coordiná tu visita con Daniel Montaño.`
+      : `Oportunidad en ${zoneStr}: ${category} ${dormStr}. ${badgeStr ? badgeStr + '. ' : ''}Coordiná tu visita con Daniel Montaño.`
+    ).substring(0, 155);
 
     // 🏡 Variante B: Familiar / Calidez
     const titleB = `${category.toUpperCase()} de ${bedrooms || 2} Dormitorios en ${neighborhood} | Fondo & Confort - San José`.substring(0, 60);
@@ -48,7 +53,10 @@ export async function POST(request: Request) {
     // 📐 Variante C: Técnico / Financiero
     const areaStr = builtAreaM2 ? `${builtAreaM2}m² edif.` : plotAreaM2 ? `${plotAreaM2}m² terr.` : '';
     const titleC = `${category.toUpperCase()} ${opText} ${areaStr} en ${neighborhood} | ${features.bankCreditEligible ? 'Apta Banco' : 'Títulos al Día'}`.substring(0, 60);
-    const descC = `${category} en ${zoneStr}. ${areaStr} ${badgeStr ? '— ' + badgeStr : ''}. Precio: ${priceFormatted}. Atención personalizada por Daniel Montaño.`.substring(0, 155);
+    const descC = (hasValidPrice
+      ? `${category} en ${zoneStr}. ${areaStr} ${badgeStr ? '— ' + badgeStr : ''}. Precio: ${priceFormatted}. Atención personalizada por Daniel Montaño.`
+      : `${category} en ${zoneStr}. ${areaStr} ${badgeStr ? '— ' + badgeStr : ''}. Consultá con Daniel Montaño.`
+    ).substring(0, 155);
 
     return NextResponse.json({
       success: true,

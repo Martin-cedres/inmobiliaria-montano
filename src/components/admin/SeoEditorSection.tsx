@@ -11,6 +11,7 @@ interface SeoEditorSectionProps {
   operation: OperationType;
   priceAmount: number;
   priceCurrency: 'USD' | 'UYU';
+  priceMode?: 'visible' | 'consultar' | 'reservado' | 'desde';
   neighborhood: string;
   city?: string;
   bedrooms?: number;
@@ -35,6 +36,7 @@ export function SeoEditorSection({
   operation,
   priceAmount,
   priceCurrency,
+  priceMode = 'visible',
   neighborhood,
   city = 'San José de Mayo',
   bedrooms,
@@ -74,7 +76,7 @@ export function SeoEditorSection({
       title,
       category,
       operation,
-      price: { amount: priceAmount, currency: priceCurrency },
+      price: { amount: priceAmount, currency: priceCurrency, priceMode },
       location: { department: 'San José', city, neighborhood },
       features: { bedrooms, builtAreaM2, plotAreaM2, ...features },
       guarantees,
@@ -101,6 +103,7 @@ export function SeoEditorSection({
           operation,
           priceAmount,
           priceCurrency,
+          priceMode,
           neighborhood,
           city,
           bedrooms,
@@ -130,7 +133,10 @@ export function SeoEditorSection({
 
   const generatedSlug = generatePropertySlug(title || 'propiedad', codeRef, category, operation, neighborhood);
   const mainImg = images.find((i) => i.isMain)?.webpUrl || images[0]?.webpUrl || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80';
-  const priceFormatted = `${priceCurrency === 'USD' ? 'USD' : 'UYU $'} ${priceAmount.toLocaleString()}`;
+  const hasValidPrice = Boolean(priceAmount && Number(priceAmount) > 0 && priceMode !== 'consultar' && priceMode !== 'reservado');
+  const priceFormatted = hasValidPrice
+    ? `${priceMode === 'desde' ? 'Desde ' : ''}${priceCurrency === 'USD' ? 'USD' : 'UYU $'} ${Number(priceAmount).toLocaleString('es-UY')}`
+    : '';
 
   const handleForceGoogleIndexing = async () => {
     setIsNotifyingGoogle(true);
@@ -361,9 +367,6 @@ export function SeoEditorSection({
                   alt="Vista previa"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute top-2 right-2 bg-black/70 text-white font-extrabold text-[10px] px-2 py-0.5 rounded-md">
-                  {priceFormatted}
-                </div>
               </div>
 
               <div className="p-3 bg-slate-50 border-t border-slate-100 space-y-1">

@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { Property } from '@/types/property';
 import { buildPropertyWhatsAppLink } from '@/utils/whatsapp';
 import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon';
-import { Bed, Bath, Maximize2, Car, MapPin, Landmark, ShieldCheck, Sparkles, Clock, CheckCircle2, AlertCircle, FileCheck, ArrowLeftRight, Compass, Trees, Building, Ruler, Flame, Droplets } from 'lucide-react';
+import { Bed, Bath, Maximize2, Car, MapPin, Landmark, ShieldCheck, Sparkles, Clock, CheckCircle2, AlertCircle, FileCheck, ArrowLeftRight, Compass, Trees, Building, Ruler, Flame, Droplets, LayoutGrid, Milestone, DollarSign, Layers, Zap } from 'lucide-react';
 
 interface PropertyCardProps {
   property: Property;
@@ -105,6 +105,19 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
 
   const isUnavailable = property.status === 'vendido' || property.status === 'alquilado';
   const isReserved = property.status === 'reservado';
+
+  const cleanRef = (property.codeRef || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+  const cleanSlug = (property.slug || '').toLowerCase();
+  const cleanTitle = (property.title || '').toLowerCase();
+
+  const isBypassIndustrial = 
+    cleanRef === 'indbypass01' || 
+    cleanRef.includes('indbypass') || 
+    cleanSlug.includes('indbypass') || 
+    cleanSlug.includes('bypass-ruta-3-y-11') ||
+    cleanTitle.includes('bypass ruta 3') ||
+    cleanTitle.includes('12 hectareas') ||
+    cleanTitle.includes('12 hectáreas');
 
   const mainImage = property.images && property.images.length > 0 ? (
     typeof property.images[0] === 'string' ? property.images[0] : (property.images.find((img) => img.isMain) || property.images[0])?.webpUrl || (property.images.find((img) => img.isMain) || property.images[0])?.blobUrl
@@ -224,6 +237,73 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
 
             {/* Unified Features & Badges Grid (Un Solo Recuadro Gris) */}
             <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 my-3 py-2 px-2.5 bg-slate-50 rounded-xl text-[11px] sm:text-xs font-semibold text-slate-700 border border-slate-100">
+              {isBypassIndustrial || property.features?.fractionable || property.features?.routeFrontage || property.features?.pricePerM2 || property.features?.soilTopography || property.features?.gatedPerimeter ? (
+                <>
+                  {(property.features?.isHectares || (property.features?.plotAreaM2 && property.features.plotAreaM2 >= 10000) || isBypassIndustrial) && (
+                    <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-purple-200 shadow-2xs whitespace-nowrap" title="Superficie Total">
+                      <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
+                        <Maximize2 className="w-3.5 h-3.5" />
+                      </span>
+                      <span className="font-black text-[#5e1754]">
+                        {property.features?.isHectares && property.features?.plotAreaM2 && property.features.plotAreaM2 < 1000
+                          ? property.features.plotAreaM2
+                          : ((property.features?.plotAreaM2 || 120000) / 10000).toLocaleString('es-UY')}{' '}
+                        Ha Predio
+                      </span>
+                    </div>
+                  )}
+
+                  {(property.features?.fractionable || property.features?.minFractionM2 || isBypassIndustrial) && (
+                    <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Fraccionamiento">
+                      <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
+                        <LayoutGrid className="w-3.5 h-3.5" />
+                      </span>
+                      <span>Fracc. desde {(property.features?.minFractionM2 || 12000).toLocaleString('es-UY')} m²</span>
+                    </div>
+                  )}
+
+                  {(property.features?.routeFrontage || property.features?.frontMeters || isBypassIndustrial) && (
+                    <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-orange-200 shadow-2xs whitespace-nowrap" title="Frente sobre Ruta / Conectividad">
+                      <span className="p-0.5 rounded-md bg-[#E85D04]/10 text-[#E85D04]">
+                        <Milestone className="w-3.5 h-3.5" />
+                      </span>
+                      <span className="font-extrabold text-[#E85D04]">
+                        {property.features?.routeFrontage || `${property.features?.frontMeters || 50}m Frente Ruta`}
+                      </span>
+                    </div>
+                  )}
+
+                  {(property.features?.pricePerM2 || isBypassIndustrial) && (
+                    <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-emerald-200 shadow-2xs whitespace-nowrap" title="Precio por m²">
+                      <span className="p-0.5 rounded-md bg-emerald-500/10 text-emerald-700">
+                        <DollarSign className="w-3.5 h-3.5" />
+                      </span>
+                      <span className="font-black text-emerald-700">
+                        USD {property.features?.pricePerM2 || 15} / m²
+                      </span>
+                    </div>
+                  )}
+
+                  {(property.features?.soilTopography || isBypassIndustrial) && (
+                    <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Topografía">
+                      <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
+                        <Layers className="w-3.5 h-3.5" />
+                      </span>
+                      <span>{property.features?.soilTopography || '100% Nivelado'}</span>
+                    </div>
+                  )}
+
+                  {(property.features?.gatedPerimeter || isBypassIndustrial) && (
+                    <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Seguridad">
+                      <span className="p-0.5 rounded-md bg-blue-500/10 text-blue-700">
+                        <ShieldCheck className="w-3.5 h-3.5" />
+                      </span>
+                      <span>Predio Cerrado</span>
+                    </div>
+                  )}
+                </>
+              ) : null}
+
               {!!property.features.bedrooms && property.features.bedrooms > 0 && (
                 <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Dormitorios">
                   <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
@@ -256,15 +336,19 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
                   <span>{property.features.builtAreaM2} m² edif.</span>
                 </div>
               )}
-              {!!property.features.plotAreaM2 && property.features.plotAreaM2 > 0 && (
+              {!isBypassIndustrial && !!property.features.plotAreaM2 && property.features.plotAreaM2 > 0 && (
                 <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Superficie del Terreno">
                   <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
                     <Maximize2 className="w-3.5 h-3.5" />
                   </span>
-                  <span>{property.features.plotAreaM2} m² terr.</span>
+                  <span>
+                    {property.features.isHectares || property.features.plotAreaM2 >= 10000
+                      ? `${(property.features.isHectares ? property.features.plotAreaM2 : property.features.plotAreaM2 / 10000).toLocaleString('es-UY')} Ha`
+                      : `${property.features.plotAreaM2.toLocaleString('es-UY')} m² terr.`}
+                  </span>
                 </div>
               )}
-              {!!property.features.frontMeters && property.features.frontMeters > 0 && (
+              {!isBypassIndustrial && !!property.features.frontMeters && property.features.frontMeters > 0 && (
                 <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Metros de Frente">
                   <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
                     <Compass className="w-3.5 h-3.5" />

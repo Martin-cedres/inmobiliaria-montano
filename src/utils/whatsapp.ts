@@ -14,12 +14,13 @@ export function buildPropertyWhatsAppLink(
   customPhone: string = MONTAÑO_WHATSAPP_PHONE
 ): string {
   const opStr = property.operation === 'alquiler' ? 'alquiler' : property.operation === 'proyecto' ? 'proyecto' : 'venta';
-  const priceFormatted = `${property.price.currency} ${property.price.amount.toLocaleString('es-UY')}`;
-  const priceMode = property.price.priceMode || 'visible';
+  const priceMode = property.price.priceMode || (property.price.amount === 0 ? 'consultar' : 'visible');
+  const hasValidPrice = Boolean(property.price.amount && property.price.amount > 0 && priceMode !== 'consultar' && priceMode !== 'reservado');
+  const priceFormatted = `${property.price.currency} ${property.price.amount?.toLocaleString('es-UY')}`;
   const propertyUrl = `${SITE_URL}/propiedad/${property.slug}`;
 
   let text = '';
-  if (priceMode === 'consultar') {
+  if (!hasValidPrice || priceMode === 'consultar') {
     text = `Hola Inmobiliaria Montaño, quisiera consultar el precio y condiciones de la propiedad Ref. #${property.codeRef} (${property.title} en ${property.location.neighborhood}).\n\n🔗 Ver propiedad: ${propertyUrl}\n\n¿Podrían brindarme más información y coordinar una visita?`;
   } else if (priceMode === 'reservado') {
     text = `Hola Inmobiliaria Montaño, quisiera solicitar información confidencial y detalles de la propiedad Ref. #${property.codeRef} (${property.title} en ${property.location.neighborhood}).\n\n🔗 Ver propiedad: ${propertyUrl}\n\n¿Podrían contactarme?`;

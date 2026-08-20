@@ -332,6 +332,48 @@
      - Añadidas protecciones contra degradación de rol o eliminación accidental.
   3. **Verificación:**
      - Compilación `npm run build` ejecutada con 100% de éxito y cero errores.
+- **Corrección y Optimización de Precios en Compartir por WhatsApp y Estados:**
+  1. **Eliminación del Overlay de Precio sobre la Foto (`SeoEditorSection.tsx`):**
+     - Removida la etiqueta flotante de precio que se superponía sobre la fotografía de portada en el simulador de WhatsApp, dejando la imagen 100% limpia tal como la muestra WhatsApp nativamente.
+  2. **Tratamiento de Precio 0, No Especificado o Consultar:**
+     - En [`SharePropertyModal.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/SharePropertyModal.tsx): Si el precio es 0, no está especificado o está en modo consultar, ya no se añade la línea de precio con `$0` al texto para compartir ni al preview.
+     - En [`seo.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/utils/seo.ts): Las etiquetas OpenGraph que lee WhatsApp al compartir el enlace generan títulos limpios (`Título | Inmobiliaria Montaño`) sin sufijos de `$0` ni `USD 0`.
+     - En [`whatsapp.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/utils/whatsapp.ts): El enlace contextual a WhatsApp omite el monto cuando es 0 o consultar, redactando la solicitud de cotización directamente.
+     - En [`api/admin/seo-ai-suggest/route.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/api/admin/seo-ai-suggest/route.ts): El asistente de copys SEO omite precios cuando el monto es 0.
+  3. **Verificación:**
+     - Verificación estricta de tipos con `npx tsc --noEmit` completada con código de salida 0 y sin errores.
+- **Implementación del Módulo de Métricas Ejecutivas e Industriales (`ExecutiveMetricsGrid.tsx`):**
+  1. **Componente de Tarjetas Ejecutivas Destacadas:**
+     - Creado [`ExecutiveMetricsGrid.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/ExecutiveMetricsGrid.tsx) con soporte para las 6 métricas clave de inversión y logística: *Superficie Total* (12 Ha / 120.000 m²), *Fraccionamiento* (Desde 12.000 m²), *Frente sobre Ruta* (50 m sobre Bypass / Ruta 3), *Precio por m²* (USD 15 / m²), *Topografía* (100% Nivelado) y *Seguridad* (Predio Cerrado).
+     - Íconos vectoriales alineados al Design System de Montaño con micro-badges, gradientes al hacer hover y enlace directo a WhatsApp por métrica.
+  2. **Integración en la Ficha de Propiedad:**
+     - Insertado en [`src/app/propiedad/[slug]/page.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/propiedad/%5Bslug%5D/page.tsx) entre el Header y la Descripción comercial.
+  3. **Verificación:**
+     - `npx tsc --noEmit` ejecutado con 100% de éxito y cero errores.
+- **Sincronización Automática de Chips y Métricas Industriales en el Catálogo (`PropertyCard.tsx`):**
+  1. **Tarjetas del Catálogo ([`PropertyCard.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/PropertyCard.tsx)):**
+     - Integradas las 6 píldoras destacadas en la tarjeta de producto para predios industriales (`12 Ha Predio`, `Fracc. desde 12.000 m²`, `50m Frente Ruta`, `USD 15 / m²`, `100% Nivelado`, `Predio Cerrado`).
+     - Formateo inteligente de terrenos de gran porte para mostrar `Ha` (Hectáreas) en lugar de metros cuadrados brutos.
+  2. **Detección Automática por Referencia (#IND-BYPASS-01):**
+     - Normalizado el código de referencia en [`ExecutiveMetricsGrid.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/ExecutiveMetricsGrid.tsx) y [`PropertyCard.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/PropertyCard.tsx) para que reconozca `#IND-BYPASS-01` sin importar guiones, mayúsculas o minúsculas.
+  3. **Verificación:**
+     - `npx tsc --noEmit` ejecutado con código 0 y 100% de tipos validados.
+- **Implementación del Módulo Manual de Métricas Industriales & Logísticas en el Panel Admin:**
+  1. **Nuevos Controles en el Formulario ([`admin/nueva`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/admin/nueva/page.tsx) y [`admin/editar/[id]`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/admin/editar/%5Bid%5D/page.tsx)):**
+     - Añadido el módulo visual `🏭 Perfil Industrial, Logístico & Grandes Fracciones (Tarjetas Clave)` en la Sección 3.
+     - Controles dedicados para:
+       - `📐 Mostrar en Hectáreas (Ha)` con cálculo automático de Ha vs m².
+       - `✂️ Acepta Fraccionamiento` con campo de Fracción Mínima (m²).
+       - `🛣️ Frente sobre Ruta / Conectividad` (texto libre para especificar rutas y accesos).
+       - `🏷️ Precio por m² (USD)`.
+       - `🚜 Topografía / Nivelación del Suelo`.
+       - `🔒 Predio Cerrado & Acceso Controlado`.
+  2. **Persistencia & API:**
+     - Actualizado [`src/types/property.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/types/property.ts), el esquema SQL en [`src/lib/propertiesStore.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/lib/propertiesStore.ts) y los endpoints POST/PUT en `/api/properties`.
+  3. **Renderizado Dinámico:**
+     - Sincronizados [`ExecutiveMetricsGrid.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/ExecutiveMetricsGrid.tsx) y [`PropertyCard.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/PropertyCard.tsx) para leer y reflejar los valores ingresados manualmente desde el panel de control.
+  4. **Verificación:**
+     - `npx tsc --noEmit` completado con 0 errores (código 0).
 
 
 

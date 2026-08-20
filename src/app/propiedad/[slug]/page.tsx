@@ -11,6 +11,7 @@ import { PropertyMapWrapper } from '@/components/PropertyMapWrapper';
 import { SharePropertyModal } from '@/components/SharePropertyModal';
 import { PropertyGallery } from '@/components/PropertyGallery';
 import { PropertyCard } from '@/components/PropertyCard';
+import { ExecutiveMetricsGrid } from '@/components/ExecutiveMetricsGrid';
 import JsonLdProperty from '@/components/seo/JsonLdProperty';
 import { PropertyTracker } from '@/components/analytics/PropertyTracker';
 import { WhatsAppTrackButton } from '@/components/analytics/WhatsAppTrackButton';
@@ -150,6 +151,9 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                 )}
               </div>
             </div>
+
+            {/* Executive Key Metrics Grid (Industrial / Logistics / Investment Highlights) */}
+            <ExecutiveMetricsGrid property={property} />
 
             {/* Exact Human Description Written by User */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-purple-100 shadow-sm space-y-4 text-left">

@@ -65,11 +65,12 @@ export function generateSmartSeoDescription(p: Partial<Property>): string {
   const city = p.location?.city || 'San José de Mayo';
   const dorms = p.features?.bedrooms ? `${p.features.bedrooms} dorms` : '';
   const priceMode = p.price?.priceMode || (p.price?.amount === 0 ? 'consultar' : 'visible');
+  const hasValidPrice = Boolean(p.price?.amount && p.price.amount > 0 && priceMode !== 'consultar' && priceMode !== 'reservado');
   const priceFormatted =
     priceMode === 'consultar' ? 'Precio a Consultar' :
     priceMode === 'reservado' ? 'Precio Reservado' :
-    priceMode === 'desde' && p.price?.amount ? `Desde ${p.price.currency === 'USD' ? 'USD' : 'UYU $'} ${p.price.amount.toLocaleString('es-UY')}` :
-    p.price?.amount ? `${p.price.currency === 'USD' ? 'USD' : 'UYU $'} ${p.price.amount.toLocaleString('es-UY')}` : '';
+    priceMode === 'desde' && hasValidPrice ? `Desde ${p.price?.currency === 'USD' ? 'USD' : 'UYU $'} ${p.price?.amount?.toLocaleString('es-UY')}` :
+    hasValidPrice ? `${p.price?.currency === 'USD' ? 'USD' : 'UYU $'} ${p.price?.amount?.toLocaleString('es-UY')}` : '';
 
   let keyAttr = '';
   if (p.features?.garage) keyAttr = 'con garage';
@@ -163,13 +164,14 @@ export function generatePropertyMetadata(property: Property): Metadata {
   const canonicalUrl = `${BASE_URL}/propiedad/${property.slug}`;
 
   const priceMode = property.price?.priceMode || (property.price?.amount === 0 ? 'consultar' : 'visible');
-  const defaultPriceStr =
-    priceMode === 'consultar' ? 'Consultar Precio' :
-    priceMode === 'reservado' ? 'Precio Reservado' :
-    priceMode === 'desde' ? `Desde ${property.price?.currency} $${property.price?.amount?.toLocaleString('es-UY')}` :
-    `${property.price?.currency} $${property.price?.amount?.toLocaleString('es-UY')}`;
+  const hasValidPrice = Boolean(property.price?.amount && property.price.amount > 0 && priceMode !== 'consultar' && priceMode !== 'reservado');
 
-  const titleStr = property.seoTitle || `${property.title} — ${defaultPriceStr} | Inmobiliaria Montaño`;
+  const defaultPriceStr =
+    !hasValidPrice ? '' :
+    priceMode === 'desde' ? ` — Desde ${property.price?.currency} $${property.price?.amount?.toLocaleString('es-UY')}` :
+    ` — ${property.price?.currency} $${property.price?.amount?.toLocaleString('es-UY')}`;
+
+  const titleStr = property.seoTitle || `${property.title}${defaultPriceStr} | Inmobiliaria Montaño`;
   const descriptionStr = property.seoDescription || `Oportunidad en ${property.location?.neighborhood}, San José de Mayo. Ref. #${property.codeRef}. ${property.description.substring(0, 140)}...`;
 
   return {

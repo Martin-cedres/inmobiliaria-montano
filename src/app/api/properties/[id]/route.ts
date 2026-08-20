@@ -108,6 +108,13 @@ export async function PUT(
         pavedStreet: body.pavedStreet !== undefined ? Boolean(body.pavedStreet) : (body.features?.pavedStreet !== undefined ? Boolean(body.features.pavedStreet) : existing.features?.pavedStreet),
         shedOrCorral: body.shedOrCorral !== undefined ? Boolean(body.shedOrCorral) : (body.features?.shedOrCorral !== undefined ? Boolean(body.features.shedOrCorral) : existing.features?.shedOrCorral),
         coneatIndex: body.coneatIndex !== undefined ? Number(body.coneatIndex) : (body.features?.coneatIndex !== undefined ? Number(body.features.coneatIndex) : existing.features?.coneatIndex),
+        fractionable: body.fractionable !== undefined ? Boolean(body.fractionable) : (body.features?.fractionable !== undefined ? Boolean(body.features.fractionable) : existing.features?.fractionable),
+        minFractionM2: body.minFractionM2 !== undefined ? (body.minFractionM2 ? Number(body.minFractionM2) : undefined) : (body.features?.minFractionM2 !== undefined ? (body.features.minFractionM2 ? Number(body.features.minFractionM2) : undefined) : existing.features?.minFractionM2),
+        fractionNotes: body.fractionNotes !== undefined ? body.fractionNotes : (body.features?.fractionNotes !== undefined ? body.features.fractionNotes : existing.features?.fractionNotes),
+        routeFrontage: body.routeFrontage !== undefined ? body.routeFrontage : (body.features?.routeFrontage !== undefined ? body.features.routeFrontage : existing.features?.routeFrontage),
+        pricePerM2: body.pricePerM2 !== undefined ? (body.pricePerM2 ? Number(body.pricePerM2) : undefined) : (body.features?.pricePerM2 !== undefined ? (body.features.pricePerM2 ? Number(body.features.pricePerM2) : undefined) : existing.features?.pricePerM2),
+        soilTopography: body.soilTopography !== undefined ? body.soilTopography : (body.features?.soilTopography !== undefined ? body.features.soilTopography : existing.features?.soilTopography),
+        gatedPerimeter: body.gatedPerimeter !== undefined ? Boolean(body.gatedPerimeter) : (body.features?.gatedPerimeter !== undefined ? Boolean(body.features.gatedPerimeter) : existing.features?.gatedPerimeter),
       },
       guarantees: Array.isArray(body.guarantees) ? body.guarantees : existing.guarantees,
       legalCertainties: {
