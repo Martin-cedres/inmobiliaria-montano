@@ -426,10 +426,18 @@
   3. **Visualización en Vivo en la Ficha Pública:** [`PropertyDescriptionRenderer.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/PropertyDescriptionRenderer.tsx) renderiza el HTML enriquecido preservando colores, formatos, títulos y listas, con compatibilidad hacia atrás para descripciones existentes.
   4. **Verificación:** `npx tsc --noEmit` completado con 0 errores (código 0).
 
-
-
-
-
-
-
+- **Reorganización Integral del Panel Admin en Cockpit Modular por Pestañas:**
+  1. **Sticky Top Action Bar:** Barra superior fija en [`admin/nueva`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/admin/nueva/page.tsx) y [`admin/editar/[id]`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/admin/editar/%5Bid%5D/page.tsx) con código de referencia, título en vivo, selector rápido de estado (`🟢 Disponible`, `🟡 Reservado`, `🔴 Vendido`, `🔵 Alquilado`) y botón `Guardar / Publicar` siempre visible sin importar en qué sección se encuentre el usuario.
+  2. **Estructura en 4 Pestañas Claras (Tabs):**
+     - **Pestaña 1 (General & Precio):** Código Ref, Operación, Categoría, Título de la propiedad, Editor Visual WYSIWYG estilo Word, Condiciones de precio y Selector de Privacidad en mapa con radio de aproximación.
+     - **Pestaña 2 (Medidas & Características - Smart Form):** Formulario dinámico adaptativo según la categoría seleccionada (oculta dormitorios/baños/pisos en terrenos y chacras, resalta superficies, comodidades con checks modernos, servicios básicos, certeza legal y las 6 tarjetas de perfil logístico/rural con tick opcional).
+     - **Pestaña 3 (Fotos & Galería):** Subida y ordenamiento de imágenes en alta definición con selector de portada principal ⭐.
+     - **Pestaña 4 (SEO & Google):** Posicionamiento orgánico con vista previa en vivo del Snippet de Google y metadatos Schema.org automáticos.
+  3. **Dashboard Admin Optimizado ([`admin/page.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/admin/page.tsx)):**
+     - Píldoras de filtrado rápido por estado comercial (`[ Todos ]`, `[ 🏡 En Venta ]`, `[ 🔑 Alquiler ]`, `[ 🟢 Disponibles ]`, `[ 🟡 Reservados ]`, `[ 🔴 Vendidos / Alquilados ]`).
+     - Selector rápido por categoría de inmueble.
+     - Botón de 1 clic para copiar ficha estructurada para enviar directo por WhatsApp a clientes.
+  4. **Verificación de Calidad:**
+     - `npx tsc --noEmit` completado con 0 errores (código 0).
+     - `npm run build` completado exitosamente (100% de las 34 rutas generadas limpiamente en Next.js 16).
 

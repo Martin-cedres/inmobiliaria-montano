@@ -5,12 +5,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
-import { Property, PropertyStatus } from '@/types/property';
+import { Property, PropertyStatus, PropertyCategory, OperationType } from '@/types/property';
 import { UserSessionPayload } from '@/types/user';
 import { 
   Plus, Trash2, Eye, Edit3, CheckCircle2, Sparkles, Search, 
   RefreshCw, AlertCircle, Building2, Key, Tag, MessageCircle, 
-  Flame, TrendingUp, ArrowUpDown, Users, LogOut, ShieldCheck, Shield, Zap 
+  Flame, TrendingUp, ArrowUpDown, Users, LogOut, ShieldCheck, Shield, Zap,
+  Copy, Share2, Filter, Check
 } from 'lucide-react';
 
 export default function AdminDashboardPage() {
@@ -19,8 +20,11 @@ export default function AdminDashboardPage() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isRevalidating, setIsRevalidating] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [statusFilter, setStatusFilter] = useState<'todos' | 'venta' | 'alquiler' | 'disponible' | 'reservado' | 'vendido'>('todos');
+  const [categoryFilter, setCategoryFilter] = useState<string>('todos');
   const [sortBy, setSortBy] = useState<'recent' | 'views' | 'whatsapp' | 'conversion'>('recent');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
   const [currentUser, setCurrentUser] = useState<UserSessionPayload | null>(null);
   const [isAuthChecking, setIsAuthChecking] = useState<boolean>(true);
@@ -71,7 +75,6 @@ export default function AdminDashboardPage() {
   };
 
   useEffect(() => {
-    // Cargar datos de usuario autenticado
     fetch('/api/auth/me')
       .then((res) => res.json())
       .then((data) => {
@@ -92,21 +95,10 @@ export default function AdminDashboardPage() {
     try {
       await fetch('/api/auth/logout', { method: 'POST' });
       router.replace('/login');
-    } catch (err) {
+    } catch {
       window.location.href = '/login';
     }
   };
-
-  if (isAuthChecking) {
-    return (
-      <div className="min-h-screen bg-slate-950 flex flex-col justify-center items-center p-4">
-        <div className="w-10 h-10 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mb-4" />
-        <p className="text-slate-400 text-sm font-medium">Verificando sesión...</p>
-      </div>
-    );
-  }
-
-
 
   const handleStatusChange = async (id: string, codeRef: string, newStatus: PropertyStatus) => {
     setUpdatingId(id);
@@ -154,6 +146,46 @@ export default function AdminDashboardPage() {
     }
   };
 
+  const handleCopyWhatsAppSnippet = (prop: Property) => {
+    const origin = typeof window !== 'undefined' ? window.location.origin : 'https://inmobiliariamontano.com';
+    const link = `${origin}/propiedad/${prop.slug}`;
+    
+    let priceText = `${prop.price.currency} ${prop.price.amount.toLocaleString('es-UY')}`;
+    if (prop.price.priceMode === 'consultar') priceText = 'A consultar';
+    if (prop.price.priceMode === 'reservado') priceText = 'Reservado';
+    if (prop.price.priceMode === 'desde') priceText = `Desde ${prop.price.currency} ${prop.price.amount.toLocaleString('es-UY')}`;
+
+    let featuresList = [];
+    if (prop.features?.bedrooms) featuresList.push(`${prop.features.bedrooms} dorm.`);
+    if (prop.features?.bathrooms) featuresList.push(`${prop.features.bathrooms} baños`);
+    if (prop.features?.builtAreaM2) featuresList.push(`${prop.features.builtAreaM2} m² edif.`);
+    if (prop.features?.plotAreaM2) featuresList.push(`${prop.features.plotAreaM2} m² solar`);
+    if (prop.features?.hectaresAmount) featuresList.push(`${prop.features.hectaresAmount} Ha`);
+
+    const snippet = `🏡 *INMOBILIARIA MONTAÑO* - Ref. #${prop.codeRef}
+📍 *${prop.title}*
+📍 *Ubicación:* ${prop.location.neighborhood}, San José de Mayo
+🏷️ *Operación:* ${prop.operation.toUpperCase()} | ${prop.category.toUpperCase()}
+💵 *Precio:* ${priceText}
+${featuresList.length > 0 ? `✨ *Comodidades:* ${featuresList.join(' · ')}\n` : ''}
+🔗 *Ver fotos y ficha completa:*
+${link}`;
+
+    navigator.clipboard.writeText(snippet);
+    setCopiedId(prop.id);
+    showToast(`📋 ¡Ficha de Ref. #${prop.codeRef} copiada al portapapeles para WhatsApp!`);
+    setTimeout(() => setCopiedId(null), 2500);
+  };
+
+  if (isAuthChecking) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex flex-col justify-center items-center p-4">
+        <div className="w-10 h-10 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mb-4" />
+        <p className="text-slate-400 text-sm font-medium">Verificando sesión...</p>
+      </div>
+    );
+  }
+
   // Executive Metrics KPIs
   const totalCount = properties.length;
   const totalViews = properties.reduce((acc, p) => acc + (p.viewsCount || 0), 0);
@@ -168,13 +200,27 @@ export default function AdminDashboardPage() {
   // Filtered & Sorted properties
   let filteredProperties = properties.filter((p) => {
     const query = searchQuery.toLowerCase();
-    return (
+    const matchesSearch = (
       p.codeRef.toLowerCase().includes(query) ||
       p.title.toLowerCase().includes(query) ||
       p.location.neighborhood.toLowerCase().includes(query) ||
       p.operation.toLowerCase().includes(query) ||
       p.category.toLowerCase().includes(query)
     );
+
+    if (!matchesSearch) return false;
+
+    // Filter by quick status/operation
+    if (statusFilter === 'venta' && p.operation !== 'venta') return false;
+    if (statusFilter === 'alquiler' && p.operation !== 'alquiler') return false;
+    if (statusFilter === 'disponible' && p.status !== 'disponible' && p.status !== 'nuevo') return false;
+    if (statusFilter === 'reservado' && p.status !== 'reservado') return false;
+    if (statusFilter === 'vendido' && p.status !== 'vendido' && p.status !== 'alquilado') return false;
+
+    // Filter by Category
+    if (categoryFilter !== 'todos' && p.category !== categoryFilter) return false;
+
+    return true;
   });
 
   if (sortBy === 'views') {
@@ -201,11 +247,11 @@ export default function AdminDashboardPage() {
         </div>
       )}
 
-      <main className="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10">
+      <main className="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         
         {/* User Session Bar */}
         {currentUser && (
-          <div className="mb-6 bg-slate-900 text-white p-4 rounded-2xl flex flex-wrap items-center justify-between gap-4 border border-slate-800 shadow-md">
+          <div className="bg-slate-900 text-white p-4 rounded-2xl flex flex-wrap items-center justify-between gap-4 border border-slate-800 shadow-md">
             <div className="flex items-center gap-3">
               {currentUser.image ? (
                 <img
@@ -258,18 +304,17 @@ export default function AdminDashboardPage() {
         )}
 
         {/* Header Admin & Action CTA */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 bg-white p-6 sm:p-8 rounded-3xl border border-purple-100 shadow-xs">
-
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 sm:p-8 rounded-3xl border border-purple-100 shadow-xs">
           <div>
             <div className="flex items-center space-x-2 text-[#E85D04] font-bold text-xs uppercase tracking-wider mb-1">
               <Sparkles className="w-4 h-4 text-amber-500" />
-              <span>Panel de Administración & Analítica Comercial</span>
+              <span>Panel de Control & Cockpit Inmobiliario</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
               Gestión de Propiedades & Leads
             </h1>
             <p className="text-xs text-slate-500 mt-1">
-              Monitoreá visualizaciones en tiempo real y consultas enviadas a Daniel por WhatsApp.
+              Monitoreá visualizaciones, compartí fichas formateadas a clientes por WhatsApp y gestioná el inventario.
             </p>
           </div>
 
@@ -294,13 +339,13 @@ export default function AdminDashboardPage() {
               className="flex-1 sm:flex-initial bg-[#E85D04] hover:bg-[#FF8500] active:scale-95 text-white font-black px-6 py-3.5 rounded-full shadow-md hover:shadow-orange-500/30 transition-all flex items-center justify-center space-x-2 text-xs sm:text-sm"
             >
               <Plus className="w-5 h-5" />
-              <span>Publicar Nueva Propiedad</span>
+              <span>Nueva Propiedad</span>
             </Link>
           </div>
         </div>
 
         {/* Commercial Executive KPI Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-white p-5 rounded-2xl border border-purple-100 shadow-xs flex items-center justify-between">
             <div>
               <p className="text-xs text-slate-400 font-bold uppercase">Total Inmuebles</p>
@@ -353,60 +398,121 @@ export default function AdminDashboardPage() {
           </div>
         </div>
 
-        {/* Properties Management Table */}
-        <div className="bg-white rounded-3xl border border-purple-100 shadow-xs overflow-hidden text-left">
+        {/* Quick Filter Cockpit Bar */}
+        <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs space-y-3">
           
-          {/* Table Toolbar, Search & Sort */}
-          <div className="p-5 sm:p-6 border-b border-slate-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div className="flex flex-wrap items-center gap-3">
-              <h3 className="font-extrabold text-slate-900 text-base flex items-center space-x-2">
-                <span>Propiedades Registradas</span>
-                <span className="bg-purple-100 text-[#5E1754] text-xs font-black px-2.5 py-0.5 rounded-full">
-                  {filteredProperties.length}
-                </span>
-              </h3>
+          {/* Row 1: Status & Operation Pills */}
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center gap-1.5 text-xs font-extrabold">
+              <span className="text-slate-400 mr-1 flex items-center gap-1">
+                <Filter className="w-3.5 h-3.5" />
+                <span>Estado:</span>
+              </span>
 
-              {/* Quick Sort Filter Buttons */}
-              <div className="flex items-center space-x-1.5 bg-slate-100 p-1 rounded-xl text-[11px] font-extrabold">
+              {[
+                { key: 'todos', label: 'Todos' },
+                { key: 'venta', label: '🏡 En Venta' },
+                { key: 'alquiler', label: '🔑 Alquiler' },
+                { key: 'disponible', label: '🟢 Disponibles' },
+                { key: 'reservado', label: '🟡 Reservados' },
+                { key: 'vendido', label: '🔴 Vendidos / Alquilados' },
+              ].map((pill) => (
                 <button
-                  onClick={() => setSortBy('recent')}
-                  className={`px-3 py-1 rounded-lg transition-all ${
-                    sortBy === 'recent' ? 'bg-white text-slate-900 shadow-2xs' : 'text-slate-500 hover:text-slate-800'
+                  key={pill.key}
+                  onClick={() => setStatusFilter(pill.key as any)}
+                  className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer ${
+                    statusFilter === pill.key
+                      ? 'bg-[#5E1754] text-white shadow-xs'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                   }`}
                 >
-                  Recientes
+                  {pill.label}
                 </button>
-                <button
-                  onClick={() => setSortBy('whatsapp')}
-                  className={`px-3 py-1 rounded-lg transition-all flex items-center space-x-1 ${
-                    sortBy === 'whatsapp' ? 'bg-white text-emerald-700 shadow-2xs' : 'text-slate-500 hover:text-slate-800'
-                  }`}
-                >
-                  <MessageCircle className="w-3 h-3 text-emerald-600" />
-                  <span>Más Consultadas</span>
-                </button>
-                <button
-                  onClick={() => setSortBy('views')}
-                  className={`px-3 py-1 rounded-lg transition-all flex items-center space-x-1 ${
-                    sortBy === 'views' ? 'bg-white text-blue-700 shadow-2xs' : 'text-slate-500 hover:text-slate-800'
-                  }`}
-                >
-                  <Eye className="w-3 h-3 text-blue-600" />
-                  <span>Más Vistas</span>
-                </button>
-              </div>
+              ))}
             </div>
 
-            <div className="relative w-full md:w-72">
+            {/* Sort Dropdown */}
+            <div className="flex items-center space-x-1.5 bg-slate-100 p-1 rounded-xl text-[11px] font-extrabold">
+              <button
+                onClick={() => setSortBy('recent')}
+                className={`px-3 py-1 rounded-lg transition-all cursor-pointer ${
+                  sortBy === 'recent' ? 'bg-white text-slate-900 shadow-2xs' : 'text-slate-500 hover:text-slate-800'
+                }`}
+              >
+                Recientes
+              </button>
+              <button
+                onClick={() => setSortBy('whatsapp')}
+                className={`px-3 py-1 rounded-lg transition-all flex items-center space-x-1 cursor-pointer ${
+                  sortBy === 'whatsapp' ? 'bg-white text-emerald-700 shadow-2xs' : 'text-slate-500 hover:text-slate-800'
+                }`}
+              >
+                <MessageCircle className="w-3 h-3 text-emerald-600" />
+                <span>Más Consultadas</span>
+              </button>
+              <button
+                onClick={() => setSortBy('views')}
+                className={`px-3 py-1 rounded-lg transition-all flex items-center space-x-1 cursor-pointer ${
+                  sortBy === 'views' ? 'bg-white text-blue-700 shadow-2xs' : 'text-slate-500 hover:text-slate-800'
+                }`}
+              >
+                <Eye className="w-3 h-3 text-blue-600" />
+                <span>Más Vistas</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Row 2: Category Selector + Search Input */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-slate-100">
+            <div className="flex flex-wrap items-center gap-1.5 text-xs font-bold w-full sm:w-auto">
+              <span className="text-slate-400 mr-1">Categoría:</span>
+              {[
+                { key: 'todos', label: 'Todas' },
+                { key: 'casa', label: 'Casas' },
+                { key: 'apartamento', label: 'Apartamentos' },
+                { key: 'terreno', label: 'Terrenos' },
+                { key: 'chacra', label: 'Chacras' },
+                { key: 'local', label: 'Locales' },
+                { key: 'deposito', label: 'Depósitos' },
+              ].map((cat) => (
+                <button
+                  key={cat.key}
+                  onClick={() => setCategoryFilter(cat.key)}
+                  className={`px-2.5 py-1 rounded-lg transition-all text-xs cursor-pointer ${
+                    categoryFilter === cat.key
+                      ? 'bg-purple-100 text-[#5E1754] font-black border border-purple-200'
+                      : 'text-slate-600 hover:bg-slate-100'
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+
+            <div className="relative w-full sm:w-72">
               <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 placeholder="Buscar por ref, título o barrio..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-full text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754]/30"
+                className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754]/30"
               />
             </div>
+          </div>
+
+        </div>
+
+        {/* Properties Management Table */}
+        <div className="bg-white rounded-3xl border border-purple-100 shadow-xs overflow-hidden text-left">
+          
+          <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+            <h3 className="font-extrabold text-slate-900 text-sm flex items-center space-x-2">
+              <span>Listado de Inmuebles</span>
+              <span className="bg-purple-100 text-[#5E1754] text-xs font-black px-2.5 py-0.5 rounded-full">
+                {filteredProperties.length}
+              </span>
+            </h3>
           </div>
 
           {isLoading ? (
@@ -417,19 +523,19 @@ export default function AdminDashboardPage() {
           ) : filteredProperties.length === 0 ? (
             <div className="p-12 text-center text-slate-500">
               <AlertCircle className="w-8 h-8 text-amber-500 mx-auto mb-2" />
-              <p className="font-bold text-sm">No se encontraron propiedades que coincidan con la búsqueda.</p>
+              <p className="font-bold text-sm">No se encontraron propiedades que coincidan con los filtros.</p>
             </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs min-w-[760px]">
                 <thead className="bg-slate-50 text-slate-500 uppercase font-extrabold text-[10px] tracking-wider border-b border-slate-100">
                   <tr>
-                    <th className="py-3 px-3 sm:px-4">Ref. & Propiedad</th>
+                    <th className="py-3 px-3 sm:px-4">Ref. & Inmueble</th>
                     <th className="py-3 px-2 hidden sm:table-cell">Tipo</th>
                     <th className="py-3 px-2">Precio</th>
-                    <th className="py-3 px-2">Rendimiento (Leads & Vistas)</th>
+                    <th className="py-3 px-2">Métricas</th>
                     <th className="py-3 px-2">Estado</th>
-                    <th className="py-3 px-3 text-right">Acciones</th>
+                    <th className="py-3 px-3 text-right">Acciones Comerciales</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
@@ -447,19 +553,20 @@ export default function AdminDashboardPage() {
                     const views = prop.viewsCount || 0;
                     const waClicks = prop.whatsappClicksCount || 0;
                     const isHighDemand = waClicks >= 3 || (views >= 20 && waClicks >= 2);
+                    const isCopied = copiedId === prop.id;
 
                     return (
                     <tr key={prop.id} className="hover:bg-purple-50/20 transition-colors">
                       {/* Col 1: Ref + Título + Categoría */}
                       <td className="py-3 px-3 sm:px-4">
-                        <div className="flex items-center space-x-2">
-                          <span className="bg-[#350A2F] text-amber-300 font-extrabold text-[9px] px-1.5 py-0.5 rounded flex-shrink-0">
+                        <div className="flex items-center space-x-2.5">
+                          <span className="bg-[#350A2F] text-amber-300 font-extrabold text-[9px] px-2 py-0.5 rounded flex-shrink-0">
                             #{prop.codeRef}
                           </span>
                           <div className="min-w-0">
                             <Link
                               href={`/admin/editar/${prop.id}`}
-                              className="font-bold text-slate-900 text-xs truncate max-w-[170px] sm:max-w-[220px] lg:max-w-[280px] block hover:text-[#E85D04] transition-colors"
+                              className="font-bold text-slate-900 text-xs truncate max-w-[170px] sm:max-w-[240px] lg:max-w-[300px] block hover:text-[#E85D04] transition-colors"
                               title="Haz clic para editar esta propiedad"
                             >
                               {prop.title}
@@ -516,13 +623,7 @@ export default function AdminDashboardPage() {
                           {isHighDemand && (
                             <span className="inline-flex items-center space-x-1 text-[10px] font-black text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full" title="Propiedad con alta tracción comercial">
                               <Flame className="w-3 h-3 text-amber-500 animate-pulse" />
-                              <span>Alta Demanda</span>
-                            </span>
-                          )}
-
-                          {prop.googleIndexingStatus === 'notified' && (
-                            <span className="inline-flex items-center space-x-1 text-[10px] font-extrabold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full" title="Google Indexing Notificado">
-                              <span>🟢 Google</span>
+                              <span>Hot</span>
                             </span>
                           )}
                         </div>
@@ -534,7 +635,7 @@ export default function AdminDashboardPage() {
                           value={prop.status}
                           disabled={updatingId === prop.id}
                           onChange={(e) => handleStatusChange(prop.id, prop.codeRef, e.target.value as PropertyStatus)}
-                          className={`text-[10px] sm:text-xs font-bold px-2 py-1 rounded-full border cursor-pointer focus:outline-none transition-all ${
+                          className={`text-[10px] sm:text-xs font-bold px-2.5 py-1 rounded-full border cursor-pointer focus:outline-none transition-all ${
                             prop.status === 'disponible'
                               ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
                               : prop.status === 'nuevo'
@@ -548,40 +649,56 @@ export default function AdminDashboardPage() {
                               : 'bg-orange-50 text-orange-800 border-orange-200'
                           }`}
                         >
-                          <option value="disponible">Disponible</option>
-                          <option value="nuevo">Nuevo</option>
-                          <option value="reservado">Reservado</option>
-                          <option value="vendido">Vendido</option>
-                          <option value="alquilado">Alquilado</option>
-                          <option value="oportunidad">Oportunidad</option>
+                          <option value="disponible">🟢 Disponible</option>
+                          <option value="nuevo">🔵 Nuevo</option>
+                          <option value="reservado">🟡 Reservado</option>
+                          <option value="vendido">🔴 Vendido</option>
+                          <option value="alquilado">🟣 Alquilado</option>
+                          <option value="oportunidad">🟠 Oportunidad</option>
                         </select>
                       </td>
 
                       {/* Col 6: Acciones */}
                       <td className="py-3 px-3 text-right whitespace-nowrap">
-                        <div className="flex items-center justify-end space-x-1">
+                        <div className="flex items-center justify-end space-x-1.5">
+                          
+                          {/* WhatsApp Snippet Quick Copy */}
+                          <button
+                            onClick={() => handleCopyWhatsAppSnippet(prop)}
+                            className={`p-1.5 rounded-lg border transition-all cursor-pointer ${
+                              isCopied
+                                ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
+                                : 'text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border-emerald-200'
+                            }`}
+                            title="Copiar ficha lista para enviar por WhatsApp"
+                          >
+                            {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-700" /> : <Share2 className="w-3.5 h-3.5" />}
+                          </button>
+
                           <Link
                             href={`/propiedad/${prop.slug}`}
                             target="_blank"
                             className="p-1.5 text-slate-500 hover:text-[#5E1754] hover:bg-purple-100/60 rounded-lg transition-colors"
                             title="Ver ficha pública en vivo"
                           >
-                            <Eye className="w-4 h-4" />
+                            <Eye className="w-3.5 h-3.5" />
                           </Link>
+
                           <Link
                             href={`/admin/editar/${prop.id}`}
-                            className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold bg-amber-50 text-[#E85D04] hover:bg-[#E85D04] hover:text-white border border-amber-200/80 rounded-lg transition-all shadow-xs"
+                            className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold bg-[#5E1754]/10 text-[#5E1754] hover:bg-[#5E1754] hover:text-white rounded-lg transition-all"
                             title="Editar propiedad"
                           >
                             <Edit3 className="w-3.5 h-3.5" />
                             <span>Editar</span>
                           </Link>
+
                           <button
                             onClick={() => handleDelete(prop.id, prop.codeRef)}
-                            className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                            className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
                             title="Eliminar propiedad"
                           >
-                            <Trash2 className="w-4 h-4" />
+                            <Trash2 className="w-3.5 h-3.5" />
                           </button>
                         </div>
                       </td>
@@ -600,3 +717,4 @@ export default function AdminDashboardPage() {
     </div>
   );
 }
+

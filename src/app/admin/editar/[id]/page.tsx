@@ -9,14 +9,62 @@ import { ImageUploader } from '@/components/ImageUploader';
 import { SeoEditorSection } from '@/components/admin/SeoEditorSection';
 import { RichTextEditor } from '@/components/admin/RichTextEditor';
 import { generatePropertySlug } from '@/utils/seo';
-import { ArrowLeft, Save, Sparkles, Upload, CheckCircle2, ShieldCheck, Camera, Loader2, Edit3 } from 'lucide-react';
+import { 
+  ArrowLeft, 
+  Save, 
+  CheckCircle2, 
+  Loader2, 
+  FileText, 
+  Sliders, 
+  Image as ImageIcon, 
+  Search as SearchIcon,
+  ChevronRight,
+  ChevronLeft,
+  DollarSign,
+  MapPin,
+  Maximize2,
+  Building,
+  Building2
+} from 'lucide-react';
 import { PropertyCategory, OperationType, PropertyStatus, GuaranteeType, ImageAsset } from '@/types/property';
 import { AdminLocationPickerWrapper } from '@/components/AdminLocationPickerWrapper';
+
+const SAN_JOSE_NEIGHBORHOODS = [
+  'Centro',
+  'Barrio Industrial',
+  'Plaza Arriaga',
+  'Arroyo Mallada',
+  'Colón',
+  'Parque Rodó',
+  'Treinta y Tres',
+  'Picada de las Tunas',
+  'Bypass Ruta 3 y 11',
+  'Ruta 3',
+  'Ruta 11',
+  'Villa Olímpica / Playa Pascual',
+  'Libertad',
+  'Ciudad del Plata',
+  'Zona Rural / Chacras',
+];
+
+const GUARANTEE_OPTIONS: GuaranteeType[] = [
+  'ANDA',
+  'CGN',
+  'Porto',
+  'Sura',
+  'Mapfre',
+  'Depósito',
+  'Propia',
+  'Otra',
+];
 
 export default function EditarPropiedadPage() {
   const router = useRouter();
   const params = useParams();
   const propertyId = params?.id as string;
+
+  // Tab State: 'general' | 'features' | 'images' | 'seo'
+  const [activeTab, setActiveTab] = useState<'general' | 'features' | 'images' | 'seo'>('general');
 
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -105,18 +153,24 @@ export default function EditarPropiedadPage() {
   const [gatedPerimeter, setGatedPerimeter] = useState<boolean>(false);
 
   const [selectedGuarantees, setSelectedGuarantees] = useState<GuaranteeType[]>([]);
-
-  const [lastGoogleNotifiedAt, setLastGoogleNotifiedAt] = useState<string | undefined>(undefined);
-  const [googleIndexingStatus, setGoogleIndexingStatus] = useState<'notified' | 'pending' | 'error'>('pending');
+  const [lastGoogleNotifiedAt, setLastGoogleNotifiedAt] = useState<string | undefined>();
+  const [googleIndexingStatus, setGoogleIndexingStatus] = useState<'pending' | 'notified' | 'error'>('pending');
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-  // Cargar datos de la propiedad para editar
-  useEffect(() => {
-    if (!propertyId) return;
+  // Clasificación de categoría para campos condicionales
+  const isLandOrFarm = category === 'terreno' || category === 'chacra';
 
+  const toggleGuarantee = (g: GuaranteeType) => {
+    setSelectedGuarantees((prev) =>
+      prev.includes(g) ? prev.filter((item) => item !== g) : [...prev, g]
+    );
+  };
+
+  useEffect(() => {
     async function fetchProperty() {
+      if (!propertyId) return;
       try {
         setIsLoading(true);
         const res = await fetch(`/api/properties/${propertyId}`);
@@ -130,17 +184,18 @@ export default function EditarPropiedadPage() {
           setOperation(p.operation || 'venta');
           setCategory(p.category || 'casa');
           setStatus(p.status || 'disponible');
+
           setPriceAmount(p.price?.amount || 0);
           setPriceCurrency(p.price?.currency || 'USD');
           setPriceMode(p.price?.priceMode || 'visible');
+
           setNeighborhood(p.location?.neighborhood || 'Centro');
           setAddress(p.location?.address || '');
-          
-          setHasLocation(p.location?.hasLocation !== false);
-          setLat(p.location?.coordinates?.lat ?? p.location?.lat ?? -34.3375);
-          setLng(p.location?.coordinates?.lng ?? p.location?.lng ?? -56.7136);
-          setIsExactLocation(p.location?.isExactLocation ?? false);
-          setRadiusMeters(p.location?.radiusMeters ?? 300);
+          setHasLocation(p.location?.hasLocation !== undefined ? p.location.hasLocation : true);
+          setLat(p.location?.coordinates?.lat || -34.3375);
+          setLng(p.location?.coordinates?.lng || -56.7136);
+          setIsExactLocation(!!p.location?.isExactLocation);
+          setRadiusMeters(p.location?.radiusMeters || 300);
 
           setBedrooms(p.features?.bedrooms || 0);
           setBathrooms(p.features?.bathrooms || 0);
@@ -148,7 +203,7 @@ export default function EditarPropiedadPage() {
           setBuiltAreaM2(p.features?.builtAreaM2 || 0);
           setPlotAreaM2(p.features?.plotAreaM2 || 0);
           setFrontMeters(p.features?.frontMeters);
-          
+
           setCarAccess(!!p.features?.carAccess);
           setGarage(!!p.features?.garage);
           setBarbecue(!!p.features?.barbecue);
@@ -157,22 +212,22 @@ export default function EditarPropiedadPage() {
           setWoodStoveOrAC(!!p.features?.woodStoveOrAC);
           setPetFriendly(!!p.features?.petFriendly);
 
-          setFondo(!!(p.features?.fondo ?? p.features?.garden));
+          setFondo(!!p.features?.fondo);
           setPatio(!!p.features?.patio);
           setBarbacoa(!!p.features?.barbacoa);
-          setParrillero(!!(p.features?.parrillero ?? p.features?.barbecue));
-          setCochera(!!(p.features?.cochera ?? p.features?.carAccess));
-          setCocheraTechada(!!(p.features?.cocheraTechada ?? p.features?.garage));
+          setParrillero(!!p.features?.parrillero);
+          setCochera(!!p.features?.cochera);
+          setCocheraTechada(!!p.features?.cocheraTechada);
 
-          setOseWater(p.features?.oseWater ?? true);
-          setUteElectric(p.features?.uteElectric ?? true);
-          setSanitation(p.features?.sanitation ?? true);
-          setFiberOptic(p.features?.fiberOptic ?? true);
+          setOseWater(p.features?.oseWater !== undefined ? !!p.features?.oseWater : true);
+          setUteElectric(p.features?.uteElectric !== undefined ? !!p.features?.uteElectric : true);
+          setSanitation(p.features?.sanitation !== undefined ? !!p.features?.sanitation : true);
+          setFiberOptic(p.features?.fiberOptic !== undefined ? !!p.features?.fiberOptic : true);
           setWaterWellOrPond(!!p.features?.waterWellOrPond);
 
-          setTitlesUpToDate(p.features?.titlesUpToDate ?? p.legalCertainties?.titlesUpToDate ?? true);
-          setBankCreditEligible(!!p.features?.bankCreditEligible || !!p.legalCertainties?.bankCreditEligible);
-          setAcceptsTradeIn(!!p.features?.acceptsTradeIn || !!p.legalCertainties?.acceptsTradeIn);
+          setTitlesUpToDate(p.features?.titlesUpToDate !== undefined ? !!p.features?.titlesUpToDate : true);
+          setBankCreditEligible(!!p.features?.bankCreditEligible);
+          setAcceptsTradeIn(!!p.features?.acceptsTradeIn);
           setPhRegime(!!p.features?.phRegime);
           setPerimeterFence(!!p.features?.perimeterFence);
           setSecuritySystem(!!p.features?.securitySystem);
@@ -181,13 +236,14 @@ export default function EditarPropiedadPage() {
           setPavedStreet(!!p.features?.pavedStreet);
           setShedOrCorral(!!p.features?.shedOrCorral);
 
-          const isHa = !!p.features?.isHectares || (p.features?.plotAreaM2 ? p.features.plotAreaM2 >= 10000 : false);
-          setIsHectares(isHa);
-          setHectaresAmount(p.features?.hectaresAmount || (p.features?.plotAreaM2 && p.features.plotAreaM2 >= 10000 ? p.features.plotAreaM2 / 10000 : undefined));
+          const hasHectares = !!p.features?.isHectares || !!p.features?.hectaresAmount;
+          setIsHectares(hasHectares);
+          setHectaresAmount(p.features?.hectaresAmount);
+
           setFractionable(!!p.features?.fractionable);
           setMinFractionM2(p.features?.minFractionM2);
           setFractionNotes(p.features?.fractionNotes || '');
-          
+
           setHasRouteFrontage(!!p.features?.routeFrontage);
           setRouteFrontage(p.features?.routeFrontage || '');
 
@@ -250,10 +306,10 @@ export default function EditarPropiedadPage() {
           lng,
           isExactLocation,
           radiusMeters,
-          bedrooms,
-          bathrooms,
-          floors,
-          builtAreaM2,
+          bedrooms: isLandOrFarm ? undefined : bedrooms,
+          bathrooms: isLandOrFarm ? undefined : bathrooms,
+          floors: isLandOrFarm ? undefined : floors,
+          builtAreaM2: isLandOrFarm ? undefined : builtAreaM2,
           plotAreaM2,
           frontMeters,
           carAccess,
@@ -303,10 +359,10 @@ export default function EditarPropiedadPage() {
       const data = await response.json();
 
       if (data.success) {
-        setSuccessMessage(`¡Propiedad Ref. #${codeRef} actualizada correctamente en la base de datos!`);
+        setSuccessMessage(`¡Propiedad Ref. #${codeRef} actualizada correctamente! Redirigiendo...`);
         setTimeout(() => {
           router.push('/admin');
-        }, 1500);
+        }, 1200);
       } else {
         alert(data.error || 'Error al actualizar la propiedad.');
       }
@@ -322,7 +378,7 @@ export default function EditarPropiedadPage() {
     return (
       <div className="min-h-screen bg-slate-100 flex flex-col justify-between">
         <Header />
-        <main className="max-w-4xl mx-auto px-4 py-20 text-center">
+        <main className="max-w-4xl mx-auto px-4 py-24 text-center">
           <Loader2 className="w-12 h-12 text-[#5E1754] animate-spin mx-auto mb-4" />
           <p className="text-sm font-bold text-slate-700">Cargando datos de la propiedad para editar...</p>
         </main>
@@ -351,59 +407,147 @@ export default function EditarPropiedadPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-100 font-sans text-slate-800 flex flex-col justify-between">
+    <div className="min-h-screen flex flex-col bg-slate-100/70 text-slate-800">
       <Header />
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex-grow">
-        
-        {/* Header Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-          <div>
-            <div className="flex items-center space-x-2 text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">
-              <Link href="/admin" className="hover:text-[#5E1754] flex items-center space-x-1">
-                <ArrowLeft className="w-3.5 h-3.5" />
-                <span>Panel de Administración</span>
-              </Link>
-              <span>/</span>
-              <span className="text-[#5E1754]">Editar Propiedad</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 flex items-center space-x-2">
-              <Edit3 className="w-7 h-7 text-[#E85D04]" />
-              <span>Editar Inmueble Ref. #{codeRef}</span>
-            </h1>
-          </div>
-
-          <Link
-            href="/admin"
-            className="inline-flex items-center space-x-2 bg-white border border-slate-200 hover:border-slate-300 text-slate-700 px-4 py-2.5 rounded-xl text-xs font-bold shadow-xs transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Cancelar</span>
-          </Link>
-        </div>
-
-        {/* Main Form Container */}
-        <div className="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-xl space-y-8">
+      {/* STICKY TOP ACTION BAR */}
+      <div className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs px-4 sm:px-8 py-3">
+        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
           
-          {/* Success Toast */}
-          {successMessage && (
-            <div className="bg-emerald-50 border-2 border-emerald-300 p-4 rounded-2xl flex items-center space-x-3 text-emerald-950 text-xs sm:text-sm font-bold animate-fade-in shadow-md">
-              <CheckCircle2 className="w-6 h-6 text-emerald-600 flex-shrink-0" />
-              <div className="flex-1">
-                <p>{successMessage}</p>
-                <p className="text-[11px] text-emerald-700 font-medium">Redirigiendo al Panel de Administración...</p>
+          <div className="flex items-center space-x-3 min-w-0">
+            <Link
+              href="/admin"
+              className="inline-flex items-center space-x-1 text-xs font-extrabold text-slate-600 hover:text-[#5E1754] bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-xl transition-all"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span className="hidden sm:inline">Panel</span>
+            </Link>
+
+            <div className="min-w-0">
+              <div className="flex items-center space-x-2">
+                <span className="bg-[#5E1754]/10 text-[#5E1754] text-[10px] font-black px-2 py-0.5 rounded-md uppercase">
+                  {codeRef}
+                </span>
+                <span className="text-xs font-bold text-slate-800 truncate max-w-[200px] sm:max-w-[320px]">
+                  {title}
+                </span>
               </div>
             </div>
-          )}
+          </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            
-            {/* Section 1: Basic Info */}
-            <div className="space-y-4">
-              <h3 className="text-sm font-extrabold text-[#5E1754] uppercase tracking-wider">
-                1. Información Principal (Redacción Libre)
-              </h3>
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            {/* Quick Status Pill */}
+            <select
+              value={status}
+              onChange={(e) => setStatus(e.target.value as PropertyStatus)}
+              className="bg-slate-100 border border-slate-300 text-slate-800 text-xs font-bold rounded-xl px-3 py-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
+            >
+              <option value="disponible">🟢 Disponible</option>
+              <option value="reservado">🟡 Reservado</option>
+              <option value="vendido">🔴 Vendido</option>
+              <option value="alquilado">🔵 Alquilado</option>
+            </select>
 
+            {/* Save Button */}
+            <button
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+              type="button"
+              className="bg-[#5E1754] hover:bg-[#43103c] active:scale-95 text-white font-black px-5 py-2 rounded-xl text-xs sm:text-sm shadow-md hover:shadow-purple-900/25 transition-all flex items-center space-x-2 cursor-pointer"
+            >
+              <Save className="w-4 h-4" />
+              <span>{isSubmitting ? 'Guardando...' : 'Guardar Cambios'}</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <main className="flex-grow max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 text-left space-y-6">
+        
+        {/* Success Alert */}
+        {successMessage && (
+          <div className="bg-emerald-50 border border-emerald-200 text-emerald-900 p-4 rounded-2xl text-xs sm:text-sm font-semibold flex items-center space-x-3 shadow-xs">
+            <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+            <span>{successMessage}</span>
+          </div>
+        )}
+
+        {/* TAB NAVIGATION COCKPIT */}
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-xs p-1.5 flex flex-wrap sm:flex-nowrap gap-1">
+          
+          <button
+            type="button"
+            onClick={() => setActiveTab('general')}
+            className={`flex-1 min-w-[130px] flex items-center justify-center space-x-2 py-3 px-3 rounded-xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer ${
+              activeTab === 'general'
+                ? 'bg-[#5E1754] text-white shadow-sm'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+          >
+            <FileText className="w-4 h-4" />
+            <span>1. General & Precio</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('features')}
+            className={`flex-1 min-w-[130px] flex items-center justify-center space-x-2 py-3 px-3 rounded-xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer ${
+              activeTab === 'features'
+                ? 'bg-[#5E1754] text-white shadow-sm'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+          >
+            <Sliders className="w-4 h-4" />
+            <span>2. Medidas & Características</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('images')}
+            className={`flex-1 min-w-[130px] flex items-center justify-center space-x-2 py-3 px-3 rounded-xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer ${
+              activeTab === 'images'
+                ? 'bg-[#5E1754] text-white shadow-sm'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+          >
+            <ImageIcon className="w-4 h-4" />
+            <span>3. Fotos ({images.length})</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('seo')}
+            className={`flex-1 min-w-[130px] flex items-center justify-center space-x-2 py-3 px-3 rounded-xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer ${
+              activeTab === 'seo'
+                ? 'bg-[#5E1754] text-white shadow-sm'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+          >
+            <SearchIcon className="w-4 h-4" />
+            <span>4. SEO & Google</span>
+          </button>
+
+        </div>
+
+        {/* FORM BODY CONTAINER */}
+        <form onSubmit={handleSubmit} className="space-y-6">
+
+          {/* TAB 1: GENERAL & PRECIO */}
+          {activeTab === 'general' && (
+            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 animate-in fade-in duration-200">
+              
+              <div className="border-b border-slate-100 pb-3">
+                <h2 className="text-lg font-black text-slate-900 flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-[#5E1754]" />
+                  <span>Información Principal, Redacción & Precio</span>
+                </h2>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Actualizá los datos clave del inmueble y su redacción con el editor visual Word.
+                </p>
+              </div>
+
+              {/* 1.1 Código, Operación y Categoría */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Código Ref.</label>
@@ -421,7 +565,7 @@ export default function EditarPropiedadPage() {
                   <select
                     value={operation}
                     onChange={(e) => setOperation(e.target.value as OperationType)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754] cursor-pointer"
                   >
                     <option value="venta">🏡 En Venta</option>
                     <option value="alquiler">🔑 Alquiler</option>
@@ -430,7 +574,7 @@ export default function EditarPropiedadPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Categoría</label>
+                  <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Categoría del Inmueble</label>
                   <select
                     value={category}
                     onChange={(e) => {
@@ -440,7 +584,7 @@ export default function EditarPropiedadPage() {
                         setHasLocation(false);
                       }
                     }}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754] cursor-pointer"
                   >
                     <option value="casa">🏡 Casa</option>
                     <option value="apartamento">🏢 Apartamento</option>
@@ -454,353 +598,455 @@ export default function EditarPropiedadPage() {
                 </div>
               </div>
 
+              {/* 1.2 Título Comercial */}
               <div>
-                <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Título de la Propiedad</label>
+                <label className="block text-xs font-bold uppercase text-slate-600 mb-1">
+                  Título de la Propiedad <span className="text-red-500">*</span>
+                </label>
                 <input
                   type="text"
                   required
-                  placeholder="ej. Hermosa Casa de 2 Dormitorios en Barrio Centro"
+                  placeholder="ej. Hermosa Casa de 2 Dormitorios con Fondo y Garage en Barrio Centro"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
                 />
               </div>
 
+              {/* 1.3 Editor de Texto Enriquecido Visual */}
               <RichTextEditor
                 value={description}
                 onChange={setDescription}
                 required
-                label="Descripción Comercial & Detalles"
-                placeholder="Describí las características, estado de conservación, orientación, luminosidad y entorno del inmueble..."
+                label="Descripción Comercial & Redacción"
+                placeholder="Escribí aquí las comodidades, estado, luminosidad y entorno del inmueble..."
               />
-            </div>
 
-            {/* Section 2: Location & Price */}
-            <div className="space-y-4 pt-4 border-t border-slate-100">
-              <h3 className="text-sm font-extrabold text-[#5E1754] uppercase tracking-wider">
-                2. Ubicación & Precio Comercial
-              </h3>
+              {/* 1.4 Precios y Modalidad */}
+              <div className="pt-4 border-t border-slate-100 space-y-3">
+                <h3 className="text-xs font-extrabold text-[#5E1754] uppercase tracking-wider flex items-center gap-1.5">
+                  <DollarSign className="w-4 h-4" />
+                  <span>Condiciones de Precio</span>
+                </h3>
 
-              {/* Modalidad de Visualización del Precio */}
-              <div className="bg-purple-50/60 border border-purple-200/80 rounded-2xl p-4 space-y-3">
-                <div className="flex flex-wrap items-center justify-between gap-1">
-                  <label className="text-xs font-black uppercase text-[#5E1754] flex items-center gap-1.5">
-                    💵 Modalidad de Precio / Publicación
-                  </label>
-                  <span className="text-[11px] text-purple-700 font-semibold">Define cómo lo ve el cliente en la web</span>
-                </div>
-
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                  <button
-                    type="button"
-                    onClick={() => setPriceMode('visible')}
-                    className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
-                      priceMode === 'visible'
-                        ? 'bg-[#5E1754] text-white border-[#5E1754] shadow-md'
-                        : 'bg-white text-slate-700 border-slate-200 hover:border-purple-300'
-                    }`}
-                  >
-                    <div className="font-extrabold text-xs">💵 Precio Fijo</div>
-                    <div className={`text-[10px] mt-0.5 ${priceMode === 'visible' ? 'text-purple-200' : 'text-slate-400'}`}>Monto visible</div>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setPriceMode('consultar')}
-                    className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
-                      priceMode === 'consultar'
-                        ? 'bg-[#5E1754] text-white border-[#5E1754] shadow-md'
-                        : 'bg-white text-slate-700 border-slate-200 hover:border-purple-300'
-                    }`}
-                  >
-                    <div className="font-extrabold text-xs">💬 Consultar Precio</div>
-                    <div className={`text-[10px] mt-0.5 ${priceMode === 'consultar' ? 'text-purple-200' : 'text-slate-400'}`}>Oculta el monto</div>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setPriceMode('reservado')}
-                    className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
-                      priceMode === 'reservado'
-                        ? 'bg-[#5E1754] text-white border-[#5E1754] shadow-md'
-                        : 'bg-white text-slate-700 border-slate-200 hover:border-purple-300'
-                    }`}
-                  >
-                    <div className="font-extrabold text-xs">🔒 Precio Reservado</div>
-                    <div className={`text-[10px] mt-0.5 ${priceMode === 'reservado' ? 'text-purple-200' : 'text-slate-400'}`}>Confidencial</div>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setPriceMode('desde')}
-                    className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
-                      priceMode === 'desde'
-                        ? 'bg-[#5E1754] text-white border-[#5E1754] shadow-md'
-                        : 'bg-white text-slate-700 border-slate-200 hover:border-purple-300'
-                    }`}
-                  >
-                    <div className="font-extrabold text-xs">📈 Precio "Desde..."</div>
-                    <div className={`text-[10px] mt-0.5 ${priceMode === 'desde' ? 'text-purple-200' : 'text-slate-400'}`}>Para proyectos/lotes</div>
-                  </button>
-                </div>
-
-                {/* Mensaje Informativo Contextual */}
-                {priceMode === 'consultar' && (
-                  <p className="text-[11px] text-purple-900 font-medium bg-purple-100/70 p-2.5 rounded-xl border border-purple-200">
-                    💡 La tarjeta y ficha mostrarán <strong>"Consultar Precio"</strong>. El monto abajo queda guardado como referencia interna.
-                  </p>
-                )}
-                {priceMode === 'reservado' && (
-                  <p className="text-[11px] text-purple-900 font-medium bg-purple-100/70 p-2.5 rounded-xl border border-purple-200">
-                    🔒 La tarjeta y ficha mostrarán <strong>"🔒 Precio Reservado"</strong> para propiedades de alta confidencialidad.
-                  </p>
-                )}
-                {priceMode === 'desde' && (
-                  <p className="text-[11px] text-purple-900 font-medium bg-purple-100/70 p-2.5 rounded-xl border border-purple-200">
-                    📈 La tarjeta y ficha mostrarán <strong>"Desde {priceCurrency} {priceAmount.toLocaleString('es-UY')}"</strong>.
-                  </p>
-                )}
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div>
-                  <label className="block text-xs font-bold uppercase text-slate-600 mb-1">
-                    {priceMode === 'desde' ? 'Monto Base ("Desde...")' : priceMode === 'visible' ? 'Monto del Precio' : 'Monto de Referencia Interno'}
-                  </label>
-                  <input
-                    type="number"
-                    required
-                    value={priceAmount}
-                    onChange={(e) => setPriceAmount(Number(e.target.value))}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-black focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Moneda</label>
-                  <select
-                    value={priceCurrency}
-                    onChange={(e) => setPriceCurrency(e.target.value as 'USD' | 'UYU')}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
-                  >
-                    <option value="USD">💵 Dólares (USD)</option>
-                    <option value="UYU">🇺🇾 Pesos Uruguayos (UYU)</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Estado Comercial</label>
-                  <select
-                    value={status}
-                    onChange={(e) => setStatus(e.target.value as PropertyStatus)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
-                  >
-                    <option value="disponible">🟢 Disponible</option>
-                    <option value="nuevo">🟢 Nuevo Ingreso</option>
-                    <option value="reservado">🟡 Reservado</option>
-                    <option value="vendido">🔴 Vendido</option>
-                    <option value="alquilado">🔵 Alquilado</option>
-                    <option value="oportunidad">💥 Oportunidad</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Barrio / Zona</label>
-                  <input
-                    type="text"
-                    required
-                    value={neighborhood}
-                    onChange={(e) => setNeighborhood(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Dirección (Opcional)</label>
-                  <input
-                    type="text"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
-                  />
-                </div>
-              </div>
-
-              {/* Toggle Opcional de Mapa */}
-              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
-                <label className="flex items-center space-x-3 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={hasLocation}
-                    onChange={(e) => setHasLocation(e.target.checked)}
-                    className="w-5 h-5 text-[#5E1754] rounded focus:ring-[#5E1754]"
-                  />
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div>
-                    <span className="text-xs font-black uppercase text-slate-800">
-                      🗺️ Mostrar Mapa de Ubicación Geográfica
-                    </span>
-                    <p className="text-[11px] text-slate-500 font-medium">
-                      Desmarcá esta opción para Módulos Habitacionales, Galpones Transportables o inmuebles sin terreno fijo.
-                    </p>
+                    <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Monto</label>
+                    <input
+                      type="number"
+                      min={0}
+                      disabled={priceMode === 'consultar'}
+                      value={priceAmount}
+                      onChange={(e) => setPriceAmount(Number(e.target.value))}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754] disabled:opacity-50"
+                    />
                   </div>
-                </label>
 
-                {hasLocation ? (
-                  <div className="pt-2">
+                  <div>
+                    <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Moneda</label>
+                    <select
+                      value={priceCurrency}
+                      onChange={(e) => setPriceCurrency(e.target.value as 'USD' | 'UYU')}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754] cursor-pointer"
+                    >
+                      <option value="USD">Dólares (USD)</option>
+                      <option value="UYU">Pesos Uruguayos ($UY)</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Modalidad</label>
+                    <select
+                      value={priceMode}
+                      onChange={(e) => setPriceMode(e.target.value as 'visible' | 'consultar' | 'reservado' | 'desde')}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754] cursor-pointer"
+                    >
+                      <option value="visible">Mostrar Precio Exacto</option>
+                      <option value="consultar">Consultar Precio</option>
+                      <option value="desde">Precio &quot;Desde&quot;</option>
+                      <option value="reservado">Reservado</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* 1.5 Ubicación y Mapa */}
+              <div className="pt-4 border-t border-slate-100 space-y-4">
+                <h3 className="text-xs font-extrabold text-[#5E1754] uppercase tracking-wider flex items-center gap-1.5">
+                  <MapPin className="w-4 h-4" />
+                  <span>Ubicación en San José & Privacidad del Mapa</span>
+                </h3>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Barrio / Zona</label>
+                    <div className="space-y-2">
+                      <select
+                        value={SAN_JOSE_NEIGHBORHOODS.includes(neighborhood) ? neighborhood : 'otro'}
+                        onChange={(e) => {
+                          if (e.target.value !== 'otro') {
+                            setNeighborhood(e.target.value);
+                          }
+                        }}
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754] cursor-pointer"
+                      >
+                        {SAN_JOSE_NEIGHBORHOODS.map((nh) => (
+                          <option key={nh} value={nh}>{nh}</option>
+                        ))}
+                        <option value="otro">Otro Barrio / Personalizado...</option>
+                      </select>
+
+                      {(!SAN_JOSE_NEIGHBORHOODS.includes(neighborhood) || neighborhood === '') && (
+                        <input
+                          type="text"
+                          placeholder="Escribí el barrio o zona..."
+                          value={neighborhood}
+                          onChange={(e) => setNeighborhood(e.target.value)}
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
+                        />
+                      )}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold uppercase text-slate-600 mb-1">
+                      Dirección / Calle <span className="text-slate-400 font-normal">(Opcional)</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="ej. 25 de Mayo casi Artigas"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
+                    />
+                  </div>
+                </div>
+
+                {/* Mapa Interactivo */}
+                <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <label className="flex items-center space-x-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={hasLocation}
+                        onChange={(e) => setHasLocation(e.target.checked)}
+                        className="w-4 h-4 text-[#5E1754] rounded"
+                      />
+                      <span className="text-xs font-bold text-slate-800">📍 Mostrar Mapa de Ubicación</span>
+                    </label>
+                  </div>
+
+                  {hasLocation && (
                     <AdminLocationPickerWrapper
                       lat={lat}
                       lng={lng}
                       isExactLocation={isExactLocation}
                       radiusMeters={radiusMeters}
-                      onChangeLocation={(newLat, newLng) => {
+                      onChangeLocation={(newLat: number, newLng: number) => {
                         setLat(newLat);
                         setLng(newLng);
                       }}
-                      onChangeExactLocation={setIsExactLocation}
-                      onChangeRadiusMeters={setRadiusMeters}
+                      onChangeExactLocation={(isExact: boolean) => setIsExactLocation(isExact)}
+                      onChangeRadiusMeters={(radius: number) => setRadiusMeters(radius)}
                     />
-                  </div>
-                ) : (
-                  <div className="bg-amber-50 border border-amber-200 rounded-xl p-3.5 text-xs text-amber-900 font-bold flex items-center space-x-2">
-                    <span>🚫 Ubicación desactivada: Esta publicación no incluirá sección de mapa interactivo.</span>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
-            </div>
 
-            {/* Section 3: Adaptive Features, Services & Badges */}
-            <div className="space-y-6 pt-4 border-t border-slate-100">
+              {/* Botón Siguiente Paso */}
+              <div className="pt-4 flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('features')}
+                  className="bg-[#5E1754] hover:bg-[#43103c] text-white text-xs sm:text-sm font-extrabold px-6 py-3 rounded-xl flex items-center space-x-2 transition-all cursor-pointer"
+                >
+                  <span>Siguiente: Medidas & Características</span>
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+
+            </div>
+          )}
+
+          {/* TAB 2: MEDIDAS & CARACTERÍSTICAS */}
+          {activeTab === 'features' && (
+            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-8 animate-in fade-in duration-200">
               
-              <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-                <h3 className="text-sm font-extrabold text-[#5E1754] uppercase tracking-wider flex items-center space-x-2">
-                  <Sparkles className="w-4 h-4 text-[#E85D04]" />
-                  <span>3. Características, Servicios & Comodidades</span>
-                </h3>
-                <span className="text-[11px] font-bold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full">
-                  Campos adaptados a {category.toUpperCase()} ({operation.toUpperCase()})
+              <div className="border-b border-slate-100 pb-3 flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <h2 className="text-lg font-black text-slate-900 flex items-center gap-2">
+                    <Sliders className="w-5 h-5 text-[#5E1754]" />
+                    <span>Medidas, Ambientes & Comodidades</span>
+                  </h2>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    Configuración inteligente adaptada a <strong>{category.toUpperCase()}</strong>.
+                  </p>
+                </div>
+                <span className="text-[11px] font-extrabold px-3 py-1 bg-purple-100 text-[#5E1754] rounded-full">
+                  Categoría: {category.toUpperCase()}
                 </span>
               </div>
 
-              {/* Adaptativo: Alquileres (Garantías) */}
-              {operation === 'alquiler' && (
-                <div className="bg-emerald-50/60 border border-emerald-200/80 rounded-2xl p-4 space-y-3">
-                  <h4 className="text-xs font-black uppercase text-emerald-900">
-                    🛡️ Garantías de Alquiler Aceptadas
-                  </h4>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                    {(['ANDA', 'CGN', 'Porto', 'Sura', 'Mapfre', 'Depósito'] as GuaranteeType[]).map((g) => (
-                      <label key={g} className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer">
-                        <input
-                          type="checkbox"
-                          checked={selectedGuarantees.includes(g)}
-                          onChange={(e) => {
-                            if (e.target.checked) {
-                              setSelectedGuarantees([...selectedGuarantees, g]);
-                            } else {
-                              setSelectedGuarantees(selectedGuarantees.filter((x) => x !== g));
-                            }
-                          }}
-                          className="w-4 h-4 text-emerald-600 rounded"
-                        />
-                        <span>🛡️ {g}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-              )}
+              {/* 2.1 Superficies y Medidas */}
+              <div className="space-y-3">
+                <h3 className="text-xs font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                  <Maximize2 className="w-4 h-4 text-[#E85D04]" />
+                  <span>Superficies & Dimensiones</span>
+                </h3>
 
-              {/* Grupo 1: Dimensiones, Estructura & Plantas */}
-              <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 space-y-3">
-                <h4 className="text-xs font-black uppercase text-slate-700">
-                  📐 Dimensiones, Estructura & Plantas
-                </h4>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {!isLandOrFarm && (
+                    <div>
+                      <label className="block text-xs font-bold uppercase text-slate-600 mb-1">m² Edificados</label>
+                      <input
+                        type="number"
+                        min={0}
+                        value={builtAreaM2}
+                        onChange={(e) => setBuiltAreaM2(Number(e.target.value))}
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
+                      />
+                    </div>
+                  )}
+
                   <div>
-                    <label className="block text-[11px] font-bold uppercase text-slate-600 mb-1">Dormitorios</label>
-                    <input
-                      type="number"
-                      min={0}
-                      value={bedrooms}
-                      onChange={(e) => setBedrooms(Number(e.target.value))}
-                      className="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-bold focus:ring-2 focus:ring-[#5E1754]"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[11px] font-bold uppercase text-slate-600 mb-1">Baños</label>
-                    <input
-                      type="number"
-                      min={0}
-                      value={bathrooms}
-                      onChange={(e) => setBathrooms(Number(e.target.value))}
-                      className="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-bold focus:ring-2 focus:ring-[#5E1754]"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[11px] font-bold uppercase text-slate-600 mb-1">Plantas / Pisos</label>
-                    <input
-                      type="number"
-                      min={0}
-                      value={floors || ''}
-                      onChange={(e) => setFloors(e.target.value ? Number(e.target.value) : 0)}
-                      className="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-bold focus:ring-2 focus:ring-[#5E1754]"
-                      placeholder="0 (Opcional)"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[11px] font-bold uppercase text-slate-600 mb-1">M² Edificados</label>
-                    <input
-                      type="number"
-                      min={0}
-                      value={builtAreaM2}
-                      onChange={(e) => setBuiltAreaM2(Number(e.target.value))}
-                      className="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-bold focus:ring-2 focus:ring-[#5E1754]"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[11px] font-bold uppercase text-slate-600 mb-1">M² Terreno</label>
+                    <label className="block text-xs font-bold uppercase text-slate-600 mb-1">m² de Terreno / Solar</label>
                     <input
                       type="number"
                       min={0}
                       value={plotAreaM2}
                       onChange={(e) => setPlotAreaM2(Number(e.target.value))}
-                      className="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-bold focus:ring-2 focus:ring-[#5E1754]"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
                     />
                   </div>
+
                   <div>
-                    <label className="block text-[11px] font-bold uppercase text-slate-600 mb-1">Frente (m)</label>
+                    <label className="block text-xs font-bold uppercase text-slate-600 mb-1">
+                      Metros de Frente <span className="text-slate-400 font-normal">(Opcional)</span>
+                    </label>
                     <input
                       type="number"
                       min={0}
+                      placeholder="ej. 15"
                       value={frontMeters || ''}
                       onChange={(e) => setFrontMeters(e.target.value ? Number(e.target.value) : undefined)}
-                      placeholder="Opcional"
-                      className="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-bold focus:ring-2 focus:ring-[#5E1754]"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
                     />
                   </div>
                 </div>
               </div>
 
-              {/* Sub-bloque Destacado: Perfil Industrial, Logístico & Fraccionamiento */}
-              <div className="bg-purple-50/70 border border-purple-200/80 rounded-2xl p-4 sm:p-5 space-y-4">
-                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-purple-200/60 pb-3">
-                  <div>
-                    <h4 className="text-xs sm:text-sm font-black uppercase text-[#5E1754] flex items-center gap-2">
-                      <span>🏭 Perfil Industrial, Logístico & Grandes Fracciones (Tarjetas Clave)</span>
-                    </h4>
-                    <p className="text-[11px] text-slate-600 font-medium mt-0.5">
-                      Marcá con un tick las tarjetas que desees activar para generar los badges en el catálogo y la ficha.
-                    </p>
+              {/* 2.2 Ambientes Residenciales */}
+              {!isLandOrFarm && (
+                <div className="space-y-3 pt-4 border-t border-slate-100">
+                  <h3 className="text-xs font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                    <Building className="w-4 h-4 text-[#E85D04]" />
+                    <span>Ambientes & Distribución</span>
+                  </h3>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Dormitorios</label>
+                      <input
+                        type="number"
+                        min={0}
+                        value={bedrooms}
+                        onChange={(e) => setBedrooms(Number(e.target.value))}
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Baños</label>
+                      <input
+                        type="number"
+                        min={0}
+                        value={bathrooms}
+                        onChange={(e) => setBathrooms(Number(e.target.value))}
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold uppercase text-slate-600 mb-1">
+                        Plantas / Pisos <span className="text-slate-400 font-normal">(0 = Opcional)</span>
+                      </label>
+                      <input
+                        type="number"
+                        min={0}
+                        placeholder="0 (Opcional)"
+                        value={floors || ''}
+                        onChange={(e) => setFloors(e.target.value ? Number(e.target.value) : 0)}
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
+                      />
+                    </div>
                   </div>
-                  <span className="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-lg bg-[#5E1754] text-white">
-                    Tarjetas Opcionales
-                  </span>
+                </div>
+              )}
+
+              {/* 2.3 Comodidades & Etiquetas Principales */}
+              <div className="space-y-3 pt-4 border-t border-slate-100">
+                <h3 className="text-xs font-black uppercase tracking-wider text-slate-700">
+                  ✨ Comodidades & Características Destacadas
+                </h3>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 text-xs font-semibold text-slate-700">
+                  <label className="flex items-center space-x-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 hover:border-purple-300 cursor-pointer">
+                    <input type="checkbox" checked={barbecue} onChange={(e) => setBarbecue(e.target.checked)} className="w-4 h-4 text-[#5E1754] rounded" />
+                    <span>🍖 Parrillero / Barbacoa</span>
+                  </label>
+
+                  <label className="flex items-center space-x-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 hover:border-purple-300 cursor-pointer">
+                    <input type="checkbox" checked={fondo} onChange={(e) => setFondo(e.target.checked)} className="w-4 h-4 text-[#5E1754] rounded" />
+                    <span>🌳 Fondo Verde</span>
+                  </label>
+
+                  <label className="flex items-center space-x-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 hover:border-purple-300 cursor-pointer">
+                    <input type="checkbox" checked={patio} onChange={(e) => setPatio(e.target.checked)} className="w-4 h-4 text-[#5E1754] rounded" />
+                    <span>🧱 Patio</span>
+                  </label>
+
+                  <label className="flex items-center space-x-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 hover:border-purple-300 cursor-pointer">
+                    <input type="checkbox" checked={garage} onChange={(e) => setGarage(e.target.checked)} className="w-4 h-4 text-[#5E1754] rounded" />
+                    <span>🚗 Garage Techado</span>
+                  </label>
+
+                  <label className="flex items-center space-x-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 hover:border-purple-300 cursor-pointer">
+                    <input type="checkbox" checked={carAccess} onChange={(e) => setCarAccess(e.target.checked)} className="w-4 h-4 text-[#5E1754] rounded" />
+                    <span>🚙 Entrada de Auto</span>
+                  </label>
+
+                  <label className="flex items-center space-x-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 hover:border-purple-300 cursor-pointer">
+                    <input type="checkbox" checked={pool} onChange={(e) => setPool(e.target.checked)} className="w-4 h-4 text-[#5E1754] rounded" />
+                    <span>🏊 Piscina</span>
+                  </label>
+
+                  <label className="flex items-center space-x-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 hover:border-purple-300 cursor-pointer">
+                    <input type="checkbox" checked={woodStoveOrAC} onChange={(e) => setWoodStoveOrAC(e.target.checked)} className="w-4 h-4 text-[#5E1754] rounded" />
+                    <span>🔥 Estufa / Aire Acond.</span>
+                  </label>
+
+                  <label className="flex items-center space-x-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 hover:border-purple-300 cursor-pointer">
+                    <input type="checkbox" checked={petFriendly} onChange={(e) => setPetFriendly(e.target.checked)} className="w-4 h-4 text-[#5E1754] rounded" />
+                    <span>🐾 Acepta Mascotas</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* 2.4 Servicios Básicos */}
+              <div className="space-y-3 pt-4 border-t border-slate-100">
+                <h3 className="text-xs font-black uppercase tracking-wider text-slate-700">
+                  💧 Servicios & Conectividad
+                </h3>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 text-xs font-semibold text-slate-700">
+                  <label className="flex items-center space-x-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 hover:border-purple-300 cursor-pointer">
+                    <input type="checkbox" checked={oseWater} onChange={(e) => setOseWater(e.target.checked)} className="w-4 h-4 text-[#5E1754] rounded" />
+                    <span>💧 Agua OSE</span>
+                  </label>
+
+                  <label className="flex items-center space-x-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 hover:border-purple-300 cursor-pointer">
+                    <input type="checkbox" checked={uteElectric} onChange={(e) => setUteElectric(e.target.checked)} className="w-4 h-4 text-[#5E1754] rounded" />
+                    <span>⚡ Luz UTE</span>
+                  </label>
+
+                  <label className="flex items-center space-x-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 hover:border-purple-300 cursor-pointer">
+                    <input type="checkbox" checked={sanitation} onChange={(e) => setSanitation(e.target.checked)} className="w-4 h-4 text-[#5E1754] rounded" />
+                    <span>🚽 Saneamiento</span>
+                  </label>
+
+                  <label className="flex items-center space-x-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 hover:border-purple-300 cursor-pointer">
+                    <input type="checkbox" checked={fiberOptic} onChange={(e) => setFiberOptic(e.target.checked)} className="w-4 h-4 text-[#5E1754] rounded" />
+                    <span>🌐 Fibra Óptica</span>
+                  </label>
+
+                  <label className="flex items-center space-x-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 hover:border-purple-300 cursor-pointer">
+                    <input type="checkbox" checked={waterWellOrPond} onChange={(e) => setWaterWellOrPond(e.target.checked)} className="w-4 h-4 text-[#5E1754] rounded" />
+                    <span>🚜 Pozo / Tajamar</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* 2.5 Certeza Legal & Garantías */}
+              <div className="space-y-3 pt-4 border-t border-slate-100">
+                <h3 className="text-xs font-black uppercase tracking-wider text-slate-700">
+                  ⚖️ Certeza Legal & Seguridad
+                </h3>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs font-semibold text-slate-700">
+                  <label className="flex items-center space-x-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 hover:border-purple-300 cursor-pointer">
+                    <input type="checkbox" checked={titlesUpToDate} onChange={(e) => setTitlesUpToDate(e.target.checked)} className="w-4 h-4 text-[#5E1754] rounded" />
+                    <span>📑 Títulos al Día</span>
+                  </label>
+
+                  <label className="flex items-center space-x-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 hover:border-purple-300 cursor-pointer">
+                    <input type="checkbox" checked={bankCreditEligible} onChange={(e) => setBankCreditEligible(e.target.checked)} className="w-4 h-4 text-[#5E1754] rounded" />
+                    <span>🏦 Apta Banco</span>
+                  </label>
+
+                  <label className="flex items-center space-x-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 hover:border-purple-300 cursor-pointer">
+                    <input type="checkbox" checked={acceptsTradeIn} onChange={(e) => setAcceptsTradeIn(e.target.checked)} className="w-4 h-4 text-[#5E1754] rounded" />
+                    <span>🔄 Acepta Permuta</span>
+                  </label>
+
+                  <label className="flex items-center space-x-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 hover:border-purple-300 cursor-pointer">
+                    <input type="checkbox" checked={phRegime} onChange={(e) => setPhRegime(e.target.checked)} className="w-4 h-4 text-[#5E1754] rounded" />
+                    <span>🏢 Propiedad Horizontal (PH)</span>
+                  </label>
+
+                  <label className="flex items-center space-x-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 hover:border-purple-300 cursor-pointer">
+                    <input type="checkbox" checked={perimeterFence} onChange={(e) => setPerimeterFence(e.target.checked)} className="w-4 h-4 text-[#5E1754] rounded" />
+                    <span>🧱 Predio Cercado</span>
+                  </label>
+
+                  <label className="flex items-center space-x-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 hover:border-purple-300 cursor-pointer">
+                    <input type="checkbox" checked={securitySystem} onChange={(e) => setSecuritySystem(e.target.checked)} className="w-4 h-4 text-[#5E1754] rounded" />
+                    <span>🚨 Alarma / Seguridad</span>
+                  </label>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {/* 1. Medida en Hectáreas */}
-                  <div className="bg-white p-3.5 rounded-xl border border-purple-100 shadow-2xs space-y-2">
+                {/* Garantías de Alquiler */}
+                {operation === 'alquiler' && (
+                  <div className="mt-4 p-4 bg-purple-50/50 rounded-2xl border border-purple-100 space-y-2">
+                    <label className="block text-xs font-bold uppercase text-[#5E1754]">
+                      Garantías de Alquiler Aceptadas
+                    </label>
+                    <div className="flex flex-wrap gap-2 pt-1">
+                      {GUARANTEE_OPTIONS.map((g) => {
+                        const isChecked = selectedGuarantees.includes(g);
+                        return (
+                          <button
+                            key={g}
+                            type="button"
+                            onClick={() => toggleGuarantee(g)}
+                            className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
+                              isChecked
+                                ? 'bg-[#5E1754] text-white border-[#5E1754]'
+                                : 'bg-white text-slate-700 border-slate-200 hover:border-purple-300'
+                            }`}
+                          >
+                            {isChecked ? `✓ ${g}` : `+ ${g}`}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* 2.6 Perfil Industrial, Logístico & Grandes Fracciones */}
+              <div className="space-y-3 pt-4 border-t border-slate-100">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xs font-black uppercase tracking-wider text-[#5E1754] flex items-center gap-1.5">
+                    <Building2 className="w-4 h-4" />
+                    <span>Perfil Industrial, Logístico & Fracciones (Opcional)</span>
+                  </h3>
+                  <span className="text-[10px] text-slate-400 font-bold">Activalas con el tick según corresponda</span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                  
+                  {/* 1. Hectáreas */}
+                  <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-2">
                     <label className="flex items-center space-x-2 cursor-pointer">
                       <input
                         type="checkbox"
@@ -808,81 +1054,73 @@ export default function EditarPropiedadPage() {
                         onChange={(e) => {
                           const val = e.target.checked;
                           setIsHectares(val);
-                          if (val && !hectaresAmount && plotAreaM2) {
-                            setHectaresAmount(plotAreaM2 / 10000);
-                          }
+                          if (!val) setHectaresAmount(undefined);
                         }}
                         className="w-4 h-4 text-[#5E1754] rounded"
                       />
                       <span className="text-xs font-bold text-slate-800">📐 Superficie en Hectáreas (Ha)</span>
                     </label>
-
                     {isHectares ? (
                       <div className="space-y-1.5 pt-1">
-                        <label className="block text-[10px] font-extrabold uppercase text-slate-500">
-                          Cantidad de Hectáreas (Ha)
-                        </label>
+                        <label className="block text-[10px] font-extrabold uppercase text-slate-500">Cantidad de Hectáreas</label>
                         <input
                           type="number"
-                          step="any"
-                          value={hectaresAmount !== undefined ? hectaresAmount : ''}
+                          step="0.01"
+                          min={0}
+                          value={hectaresAmount || ''}
                           onChange={(e) => {
                             const val = e.target.value ? Number(e.target.value) : undefined;
                             setHectaresAmount(val);
-                            if (val) {
-                              setPlotAreaM2(val * 10000);
-                            }
+                            if (val) setPlotAreaM2(Math.round(val * 10000));
                           }}
-                          placeholder="ej. 12"
-                          className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
+                          placeholder="ej. 12 o 12.5"
+                          className="w-full bg-white border border-slate-200 rounded-lg p-2 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
                         />
-                        <p className="text-[10px] text-slate-500 font-medium">
-                          Equivale a: <strong className="text-slate-800">{hectaresAmount ? (hectaresAmount * 10000).toLocaleString('es-UY') : 0} m²</strong>
-                        </p>
+                        {hectaresAmount ? (
+                          <p className="text-[10px] text-purple-700 font-bold">
+                            = {(hectaresAmount * 10000).toLocaleString('es-UY')} m²
+                          </p>
+                        ) : null}
                       </div>
                     ) : (
-                      <p className="text-[11px] text-slate-400">
-                        Activalo para definir y mostrar el predio en Hectáreas.
-                      </p>
+                      <p className="text-[11px] text-slate-400">Activalo para campos, chacras o predios grandes.</p>
                     )}
                   </div>
 
                   {/* 2. Fraccionamiento */}
-                  <div className="bg-white p-3.5 rounded-xl border border-purple-100 shadow-2xs space-y-2">
+                  <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-2">
                     <label className="flex items-center space-x-2 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={fractionable}
-                        onChange={(e) => setFractionable(e.target.checked)}
+                        onChange={(e) => {
+                          const val = e.target.checked;
+                          setFractionable(val);
+                          if (!val) { setMinFractionM2(undefined); setFractionNotes(''); }
+                        }}
                         className="w-4 h-4 text-[#5E1754] rounded"
                       />
                       <span className="text-xs font-bold text-slate-800">✂️ Acepta Fraccionamiento</span>
                     </label>
                     {fractionable ? (
                       <div className="space-y-1.5 pt-1">
-                        <label className="block text-[10px] font-extrabold uppercase text-slate-500">Fracción mínima (m²)</label>
+                        <label className="block text-[10px] font-extrabold uppercase text-slate-500">Fracción Mínima (m²)</label>
                         <input
                           type="number"
+                          min={0}
                           value={minFractionM2 || ''}
                           onChange={(e) => setMinFractionM2(e.target.value ? Number(e.target.value) : undefined)}
                           placeholder="ej. 12000"
-                          className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
-                        />
-                        <input
-                          type="text"
-                          value={fractionNotes}
-                          onChange={(e) => setFractionNotes(e.target.value)}
-                          placeholder="Nota opcional: ej. Adaptable a necesidad"
-                          className="w-full bg-slate-50 border border-slate-200 rounded-lg p-1.5 text-[11px] font-medium"
+                          className="w-full bg-white border border-slate-200 rounded-lg p-2 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
                         />
                       </div>
                     ) : (
-                      <p className="text-[11px] text-slate-400">Activalo para indicar fraccionamiento adaptable.</p>
+                      <p className="text-[11px] text-slate-400">Activalo si se vende en partes adaptables.</p>
                     )}
                   </div>
 
-                  {/* 3. Frente sobre Ruta / Bypass */}
-                  <div className="bg-white p-3.5 rounded-xl border border-purple-100 shadow-2xs space-y-2">
+                  {/* 3. Frente sobre Ruta */}
+                  <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-2">
                     <label className="flex items-center space-x-2 cursor-pointer">
                       <input
                         type="checkbox"
@@ -894,17 +1132,17 @@ export default function EditarPropiedadPage() {
                         }}
                         className="w-4 h-4 text-[#5E1754] rounded"
                       />
-                      <span className="text-xs font-bold text-slate-800">🛣️ Frente sobre Ruta / Conectividad</span>
+                      <span className="text-xs font-bold text-slate-800">🛣️ Frente sobre Ruta / Acceso</span>
                     </label>
                     {hasRouteFrontage ? (
-                      <div className="space-y-1 pt-1">
-                        <label className="block text-[10px] font-extrabold uppercase text-slate-500">Detalle de Frente / Acceso</label>
+                      <div className="space-y-1.5 pt-1">
+                        <label className="block text-[10px] font-extrabold uppercase text-slate-500">Detalle de Frente</label>
                         <input
                           type="text"
                           value={routeFrontage}
                           onChange={(e) => setRouteFrontage(e.target.value)}
                           placeholder="ej. 50 Metros sobre Bypass / Ruta 3"
-                          className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
+                          className="w-full bg-white border border-slate-200 rounded-lg p-2 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
                         />
                       </div>
                     ) : (
@@ -913,7 +1151,7 @@ export default function EditarPropiedadPage() {
                   </div>
 
                   {/* 4. Precio por Unidad */}
-                  <div className="bg-white p-3.5 rounded-xl border border-purple-100 shadow-2xs space-y-2">
+                  <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-2">
                     <label className="flex items-center space-x-2 cursor-pointer">
                       <input
                         type="checkbox"
@@ -925,47 +1163,50 @@ export default function EditarPropiedadPage() {
                         }}
                         className="w-4 h-4 text-[#5E1754] rounded"
                       />
-                      <span className="text-xs font-bold text-slate-800">🏷️ Precio por Unidad (USD)</span>
+                      <span className="text-xs font-bold text-slate-800">🏷️ Precio por Unidad</span>
                     </label>
                     {hasPricePerUnit ? (
-                      <div className="space-y-2 pt-1">
+                      <div className="space-y-1.5 pt-1">
                         <div className="grid grid-cols-2 gap-2">
                           <div>
-                            <label className="block text-[10px] font-extrabold uppercase text-slate-500">Monto (USD)</label>
+                            <label className="block text-[10px] font-extrabold uppercase text-slate-500">Monto USD</label>
                             <input
                               type="number"
-                              step="any"
-                              value={pricePerM2 !== undefined ? pricePerM2 : ''}
+                              step="0.01"
+                              min={0}
+                              value={pricePerM2 || ''}
                               onChange={(e) => setPricePerM2(e.target.value ? Number(e.target.value) : undefined)}
                               placeholder="ej. 15"
-                              className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
+                              className="w-full bg-white border border-slate-200 rounded-lg p-2 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
                             />
                           </div>
                           <div>
-                            <label className="block text-[10px] font-extrabold uppercase text-slate-500">Unidad de Medida</label>
+                            <label className="block text-[10px] font-extrabold uppercase text-slate-500">Unidad</label>
                             <select
                               value={priceUnitType}
                               onChange={(e) => setPriceUnitType(e.target.value)}
-                              className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
+                              className="w-full bg-white border border-slate-200 rounded-lg p-2 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754] cursor-pointer"
                             >
-                              <option value="m²">m² (Metro cuadrado)</option>
-                              <option value="Ha">Ha (Hectárea)</option>
-                              <option value="Fracción">Fracción</option>
-                              <option value="Solar">Solar</option>
+                              <option value="m²">/ m²</option>
+                              <option value="Ha">/ Ha</option>
+                              <option value="Fracción">/ Fracción</option>
+                              <option value="Solar">/ Solar</option>
                             </select>
                           </div>
                         </div>
-                        <p className="text-[10px] text-slate-500 font-medium">
-                          Se mostrará: <strong className="text-[#5E1754]">USD {pricePerM2 ? pricePerM2.toLocaleString('es-UY') : 0} / {priceUnitType}</strong>
-                        </p>
+                        {pricePerM2 ? (
+                          <p className="text-[10px] text-purple-700 font-bold">
+                            Vista: USD {pricePerM2} / {priceUnitType}
+                          </p>
+                        ) : null}
                       </div>
                     ) : (
-                      <p className="text-[11px] text-slate-400">Activalo para especificar precio en USD por m², Ha o fracción.</p>
+                      <p className="text-[11px] text-slate-400">Activalo para mostrar ej. USD 15 / m² o USD 15.000 / Ha.</p>
                     )}
                   </div>
 
-                  {/* 5. Topografía & Suelo */}
-                  <div className="bg-white p-3.5 rounded-xl border border-purple-100 shadow-2xs space-y-2">
+                  {/* 5. Topografía */}
+                  <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-2">
                     <label className="flex items-center space-x-2 cursor-pointer">
                       <input
                         type="checkbox"
@@ -980,23 +1221,23 @@ export default function EditarPropiedadPage() {
                       <span className="text-xs font-bold text-slate-800">🚜 Topografía & Suelo</span>
                     </label>
                     {hasSoilTopography ? (
-                      <div className="space-y-1 pt-1">
+                      <div className="space-y-1.5 pt-1">
                         <label className="block text-[10px] font-extrabold uppercase text-slate-500">Estado del Suelo</label>
                         <input
                           type="text"
                           value={soilTopography}
                           onChange={(e) => setSoilTopography(e.target.value)}
                           placeholder="ej. 100% Nivelado - Listo para edificar"
-                          className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
+                          className="w-full bg-white border border-slate-200 rounded-lg p-2 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
                         />
                       </div>
                     ) : (
-                      <p className="text-[11px] text-slate-400">Activalo para detallar suelo parejo, relleno o nivelación.</p>
+                      <p className="text-[11px] text-slate-400">Activalo para detallar suelo parejo o relleno.</p>
                     )}
                   </div>
 
-                  {/* 6. Seguridad & Predio Cerrado */}
-                  <div className="bg-white p-3.5 rounded-xl border border-purple-100 shadow-2xs space-y-2 flex flex-col justify-center">
+                  {/* 6. Predio Cerrado */}
+                  <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-2 flex flex-col justify-center">
                     <label className="flex items-center space-x-2 cursor-pointer">
                       <input
                         type="checkbox"
@@ -1004,350 +1245,157 @@ export default function EditarPropiedadPage() {
                         onChange={(e) => setGatedPerimeter(e.target.checked)}
                         className="w-4 h-4 text-[#5E1754] rounded"
                       />
-                      <span className="text-xs font-bold text-slate-800">🔒 Predio Cerrado & Acceso Controlado</span>
+                      <span className="text-xs font-bold text-slate-800">🔒 Predio Cerrado</span>
                     </label>
                     <p className="text-[11px] text-slate-500 mt-1">
                       Perímetro delimitado y seguridad de accesos para transporte pesado.
                     </p>
                   </div>
+
                 </div>
               </div>
 
-              {/* Grupo 2: Servicios Básicos & Conectividad */}
-              <div className="bg-sky-50/50 border border-sky-100 rounded-2xl p-4 space-y-3">
-                <h4 className="text-xs font-black uppercase text-sky-900">
-                  💧 Servicios Básicos & Conectividad
-                </h4>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-sky-200/60 shadow-2xs hover:border-sky-300">
-                    <input
-                      type="checkbox"
-                      checked={oseWater}
-                      onChange={(e) => setOseWater(e.target.checked)}
-                      className="w-4 h-4 text-sky-600 rounded"
-                    />
-                    <span>🚰 Agua de OSE</span>
-                  </label>
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-sky-200/60 shadow-2xs hover:border-sky-300">
-                    <input
-                      type="checkbox"
-                      checked={uteElectric}
-                      onChange={(e) => setUteElectric(e.target.checked)}
-                      className="w-4 h-4 text-amber-500 rounded"
-                    />
-                    <span>⚡ Luz UTE</span>
-                  </label>
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-sky-200/60 shadow-2xs hover:border-sky-300">
-                    <input
-                      type="checkbox"
-                      checked={sanitation}
-                      onChange={(e) => setSanitation(e.target.checked)}
-                      className="w-4 h-4 text-sky-600 rounded"
-                    />
-                    <span>🚽 Saneamiento</span>
-                  </label>
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-sky-200/60 shadow-2xs hover:border-sky-300">
-                    <input
-                      type="checkbox"
-                      checked={fiberOptic}
-                      onChange={(e) => setFiberOptic(e.target.checked)}
-                      className="w-4 h-4 text-indigo-600 rounded"
-                    />
-                    <span>📶 Fibra Óptica</span>
-                  </label>
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-sky-200/60 shadow-2xs hover:border-sky-300">
-                    <input
-                      type="checkbox"
-                      checked={waterWellOrPond}
-                      onChange={(e) => setWaterWellOrPond(e.target.checked)}
-                      className="w-4 h-4 text-blue-600 rounded"
-                    />
-                    <span>💧 Pozo / Tajamar</span>
-                  </label>
-                </div>
-              </div>
+              {/* Botones de Navegación */}
+              <div className="pt-4 flex justify-between">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('general')}
+                  className="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs sm:text-sm font-extrabold px-5 py-3 rounded-xl flex items-center space-x-2 transition-all cursor-pointer"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                  <span>Paso Anterior</span>
+                </button>
 
-              {/* Grupo 3: Badges Destacados (Etiquetas Clave) */}
-              <div className="bg-amber-50/70 border-2 border-amber-300/80 rounded-2xl p-4 space-y-3">
-                <div className="flex flex-wrap items-center justify-between gap-1">
-                  <h4 className="text-xs font-black uppercase text-amber-950 flex items-center gap-1.5">
-                    🏷️ Badges Destacados (Etiquetas Visibles en Portada y Ficha)
-                  </h4>
-                  <span className="text-[11px] text-amber-800 font-bold">Resaltan en la tarjeta de la propiedad</span>
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/80 shadow-2xs hover:border-amber-400">
-                    <input
-                      type="checkbox"
-                      checked={fondo}
-                      onChange={(e) => setFondo(e.target.checked)}
-                      className="w-4 h-4 text-[#5E1754] rounded"
-                    />
-                    <span>🌳 Fondo</span>
-                  </label>
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/80 shadow-2xs hover:border-amber-400">
-                    <input
-                      type="checkbox"
-                      checked={patio}
-                      onChange={(e) => setPatio(e.target.checked)}
-                      className="w-4 h-4 text-[#5E1754] rounded"
-                    />
-                    <span>🏡 Patio</span>
-                  </label>
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/80 shadow-2xs hover:border-amber-400">
-                    <input
-                      type="checkbox"
-                      checked={barbacoa}
-                      onChange={(e) => setBarbacoa(e.target.checked)}
-                      className="w-4 h-4 text-[#E85D04] rounded"
-                    />
-                    <span>🥩 Barbacoa</span>
-                  </label>
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/80 shadow-2xs hover:border-amber-400">
-                    <input
-                      type="checkbox"
-                      checked={parrillero}
-                      onChange={(e) => setParrillero(e.target.checked)}
-                      className="w-4 h-4 text-[#E85D04] rounded"
-                    />
-                    <span>🔥 Parrillero</span>
-                  </label>
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/80 shadow-2xs hover:border-amber-400">
-                    <input
-                      type="checkbox"
-                      checked={cochera}
-                      onChange={(e) => setCochera(e.target.checked)}
-                      className="w-4 h-4 text-[#5E1754] rounded"
-                    />
-                    <span>🚗 Cochera</span>
-                  </label>
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-amber-200/80 shadow-2xs hover:border-amber-400">
-                    <input
-                      type="checkbox"
-                      checked={cocheraTechada}
-                      onChange={(e) => setCocheraTechada(e.target.checked)}
-                      className="w-4 h-4 text-[#5E1754] rounded"
-                    />
-                    <span>🛡️ Cochera Techada</span>
-                  </label>
-                </div>
-              </div>
-
-              {/* Grupo 4: Otras Comodidades & Equipamiento */}
-              <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 space-y-3">
-                <h4 className="text-xs font-black uppercase text-slate-700">
-                  🏡 Otras Comodidades & Equipamiento
-                </h4>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-slate-200 shadow-2xs hover:border-slate-400">
-                    <input
-                      type="checkbox"
-                      checked={carAccess}
-                      onChange={(e) => setCarAccess(e.target.checked)}
-                      className="w-4 h-4 text-slate-700 rounded"
-                    />
-                    <span>Entrada de Auto</span>
-                  </label>
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-slate-200 shadow-2xs hover:border-slate-400">
-                    <input
-                      type="checkbox"
-                      checked={woodStoveOrAC}
-                      onChange={(e) => setWoodStoveOrAC(e.target.checked)}
-                      className="w-4 h-4 text-slate-700 rounded"
-                    />
-                    <span>Estufa a Leña / AC</span>
-                  </label>
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-slate-200 shadow-2xs hover:border-slate-400">
-                    <input
-                      type="checkbox"
-                      checked={pool}
-                      onChange={(e) => setPool(e.target.checked)}
-                      className="w-4 h-4 text-slate-700 rounded"
-                    />
-                    <span>Piscina</span>
-                  </label>
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-slate-200 shadow-2xs hover:border-slate-400">
-                    <input
-                      type="checkbox"
-                      checked={petFriendly}
-                      onChange={(e) => setPetFriendly(e.target.checked)}
-                      className="w-4 h-4 text-slate-700 rounded"
-                    />
-                    <span>Acepta Mascotas</span>
-                  </label>
-                </div>
-              </div>
-
-              {/* Grupo 4: Certeza Legal, Regímenes & Seguridad */}
-              <div className="bg-purple-50/50 border border-purple-100 rounded-2xl p-4 space-y-3">
-                <h4 className="text-xs font-black uppercase text-[#5E1754]">
-                  📜 Certeza Legal, Regímenes & Seguridad
-                </h4>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-3">
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-purple-200/60 shadow-2xs hover:border-purple-300">
-                    <input
-                      type="checkbox"
-                      checked={titlesUpToDate}
-                      onChange={(e) => setTitlesUpToDate(e.target.checked)}
-                      className="w-4 h-4 text-[#5E1754] rounded"
-                    />
-                    <span>📜 Títulos al Día</span>
-                  </label>
-
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-purple-200/60 shadow-2xs hover:border-purple-300">
-                    <input
-                      type="checkbox"
-                      checked={bankCreditEligible}
-                      onChange={(e) => setBankCreditEligible(e.target.checked)}
-                      className="w-4 h-4 text-[#5E1754] rounded"
-                    />
-                    <span>🏛️ Apta Crédito Bancario</span>
-                  </label>
-
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-purple-200/60 shadow-2xs hover:border-purple-300">
-                    <input
-                      type="checkbox"
-                      checked={acceptsTradeIn}
-                      onChange={(e) => setAcceptsTradeIn(e.target.checked)}
-                      className="w-4 h-4 text-[#5E1754] rounded"
-                    />
-                    <span>🔄 Acepta Permuta</span>
-                  </label>
-
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-purple-200/60 shadow-2xs hover:border-purple-300">
-                    <input
-                      type="checkbox"
-                      checked={phRegime}
-                      onChange={(e) => setPhRegime(e.target.checked)}
-                      className="w-4 h-4 text-[#5E1754] rounded"
-                    />
-                    <span>🏢 Régimen de PH</span>
-                  </label>
-
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-purple-200/60 shadow-2xs hover:border-purple-300">
-                    <input
-                      type="checkbox"
-                      checked={perimeterFence}
-                      onChange={(e) => setPerimeterFence(e.target.checked)}
-                      className="w-4 h-4 text-[#5E1754] rounded"
-                    />
-                    <span>🛡️ Cerco Perimetral / Rejas</span>
-                  </label>
-
-                  <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-purple-200/60 shadow-2xs hover:border-purple-300">
-                    <input
-                      type="checkbox"
-                      checked={securitySystem}
-                      onChange={(e) => setSecuritySystem(e.target.checked)}
-                      className="w-4 h-4 text-[#5E1754] rounded"
-                    />
-                    <span>📹 Alarma / Seguridad</span>
-                  </label>
-                </div>
-              </div>
-
-              {/* Grupo 5: Atributos Rurales & Comerciales */}
-              <div className="bg-[#5E1754]/5 border border-[#5E1754]/10 rounded-2xl p-4 space-y-3">
-                <h4 className="text-xs font-black uppercase text-[#5E1754]">
-                  🌾 Atributos Rurales & Comerciales
-                </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <div>
-                    <label className="block text-[11px] font-bold uppercase text-slate-600 mb-1">Índice CONEAT</label>
-                    <input
-                      type="number"
-                      value={coneatIndex || ''}
-                      onChange={(e) => setConeatIndex(e.target.value ? Number(e.target.value) : undefined)}
-                      className="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-bold focus:ring-2 focus:ring-[#5E1754]"
-                      placeholder="ej. 120"
-                    />
-                  </div>
-                  <div className="flex items-center sm:pt-5">
-                    <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-slate-200/60 shadow-2xs hover:border-purple-300 w-full">
-                      <input
-                        type="checkbox"
-                        checked={pavedStreet}
-                        onChange={(e) => setPavedStreet(e.target.checked)}
-                        className="w-4 h-4 text-[#5E1754] rounded"
-                      />
-                      <span>🛣️ Frente a Asfalto</span>
-                    </label>
-                  </div>
-                  <div className="flex items-center sm:pt-5">
-                    <label className="flex items-center space-x-2 text-xs font-bold text-slate-800 cursor-pointer bg-white p-2.5 rounded-xl border border-slate-200/60 shadow-2xs hover:border-purple-300 w-full">
-                      <input
-                        type="checkbox"
-                        checked={shedOrCorral}
-                        onChange={(e) => setShedOrCorral(e.target.checked)}
-                        className="w-4 h-4 text-[#5E1754] rounded"
-                      />
-                      <span>🛖 Galpón / Depósito</span>
-                    </label>
-                  </div>
-                </div>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('images')}
+                  className="bg-[#5E1754] hover:bg-[#43103c] text-white text-xs sm:text-sm font-extrabold px-6 py-3 rounded-xl flex items-center space-x-2 transition-all cursor-pointer"
+                >
+                  <span>Siguiente: Fotos & Galería</span>
+                  <ChevronRight className="w-4 h-4" />
+                </button>
               </div>
 
             </div>
+          )}
 
-            {/* Section 4: SEO Optimization & Live Previews */}
-            <SeoEditorSection
-              title={title}
-              category={category}
-              operation={operation}
-              priceAmount={priceAmount}
-              priceCurrency={priceCurrency}
-              priceMode={priceMode}
-              neighborhood={neighborhood}
-              bedrooms={bedrooms}
-              builtAreaM2={builtAreaM2}
-              plotAreaM2={plotAreaM2}
-              codeRef={codeRef}
-              features={{
-                carAccess, garage, barbecue, pool, garden, woodStoveOrAC, petFriendly,
-                oseWater, uteElectric, sanitation, fiberOptic, waterWellOrPond,
-                titlesUpToDate, bankCreditEligible, acceptsTradeIn, phRegime, perimeterFence, securitySystem,
-                pavedStreet, shedOrCorral, coneatIndex
-              }}
-              guarantees={selectedGuarantees}
-              images={images}
-              seoTitle={seoTitle}
-              setSeoTitle={setSeoTitle}
-              seoDescription={seoDescription}
-              setSeoDescription={setSeoDescription}
-              propertyId={propertyId}
-              lastGoogleNotifiedAt={lastGoogleNotifiedAt}
-              googleIndexingStatus={googleIndexingStatus}
-            />
-
-            {/* Section 5: Gallery & Main Cover Photo */}
-            <div className="space-y-4 pt-4 border-t border-slate-100">
-              <h3 className="text-sm font-extrabold text-[#5E1754] uppercase tracking-wider flex items-center space-x-2">
-                <Camera className="w-4 h-4 text-[#E85D04]" />
-                <span>5. Galería de Fotos & Portada Principal</span>
-              </h3>
+          {/* TAB 3: FOTOS & GALERÍA */}
+          {activeTab === 'images' && (
+            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 animate-in fade-in duration-200">
+              
+              <div className="border-b border-slate-100 pb-3 flex items-center justify-between">
+                <div>
+                  <h2 className="text-lg font-black text-slate-900 flex items-center gap-2">
+                    <ImageIcon className="w-5 h-5 text-[#5E1754]" />
+                    <span>Galería Multimedia & Foto de Portada</span>
+                  </h2>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    Subí imágenes en alta calidad. La primera imagen o la que tenga la estrella ⭐ será la portada principal del catálogo.
+                  </p>
+                </div>
+                <span className="text-xs font-black px-3 py-1 bg-purple-100 text-[#5E1754] rounded-full">
+                  {images.length} fotos cargadas
+                </span>
+              </div>
 
               <ImageUploader
                 images={images}
                 onChange={setImages}
                 propertyTitle={title || 'Propiedad'}
               />
+
+              {/* Botones de Navegación */}
+              <div className="pt-4 flex justify-between">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('features')}
+                  className="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs sm:text-sm font-extrabold px-5 py-3 rounded-xl flex items-center space-x-2 transition-all cursor-pointer"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                  <span>Paso Anterior</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('seo')}
+                  className="bg-[#5E1754] hover:bg-[#43103c] text-white text-xs sm:text-sm font-extrabold px-6 py-3 rounded-xl flex items-center space-x-2 transition-all cursor-pointer"
+                >
+                  <span>Siguiente: Posicionamiento SEO</span>
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+
             </div>
+          )}
 
-            {/* Submit Button */}
-            <div className="pt-6 border-t border-slate-100">
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-[#E85D04] hover:bg-[#FF8500] active:scale-98 text-white font-black py-4 px-6 rounded-2xl shadow-lg hover:shadow-orange-500/30 transition-all flex items-center justify-center space-x-2 text-sm sm:text-base"
-              >
-                <Save className="w-5 h-5" />
-                <span>{isSubmitting ? 'Guardando Cambios...' : 'Guardar Cambios en la Propiedad'}</span>
-              </button>
+          {/* TAB 4: SEO & GOOGLE */}
+          {activeTab === 'seo' && (
+            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 animate-in fade-in duration-200">
+              
+              <div className="border-b border-slate-100 pb-3">
+                <h2 className="text-lg font-black text-slate-900 flex items-center gap-2">
+                  <SearchIcon className="w-5 h-5 text-[#5E1754]" />
+                  <span>Posicionamiento en Google & Metadatos Automáticos</span>
+                </h2>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  El sistema genera automáticamente la estructura Schema.org y OpenGraph. Podés personalizar el título y la descripción para Google si lo deseas.
+                </p>
+              </div>
+
+              <SeoEditorSection
+                title={title}
+                category={category}
+                operation={operation}
+                priceAmount={priceAmount}
+                priceCurrency={priceCurrency}
+                priceMode={priceMode}
+                neighborhood={neighborhood}
+                bedrooms={bedrooms}
+                builtAreaM2={builtAreaM2}
+                plotAreaM2={plotAreaM2}
+                codeRef={codeRef}
+                features={{
+                  carAccess, garage, barbecue, pool, garden, woodStoveOrAC, petFriendly,
+                  oseWater, uteElectric, sanitation, fiberOptic, waterWellOrPond,
+                  titlesUpToDate, bankCreditEligible, acceptsTradeIn, phRegime, perimeterFence, securitySystem,
+                  pavedStreet, shedOrCorral, coneatIndex
+                }}
+                guarantees={selectedGuarantees}
+                images={images}
+                seoTitle={seoTitle}
+                setSeoTitle={setSeoTitle}
+                seoDescription={seoDescription}
+                setSeoDescription={setSeoDescription}
+                propertyId={propertyId}
+                googleIndexingStatus={googleIndexingStatus}
+                lastGoogleNotifiedAt={lastGoogleNotifiedAt}
+              />
+
+              {/* Botones de Navegación & Guardar */}
+              <div className="pt-4 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('images')}
+                  className="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs sm:text-sm font-extrabold px-5 py-3 rounded-xl flex items-center space-x-2 transition-all cursor-pointer"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                  <span>Paso Anterior</span>
+                </button>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="bg-[#5E1754] hover:bg-[#43103c] active:scale-95 text-white font-black py-3.5 px-8 rounded-xl shadow-lg hover:shadow-purple-900/30 transition-all flex items-center space-x-2 text-xs sm:text-sm cursor-pointer"
+                >
+                  <Save className="w-4 h-4" />
+                  <span>{isSubmitting ? 'Guardando Cambios...' : 'Guardar Todos los Cambios'}</span>
+                </button>
+              </div>
+
             </div>
+          )}
 
-          </form>
-
-        </div>
+        </form>
 
       </main>
 
