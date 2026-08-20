@@ -77,6 +77,7 @@ export default function NuevaPropiedadPage() {
   const [priceCurrency, setPriceCurrency] = useState<'USD' | 'UYU'>('USD');
   const [priceMode, setPriceMode] = useState<'visible' | 'consultar' | 'reservado' | 'desde'>('visible');
   const [neighborhood, setNeighborhood] = useState('Centro');
+  const [isCustomNeighborhood, setIsCustomNeighborhood] = useState<boolean>(false);
   const [address, setAddress] = useState('');
   
   // Location Map Pin & Privacy State
@@ -534,9 +535,15 @@ export default function NuevaPropiedadPage() {
                     <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Barrio / Zona</label>
                     <div className="space-y-2">
                       <select
-                        value={SAN_JOSE_NEIGHBORHOODS.includes(neighborhood) ? neighborhood : 'otro'}
+                        value={isCustomNeighborhood ? 'otro' : (SAN_JOSE_NEIGHBORHOODS.includes(neighborhood) ? neighborhood : 'otro')}
                         onChange={(e) => {
-                          if (e.target.value !== 'otro') {
+                          if (e.target.value === 'otro') {
+                            setIsCustomNeighborhood(true);
+                            if (SAN_JOSE_NEIGHBORHOODS.includes(neighborhood)) {
+                              setNeighborhood('');
+                            }
+                          } else {
+                            setIsCustomNeighborhood(false);
                             setNeighborhood(e.target.value);
                           }
                         }}
@@ -548,14 +555,20 @@ export default function NuevaPropiedadPage() {
                         <option value="otro">Otro Barrio / Personalizado...</option>
                       </select>
 
-                      {(!SAN_JOSE_NEIGHBORHOODS.includes(neighborhood) || neighborhood === '') && (
-                        <input
-                          type="text"
-                          placeholder="Escribí el barrio o zona..."
-                          value={neighborhood}
-                          onChange={(e) => setNeighborhood(e.target.value)}
-                          className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
-                        />
+                      {isCustomNeighborhood && (
+                        <div className="animate-in fade-in duration-150 space-y-1">
+                          <input
+                            type="text"
+                            autoFocus
+                            placeholder="Escribí el nombre del barrio o zona..."
+                            value={neighborhood}
+                            onChange={(e) => setNeighborhood(e.target.value)}
+                            className="w-full bg-white border border-[#5E1754]/40 rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754] shadow-xs"
+                          />
+                          <p className="text-[10px] text-slate-400 pl-1">
+                            Podés escribir cualquier barrio o zona de San José o alrededores.
+                          </p>
+                        </div>
                       )}
                     </div>
                   </div>
