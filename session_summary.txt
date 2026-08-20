@@ -413,7 +413,18 @@
      - 🚜 **Topografía & Suelo:** Permite ingresar el detalle del estado de nivelación.
      - 🔒 **Predio Cerrado & Acceso Controlado:** Checkbox booleano.
   2. **Plantas / Pisos Opcional (No por Defecto):** Se eliminó el valor por defecto `1 Planta`. Ahora inicia en `0` (opcional). En la ficha pública y catálogo sólo se renderiza la etiqueta de plantas si el inmueble tiene más de 1 piso (`floors > 1`), evitando mostrar `1 Planta` en terrenos o construcciones de un solo nivel.
-  3. **Verificación:** `npx tsc --noEmit` completado con 0 errores (código 0).
+- **Editor de Texto Enriquecido Visual Estilo Word (WYSIWYG):**
+  1. **Editor Visual sin Markdown:** Se reemplazó el editor basado en códigos de markdown y la plantilla artificial por un editor visual tipo Word / Google Docs.
+  2. **Barra de Formato Estilo Ribbon:**
+     - **Deshacer / Rehacer:** `Undo` / `Redo` (Ctrl+Z, Ctrl+Y).
+     - **Jerarquía:** Párrafo Normal, Título Principal (H2), Subtítulo (H3), Encabezado Menor (H4).
+     - **Estilos de Texto:** Negrita (**B** / Ctrl+B), Cursiva (*I* / Ctrl+I), Subrayado (<u>U</u> / Ctrl+U), Tachado (~~S~~).
+     - **Paleta de Colores & Resaltador:** Color de fuente personalizado (Púrpura institucional, Naranja, Azul, etc.) y resaltador de fondo (Amarillo, Violeta, Verde, Celeste).
+     - **Listas & Alineación:** Viñetas circulares, listas numeradas, alineación a la izquierda, centrado y alineación a la derecha.
+     - **Insertar:** Citas destacadas, líneas divisorias y enlaces web.
+     - **Borrador de formato:** Elimina formato de la selección con un clic.
+  3. **Visualización en Vivo en la Ficha Pública:** [`PropertyDescriptionRenderer.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/PropertyDescriptionRenderer.tsx) renderiza el HTML enriquecido preservando colores, formatos, títulos y listas, con compatibilidad hacia atrás para descripciones existentes.
+  4. **Verificación:** `npx tsc --noEmit` completado con 0 errores (código 0).
 
 
 

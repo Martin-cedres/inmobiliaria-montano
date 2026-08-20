@@ -19,7 +19,32 @@ export const PropertyDescriptionRenderer: React.FC<PropertyDescriptionRendererPr
     return null;
   }
 
-  // Helper para renderizar negritas e itálicas dentro de una línea
+  // Detectar si la descripción fue creada con el editor visual (HTML)
+  const isHtml = /<(p|div|h1|h2|h3|h4|ul|ol|li|strong|b|em|i|blockquote|hr|span|a)[^>]*>/i.test(description);
+
+  if (isHtml) {
+    return (
+      <div 
+        className={`text-slate-800 text-base sm:text-lg leading-relaxed prose max-w-none 
+          [&_h2]:text-xl [&_h2]:sm:text-2xl [&_h2]:font-black [&_h2]:text-[#5E1754] [&_h2]:mt-6 [&_h2]:mb-3
+          [&_h3]:text-lg [&_h3]:sm:text-xl [&_h3]:font-black [&_h3]:text-slate-900 [&_h3]:mt-5 [&_h3]:mb-2
+          [&_h4]:text-base [&_h4]:sm:text-lg [&_h4]:font-bold [&_h4]:text-slate-800 [&_h4]:mt-4 [&_h4]:mb-1
+          [&_p]:my-3 [&_p]:leading-relaxed
+          [&_strong]:font-black [&_strong]:text-slate-900
+          [&_em]:italic [&_em]:text-slate-800
+          [&_u]:underline [&_u]:decoration-[#5E1754]/60
+          [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:my-4 [&_ul]:space-y-2
+          [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:my-4 [&_ol]:space-y-2
+          [&_li]:text-slate-800 [&_li]:leading-relaxed
+          [&_blockquote]:border-l-4 [&_blockquote]:border-[#5E1754] [&_blockquote]:bg-purple-50/70 [&_blockquote]:p-4 [&_blockquote]:rounded-r-2xl [&_blockquote]:italic [&_blockquote]:my-4
+          [&_hr]:my-6 [&_hr]:border-slate-200
+          [&_a]:text-[#5E1754] [&_a]:underline [&_a]:font-bold ${className}`}
+        dangerouslySetInnerHTML={{ __html: description }}
+      />
+    );
+  }
+
+  // Helper para renderizar negritas e itálicas dentro de una línea (Fallback texto heredado)
   const renderInlineFormatted = (text: string): React.ReactNode[] => {
     // Regex para capturar **bold** e *italic*
     const parts: React.ReactNode[] = [];
