@@ -400,8 +400,10 @@
        - `🚜 100% Nivelado`
        - `🔒 Predio Cerrado / Acceso Controlado`
        - `🛣️ Frente a Asfalto / Ruta`
-  3. **Verificación:**
+  3. **Verificación & Despliegue:**
      - `npx tsc --noEmit` completado con 0 errores (código 0).
+     - Build de producción (`npm run build`) validado con 100% de éxito en 34 rutas.
+     - Commiteado y desplegado a producción en GitHub / Vercel vía `git push origin main` (Commit `e8cfcd8`).
 
 
 
