@@ -404,6 +404,16 @@
      - `npx tsc --noEmit` completado con 0 errores (código 0).
      - Build de producción (`npm run build`) validado con 100% de éxito en 34 rutas.
      - Commiteado y desplegado a producción en GitHub / Vercel vía `git push origin main` (Commit `e8cfcd8`).
+- **Tarjetas Opcionales, Precio por Unidad Personalizable y Plantas No Por Defecto:**
+  1. **Tarjetas 100% Opcionales con Tick en Panel Admin:** En la sección "Perfil Industrial, Logístico & Fracciones", todas las 6 tarjetas cuentan con un checkbox/tick para activarse o desactivarse a demanda:
+     - 📐 **Superficie en Hectáreas (Ha):** Permite ingresar directamente el valor en Ha (ej. `12`) sincronizando automáticamente los m² equivalentes (`120.000 m²`).
+     - ✂️ **Fraccionamiento:** Permite ingresar m² mínimos y notas.
+     - 🛣️ **Frente sobre Ruta / Conectividad:** Permite ingresar la descripción exacta del frente/acceso.
+     - 🏷️ **Precio por Unidad:** Permite ingresar el monto numérico y seleccionar la unidad (`m²`, `Ha`, `Fracción`, `Solar`), mostrando por ejemplo `USD 15 / m²` o `USD 15.000 / Ha`.
+     - 🚜 **Topografía & Suelo:** Permite ingresar el detalle del estado de nivelación.
+     - 🔒 **Predio Cerrado & Acceso Controlado:** Checkbox booleano.
+  2. **Plantas / Pisos Opcional (No por Defecto):** Se eliminó el valor por defecto `1 Planta`. Ahora inicia en `0` (opcional). En la ficha pública y catálogo sólo se renderiza la etiqueta de plantas si el inmueble tiene más de 1 piso (`floors > 1`), evitando mostrar `1 Planta` en terrenos o construcciones de un solo nivel.
+  3. **Verificación:** `npx tsc --noEmit` completado con 0 errores (código 0).
 
 
 

@@ -106,19 +106,6 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
   const isUnavailable = property.status === 'vendido' || property.status === 'alquilado';
   const isReserved = property.status === 'reservado';
 
-  const cleanRef = (property.codeRef || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-  const cleanSlug = (property.slug || '').toLowerCase();
-  const cleanTitle = (property.title || '').toLowerCase();
-
-  const isBypassIndustrial = 
-    cleanRef === 'indbypass01' || 
-    cleanRef.includes('indbypass') || 
-    cleanSlug.includes('indbypass') || 
-    cleanSlug.includes('bypass-ruta-3-y-11') ||
-    cleanTitle.includes('bypass ruta 3') ||
-    cleanTitle.includes('12 hectareas') ||
-    cleanTitle.includes('12 hectáreas');
-
   const mainImage = property.images && property.images.length > 0 ? (
     typeof property.images[0] === 'string' ? property.images[0] : (property.images.find((img) => img.isMain) || property.images[0])?.webpUrl || (property.images.find((img) => img.isMain) || property.images[0])?.blobUrl
   ) : null;
@@ -169,7 +156,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
             <div className="flex items-center space-x-1.5 text-white text-xs font-bold drop-shadow">
               <MapPin className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
               <span className="truncate">
-                {property.location.neighborhood}, {property.location.city}
+                {property.location.neighborhood || property.location.address}
               </span>
             </div>
           </div>
@@ -235,75 +222,76 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
               {property.title}
             </h3>
 
-            {/* Unified Features & Badges Grid (Un Solo Recuadro Gris) */}
+            {/* Unified Features & Badges Grid (Un Solo Recuadro Gris con Iconos Homogéneos) */}
             <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 my-3 py-2 px-2.5 bg-slate-50 rounded-xl text-[11px] sm:text-xs font-semibold text-slate-700 border border-slate-100">
-              {isBypassIndustrial || property.features?.fractionable || property.features?.routeFrontage || property.features?.pricePerM2 || property.features?.soilTopography || property.features?.gatedPerimeter ? (
-                <>
-                  {(property.features?.isHectares || (property.features?.plotAreaM2 && property.features.plotAreaM2 >= 10000) || isBypassIndustrial) && (
-                    <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-purple-200 shadow-2xs whitespace-nowrap" title="Superficie Total">
-                      <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                        <Maximize2 className="w-3.5 h-3.5" />
-                      </span>
-                      <span className="font-black text-[#5e1754]">
-                        {property.features?.isHectares && property.features?.plotAreaM2 && property.features.plotAreaM2 < 1000
-                          ? property.features.plotAreaM2
-                          : ((property.features?.plotAreaM2 || 120000) / 10000).toLocaleString('es-UY')}{' '}
-                        Ha Predio
-                      </span>
-                    </div>
-                  )}
-
-                  {(property.features?.fractionable || property.features?.minFractionM2 || isBypassIndustrial) && (
-                    <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Fraccionamiento">
-                      <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                        <LayoutGrid className="w-3.5 h-3.5" />
-                      </span>
-                      <span>Fracc. desde {(property.features?.minFractionM2 || 12000).toLocaleString('es-UY')} m²</span>
-                    </div>
-                  )}
-
-                  {(property.features?.routeFrontage || property.features?.frontMeters || isBypassIndustrial) && (
-                    <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-orange-200 shadow-2xs whitespace-nowrap" title="Frente sobre Ruta / Conectividad">
-                      <span className="p-0.5 rounded-md bg-[#E85D04]/10 text-[#E85D04]">
-                        <Milestone className="w-3.5 h-3.5" />
-                      </span>
-                      <span className="font-extrabold text-[#E85D04]">
-                        {property.features?.routeFrontage || `${property.features?.frontMeters || 50}m Frente Ruta`}
-                      </span>
-                    </div>
-                  )}
-
-                  {(property.features?.pricePerM2 || isBypassIndustrial) && (
-                    <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-emerald-200 shadow-2xs whitespace-nowrap" title="Precio por m²">
-                      <span className="p-0.5 rounded-md bg-emerald-500/10 text-emerald-700">
-                        <DollarSign className="w-3.5 h-3.5" />
-                      </span>
-                      <span className="font-black text-emerald-700">
-                        USD {property.features?.pricePerM2 || 15} / m²
-                      </span>
-                    </div>
-                  )}
-
-                  {(property.features?.soilTopography || isBypassIndustrial) && (
-                    <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Topografía">
-                      <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                        <Layers className="w-3.5 h-3.5" />
-                      </span>
-                      <span>{property.features?.soilTopography || '100% Nivelado'}</span>
-                    </div>
-                  )}
-
-                  {(property.features?.gatedPerimeter || isBypassIndustrial) && (
-                    <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Seguridad">
-                      <span className="p-0.5 rounded-md bg-blue-500/10 text-blue-700">
-                        <ShieldCheck className="w-3.5 h-3.5" />
-                      </span>
-                      <span>Predio Cerrado</span>
-                    </div>
-                  )}
-                </>
+              {/* Badges de Gran Predio / Industrial / Rural (Opcionales) */}
+              {(property.features?.hectaresAmount || property.features?.isHectares || (property.features?.plotAreaM2 && property.features.plotAreaM2 >= 10000)) ? (
+                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap text-slate-700" title="Superficie Total">
+                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
+                    <Maximize2 className="w-3.5 h-3.5" />
+                  </span>
+                  <span>
+                    {property.features.hectaresAmount
+                      ? `${property.features.hectaresAmount.toLocaleString('es-UY')} Ha`
+                      : property.features.isHectares && property.features.plotAreaM2 && property.features.plotAreaM2 < 1000
+                      ? `${property.features.plotAreaM2} Ha`
+                      : `${((property.features?.plotAreaM2 || 0) / 10000).toLocaleString('es-UY')} Ha`}
+                  </span>
+                </div>
               ) : null}
 
+              {property.features?.fractionable ? (
+                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap text-slate-700" title="Fraccionamiento">
+                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
+                    <LayoutGrid className="w-3.5 h-3.5" />
+                  </span>
+                  <span>
+                    {property.features?.minFractionM2
+                      ? `Fracc. desde ${property.features.minFractionM2.toLocaleString('es-UY')} m²`
+                      : 'Fraccionable'}
+                  </span>
+                </div>
+              ) : null}
+
+              {property.features?.routeFrontage ? (
+                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap text-slate-700" title="Frente sobre Ruta / Conectividad">
+                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
+                    <Milestone className="w-3.5 h-3.5" />
+                  </span>
+                  <span>{property.features.routeFrontage}</span>
+                </div>
+              ) : null}
+
+              {!!property.features?.pricePerM2 && property.features.pricePerM2 > 0 ? (
+                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap text-slate-700" title="Precio por Unidad">
+                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
+                    <DollarSign className="w-3.5 h-3.5" />
+                  </span>
+                  <span>
+                    USD {property.features.pricePerM2.toLocaleString('es-UY')} / {property.features.priceUnitType || 'm²'}
+                  </span>
+                </div>
+              ) : null}
+
+              {property.features?.soilTopography ? (
+                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap text-slate-700" title="Topografía">
+                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
+                    <Layers className="w-3.5 h-3.5" />
+                  </span>
+                  <span>{property.features.soilTopography}</span>
+                </div>
+              ) : null}
+
+              {property.features?.gatedPerimeter ? (
+                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap text-slate-700" title="Seguridad">
+                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                  </span>
+                  <span>Predio Cerrado</span>
+                </div>
+              ) : null}
+
+              {/* Comodidades estándar */}
               {!!property.features.bedrooms && property.features.bedrooms > 0 && (
                 <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Dormitorios">
                   <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
@@ -336,19 +324,15 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
                   <span>{property.features.builtAreaM2} m² edif.</span>
                 </div>
               )}
-              {!isBypassIndustrial && !!property.features.plotAreaM2 && property.features.plotAreaM2 > 0 && (
+              {!property.features?.hectaresAmount && !property.features?.isHectares && !!property.features.plotAreaM2 && property.features.plotAreaM2 > 0 && (
                 <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Superficie del Terreno">
                   <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
                     <Maximize2 className="w-3.5 h-3.5" />
                   </span>
-                  <span>
-                    {property.features.isHectares || property.features.plotAreaM2 >= 10000
-                      ? `${(property.features.isHectares ? property.features.plotAreaM2 : property.features.plotAreaM2 / 10000).toLocaleString('es-UY')} Ha`
-                      : `${property.features.plotAreaM2.toLocaleString('es-UY')} m² terr.`}
-                  </span>
+                  <span>{property.features.plotAreaM2.toLocaleString('es-UY')} m² terr.</span>
                 </div>
               )}
-              {!isBypassIndustrial && !!property.features.frontMeters && property.features.frontMeters > 0 && (
+              {!!property.features.frontMeters && property.features.frontMeters > 0 && !property.features.routeFrontage && (
                 <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Metros de Frente">
                   <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
                     <Compass className="w-3.5 h-3.5" />
@@ -374,7 +358,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
               )}
               {property.features.barbacoa && (
                 <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Barbacoa">
-                  <span className="p-0.5 rounded-md bg-[#E85D04]/10 text-[#E85D04]">
+                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
                     <Flame className="w-3.5 h-3.5" />
                   </span>
                   <span>Barbacoa</span>
@@ -382,7 +366,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
               )}
               {(property.features.parrillero || property.features.barbecue) && (
                 <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Parrillero">
-                  <span className="p-0.5 rounded-md bg-[#E85D04]/10 text-[#E85D04]">
+                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
                     <Flame className="w-3.5 h-3.5" />
                   </span>
                   <span>Parrillero</span>

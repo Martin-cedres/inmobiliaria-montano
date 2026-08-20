@@ -106,7 +106,7 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                 <div className="flex flex-wrap items-center gap-3">
                   <div className="flex items-center space-x-1.5 text-xs font-bold text-[#E85D04]">
                     <MapPin className="w-4 h-4" />
-                    <span>{property.location.neighborhood}, {property.location.city}, {property.location.department}</span>
+                    <span>{property.location.neighborhood || property.location.address}</span>
                   </div>
                   <span className="font-mono text-xs font-extrabold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md border border-slate-200/80">
                     Ref. #{property.codeRef}
@@ -202,12 +202,12 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                     <span className="truncate">{property.features.bathrooms} Baño/s</span>
                   </div>
                 )}
-                {!!property.features.floors && property.features.floors > 0 && (
+                {!!property.features.floors && property.features.floors > 1 && (
                   <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
                     <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
                       <Building className="w-4 h-4 sm:w-5 sm:h-5" />
                     </span>
-                    <span className="truncate">{property.features.floors} Planta{property.features.floors > 1 ? 's' : ''}</span>
+                    <span className="truncate">{property.features.floors} Plantas</span>
                   </div>
                 )}
                 {!!property.features.builtAreaM2 && property.features.builtAreaM2 > 0 && (
@@ -218,21 +218,23 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                     <span className="truncate">{property.features.builtAreaM2} m² Edificados</span>
                   </div>
                 )}
-                {!!property.features.plotAreaM2 && property.features.plotAreaM2 > 0 && (
+                {((property.features.plotAreaM2 && property.features.plotAreaM2 > 0) || property.features.hectaresAmount) && (
                   <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
                     <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
                       <Maximize2 className="w-4 h-4 sm:w-5 sm:h-5" />
                     </span>
                     <span className="truncate">
-                      {property.features.isHectares || property.features.plotAreaM2 >= 10000
-                        ? `${(property.features.isHectares && property.features.plotAreaM2 < 1000 ? property.features.plotAreaM2 : property.features.plotAreaM2 / 10000).toLocaleString('es-UY')} Ha (${property.features.plotAreaM2.toLocaleString('es-UY')} m²)`
-                        : `${property.features.plotAreaM2.toLocaleString('es-UY')} m² Terreno`}
+                      {property.features.hectaresAmount
+                        ? `${property.features.hectaresAmount.toLocaleString('es-UY')} Ha (${(property.features.plotAreaM2 || property.features.hectaresAmount * 10000).toLocaleString('es-UY')} m²)`
+                        : property.features.isHectares || (property.features.plotAreaM2 && property.features.plotAreaM2 >= 10000)
+                        ? `${((property.features.plotAreaM2 || 0) / 10000).toLocaleString('es-UY')} Ha (${(property.features.plotAreaM2 || 0).toLocaleString('es-UY')} m²)`
+                        : `${(property.features.plotAreaM2 || 0).toLocaleString('es-UY')} m² Terreno`}
                     </span>
                   </div>
                 )}
                 {property.features.routeFrontage ? (
                   <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
-                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#E85D04]/10 text-[#E85D04] flex-shrink-0">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
                       <Milestone className="w-4 h-4 sm:w-5 sm:h-5" />
                     </span>
                     <span className="truncate">{property.features.routeFrontage}</span>
@@ -257,10 +259,10 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                 )}
                 {!!property.features.pricePerM2 && property.features.pricePerM2 > 0 && (
                   <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
-                    <span className="p-1.5 sm:p-2 rounded-xl bg-emerald-500/10 text-emerald-700 flex-shrink-0">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
                       <DollarSign className="w-4 h-4 sm:w-5 sm:h-5" />
                     </span>
-                    <span className="truncate">USD {property.features.pricePerM2} / m²</span>
+                    <span className="truncate">USD {property.features.pricePerM2.toLocaleString('es-UY')} / {property.features.priceUnitType || 'm²'}</span>
                   </div>
                 )}
                 {!!property.features.soilTopography && (
@@ -273,7 +275,7 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                 )}
                 {property.features.gatedPerimeter && (
                   <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
-                    <span className="p-1.5 sm:p-2 rounded-xl bg-blue-500/10 text-blue-700 flex-shrink-0">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
                       <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" />
                     </span>
                     <span className="truncate">Predio Cerrado / Acceso Controlado</span>
@@ -305,7 +307,7 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                 )}
                 {property.features.barbacoa && (
                   <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
-                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#E85D04]/10 text-[#E85D04] flex-shrink-0">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
                       <Flame className="w-4 h-4 sm:w-5 sm:h-5" />
                     </span>
                     <span className="truncate">Barbacoa</span>
@@ -313,7 +315,7 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                 )}
                 {(property.features.parrillero || property.features.barbecue) && (
                   <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
-                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#E85D04]/10 text-[#E85D04] flex-shrink-0">
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
                       <Flame className="w-4 h-4 sm:w-5 sm:h-5" />
                     </span>
                     <span className="truncate">Parrillero</span>

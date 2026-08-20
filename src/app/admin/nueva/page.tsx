@@ -42,7 +42,7 @@ export default function NuevaPropiedadPage() {
   // Features
   const [bedrooms, setBedrooms] = useState<number>(2);
   const [bathrooms, setBathrooms] = useState<number>(1);
-  const [floors, setFloors] = useState<number>(1);
+  const [floors, setFloors] = useState<number>(0);
   const [builtAreaM2, setBuiltAreaM2] = useState<number>(75);
   const [plotAreaM2, setPlotAreaM2] = useState<number>(150);
   const [frontMeters, setFrontMeters] = useState<number | undefined>(undefined);
@@ -86,11 +86,16 @@ export default function NuevaPropiedadPage() {
 
   // Perfil Industrial, Logístico & Fraccionamiento
   const [isHectares, setIsHectares] = useState<boolean>(false);
+  const [hectaresAmount, setHectaresAmount] = useState<number | undefined>(undefined);
   const [fractionable, setFractionable] = useState<boolean>(false);
   const [minFractionM2, setMinFractionM2] = useState<number | undefined>(undefined);
   const [fractionNotes, setFractionNotes] = useState<string>('');
+  const [hasRouteFrontage, setHasRouteFrontage] = useState<boolean>(false);
   const [routeFrontage, setRouteFrontage] = useState<string>('');
+  const [hasPricePerUnit, setHasPricePerUnit] = useState<boolean>(false);
   const [pricePerM2, setPricePerM2] = useState<number | undefined>(undefined);
+  const [priceUnitType, setPriceUnitType] = useState<string>('m²');
+  const [hasSoilTopography, setHasSoilTopography] = useState<boolean>(false);
   const [soilTopography, setSoilTopography] = useState<string>('');
   const [gatedPerimeter, setGatedPerimeter] = useState<boolean>(false);
 
@@ -104,25 +109,25 @@ export default function NuevaPropiedadPage() {
     setIsSubmitting(true);
     setSuccessMessage(null);
 
-    const autoSlug = generatePropertySlug(title, codeRef);
+    const autoSlug = generatePropertySlug(title || `${category} en ${operation} ${neighborhood}`, codeRef);
 
     try {
       const response = await fetch('/api/properties', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          codeRef,
-          title,
+          codeRef: codeRef.trim(),
+          title: title.trim(),
           slug: autoSlug,
-          description,
+          description: description.trim(),
           operation,
           category,
           status,
           priceAmount,
           priceCurrency,
           priceMode,
-          neighborhood,
-          address,
+          neighborhood: neighborhood.trim(),
+          address: address.trim() || undefined,
           hasLocation,
           lat,
           lng,
@@ -130,7 +135,7 @@ export default function NuevaPropiedadPage() {
           radiusMeters,
           bedrooms,
           bathrooms,
-          floors,
+          floors: floors || undefined,
           builtAreaM2,
           plotAreaM2,
           frontMeters,
@@ -162,12 +167,14 @@ export default function NuevaPropiedadPage() {
           shedOrCorral,
           coneatIndex,
           isHectares,
+          hectaresAmount: isHectares ? hectaresAmount : undefined,
           fractionable,
-          minFractionM2,
-          fractionNotes: fractionNotes.trim() || undefined,
-          routeFrontage: routeFrontage.trim() || undefined,
-          pricePerM2,
-          soilTopography: soilTopography.trim() || undefined,
+          minFractionM2: fractionable ? minFractionM2 : undefined,
+          fractionNotes: fractionable && fractionNotes.trim() ? fractionNotes.trim() : undefined,
+          routeFrontage: hasRouteFrontage && routeFrontage.trim() ? routeFrontage.trim() : undefined,
+          pricePerM2: hasPricePerUnit ? pricePerM2 : undefined,
+          priceUnitType: hasPricePerUnit ? priceUnitType : undefined,
+          soilTopography: hasSoilTopography && soilTopography.trim() ? soilTopography.trim() : undefined,
           gatedPerimeter,
           guarantees: selectedGuarantees,
           images,
@@ -593,15 +600,15 @@ export default function NuevaPropiedadPage() {
                     <label className="block text-[11px] font-bold uppercase text-slate-600 mb-1">Plantas / Pisos</label>
                     <input
                       type="number"
-                      min={1}
-                      value={floors}
-                      onChange={(e) => setFloors(Number(e.target.value))}
+                      min={0}
+                      value={floors || ''}
+                      onChange={(e) => setFloors(e.target.value ? Number(e.target.value) : 0)}
                       className="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-bold focus:ring-2 focus:ring-[#5E1754]"
-                      placeholder="ej. 1 u 2"
+                      placeholder="0 (Opcional)"
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-bold uppercase text-slate-600 mb-1">m² Edificados</label>
+                    <label className="block text-[11px] font-bold uppercase text-slate-600 mb-1">M² Edificados</label>
                     <input
                       type="number"
                       min={0}
@@ -611,7 +618,7 @@ export default function NuevaPropiedadPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-bold uppercase text-slate-600 mb-1">m² Terreno</label>
+                    <label className="block text-[11px] font-bold uppercase text-slate-600 mb-1">M² Terreno</label>
                     <input
                       type="number"
                       min={0}
@@ -627,26 +634,26 @@ export default function NuevaPropiedadPage() {
                       min={0}
                       value={frontMeters || ''}
                       onChange={(e) => setFrontMeters(e.target.value ? Number(e.target.value) : undefined)}
+                      placeholder="Opcional"
                       className="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs font-bold focus:ring-2 focus:ring-[#5E1754]"
-                      placeholder="ej. 15"
                     />
                   </div>
                 </div>
               </div>
 
-              {/* Grupo: Perfil Industrial, Logístico & Fraccionamiento (Dossier Ejecutivo) */}
-              <div className="bg-purple-50/60 border-2 border-purple-200 rounded-2xl p-5 space-y-4">
+              {/* Sub-bloque Destacado: Perfil Industrial, Logístico & Fraccionamiento */}
+              <div className="bg-purple-50/70 border border-purple-200/80 rounded-2xl p-4 sm:p-5 space-y-4">
                 <div className="flex flex-wrap items-center justify-between gap-2 border-b border-purple-200/60 pb-3">
                   <div>
                     <h4 className="text-xs sm:text-sm font-black uppercase text-[#5E1754] flex items-center gap-2">
                       <span>🏭 Perfil Industrial, Logístico & Grandes Fracciones (Tarjetas Clave)</span>
                     </h4>
                     <p className="text-[11px] text-slate-600 font-medium mt-0.5">
-                      Completá estos campos para generar el Dossier de 6 tarjetas en la ficha y los badges destacados en el catálogo.
+                      Marcá con un tick las tarjetas que desees activar para generar los badges en el catálogo y la ficha.
                     </p>
                   </div>
                   <span className="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-lg bg-[#5E1754] text-white">
-                    Tarjetas Destacadas
+                    Tarjetas Opcionales
                   </span>
                 </div>
 
@@ -657,14 +664,46 @@ export default function NuevaPropiedadPage() {
                       <input
                         type="checkbox"
                         checked={isHectares}
-                        onChange={(e) => setIsHectares(e.target.checked)}
+                        onChange={(e) => {
+                          const val = e.target.checked;
+                          setIsHectares(val);
+                          if (val && !hectaresAmount && plotAreaM2) {
+                            setHectaresAmount(plotAreaM2 / 10000);
+                          }
+                        }}
                         className="w-4 h-4 text-[#5E1754] rounded"
                       />
-                      <span className="text-xs font-bold text-slate-800">📐 Mostrar en Hectáreas (Ha)</span>
+                      <span className="text-xs font-bold text-slate-800">📐 Superficie en Hectáreas (Ha)</span>
                     </label>
-                    <p className="text-[11px] text-slate-500">
-                      Calculado: {plotAreaM2 ? (isHectares && plotAreaM2 < 1000 ? plotAreaM2 : (plotAreaM2 / 10000)).toLocaleString('es-UY') : 0} Ha ({plotAreaM2 ? plotAreaM2.toLocaleString('es-UY') : 0} m²).
-                    </p>
+
+                    {isHectares ? (
+                      <div className="space-y-1.5 pt-1">
+                        <label className="block text-[10px] font-extrabold uppercase text-slate-500">
+                          Cantidad de Hectáreas (Ha)
+                        </label>
+                        <input
+                          type="number"
+                          step="any"
+                          value={hectaresAmount !== undefined ? hectaresAmount : ''}
+                          onChange={(e) => {
+                            const val = e.target.value ? Number(e.target.value) : undefined;
+                            setHectaresAmount(val);
+                            if (val) {
+                              setPlotAreaM2(val * 10000);
+                            }
+                          }}
+                          placeholder="ej. 12"
+                          className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
+                        />
+                        <p className="text-[10px] text-slate-500 font-medium">
+                          Equivale a: <strong className="text-slate-800">{hectaresAmount ? (hectaresAmount * 10000).toLocaleString('es-UY') : 0} m²</strong>
+                        </p>
+                      </div>
+                    ) : (
+                      <p className="text-[11px] text-slate-400">
+                        Activalo para definir y mostrar el predio en Hectáreas.
+                      </p>
+                    )}
                   </div>
 
                   {/* 2. Fraccionamiento */}
@@ -679,14 +718,21 @@ export default function NuevaPropiedadPage() {
                       <span className="text-xs font-bold text-slate-800">✂️ Acepta Fraccionamiento</span>
                     </label>
                     {fractionable ? (
-                      <div className="space-y-1 pt-1">
+                      <div className="space-y-1.5 pt-1">
                         <label className="block text-[10px] font-extrabold uppercase text-slate-500">Fracción mínima (m²)</label>
                         <input
                           type="number"
                           value={minFractionM2 || ''}
                           onChange={(e) => setMinFractionM2(e.target.value ? Number(e.target.value) : undefined)}
                           placeholder="ej. 12000"
-                          className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold"
+                          className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
+                        />
+                        <input
+                          type="text"
+                          value={fractionNotes}
+                          onChange={(e) => setFractionNotes(e.target.value)}
+                          placeholder="Nota opcional: ej. Adaptable a necesidad"
+                          className="w-full bg-slate-50 border border-slate-200 rounded-lg p-1.5 text-[11px] font-medium"
                         />
                       </div>
                     ) : (
@@ -696,38 +742,116 @@ export default function NuevaPropiedadPage() {
 
                   {/* 3. Frente sobre Ruta / Bypass */}
                   <div className="bg-white p-3.5 rounded-xl border border-purple-100 shadow-2xs space-y-2">
-                    <label className="block text-xs font-bold text-slate-800">🛣️ Frente sobre Ruta / Conectividad</label>
-                    <input
-                      type="text"
-                      value={routeFrontage}
-                      onChange={(e) => setRouteFrontage(e.target.value)}
-                      placeholder="ej. 50 Metros sobre Bypass / Ruta 3"
-                      className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold"
-                    />
+                    <label className="flex items-center space-x-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={hasRouteFrontage}
+                        onChange={(e) => {
+                          const val = e.target.checked;
+                          setHasRouteFrontage(val);
+                          if (!val) setRouteFrontage('');
+                        }}
+                        className="w-4 h-4 text-[#5E1754] rounded"
+                      />
+                      <span className="text-xs font-bold text-slate-800">🛣️ Frente sobre Ruta / Conectividad</span>
+                    </label>
+                    {hasRouteFrontage ? (
+                      <div className="space-y-1 pt-1">
+                        <label className="block text-[10px] font-extrabold uppercase text-slate-500">Detalle de Frente / Acceso</label>
+                        <input
+                          type="text"
+                          value={routeFrontage}
+                          onChange={(e) => setRouteFrontage(e.target.value)}
+                          placeholder="ej. 50 Metros sobre Bypass / Ruta 3"
+                          className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
+                        />
+                      </div>
+                    ) : (
+                      <p className="text-[11px] text-slate-400">Activalo para destacar metros sobre ruta o acceso clave.</p>
+                    )}
                   </div>
 
-                  {/* 4. Precio por m² */}
+                  {/* 4. Precio por Unidad */}
                   <div className="bg-white p-3.5 rounded-xl border border-purple-100 shadow-2xs space-y-2">
-                    <label className="block text-xs font-bold text-slate-800">🏷️ Precio por m² (USD)</label>
-                    <input
-                      type="number"
-                      value={pricePerM2 || ''}
-                      onChange={(e) => setPricePerM2(e.target.value ? Number(e.target.value) : undefined)}
-                      placeholder="ej. 15"
-                      className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold"
-                    />
+                    <label className="flex items-center space-x-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={hasPricePerUnit}
+                        onChange={(e) => {
+                          const val = e.target.checked;
+                          setHasPricePerUnit(val);
+                          if (!val) setPricePerM2(undefined);
+                        }}
+                        className="w-4 h-4 text-[#5E1754] rounded"
+                      />
+                      <span className="text-xs font-bold text-slate-800">🏷️ Precio por Unidad (USD)</span>
+                    </label>
+                    {hasPricePerUnit ? (
+                      <div className="space-y-2 pt-1">
+                        <div className="grid grid-cols-2 gap-2">
+                          <div>
+                            <label className="block text-[10px] font-extrabold uppercase text-slate-500">Monto (USD)</label>
+                            <input
+                              type="number"
+                              step="any"
+                              value={pricePerM2 !== undefined ? pricePerM2 : ''}
+                              onChange={(e) => setPricePerM2(e.target.value ? Number(e.target.value) : undefined)}
+                              placeholder="ej. 15"
+                              className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-[10px] font-extrabold uppercase text-slate-500">Unidad de Medida</label>
+                            <select
+                              value={priceUnitType}
+                              onChange={(e) => setPriceUnitType(e.target.value)}
+                              className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
+                            >
+                              <option value="m²">m² (Metro cuadrado)</option>
+                              <option value="Ha">Ha (Hectárea)</option>
+                              <option value="Fracción">Fracción</option>
+                              <option value="Solar">Solar</option>
+                            </select>
+                          </div>
+                        </div>
+                        <p className="text-[10px] text-slate-500 font-medium">
+                          Se mostrará: <strong className="text-[#5E1754]">USD {pricePerM2 ? pricePerM2.toLocaleString('es-UY') : 0} / {priceUnitType}</strong>
+                        </p>
+                      </div>
+                    ) : (
+                      <p className="text-[11px] text-slate-400">Activalo para especificar precio en USD por m², Ha o fracción.</p>
+                    )}
                   </div>
 
                   {/* 5. Topografía & Suelo */}
                   <div className="bg-white p-3.5 rounded-xl border border-purple-100 shadow-2xs space-y-2">
-                    <label className="block text-xs font-bold text-slate-800">🚜 Topografía / Nivelación del Suelo</label>
-                    <input
-                      type="text"
-                      value={soilTopography}
-                      onChange={(e) => setSoilTopography(e.target.value)}
-                      placeholder="ej. 100% Nivelado - Listo para edificar"
-                      className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold"
-                    />
+                    <label className="flex items-center space-x-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={hasSoilTopography}
+                        onChange={(e) => {
+                          const val = e.target.checked;
+                          setHasSoilTopography(val);
+                          if (!val) setSoilTopography('');
+                        }}
+                        className="w-4 h-4 text-[#5E1754] rounded"
+                      />
+                      <span className="text-xs font-bold text-slate-800">🚜 Topografía & Suelo</span>
+                    </label>
+                    {hasSoilTopography ? (
+                      <div className="space-y-1 pt-1">
+                        <label className="block text-[10px] font-extrabold uppercase text-slate-500">Estado del Suelo</label>
+                        <input
+                          type="text"
+                          value={soilTopography}
+                          onChange={(e) => setSoilTopography(e.target.value)}
+                          placeholder="ej. 100% Nivelado - Listo para edificar"
+                          className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754]"
+                        />
+                      </div>
+                    ) : (
+                      <p className="text-[11px] text-slate-400">Activalo para detallar suelo parejo, relleno o nivelación.</p>
+                    )}
                   </div>
 
                   {/* 6. Seguridad & Predio Cerrado */}

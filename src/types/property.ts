@@ -61,7 +61,6 @@ export interface Property {
     builtAreaM2?: number;       // m² edificados
     plotAreaM2?: number;        // m² de terreno
     frontMeters?: number;       // Metros de frente (ej. 15m)
-    isHectares?: boolean;       // Medida en ha
     carAccess?: boolean;        // Entrada de Auto / Acceso Vehicular
     garage?: boolean;           // Garage Techado / Cochera
     cochera?: boolean;          // Cochera
@@ -90,11 +89,14 @@ export interface Property {
     shedOrCorral?: boolean;     // Galpón / Embarcadero / Depósito
     coneatIndex?: number;       // Índice CONEAT (ej. 110)
     commonExpensesAmount?: number; // Gastos comunes (Monto)
+    isHectares?: boolean;       // Mostrar superficie en Hectáreas
+    hectaresAmount?: number;    // Cantidad exacta de Hectáreas (ej. 12)
     fractionable?: boolean;     // Acepta Fraccionamiento
     minFractionM2?: number;     // Fracción mínima en m² (ej. 12000)
     fractionNotes?: string;     // Notas de fraccionamiento (ej. "Desde 12.000 m² - Adaptable")
     routeFrontage?: string;     // Frente a Ruta / Bypass (ej. "50 Metros - Salida directa Bypass")
-    pricePerM2?: number;        // Precio por m² (ej. 15)
+    pricePerM2?: number;        // Precio por unidad (m², Ha, etc.)
+    priceUnitType?: string;     // Tipo de unidad (ej. "m²", "Ha", "Fracción")
     soilTopography?: string;    // Topografía (ej. "100% Nivelado - Listo para edificar")
     gatedPerimeter?: boolean;   // Predio Cerrado & Acceso Controlado
   };
