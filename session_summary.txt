@@ -450,3 +450,7 @@
      - Cierre automático al tocar fuera (backdrop) o presionar Escape, con autodesplazamiento suave hacia `#catalogo`.
   3. **Verificación de Calidad:**
      - `npx tsc --noEmit` y `npm run build` completados con **0 errores**.
+
+- **Supresión de la Sección de Propiedades Recomendadas:**
+  1. Se eliminó la sección *"Otras propiedades que te pueden interesar"* y su lógica asociada en la ficha de detalle pública ([`src/app/propiedad/[slug]/page.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/propiedad/%5Bslug%5D/page.tsx)), dejando las publicaciones con un cierre limpio y directo al botón de contacto.
+  2. Verificado con `npx tsc --noEmit` y `npm run build` (0 errores).

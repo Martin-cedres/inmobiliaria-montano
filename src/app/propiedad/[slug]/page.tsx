@@ -10,7 +10,6 @@ import { MapPin, Bed, Bath, Maximize2, Car, Building, CheckCircle2, MessageCircl
 import { PropertyMapWrapper } from '@/components/PropertyMapWrapper';
 import { SharePropertyModal } from '@/components/SharePropertyModal';
 import { PropertyGallery } from '@/components/PropertyGallery';
-import { PropertyCard } from '@/components/PropertyCard';
 import { PropertyDescriptionRenderer } from '@/components/PropertyDescriptionRenderer';
 import JsonLdProperty from '@/components/seo/JsonLdProperty';
 import { PropertyTracker } from '@/components/analytics/PropertyTracker';
@@ -50,17 +49,6 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
   if (!property) {
     notFound();
   }
-
-  // Obtener hasta 3 propiedades similares (misma categoría o misma operación)
-  let similarProperties = allProperties.filter(
-    (p) => p.id !== property.id && (p.category === property.category || p.operation === property.operation)
-  );
-
-  if (similarProperties.length < 3) {
-    const remaining = allProperties.filter((p) => p.id !== property.id && !similarProperties.some((sp) => sp.id === p.id));
-    similarProperties = [...similarProperties, ...remaining];
-  }
-  similarProperties = similarProperties.slice(0, 3);
 
   const jsonLd = generatePropertyJsonLd(property);
   const whatsappUrl = buildPropertyWhatsAppLink(property);
@@ -526,30 +514,6 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
           </div>
 
         </div>
-
-        {/* Propiedades Similares / Recomendadas */}
-        {similarProperties.length > 0 && (
-          <div className="mt-12 pt-8 border-t border-slate-200/80 space-y-6 text-left">
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#E85D04]">Recomendados</span>
-                <h3 className="text-xl sm:text-2xl font-black text-slate-900">Otras propiedades que te pueden interesar</h3>
-              </div>
-              <Link
-                href="/"
-                className="text-xs font-bold text-[#5E1754] hover:text-[#E85D04] transition-colors"
-              >
-                Ver todo el catálogo →
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {similarProperties.map((simProp) => (
-                <PropertyCard key={simProp.id} property={simProp} />
-              ))}
-            </div>
-          </div>
-        )}
 
       </main>
 
