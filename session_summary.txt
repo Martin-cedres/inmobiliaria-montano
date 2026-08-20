@@ -502,4 +502,5 @@
      - Aplicados criterios de diseño moderno: jerarquía visual de 4 niveles, espaciado con aire negativo, acentos de luz solar/ámbar, tipografía condensada y cápsula de contacto flotante con glassmorphism.
      - Tipografía de abajo a la derecha ampliada significativamente (`text-xl` / `text-28px` / `text-xs font-extrabold`) para máxima legibilidad y presencia en redes sociales.
      - Íconos y contenedores alineados 100% a la paleta de identidad visual de la web (`#5E1754` púrpura corporativo + `#E85D04` / `#FF6B00` naranja vibrante).
-  6. Verificado con `npx tsc --noEmit` (0 errores) y servidor de desarrollo activo en `http://localhost:3000`.
+  6. Verificado con `npx tsc --noEmit` (0 errores) y `npm run build` (34 rutas compiladas exitosamente).
+  7. Despliegue completado: Cambios subidos a GitHub (`origin/main`, commit `ef0f87a`).
