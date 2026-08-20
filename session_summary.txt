@@ -459,3 +459,47 @@
   1. Corregido el bug en [`admin/nueva`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/admin/nueva/page.tsx) y [`admin/editar/[id]`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/admin/editar/%5Bid%5D/page.tsx) donde al elegir *"Otro Barrio / Personalizado..."* el selector revertía inmediatamente al valor anterior.
   2. Implementado estado `isCustomNeighborhood` para mantener activa la opción y desplegar el campo de texto con autofocus para escribir cualquier barrio o zona personalizada.
   3. Verificado con `npx tsc --noEmit` y `npm run build` (0 errores).
+
+- **Creación de la Plataforma InmoDemo SaaS (White-Label):**
+  1. Clonado y desacoplado el proyecto en un nuevo directorio independiente `c:\Users\LENOVO\Desktop\inmobiliaria-demo` para comercializar a inmobiliarias ($120 USD/mes + $200-$250 USD setup).
+  2. Implementado archivo central de parametrización `src/config/siteConfig.ts` (marca, logo, WhatsApp de ventas `091090705`, colores, ubicación y precios).
+  3. Creada barra superior fija `DemoBanner.tsx` con accesos directos al panel admin, modal de contratación interactivo `DemoContractModal.tsx` y botón de reinicio demo.
+  4. Creado sistema de acceso rápido de 1 clic en `/login` (`/api/auth/demo-login`) para probar el panel de administración sin credenciales.
+  5. Creado catálogo inicial (Seed Data) con 8 inmuebles realistas de alta gama (casas, penthouses, chacras, terrenos, locales, galpones y proyectos en pozo) con fotos verificadas de arquitectura.
+  6. Implementado sistema sandbox con persistencia en vivo y auto-reset cada 24 horas (y endpoint `/api/admin/demo-reset`).
+  7. Verificado con `npx tsc --noEmit` (0 errores) y `npm run build` (41 rutas generadas con éxito). Servidor activo en `http://localhost:3001`.
+  8. Rediseño estético PropTech completado: Paleta corporativa Navy/Slate (`#0F172A`), Tech Blue (`#2563EB`) y Emerald (`#059669`), marca oficial *"Inmobiliaria DEMO"*, textos comerciales y commit raíz inicial `4f7baa1`.
+  9. Implementación de módulos interactivos de alta conversión:
+     - **Simulador de Préstamo Hipotecario Interactivo** (`MortgageCalculator.tsx`) en las fichas de venta para calcular cuotas bancarias en tiempo real y enviar consultas financieras a WhatsApp.
+     - **Sección de Métricas & Pilares de Confianza** (`TrustStatsSection.tsx`) en la página principal (Satisfacción 98%, Cierre < 45 días, Títulos verificados).
+     - **Personalizador de Marca en Vivo** (`LiveBrandCustomizer.tsx`) para que los prospectos puedan simular la web con su nombre y paletas de colores corporativas al instante.
+     - Verificado con `npx tsc --noEmit` y `npm run build` (0 errores). Commit `e881048`.
+
+=== Sesión 2026-08-20 ===
+- **Implementación del Estudio Generador de Fichas Gráficas JPG para Redes Sociales y WhatsApp:**
+  1. Diseñado y construido el conjunto de plantillas vectoriales en alta resolución (`src/components/admin/flyer-templates/`):
+     - `FlyerTemplateClassic.tsx`: Estilo urbano con corte diagonal neón naranja/dorado idéntico a las muestras de referencia, logotipo oficial, tipografía en 2 tonos, píldora de precio iluminada y cinta de contacto inferior con `www.inmobiliariamontano.uy`, `092 776 715` y `San José`.
+     - `FlyerTemplateChacra.tsx`: Formato para chacras y terrenos destacando metraje, entorno natural, agua de OSE y servicios.
+     - `FlyerTemplateModular.tsx`: Formato para viviendas modulares y proyectos llave en mano ("Tu Casa Lista Para Vivir").
+     - `FlyerIcons.tsx`: Set de íconos vectoriales SVG limpios de alta fidelidad.
+  2. Creado el componente interactivo `FlyerGeneratorModal.tsx` con vista previa en tiempo real y 4 paneles de control:
+     - Selector de plantilla visual en 1 clic.
+     - Selector de foto de la galería con controles deslizantes de zoom (100% a 200%) y ajuste de posición vertical/horizontal (pan) para encuadrar la fachada.
+     - Personalizador de títulos, subtítulos, precio y eslóganes comerciales preestablecidos.
+     - Checklist dinámico de comodidades para activar/desactivar características o agregar nuevas.
+  3. Integrado el motor de renderizado de alta definición (`html-to-image`) a escala 2.5x (1500×2250 px / 1080×1620 px equivalente) para descarga instantánea en JPG a 96% de calidad y botón de copiado directo al portapapeles.
+  4. Integración completa en el flujo de administración:
+     - Botón "Ficha JPG" en cada fila de la lista de propiedades (`src/app/admin/page.tsx`).
+     - Banner y modal de generación inmediata tras publicar una propiedad (`src/app/admin/nueva/page.tsx`).
+     - Botón "Ficha JPG" en la barra superior de edición (`src/app/admin/editar/[id]/page.tsx`).
+  5. Perfeccionamiento gráfico y ajuste visual idéntico a las muestras de referencia:
+     - Rediseñado `FlyerTemplateClassic.tsx` con fondo claro/blanco a la izquierda, tipografía dominante en 2 tonos ("EN" negro / "VENTA" naranja), caja de precio en píldora oscura con borde neón naranja y tipografía `U$S 117.000` de alto impacto, y cinta inferior con `www.inmobiliariamontano.uy`.
+     - Corregido el contenedor de previsualización en `FlyerGeneratorModal.tsx` con controles de zoom en vivo (Ajustar, Zoom In, Zoom Out) y visualización completa del 100% de la ficha (600×900 px) sin recortes en la base.
+     - Pestaña de edición rápida de precio (`POR SOLO`, monto editable), títulos, comodidades y tildes destacadas.
+     - Logo oficial de Inmobiliaria Montaño recortado con precisión (`logo-clean.png`), eliminando márgenes transparentes muertos para que luzca grande, nítido y con máximo protagonismo visual.
+     - Reestructurados todos los contenedores de las 3 plantillas (Clásica, Chacra y Modular) con límites de ancho (`truncate`, `max-w`), control de desbordes y márgenes calculados para erradicar cualquier superposición de textos, fotos o botones.
+     - Dirección web oficial `www.inmobiliariamontano.uy` destacada permanentemente en el pie de página de todas las plantillas.
+     - Aplicados criterios de diseño moderno: jerarquía visual de 4 niveles, espaciado con aire negativo, acentos de luz solar/ámbar, tipografía condensada y cápsula de contacto flotante con glassmorphism.
+     - Tipografía de abajo a la derecha ampliada significativamente (`text-xl` / `text-28px` / `text-xs font-extrabold`) para máxima legibilidad y presencia en redes sociales.
+     - Íconos y contenedores alineados 100% a la paleta de identidad visual de la web (`#5E1754` púrpura corporativo + `#E85D04` / `#FF6B00` naranja vibrante).
+  6. Verificado con `npx tsc --noEmit` (0 errores) y servidor de desarrollo activo en `http://localhost:3000`.

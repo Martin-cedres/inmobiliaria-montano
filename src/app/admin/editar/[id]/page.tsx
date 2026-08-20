@@ -24,10 +24,12 @@ import {
   MapPin,
   Maximize2,
   Building,
-  Building2
+  Building2,
+  Sparkles
 } from 'lucide-react';
-import { PropertyCategory, OperationType, PropertyStatus, GuaranteeType, ImageAsset } from '@/types/property';
+import { Property, PropertyCategory, OperationType, PropertyStatus, GuaranteeType, ImageAsset } from '@/types/property';
 import { AdminLocationPickerWrapper } from '@/components/AdminLocationPickerWrapper';
+import { FlyerGeneratorModal } from '@/components/admin/FlyerGeneratorModal';
 
 const SAN_JOSE_NEIGHBORHOODS = [
   'Centro',
@@ -68,6 +70,8 @@ export default function EditarPropiedadPage() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [loadedProperty, setLoadedProperty] = useState<Property | null>(null);
+  const [isFlyerModalOpen, setIsFlyerModalOpen] = useState(false);
 
   // Form State
   const [codeRef, setCodeRef] = useState('');
@@ -267,6 +271,7 @@ export default function EditarPropiedadPage() {
           setGoogleIndexingStatus(p.googleIndexingStatus || 'pending');
 
           setImages(Array.isArray(p.images) ? p.images : []);
+          setLoadedProperty(p);
         } else {
           setLoadError(data.error || 'No se pudo cargar la propiedad.');
         }
@@ -439,6 +444,17 @@ export default function EditarPropiedadPage() {
           </div>
 
           <div className="flex items-center space-x-2 sm:space-x-3">
+            {/* Botón Ficha JPG */}
+            <button
+              onClick={() => setIsFlyerModalOpen(true)}
+              type="button"
+              className="bg-gradient-to-r from-orange-500/15 to-amber-500/15 hover:from-orange-500/25 hover:to-amber-500/25 text-[#E85D04] border border-orange-500/40 font-black px-3.5 py-2 rounded-xl text-xs sm:text-sm shadow-xs transition-all flex items-center space-x-1.5 cursor-pointer"
+              title="Generar Ficha Gráfica JPG para Redes Sociales"
+            >
+              <Sparkles className="w-4 h-4 text-[#E85D04]" />
+              <span>Ficha JPG</span>
+            </button>
+
             {/* Quick Status Pill */}
             <select
               value={status}
@@ -1413,6 +1429,45 @@ export default function EditarPropiedadPage() {
         </form>
 
       </main>
+
+      {/* MODAL GENERADOR DE FICHAS JPG */}
+      {isFlyerModalOpen && loadedProperty && (
+        <FlyerGeneratorModal
+          property={{
+            ...loadedProperty,
+            codeRef,
+            title,
+            operation,
+            category,
+            status,
+            price: {
+              ...loadedProperty.price,
+              amount: priceAmount,
+              currency: priceCurrency,
+              priceMode,
+            },
+            location: {
+              ...loadedProperty.location,
+              neighborhood,
+              address,
+            },
+            features: {
+              ...loadedProperty.features,
+              bedrooms,
+              bathrooms,
+              builtAreaM2,
+              plotAreaM2,
+              garage,
+              barbecue,
+              pool,
+              fondo,
+            },
+            images: images.length > 0 ? images : loadedProperty.images,
+          }}
+          isOpen={isFlyerModalOpen}
+          onClose={() => setIsFlyerModalOpen(false)}
+        />
+      )}
 
       <Footer />
     </div>

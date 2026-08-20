@@ -11,8 +11,9 @@ import {
   Plus, Trash2, Eye, Edit3, CheckCircle2, Sparkles, Search, 
   RefreshCw, AlertCircle, Building2, Key, Tag, MessageCircle, 
   Flame, TrendingUp, ArrowUpDown, Users, LogOut, ShieldCheck, Shield, Zap,
-  Copy, Share2, Filter, Check
+  Copy, Share2, Filter, Check, ImageIcon
 } from 'lucide-react';
+import { FlyerGeneratorModal } from '@/components/admin/FlyerGeneratorModal';
 
 export default function AdminDashboardPage() {
   const router = useRouter();
@@ -28,6 +29,7 @@ export default function AdminDashboardPage() {
   const [updatingId, setUpdatingId] = useState<string | null>(null);
   const [currentUser, setCurrentUser] = useState<UserSessionPayload | null>(null);
   const [isAuthChecking, setIsAuthChecking] = useState<boolean>(true);
+  const [selectedFlyerProperty, setSelectedFlyerProperty] = useState<Property | null>(null);
 
   const showToast = (message: string) => {
     setToastMessage(message);
@@ -675,6 +677,16 @@ ${link}`;
                             {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-700" /> : <Share2 className="w-3.5 h-3.5" />}
                           </button>
 
+                          {/* Generador de Ficha JPG HD */}
+                          <button
+                            onClick={() => setSelectedFlyerProperty(prop)}
+                            className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-black bg-gradient-to-r from-orange-500/15 to-amber-500/15 text-[#E85D04] hover:bg-[#E85D04] hover:text-white border border-orange-500/30 rounded-lg transition-all cursor-pointer shadow-xs"
+                            title="Generar Ficha Gráfica JPG para Redes"
+                          >
+                            <Sparkles className="w-3.5 h-3.5 text-[#E85D04] group-hover:text-white" />
+                            <span>Ficha JPG</span>
+                          </button>
+
                           <Link
                             href={`/propiedad/${prop.slug}`}
                             target="_blank"
@@ -712,6 +724,15 @@ ${link}`;
         </div>
 
       </main>
+
+      {/* MODAL GENERADOR DE FICHAS JPG */}
+      {selectedFlyerProperty && (
+        <FlyerGeneratorModal
+          property={selectedFlyerProperty}
+          isOpen={Boolean(selectedFlyerProperty)}
+          onClose={() => setSelectedFlyerProperty(null)}
+        />
+      )}
 
       <Footer />
     </div>

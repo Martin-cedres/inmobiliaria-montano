@@ -23,10 +23,13 @@ import {
   MapPin,
   Maximize2,
   Building,
-  Building2
+  Building2,
+  Sparkles,
+  Download
 } from 'lucide-react';
-import { PropertyCategory, OperationType, PropertyStatus, GuaranteeType, ImageAsset } from '@/types/property';
+import { Property, PropertyCategory, OperationType, PropertyStatus, GuaranteeType, ImageAsset } from '@/types/property';
 import { AdminLocationPickerWrapper } from '@/components/AdminLocationPickerWrapper';
+import { FlyerGeneratorModal } from '@/components/admin/FlyerGeneratorModal';
 
 const SAN_JOSE_NEIGHBORHOODS = [
   'Centro',
@@ -151,6 +154,8 @@ export default function NuevaPropiedadPage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [createdProperty, setCreatedProperty] = useState<Property | null>(null);
+  const [isFlyerModalOpen, setIsFlyerModalOpen] = useState(false);
 
   // Clasificación de categoría para campos condicionales
   const isLandOrFarm = category === 'terreno' || category === 'chacra';
@@ -244,10 +249,9 @@ export default function NuevaPropiedadPage() {
       const data = await response.json();
 
       if (data.success) {
-        setSuccessMessage(`¡Propiedad Ref. #${codeRef} publicada con éxito! Redirigiendo al panel...`);
-        setTimeout(() => {
-          router.push('/admin');
-        }, 1200);
+        setCreatedProperty(data.data);
+        setSuccessMessage(`¡Propiedad Ref. #${codeRef} publicada con éxito! Ya puedes generar su Ficha Gráfica o regresar al panel.`);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         alert(data.error || 'Error al publicar la propiedad.');
       }
@@ -318,11 +322,44 @@ export default function NuevaPropiedadPage() {
 
       <main className="flex-grow max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 text-left space-y-6">
         
-        {/* Success Alert */}
+        {/* Success Alert & Actions */}
         {successMessage && (
-          <div className="bg-emerald-50 border border-emerald-200 text-emerald-900 p-4 rounded-2xl text-xs sm:text-sm font-semibold flex items-center space-x-3 shadow-xs">
-            <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
-            <span>{successMessage}</span>
+          <div className="bg-gradient-to-r from-emerald-50 via-teal-50 to-orange-50 border-2 border-emerald-300 text-emerald-950 p-5 rounded-2xl shadow-md space-y-3">
+            <div className="flex items-center space-x-3">
+              <CheckCircle2 className="w-6 h-6 text-emerald-600 shrink-0" />
+              <div>
+                <h3 className="font-black text-sm sm:text-base text-slate-900">¡Publicación Exitosa!</h3>
+                <p className="text-xs sm:text-sm text-slate-700 font-medium">{successMessage}</p>
+              </div>
+            </div>
+
+            {createdProperty && (
+              <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-emerald-200/80">
+                <button
+                  type="button"
+                  onClick={() => setIsFlyerModalOpen(true)}
+                  className="bg-gradient-to-r from-[#E85D04] to-[#FF6B00] hover:from-[#FF6B00] hover:to-[#FFA000] text-white font-black px-4 py-2 rounded-xl text-xs shadow-md shadow-orange-500/20 transition-all flex items-center space-x-1.5 cursor-pointer active:scale-95"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  <span>Generar Ficha JPG para Redes</span>
+                </button>
+
+                <Link
+                  href={`/propiedad/${createdProperty.slug}`}
+                  target="_blank"
+                  className="bg-white hover:bg-slate-50 text-slate-800 font-bold px-3.5 py-2 rounded-xl text-xs border border-slate-200 shadow-xs transition-all flex items-center space-x-1.5"
+                >
+                  <span>Ver Ficha en Vivo</span>
+                </Link>
+
+                <Link
+                  href="/admin"
+                  className="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-3.5 py-2 rounded-xl text-xs transition-all"
+                >
+                  <span>Ir al Panel Admin</span>
+                </Link>
+              </div>
+            )}
           </div>
         )}
 
@@ -1260,6 +1297,15 @@ export default function NuevaPropiedadPage() {
         </form>
 
       </main>
+
+      {/* MODAL GENERADOR DE FICHAS JPG */}
+      {isFlyerModalOpen && createdProperty && (
+        <FlyerGeneratorModal
+          property={createdProperty}
+          isOpen={isFlyerModalOpen}
+          onClose={() => setIsFlyerModalOpen(false)}
+        />
+      )}
 
       <Footer />
     </div>
