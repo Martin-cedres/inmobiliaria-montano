@@ -1,13 +1,12 @@
 'use client';
 
-import React, { useMemo, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Circle, Popup, ZoomControl } from 'react-leaflet';
+import React, { useMemo, useEffect, useState } from 'react';
+import { MapContainer, TileLayer, Marker, Circle, Popup, useMap } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import Link from 'next/link';
 import { Property } from '@/types/property';
-import { Bed, Bath, ArrowRight, MapPin, Building2, ShieldCheck } from 'lucide-react';
+import { Bed, Bath, MapPin, ShieldCheck, Layers, Compass, Plus, Minus } from 'lucide-react';
 
 interface CatalogMapProps {
   properties: Property[];
@@ -45,23 +44,23 @@ function getJitteredCoords(id: string, lat: number, lng: number, isExact?: boole
 
 // Function to generate compact Leaflet Pin in Montaño Brand Colors
 const createCompactPricePin = (priceText: string, isRent: boolean, propId: string) => {
-  const badgeBg = isRent ? '#10B981' : '#5E1754';
-  const borderColor = isRent ? '#059669' : '#E85D04';
+  const badgeBg = isRent ? '#059669' : '#5E1754';
+  const borderColor = isRent ? '#10B981' : '#E85D04';
 
   return L.divIcon({
     className: `custom-catalog-pin pin-${propId}`,
     html: `
-      <div class="pin-pill-wrapper" style="position: relative; display: inline-flex; align-items: center; justify-content: center; transform: translate(-50%, -100%); transition: all 0.2s ease;">
+      <div class="pin-pill-wrapper" style="position: relative; display: inline-flex; align-items: center; justify-content: center; transform: translate(-50%, -100%); transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);">
         <div class="pin-pill" style="
           background: ${badgeBg};
           border: 2px solid ${borderColor};
           color: white;
           border-radius: 9999px;
-          padding: 4px 9px;
+          padding: 4px 10px;
           font-weight: 900;
           font-size: 11px;
           letter-spacing: -0.01em;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
           display: flex;
           align-items: center;
           gap: 5px;
@@ -69,7 +68,7 @@ const createCompactPricePin = (priceText: string, isRent: boolean, propId: strin
           cursor: pointer;
           transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
         ">
-          <span style="width: 6px; height: 6px; background-color: ${borderColor}; border-radius: 9999px; display: inline-block;"></span>
+          <span style="width: 6px; height: 6px; background-color: ${borderColor}; border-radius: 9999px; display: inline-block; box-shadow: 0 0 6px ${borderColor};"></span>
           <span>${priceText}</span>
         </div>
       </div>
@@ -89,22 +88,23 @@ const createCustomClusterIcon = (cluster: any) => {
         background: linear-gradient(135deg, #5E1754 0%, #350A2F 100%);
         border: 2.5px solid #E85D04;
         color: white;
-        width: 38px;
-        height: 38px;
+        width: 40px;
+        height: 40px;
         border-radius: 9999px;
         display: flex;
         align-items: center;
         justify-content: center;
         font-weight: 900;
         font-size: 12px;
-        box-shadow: 0 8px 20px rgba(94, 23, 84, 0.6);
+        box-shadow: 0 8px 24px rgba(94, 23, 84, 0.65), 0 2px 6px rgba(232, 93, 4, 0.4);
         cursor: pointer;
+        transition: transform 0.2s ease;
       ">
         <span>${count}</span>
       </div>
     `,
     className: 'custom-cluster-icon',
-    iconSize: [38, 38],
+    iconSize: [40, 40],
   });
 };
 
@@ -166,9 +166,9 @@ const ClusteredMarkersLayer = React.memo(function ClusteredMarkersLayer({
               maxWidth={280}
               minWidth={250}
               autoPan={true}
-              autoPanPadding={[20, 20]}
+              autoPanPadding={[25, 25]}
             >
-              <div className="overflow-hidden rounded-2xl text-left bg-white font-sans">
+              <div className="overflow-hidden rounded-2xl text-left bg-white font-sans shadow-lg">
                 {/* Img Header */}
                 <div className="relative h-32 w-full overflow-hidden bg-slate-100">
                   <img
@@ -191,7 +191,7 @@ const ClusteredMarkersLayer = React.memo(function ClusteredMarkersLayer({
                     </div>
                   )}
                   <div className="absolute bottom-2 left-2 right-2 flex justify-between items-end text-white drop-shadow-md">
-                    <span className="text-sm font-black bg-slate-900/80 backdrop-blur-md px-2 py-0.5 rounded-lg text-amber-300">
+                    <span className="text-sm font-black bg-slate-900/85 backdrop-blur-md px-2 py-0.5 rounded-lg text-amber-300 border border-white/10">
                       {fullPriceText}
                     </span>
                   </div>
@@ -222,22 +222,7 @@ const ClusteredMarkersLayer = React.memo(function ClusteredMarkersLayer({
                         <span>{prop.features.bathrooms} Baño</span>
                       </div>
                     )}
-                    {!!prop.features.builtAreaM2 && prop.features.builtAreaM2 > 0 && (
-                      <div className="flex items-center space-x-1">
-                        <Building2 className="w-3 h-3 text-[#5E1754]" />
-                        <span>{prop.features.builtAreaM2} m²</span>
-                      </div>
-                    )}
                   </div>
-
-                  {/* CTA Button */}
-                  <Link
-                    href={`/propiedad/${prop.slug}`}
-                    className="w-full bg-[#E85D04] hover:bg-[#FF8500] text-white font-bold py-2 px-3 rounded-xl flex items-center justify-center space-x-1.5 text-xs transition-colors mt-2 shadow-md"
-                  >
-                    <span>Ver Ficha Completa</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
                 </div>
               </div>
             </Popup>
@@ -248,6 +233,143 @@ const ClusteredMarkersLayer = React.memo(function ClusteredMarkersLayer({
   );
 });
 
+// Controlador de Encuadre Dinámico y Transiciones Cinemáticas Suaves (fitBounds & flyTo)
+function MapBoundsController({
+  properties,
+  activePropertyId,
+  fitTrigger,
+}: {
+  properties: Property[];
+  activePropertyId?: string | null;
+  fitTrigger: number;
+}) {
+  const map = useMap();
+
+  // Ajuste automático de encuadre al cambiar la lista o presionar el botón de Recentrar
+  useEffect(() => {
+    if (!properties || properties.length === 0) return;
+
+    const validCoords = properties
+      .map((p) => p.location.coordinates)
+      .filter((c): c is { lat: number; lng: number } => !!c && typeof c.lat === 'number' && typeof c.lng === 'number');
+
+    if (validCoords.length === 0) return;
+
+    if (validCoords.length === 1) {
+      map.flyTo([validCoords[0].lat, validCoords[0].lng], 15, {
+        duration: 1.2,
+        easeLinearity: 0.25,
+      });
+    } else {
+      const bounds = L.latLngBounds(validCoords.map((c) => [c.lat, c.lng]));
+      map.flyToBounds(bounds, {
+        padding: [50, 50],
+        maxZoom: 15,
+        duration: 1.2,
+        easeLinearity: 0.25,
+      });
+    }
+  }, [properties, fitTrigger, map]);
+
+  // Transición suave al seleccionar una propiedad específica
+  useEffect(() => {
+    if (!activePropertyId) return;
+    const prop = properties.find((p) => p.id === activePropertyId);
+    if (!prop || !prop.location.coordinates) return;
+
+    const raw = prop.location.coordinates;
+    const [lat, lng] = getJitteredCoords(prop.id, raw.lat, raw.lng, prop.location.isExactLocation);
+
+    map.flyTo([lat, lng], Math.max(map.getZoom(), 15), {
+      duration: 1.0,
+      easeLinearity: 0.25,
+    });
+  }, [activePropertyId, properties, map]);
+
+  return null;
+}
+
+// Botonera Flotante con Glassmorphism (Recentrar, Capas y Zoom personalizado)
+function FloatingMapControls({
+  mapLayer,
+  onToggleLayer,
+  onRecenter,
+}: {
+  mapLayer: 'voyager' | 'satellite';
+  onToggleLayer: () => void;
+  onRecenter: () => void;
+}) {
+  const map = useMap();
+
+  return (
+    <div className="absolute top-3 right-3 z-[1000] flex flex-col items-end gap-2 pointer-events-none select-none">
+      
+      {/* Botón de Recentrar / Ver Todas las Propiedades */}
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          onRecenter();
+        }}
+        title="Recentrar y ver todas las propiedades"
+        aria-label="Recentrar mapa"
+        className="pointer-events-auto bg-white/90 hover:bg-white text-slate-800 backdrop-blur-md px-3 py-2 rounded-2xl shadow-xl border border-white/70 hover:shadow-2xl transition-all cursor-pointer flex items-center gap-1.5 text-xs font-black active:scale-95 text-[#5E1754]"
+      >
+        <Compass className="w-4 h-4 text-[#E85D04]" />
+        <span className="hidden sm:inline">Recentrar</span>
+      </button>
+
+      {/* Botón Alternador de Capa: Callejero vs Satélite HD */}
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          onToggleLayer();
+        }}
+        title={mapLayer === 'voyager' ? 'Cambiar a vista Satelital HD' : 'Cambiar a vista Callejero'}
+        aria-label="Cambiar capa de mapa"
+        className={`pointer-events-auto px-3 py-2 rounded-2xl shadow-xl border backdrop-blur-md transition-all cursor-pointer flex items-center gap-1.5 text-xs font-black active:scale-95 ${
+          mapLayer === 'satellite'
+            ? 'bg-[#E85D04] text-white border-orange-400 shadow-orange-500/20'
+            : 'bg-white/90 hover:bg-white text-slate-800 border-white/70'
+        }`}
+      >
+        <Layers className={`w-4 h-4 ${mapLayer === 'satellite' ? 'text-amber-300' : 'text-[#5E1754]'}`} />
+        <span>{mapLayer === 'voyager' ? 'Satélite' : 'Mapa'}</span>
+      </button>
+
+      {/* Botones de Zoom Glassmorphism */}
+      <div className="pointer-events-auto bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-white/70 overflow-hidden flex flex-col">
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            map.zoomIn();
+          }}
+          title="Acercar mapa"
+          aria-label="Acercar zoom"
+          className="p-2.5 hover:bg-slate-100 text-slate-800 transition-colors flex items-center justify-center cursor-pointer active:bg-slate-200 border-b border-slate-100"
+        >
+          <Plus className="w-4 h-4 font-bold" />
+        </button>
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            map.zoomOut();
+          }}
+          title="Alejar mapa"
+          aria-label="Alejar zoom"
+          className="p-2.5 hover:bg-slate-100 text-slate-800 transition-colors flex items-center justify-center cursor-pointer active:bg-slate-200"
+        >
+          <Minus className="w-4 h-4 font-bold" />
+        </button>
+      </div>
+
+    </div>
+  );
+}
+
 export const CatalogMap: React.FC<CatalogMapProps> = ({
   properties,
   heightClass = 'h-[500px] lg:h-[650px]',
@@ -255,13 +377,15 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
   onSelectProperty,
 }) => {
   const defaultCenter: [number, number] = [-34.3375, -56.7136];
+  const [mapLayer, setMapLayer] = useState<'voyager' | 'satellite'>('voyager');
+  const [fitTrigger, setFitTrigger] = useState<number>(0);
 
   // Filtrar solo propiedades que tienen mapa habilitado y coordenadas válidas
   const displayProperties = useMemo(() => {
     return properties.filter((p) => p.location.hasLocation !== false);
   }, [properties]);
 
-  // Calcular centro dinámico basado en propiedades
+  // Calcular centro dinámico inicial
   const validCoords = useMemo(() => {
     return displayProperties
       .map((p) => p.location.coordinates)
@@ -315,15 +439,15 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
   }, [activePropertyId, displayProperties]);
 
   return (
-    <div className={`relative w-full ${heightClass} rounded-3xl overflow-hidden shadow-xl border border-slate-200 bg-slate-900 z-0 isolate`}>
-      {/* Estilos CSS para el popup y pin activo */}
+    <div className={`relative w-full ${heightClass} rounded-3xl overflow-hidden shadow-2xl border border-slate-200 bg-slate-900 z-0 isolate`}>
+      {/* Estilos CSS para el popup, clusters y pin activo */}
       <style>{`
         .catalog-map-popup .leaflet-popup-content-wrapper {
           padding: 0 !important;
           overflow: hidden !important;
-          border-radius: 1rem !important;
-          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25), 0 8px 10px -6px rgba(0, 0, 0, 0.2) !important;
-          border: 1px solid rgba(226, 232, 240, 0.8);
+          border-radius: 1.25rem !important;
+          box-shadow: 0 25px 30px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2) !important;
+          border: 1px solid rgba(226, 232, 240, 0.9);
         }
         .catalog-map-popup .leaflet-popup-content {
           margin: 0 !important;
@@ -332,14 +456,24 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
         .catalog-map-popup .leaflet-popup-tip-container {
           margin-top: -1px;
         }
+        .custom-catalog-pin:hover .pin-pill {
+          transform: scale(1.12);
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45) !important;
+        }
         .custom-catalog-pin.is-active {
           z-index: 9999 !important;
         }
         .custom-catalog-pin.is-active .pin-pill {
           background: #E85D04 !important;
-          border-color: #FF8500 !important;
-          transform: scale(1.15) !important;
-          box-shadow: 0 0 18px rgba(232, 93, 4, 0.9) !important;
+          border-color: #FFB800 !important;
+          transform: scale(1.22) !important;
+          box-shadow: 0 0 22px rgba(232, 93, 4, 0.95), 0 4px 12px rgba(0,0,0,0.5) !important;
+        }
+        .leaflet-control-attribution {
+          display: none !important;
+        }
+        .custom-cluster-icon:hover div {
+          transform: scale(1.1);
         }
       `}</style>
 
@@ -348,15 +482,46 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
         zoom={14}
         scrollWheelZoom={false}
         zoomControl={false}
+        attributionControl={false}
         className="w-full h-full"
       >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
-          url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
-          maxZoom={19}
+        {/* Capa de Azulejos: Callejero Voyager o Satélite HD con etiquetas superpuestas */}
+        {mapLayer === 'voyager' ? (
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
+            url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+            maxZoom={19}
+          />
+        ) : (
+          <>
+            <TileLayer
+              attribution='Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+              url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+              maxZoom={19}
+            />
+            {/* Superposición sutil de calles y nombres sobre el satélite */}
+            <TileLayer
+              attribution='&copy; CARTO'
+              url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png"
+              maxZoom={19}
+              opacity={0.9}
+            />
+          </>
+        )}
+
+        {/* Controlador Dinámico de Encuadre Automático y Cinemática */}
+        <MapBoundsController
+          properties={displayProperties}
+          activePropertyId={activePropertyId}
+          fitTrigger={fitTrigger}
         />
 
-        <ZoomControl position="bottomright" />
+        {/* Barra de Herramientas Flotante Glassmorphism */}
+        <FloatingMapControls
+          mapLayer={mapLayer}
+          onToggleLayer={() => setMapLayer((prev) => (prev === 'voyager' ? 'satellite' : 'voyager'))}
+          onRecenter={() => setFitTrigger((prev) => prev + 1)}
+        />
 
         {/* Capa de Marcadores Agrupados aislada de re-renders innecesarios */}
         <ClusteredMarkersLayer
@@ -365,18 +530,18 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
           onSelectProperty={onSelectProperty}
         />
 
-        {/* Círculo de Zona Aproximada independiente fuera del Cluster */}
+        {/* Círculo de Zona Aproximada independiente fuera del Cluster con pulso sutil */}
         {activeCircleCoords && (
           <Circle
             key={`circle-${activePropertyId}`}
             center={activeCircleCoords}
-            radius={180}
+            radius={200}
             pathOptions={{
               color: '#E85D04',
               fillColor: '#5E1754',
-              fillOpacity: 0.15,
-              weight: 2,
-              dashArray: '5, 5',
+              fillOpacity: 0.2,
+              weight: 2.5,
+              dashArray: '6, 6',
             }}
           />
         )}
@@ -386,4 +551,3 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
 };
 
 export default CatalogMap;
-

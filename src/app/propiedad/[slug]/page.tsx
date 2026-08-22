@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { getAllProperties, getCachedProperties, getCachedPropertyBySlug } from '@/lib/propertiesStore';
-import { generatePropertyMetadata, generatePropertyJsonLd } from '@/utils/seo';
+import { generatePropertyMetadata, generatePropertyJsonLd, getPillarPageForProperty } from '@/utils/seo';
 import { buildPropertyWhatsAppLink } from '@/utils/whatsapp';
 import { MapPin, Bed, Bath, Maximize2, Car, Building, CheckCircle2, MessageCircle, ArrowLeft, ShieldCheck, Share2, Compass, Trees, Droplets, FileCheck, Landmark, ArrowLeftRight, Wifi, Flame, Zap, Dog, Waves, LayoutGrid, Milestone, DollarSign, Layers } from 'lucide-react';
 import { PropertyMapWrapper } from '@/components/PropertyMapWrapper';
@@ -13,6 +13,7 @@ import { PropertyGallery } from '@/components/PropertyGallery';
 import { PropertyDescriptionRenderer } from '@/components/PropertyDescriptionRenderer';
 import { PropertyCard } from '@/components/PropertyCard';
 import JsonLdProperty from '@/components/seo/JsonLdProperty';
+import PropertyBreadcrumbs from '@/components/seo/PropertyBreadcrumbs';
 import { PropertyTracker } from '@/components/analytics/PropertyTracker';
 import { WhatsAppTrackButton } from '@/components/analytics/WhatsAppTrackButton';
 
@@ -55,8 +56,14 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
   const whatsappUrl = buildPropertyWhatsAppLink(property);
   const mainImage = property.images.find((img) => img.isMain) || property.images[0];
 
+  const currentPrice = property.price?.amount || 0;
   const similarProperties = allProperties
-    .filter((p) => p.id !== property.id && (p.category === property.category || p.operation === property.operation))
+    .filter((p) => p.id !== property.id && p.category === property.category)
+    .sort((a, b) => {
+      const diffA = Math.abs((a.price?.amount || 0) - currentPrice);
+      const diffB = Math.abs((b.price?.amount || 0) - currentPrice);
+      return diffA - diffB;
+    })
     .slice(0, 3);
 
   return (
@@ -73,13 +80,14 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
         <JsonLdProperty property={property} />
         <PropertyTracker propertyId={property.id} />
         
-        {/* Navigation Back Button */}
-        <div className="mb-6">
+        {/* Navigation & Breadcrumbs */}
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <PropertyBreadcrumbs property={property} />
           <Link
             href="/"
-            className="inline-flex items-center space-x-2 text-xs font-bold text-[#5E1754] hover:text-[#E85D04] transition-colors bg-white border border-slate-200 px-4 py-2 rounded-full shadow-sm"
+            className="inline-flex items-center space-x-1.5 text-xs font-bold text-slate-600 hover:text-[#E85D04] transition-colors bg-white border border-slate-200 px-3.5 py-1.5 rounded-full shadow-xs mb-6 flex-shrink-0"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="w-3.5 h-3.5" />
             <span>Volver al Catálogo</span>
           </Link>
         </div>
@@ -523,7 +531,7 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
         {/* Similar Properties Section */}
         {similarProperties.length > 0 && (
           <div className="mt-12 sm:mt-16 pt-8 border-t border-slate-200">
-            <div className="flex items-center justify-between mb-6 text-left">
+            <div className="flex items-center justify-between mb-4 sm:mb-6 text-left">
               <div>
                 <span className="text-xs font-black uppercase tracking-wider text-[#E85D04]">
                   Te Puede Interesar
@@ -532,22 +540,61 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                   Propiedades Similares
                 </h3>
               </div>
-              <Link
-                href="/#catalogo"
-                className="hidden sm:inline-flex items-center space-x-1.5 text-xs font-extrabold text-[#5E1754] hover:text-[#E85D04] bg-purple-50 hover:bg-purple-100 px-3.5 py-1.5 rounded-full transition-colors"
-              >
-                <span>Ver todo el catálogo</span>
-                <span>➔</span>
-              </Link>
+              <div className="flex items-center space-x-2">
+                {/* Mobile Swipe Hint Badge */}
+                {similarProperties.length > 1 && (
+                  <span className="sm:hidden inline-flex items-center space-x-1 text-[10px] font-extrabold text-[#E85D04] bg-orange-50 border border-orange-200/60 px-2.5 py-1 rounded-full animate-pulse">
+                    <span>Deslizá</span>
+                    <span>➔</span>
+                  </span>
+                )}
+                <Link
+                  href="/#catalogo"
+                  className="hidden sm:inline-flex items-center space-x-1.5 text-xs font-extrabold text-[#5E1754] hover:text-[#E85D04] bg-purple-50 hover:bg-purple-100 px-3.5 py-1.5 rounded-full transition-colors"
+                >
+                  <span>Ver todo el catálogo</span>
+                  <span>➔</span>
+                </Link>
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Mobile horizontal swipe track with card peek & Desktop responsive grid */}
+            <div className="flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-6 sm:pb-0">
               {similarProperties.map((prop, idx) => (
-                <PropertyCard key={prop.id} property={prop} index={idx} />
+                <div key={prop.id} className="w-[82vw] max-w-[340px] flex-shrink-0 snap-start sm:w-auto sm:max-w-none flex flex-col">
+                  <PropertyCard property={prop} index={idx} />
+                </div>
               ))}
             </div>
           </div>
         )}
+
+        {/* Contextual SEO Pillar Link Banner (Interlinking para Google) */}
+        {(() => {
+          const pillar = getPillarPageForProperty(property);
+          return (
+            <div className="mt-12 sm:mt-16 bg-gradient-to-r from-purple-50 via-slate-50 to-orange-50/50 rounded-3xl p-6 sm:p-8 border border-purple-100/80 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+              <div>
+                <span className="text-xs font-black uppercase tracking-wider text-[#E85D04] block">
+                  Explorá el Mercado en San José
+                </span>
+                <h4 className="text-base sm:text-lg font-extrabold text-[#5E1754] mt-1">
+                  ¿Buscás más opciones de {pillar.shortTitle.toLowerCase()}?
+                </h4>
+                <p className="text-xs text-slate-500 font-medium mt-0.5">
+                  Conocé nuestro catálogo completo y actualizado de {pillar.title.toLowerCase()}.
+                </p>
+              </div>
+              <Link
+                href={pillar.href}
+                className="inline-flex items-center space-x-2 bg-[#5E1754] hover:bg-[#43123C] text-white text-xs font-black px-6 py-3 rounded-2xl shadow-md hover:shadow-lg transition-all flex-shrink-0 active:scale-95 cursor-pointer"
+              >
+                <span>Ver {pillar.title}</span>
+                <span>➔</span>
+              </Link>
+            </div>
+          );
+        })()}
 
       </main>
 

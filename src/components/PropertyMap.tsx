@@ -128,11 +128,17 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
 
       {/* Leaflet Map React Container */}
       <div className={`w-full ${heightClass}`}>
+        <style>{`
+          .leaflet-control-attribution {
+            display: none !important;
+          }
+        `}</style>
         <MapContainer
           center={[lat, lng]}
           zoom={zoom}
           scrollWheelZoom={false}
           zoomControl={false}
+          attributionControl={false}
           className="w-full h-full"
         >
           <TileLayer
@@ -140,6 +146,14 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
             url={tileLayers[mapType].url}
             maxZoom={19}
           />
+          {mapType === 'satellite' && (
+            <TileLayer
+              attribution='&copy; CARTO'
+              url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png"
+              maxZoom={19}
+              opacity={0.9}
+            />
+          )}
 
           {/* Zoom Control posicionado limpiamente en bottomright */}
           <ZoomControl position="bottomright" />

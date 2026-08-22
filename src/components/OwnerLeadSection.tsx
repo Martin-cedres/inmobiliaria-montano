@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Calculator, CheckCircle2, Send, Building, X } from 'lucide-react';
+import { Search, Calculator, Send, Building, X } from 'lucide-react';
 import { MONTAÑO_WHATSAPP_PHONE } from '@/utils/whatsapp';
 
 export const OwnerLeadSection: React.FC = () => {
@@ -34,7 +34,7 @@ export const OwnerLeadSection: React.FC = () => {
           </div>
           <h4 className="text-lg font-black text-slate-900">¡Solicitud enviada a WhatsApp!</h4>
           <p className="text-xs text-slate-600">
-            Nos pondremos en contacto contigo a la brevedad para coordinar la tasación.
+            Nos pondremos en contacto contigo de forma inmediata para coordinar la tasación.
           </p>
           <button
             onClick={() => setSubmitted(false)}
@@ -51,7 +51,7 @@ export const OwnerLeadSection: React.FC = () => {
               <input
                 type="text"
                 required
-                placeholder="ej. Carlos Montaño"
+                placeholder="ej. Juan Pérez"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-base sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5e1754]"
@@ -123,10 +123,10 @@ export const OwnerLeadSection: React.FC = () => {
 
           <button
             type="submit"
-            className="w-full bg-[#e85d04] hover:bg-[#ff7518] active:scale-98 text-white font-black py-3.5 rounded-xl shadow-lg hover:shadow-orange-500/20 transition-all flex items-center justify-center space-x-2 text-sm sm:text-base mt-2"
+            className="w-full bg-[#e85d04] hover:bg-[#ff7518] active:scale-98 text-white font-black py-3.5 rounded-xl shadow-lg hover:shadow-orange-500/20 transition-all flex items-center justify-center space-x-2 text-sm sm:text-base mt-2 cursor-pointer"
           >
             <Send className="w-4 h-4" />
-            <span>Enviar Solicitud por WhatsApp</span>
+            <span>Solicitar Tasación con Respuesta Inmediata</span>
           </button>
         </form>
       )}
@@ -145,47 +145,21 @@ export const OwnerLeadSection: React.FC = () => {
           {/* Left Column - Copy & Trust Factors */}
           <div className="md:col-span-6 space-y-6 text-left">
             <span className="inline-flex items-center space-x-2 bg-amber-400/15 text-amber-300 border border-amber-400/30 px-3.5 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-wider">
-              <Calculator className="w-4 h-4 text-amber-400" />
-              <span>Para Propietarios en San José</span>
+              <Search className="w-4 h-4 text-amber-400" />
+              <span>Alta Demanda • Respuesta Inmediata</span>
             </span>
 
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight">
-              ¿Querés vender o alquilar tu propiedad?
+              ¿Querés vender o alquilar tu propiedad? <br className="hidden sm:inline" />
+              <span className="text-amber-300">Contamos con alta demanda de propiedades.</span>
             </h2>
 
             <p className="text-slate-200 text-sm sm:text-base leading-relaxed">
-              En <strong className="text-amber-300">Inmobiliaria Montaño</strong> valuamos tu inmueble con criterio técnico real y la máxima difusión digital. Solicitá tu tasación sin compromiso.
+              Tasamos tu inmueble con criterio técnico real y te brindamos <strong className="text-white font-bold">respuesta inmediata</strong> para comercializarlo con máxima difusión.
             </p>
 
-            <div className="space-y-3.5 pt-2">
-              <div className="flex items-start space-x-3">
-                <span className="p-1 rounded-lg bg-amber-400/20 text-amber-300 flex-shrink-0 mt-0.5">
-                  <CheckCircle2 className="w-4 h-4" />
-                </span>
-                <span className="text-xs sm:text-sm font-semibold text-slate-100">
-                  Tasaciones profesionales precisas adaptadas al mercado local de San José.
-                </span>
-              </div>
-              <div className="flex items-start space-x-3">
-                <span className="p-1 rounded-lg bg-amber-400/20 text-amber-300 flex-shrink-0 mt-0.5">
-                  <CheckCircle2 className="w-4 h-4" />
-                </span>
-                <span className="text-xs sm:text-sm font-semibold text-slate-100">
-                  Difusión masiva en web optimizada, redes sociales y portales líderes.
-                </span>
-              </div>
-              <div className="flex items-start space-x-3">
-                <span className="p-1 rounded-lg bg-amber-400/20 text-amber-300 flex-shrink-0 mt-0.5">
-                  <CheckCircle2 className="w-4 h-4" />
-                </span>
-                <span className="text-xs sm:text-sm font-semibold text-slate-100">
-                  Asesoramiento legal, notarial y acompañamiento en todo el proceso.
-                </span>
-              </div>
-            </div>
-
             {/* Personal Guarantee Quote Card from Daniel Montaño */}
-            <div className="pt-3">
+            <div className="pt-2">
               <div className="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-4 sm:p-5 flex items-center space-x-4 shadow-xl">
                 {/* Circular Avatar of Daniel with Orange Ring */}
                 <div className="flex-shrink-0">
@@ -201,7 +175,7 @@ export const OwnerLeadSection: React.FC = () => {
                 {/* Quote & Signature */}
                 <div className="text-left space-y-1.5 overflow-hidden">
                   <p className="text-xs sm:text-sm text-slate-100 italic leading-snug">
-                    "Me comprometo personalmente a brindarte una tasación justa, honesta y sin falsas expectativas para defender el verdadero valor de tu propiedad."
+                    "Tasamos tu inmueble con valores reales de mercado, sin falsas expectativas y defendiendo el verdadero valor de tu propiedad."
                   </p>
                   <div className="pt-1.5 space-y-0.5">
                     <p className="font-black text-white text-xs sm:text-sm tracking-wide leading-tight">
@@ -218,15 +192,15 @@ export const OwnerLeadSection: React.FC = () => {
             {/* Mobile Compact High-Converting CTA Card (< md:hidden) */}
             <div className="md:hidden mt-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-5 text-center space-y-3.5 shadow-2xl">
               <div className="inline-flex items-center space-x-2 bg-amber-400/20 text-amber-300 border border-amber-400/30 px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider">
-                <Building className="w-3.5 h-3.5" />
-                <span>Tasación / Publicación Rápida</span>
+                <Search className="w-3.5 h-3.5" />
+                <span>Alta Demanda • Respuesta Inmediata</span>
               </div>
 
               <h3 className="text-xl font-black text-white leading-snug">
-                ¿Querés conocer el valor real de tu inmueble?
+                ¿Querés vender o alquilar tu propiedad?
               </h3>
               <p className="text-xs text-slate-200 leading-relaxed">
-                Completá tus datos en menos de 1 minuto y te contactamos al instante.
+                Contamos con alta demanda de propiedades. Recibí tu tasación y asesoramiento sin demoras.
               </p>
 
               <div className="pt-1">
@@ -236,7 +210,7 @@ export const OwnerLeadSection: React.FC = () => {
                   className="w-full bg-[#E85D04] hover:bg-[#FF8500] active:scale-95 text-white font-black py-3.5 px-4 rounded-2xl shadow-xl flex items-center justify-center space-x-2 text-sm transition-all"
                 >
                   <Calculator className="w-4.5 h-4.5" />
-                  <span>Solicitar Tasación por Formulario</span>
+                  <span>Solicitar Tasación con Respuesta Inmediata</span>
                 </button>
               </div>
             </div>
@@ -248,7 +222,7 @@ export const OwnerLeadSection: React.FC = () => {
               <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
                 <div>
                   <h3 className="text-xl font-black text-[#5e1754]">Solicitar Tasación / Publicar</h3>
-                  <p className="text-xs text-slate-500 font-medium mt-0.5">Completá los datos y te contactamos al instante.</p>
+                  <p className="text-xs text-slate-500 font-medium mt-0.5">Completá los datos y te respondemos de inmediato.</p>
                 </div>
                 <div className="w-10 h-10 bg-purple-50 rounded-full flex items-center justify-center text-[#5e1754]">
                   <Building className="w-5 h-5" />
@@ -281,7 +255,7 @@ export const OwnerLeadSection: React.FC = () => {
               </div>
               <div>
                 <h3 className="text-lg font-black text-[#5e1754] leading-tight">Solicitar Tasación / Publicar</h3>
-                <p className="text-xs text-slate-500 font-medium mt-0.5">Completá los datos y te contactamos al instante.</p>
+                <p className="text-xs text-slate-500 font-medium mt-0.5">Completá los datos y te respondemos de inmediato.</p>
               </div>
             </div>
 

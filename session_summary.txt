@@ -531,10 +531,37 @@
   7. `PropertyDescriptionRenderer.tsx`: Tipografía optimizada a `text-sm sm:text-base` con viñetas limpias y visualización completa y transparente del 100% del texto sin interrupciones ni colapsos artificiales.
   8. `PropertyGallery.tsx`: Proporciones óptimas `aspect-[4/3] sm:aspect-auto` y soporte de safe areas (`safe-area-inset-top` / `safe-area-inset-bottom`) en el Lightbox.
   9. `SharePropertyModal.tsx`: Integrada la Web Share API nativa (`navigator.share`) para compartir en 1 toque en smartphones con fallback a modal en PC.
-  10. `propiedad/[slug]/page.tsx`: Barra fija inferior adaptada con `pb-[max(0.75rem,env(safe-area-inset-bottom))]` (evita solapar la barra Home de iPhone) e incorporado el módulo universal de *Propiedades Similares* (con epígrafe *"Te Puede Interesar"* sin ataduras geográficas fijas).
+  10. `propiedad/[slug]/page.tsx`: Barra fija inferior adaptada con `pb-[max(0.75rem,env(safe-area-inset-bottom))]` e incorporado el carrusel táctil horizontal de *Propiedades Similares* (filtrado estricto por misma categoría, ordenado por cercanía de precio, con asomo visual de tarjeta `w-[82vw]` e indicador *"Deslizá ➔"* en móviles).
+- Refactorizada la sección de propietarios `OwnerLeadSection.tsx`:
+  - Titular conciso y directo: *¿Querés vender o alquilar tu propiedad? Contamos con alta demanda de propiedades.*
+  - Badge: *Alta Demanda • Respuesta Inmediata*.
+  - Texto breve y al grano con valor de respuesta inmediata.
+  - Eliminados los 3 puntos de viñetas para un diseño limpio, directo y de máxima conversión.
+  - Corregido el placeholder del campo nombre a un ejemplo neutro (`ej. Juan Pérez`).
+  - Cita de Daniel Montaño optimizada sin redundancias: *"Tasamos tu inmueble con valores reales de mercado, sin falsas expectativas y defendiendo el verdadero valor de tu propiedad."*
+  - Botón de acción: *Solicitar Tasación con Respuesta Inmediata*.
+- Actualizado el catálogo en `CatalogSection.tsx` con el epígrafe *CATÁLOGO INMOBILIARIO* y el titular *Encontrá tu Próximo Inmueble*, eliminando barreras geográficas restrictivas en el Home.
+- Modernización integral del Mapa Interactivo (`CatalogMap.tsx` y `PropertyMap.tsx`):
+  - Implementado el ajuste dinámico de encuadre (`fitBounds` con padding de 50px y tope de zoom 15) que abarca automáticamente el 100% de las propiedades distantes en el mapa.
+  - Integradas transiciones cinemáticas fluidas (`flyTo` y `flyToBounds`) con desaceleración suave.
+  - Creada la botonera flotante glassmorphism con botón de *Recentrar*, selector de capas *Callejero Voyager* vs *Satélite HD Esri* y controles táctiles de zoom.
+  - Ocultados completamente los textos de atribución de fuentes tanto en la vista callejera como en la satelital para una experiencia visual limpia y minimalista.
+- Optimización integral de SEO Técnico y Posicionamiento Local (Uruguay):
+  - Ajustadas las fórmulas de `<title>` (máx. 60 chars) y `<meta description>` (140-155 chars) con keywords locales y llamado a la acción comercial directo.
+  - Creado el componente [`src/components/seo/PropertyBreadcrumbs.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/seo/PropertyBreadcrumbs.tsx) con navegación visual y marcado Schema.org `@type: "BreadcrumbList"`.
+  - Implementado el bloque de Interlinking Contextual de retorno hacia las páginas pilares en todas las fichas de propiedad.
 - Verificada la compilación completa de producción con `npm run build` (34 rutas compiladas con código 0 y 0 errores de TypeScript).
-- Creado el documento de verificación y recorrido [`walkthrough.md`](file:///C:/Users/LENOVO/.gemini/antigravity/brain/92480682-bacf-4aae-b5e5-ac3bd97faff1/walkthrough.md).
-- Cambios subidos a GitHub (`origin/main`, commit `818c547`), disparando el despliegue automático en Vercel.
+- Actualizado el documento de recorrido y verificación [`walkthrough.md`](file:///C:/Users/LENOVO/.gemini/antigravity/brain/92480682-bacf-4aae-b5e5-ac3bd97faff1/walkthrough.md).
+
+
+
+
+
+
+
+
+
+
 
 
 

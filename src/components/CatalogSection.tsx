@@ -76,12 +76,12 @@ export function CatalogSection({ initialProperties }: CatalogSectionProps) {
         {/* Section Title & View Switcher Header */}
         <div className="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4 text-left">
           <div>
-            <div className="flex items-center space-x-2 text-[#5E1754] font-bold text-xs uppercase tracking-wider mb-1.5">
+            <div className="inline-flex items-center space-x-1.5 text-xs font-black uppercase tracking-wider text-[#E85D04] mb-2">
               <Building2 className="w-4 h-4 text-[#E85D04]" />
               <span>Catálogo Inmobiliario</span>
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
-              Propiedades en San José de Mayo
+              Encontrá tu Próximo Inmueble
             </h2>
           </div>
 

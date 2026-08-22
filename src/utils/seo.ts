@@ -4,6 +4,84 @@ import { Metadata } from 'next';
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
 
 /**
+ * Mapea una propiedad a su página pilar SEO correspondiente para enlazado interno y migas de pan.
+ */
+export function getPillarPageForProperty(property: Property): { title: string; href: string; shortTitle: string } {
+  if (property.operation === 'alquiler') {
+    return {
+      title: 'Alquileres en San José de Mayo',
+      shortTitle: 'Alquileres',
+      href: '/alquileres-san-jose-de-mayo',
+    };
+  }
+
+  switch (property.category) {
+    case 'terreno':
+    case 'chacra':
+      return {
+        title: 'Terrenos y Chacras en San José',
+        shortTitle: 'Terrenos y Chacras',
+        href: '/terrenos-y-chacras-san-jose',
+      };
+    case 'local':
+    case 'deposito':
+      return {
+        title: 'Locales Comerciales y Galpones en San José',
+        shortTitle: 'Locales y Galpones',
+        href: '/locales-comerciales-y-galpones-san-jose',
+      };
+    case 'modulo':
+    case 'proyecto':
+      return {
+        title: 'Proyectos y Viviendas Modulares en San José',
+        shortTitle: 'Proyectos y Módulos',
+        href: '/proyectos-y-viviendas-modulares-san-jose',
+      };
+    case 'casa':
+    case 'apartamento':
+    default:
+      return {
+        title: 'Casas en Venta en San José de Mayo',
+        shortTitle: 'Casas en Venta',
+        href: '/casas-en-venta-san-jose-de-mayo',
+      };
+  }
+}
+
+/**
+ * Genera el Schema.org JSON-LD de BreadcrumbList para una ficha de propiedad.
+ */
+export function generatePropertyBreadcrumbJsonLd(property: Property) {
+  const pillar = getPillarPageForProperty(property);
+  const propertyUrl = `${BASE_URL}/propiedad/${property.slug}`;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Inicio',
+        item: BASE_URL,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: pillar.title,
+        item: `${BASE_URL}${pillar.href}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: property.title,
+        item: propertyUrl,
+      },
+    ],
+  };
+}
+
+/**
  * Genera un slug SEO amigable optimizado con Palabras Clave Locales.
  * Ej: "casa-venta-2-dormitorios-arroyo-mallada-san-jose-mon-101"
  */
@@ -27,33 +105,32 @@ export function generatePropertySlug(title: string, codeRef: string, category?: 
 }
 
 /**
- * Genera una recomendación de Título SEO basada en fórmulas comerciales por categoría.
+ * Genera una recomendación de Título SEO basada en fórmulas comerciales por categoría (máx 60 caracteres).
  */
 export function generateSmartSeoTitle(p: Partial<Property>): string {
-  const category = (p.category || 'casa').toUpperCase();
+  const categoryRaw = p.category || 'casa';
+  const categoryFormatted = categoryRaw.charAt(0).toUpperCase() + categoryRaw.slice(1);
   const operation = p.operation === 'alquiler' ? 'Alquiler' : 'Venta';
-  const dorms = p.features?.bedrooms ? `${p.features.bedrooms} Dorms` : '';
   const hood = p.location?.neighborhood || 'San José de Mayo';
-  const isBank = p.features?.bankCreditEligible ? 'Apta Banco' : p.features?.titlesUpToDate ? 'Títulos al Día' : '';
 
   if (p.category === 'terreno') {
     const area = p.features?.plotAreaM2 ? `${p.features.plotAreaM2}m²` : '';
-    return `Terreno de ${area} en ${hood} | Con Servicios | San José`.substring(0, 60);
+    const title = `Terreno ${area ? `de ${area} ` : ''}en ${hood}, San José | Inmobiliaria Montaño`;
+    return title.length <= 60 ? title : title.substring(0, 57) + '...';
   }
 
   if (p.category === 'chacra') {
     const ha = p.features?.plotAreaM2 ? `${p.features.plotAreaM2} Ha` : '';
-    const coneat = p.features?.coneatIndex ? `CONEAT ${p.features.coneatIndex}` : '';
-    return `Chacra de ${ha} en ${hood} | ${coneat || 'San José'}`.substring(0, 60);
+    const title = `Chacra ${ha ? `de ${ha} ` : ''}en ${hood}, San José | Inmobiliaria Montaño`;
+    return title.length <= 60 ? title : title.substring(0, 57) + '...';
   }
 
-  if (p.operation === 'alquiler') {
-    const guar = p.guarantees && p.guarantees.length > 0 ? `Garantía ${p.guarantees[0]}` : 'Excelente Ubicación';
-    return `Alquiler de ${category} en ${hood} | ${guar} - San José`.substring(0, 60);
-  }
+  const dorms = p.features?.bedrooms ? `${p.features.bedrooms} Dorms ` : '';
+  const candidate = `${categoryFormatted} ${dorms}en ${operation} en ${hood} | Inmobiliaria Montaño`;
+  if (candidate.length <= 60) return candidate;
 
-  const badge = isBank || 'Inmobiliaria Montaño';
-  return `${category} de ${dorms} en ${hood} | ${badge}`.substring(0, 60);
+  const fallback = `${categoryFormatted} en ${operation} en ${hood} | Inmobiliaria Montaño`;
+  return fallback.length <= 60 ? fallback : fallback.substring(0, 57) + '...';
 }
 
 /**
@@ -81,7 +158,7 @@ export function generateSmartSeoDescription(p: Partial<Property>): string {
   const attrStr = keyAttr ? ` ${keyAttr}` : '';
   const priceStr = priceFormatted ? ` (${priceFormatted})` : '';
 
-  return `Oportunidad en ${hood}, ${city}: ${category} ${dorms}${attrStr}${priceStr}. Coordiná tu visita con Daniel Montaño.`.substring(0, 155);
+  return `Oportunidad en ${hood}, ${city}: ${category} ${dorms}${attrStr}${priceStr}. Coordiná tu visita con Daniel Montaño al 092 776 715.`.substring(0, 155);
 }
 
 /**
@@ -181,17 +258,8 @@ export function generatePropertyMetadata(property: Property): Metadata {
   const imageUrl = rawImg.startsWith('http') ? rawImg : `${BASE_URL}${rawImg}`;
   const canonicalUrl = `${BASE_URL}/propiedad/${property.slug}`;
 
-  const priceMode = property.price?.priceMode || (property.price?.amount === 0 ? 'consultar' : 'visible');
-  const hasValidPrice = Boolean(property.price?.amount && property.price.amount > 0 && priceMode !== 'consultar' && priceMode !== 'reservado');
-
-  const defaultPriceStr =
-    !hasValidPrice ? '' :
-    priceMode === 'desde' ? ` — Desde ${property.price?.currency} $${property.price?.amount?.toLocaleString('es-UY')}` :
-    ` — ${property.price?.currency} $${property.price?.amount?.toLocaleString('es-UY')}`;
-
-  const titleStr = property.seoTitle || `${property.title}${defaultPriceStr} | Inmobiliaria Montaño`;
-  const cleanDesc = stripMarkdown(property.description);
-  const descriptionStr = property.seoDescription || `Oportunidad en ${property.location?.neighborhood}, San José de Mayo. Ref. #${property.codeRef}. ${cleanDesc.substring(0, 140)}...`;
+  const titleStr = property.seoTitle || generateSmartSeoTitle(property);
+  const descriptionStr = property.seoDescription || generateSmartSeoDescription(property);
 
   return {
     title: titleStr,
