@@ -534,6 +534,8 @@
   10. `propiedad/[slug]/page.tsx`: Barra fija inferior adaptada con `pb-[max(0.75rem,env(safe-area-inset-bottom))]` (evita solapar la barra Home de iPhone) e incorporado el módulo universal de *Propiedades Similares* (con epígrafe *"Te Puede Interesar"* sin ataduras geográficas fijas).
 - Verificada la compilación completa de producción con `npm run build` (34 rutas compiladas con código 0 y 0 errores de TypeScript).
 - Creado el documento de verificación y recorrido [`walkthrough.md`](file:///C:/Users/LENOVO/.gemini/antigravity/brain/92480682-bacf-4aae-b5e5-ac3bd97faff1/walkthrough.md).
+- Cambios subidos a GitHub (`origin/main`, commit `818c547`), disparando el despliegue automático en Vercel.
+
 
 
 
