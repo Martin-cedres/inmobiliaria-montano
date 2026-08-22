@@ -51,7 +51,19 @@ export const SharePropertyModal: React.FC<SharePropertyModalProps> = ({
   // Redacción comercial optimizada con foto y tarjeta rica en WhatsApp
   const shareText = `🏡 Mirá esta propiedad ${operationText} en Inmobiliaria Montaño:\n\n*${property.title}*\n${priceLine}📍 *Ubicación:* ${property.location.neighborhood}, ${property.location.city}\n🔖 *Ref:* #${property.codeRef}\n\n🔗 *Ver fotos y detalles:* ${prodShareUrl}`;
 
-  const handleShareClick = () => {
+  const handleShareClick = async () => {
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      try {
+        await navigator.share({
+          title: `Inmobiliaria Montaño - Ref. #${property.codeRef}: ${property.title}`,
+          text: `🏡 Mirá esta propiedad ${operationText} en Inmobiliaria Montaño:\n*${property.title}*\n${priceLine}📍 ${property.location.neighborhood}, ${property.location.city}`,
+          url: prodShareUrl,
+        });
+        return;
+      } catch (err: any) {
+        if (err?.name === 'AbortError') return;
+      }
+    }
     setIsOpen(true);
   };
 

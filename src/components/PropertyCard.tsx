@@ -163,7 +163,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
         </div>
 
         {/* Card Body Info */}
-        <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3.5 text-left">
+        <div className="p-3.5 sm:p-5 flex-1 flex flex-col justify-between space-y-3 text-left">
           <div>
             {/* Header Row: Category Label (Left) & Ref Code (Right) */}
             <div className="flex items-center justify-between mb-1.5">
@@ -222,221 +222,111 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
               {property.title}
             </h3>
 
-            {/* Unified Features & Badges Grid (Un Solo Recuadro Gris con Iconos Homogéneos) */}
-            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 my-3 py-2 px-2.5 bg-slate-50 rounded-xl text-[11px] sm:text-xs font-semibold text-slate-700 border border-slate-100">
-              {/* Badges de Gran Predio / Industrial / Rural (Opcionales) */}
-              {(property.features?.hectaresAmount || property.features?.isHectares || (property.features?.plotAreaM2 && property.features.plotAreaM2 >= 10000)) ? (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap text-slate-700" title="Superficie Total">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <Maximize2 className="w-3.5 h-3.5" />
-                  </span>
-                  <span>
-                    {property.features.hectaresAmount
-                      ? `${property.features.hectaresAmount.toLocaleString('es-UY')} Ha`
-                      : property.features.isHectares && property.features.plotAreaM2 && property.features.plotAreaM2 < 1000
-                      ? `${property.features.plotAreaM2} Ha`
-                      : `${((property.features?.plotAreaM2 || 0) / 10000).toLocaleString('es-UY')} Ha`}
-                  </span>
-                </div>
-              ) : null}
+            {/* Compact Primary Features Bar */}
+            {(() => {
+              const f = property.features || {};
+              const items: { icon: React.ElementType; label: string; title: string }[] = [];
 
-              {property.features?.fractionable ? (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap text-slate-700" title="Fraccionamiento">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <LayoutGrid className="w-3.5 h-3.5" />
-                  </span>
-                  <span>
-                    {property.features?.minFractionM2
-                      ? `Fracc. desde ${property.features.minFractionM2.toLocaleString('es-UY')} m²`
-                      : 'Fraccionable'}
-                  </span>
-                </div>
-              ) : null}
+              // 1. Superficie Rural / Hectáreas
+              if (f.hectaresAmount || f.isHectares || (f.plotAreaM2 && f.plotAreaM2 >= 10000)) {
+                const ha = f.hectaresAmount
+                  ? `${f.hectaresAmount.toLocaleString('es-UY')} Ha`
+                  : f.isHectares && f.plotAreaM2 && f.plotAreaM2 < 1000
+                  ? `${f.plotAreaM2} Ha`
+                  : `${((f.plotAreaM2 || 0) / 10000).toLocaleString('es-UY')} Ha`;
+                items.push({ icon: Maximize2, label: ha, title: 'Superficie Rural' });
+              }
 
-              {property.features?.routeFrontage ? (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap text-slate-700" title="Frente sobre Ruta / Conectividad">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <Milestone className="w-3.5 h-3.5" />
-                  </span>
-                  <span>{property.features.routeFrontage}</span>
-                </div>
-              ) : null}
+              // 2. Dormitorios
+              if (f.bedrooms && f.bedrooms > 0) {
+                items.push({ icon: Bed, label: `${f.bedrooms} Dorm`, title: 'Dormitorios' });
+              }
 
-              {!!property.features?.pricePerM2 && property.features.pricePerM2 > 0 ? (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap text-slate-700" title="Precio por Unidad">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <DollarSign className="w-3.5 h-3.5" />
-                  </span>
-                  <span>
-                    USD {property.features.pricePerM2.toLocaleString('es-UY')} / {property.features.priceUnitType || 'm²'}
-                  </span>
-                </div>
-              ) : null}
+              // 3. Baños
+              if (f.bathrooms && f.bathrooms > 0) {
+                items.push({ icon: Bath, label: `${f.bathrooms} Baño${f.bathrooms > 1 ? 's' : ''}`, title: 'Baños' });
+              }
 
-              {property.features?.soilTopography ? (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap text-slate-700" title="Topografía">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <Layers className="w-3.5 h-3.5" />
-                  </span>
-                  <span>{property.features.soilTopography}</span>
-                </div>
-              ) : null}
+              // 4. Superficie Edificada
+              if (f.builtAreaM2 && f.builtAreaM2 > 0 && items.length < 3) {
+                items.push({ icon: Building, label: `${f.builtAreaM2} m² edif.`, title: 'Superficie Edificada' });
+              }
 
-              {property.features?.gatedPerimeter ? (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap text-slate-700" title="Seguridad">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <ShieldCheck className="w-3.5 h-3.5" />
-                  </span>
-                  <span>Predio Cerrado</span>
-                </div>
-              ) : null}
+              // 5. Superficie Terreno (si no es campo y no se superó límite)
+              if (!f.hectaresAmount && !f.isHectares && f.plotAreaM2 && f.plotAreaM2 > 0 && items.length < 3) {
+                items.push({ icon: Maximize2, label: `${f.plotAreaM2.toLocaleString('es-UY')} m² terr.`, title: 'Superficie Terreno' });
+              }
 
-              {/* Comodidades estándar */}
-              {!!property.features.bedrooms && property.features.bedrooms > 0 && (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Dormitorios">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <Bed className="w-3.5 h-3.5" />
-                  </span>
-                  <span>{property.features.bedrooms} Dorm</span>
+              // 6. Cochera / Garage
+              if ((f.cocheraTechada || f.garage || f.cochera || f.carAccess) && items.length < 3) {
+                items.push({ icon: Car, label: f.cocheraTechada || f.garage ? 'Garage' : 'Cochera', title: 'Acceso Vehicular' });
+              }
+
+              // 7. Fondo / Barbacoa / Parrillero (si aún hay espacio)
+              if ((f.barbacoa || f.parrillero || f.barbecue) && items.length < 3) {
+                items.push({ icon: Flame, label: f.barbacoa ? 'Barbacoa' : 'Parrillero', title: 'Parrillero / Barbacoa' });
+              } else if ((f.fondo || f.garden || f.patio) && items.length < 3) {
+                items.push({ icon: Trees, label: f.fondo || f.garden ? 'Fondo' : 'Patio', title: 'Espacio Exterior' });
+              }
+
+              // 8. Títulos / Apta Crédito (si quedan huecos)
+              if (f.bankCreditEligible && items.length < 3) {
+                items.push({ icon: Landmark, label: 'Apta Banco', title: 'Apta Crédito Bancario' });
+              }
+
+              // Conteo total de características
+              let totalCount = 0;
+              if (f.bedrooms) totalCount++;
+              if (f.bathrooms) totalCount++;
+              if (f.floors && f.floors > 1) totalCount++;
+              if (f.builtAreaM2) totalCount++;
+              if (f.plotAreaM2 || f.hectaresAmount) totalCount++;
+              if (f.frontMeters || f.routeFrontage) totalCount++;
+              if (f.cochera || f.cocheraTechada || f.garage || f.carAccess) totalCount++;
+              if (f.fondo || f.garden || f.patio) totalCount++;
+              if (f.barbacoa || f.parrillero || f.barbecue) totalCount++;
+              if (f.oseWater) totalCount++;
+              if (f.uteElectric) totalCount++;
+              if (f.sanitation) totalCount++;
+              if (f.fiberOptic) totalCount++;
+              if (f.titlesUpToDate) totalCount++;
+              if (f.bankCreditEligible) totalCount++;
+              if (f.acceptsTradeIn) totalCount++;
+              if (f.fractionable) totalCount++;
+              if (f.gatedPerimeter || f.perimeterFence) totalCount++;
+              if (property.guarantees && property.guarantees.length > 0) totalCount++;
+
+              const displayItems = items.slice(0, 3);
+              const remaining = Math.max(0, totalCount - displayItems.length);
+
+              if (displayItems.length === 0) return null;
+
+              return (
+                <div className="flex items-center gap-1.5 my-2.5 py-1.5 px-2 bg-slate-50 rounded-xl text-[11px] font-semibold text-slate-700 border border-slate-100 overflow-hidden">
+                  {displayItems.map((item, idx) => {
+                    const Icon = item.icon;
+                    return (
+                      <div
+                        key={idx}
+                        className="flex items-center space-x-1 px-1.5 py-0.5 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap min-w-0"
+                        title={item.title}
+                      >
+                        <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754] flex-shrink-0">
+                          <Icon className="w-3 h-3" />
+                        </span>
+                        <span className="truncate">{item.label}</span>
+                      </div>
+                    );
+                  })}
+
+                  {remaining > 0 && (
+                    <span className="text-[10px] font-bold text-[#5e1754] bg-[#5e1754]/10 px-1.5 py-0.5 rounded-md flex-shrink-0 whitespace-nowrap" title="Ver todas las comodidades en la ficha">
+                      +{remaining} más
+                    </span>
+                  )}
                 </div>
-              )}
-              {!!property.features.bathrooms && property.features.bathrooms > 0 && (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Baños">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <Bath className="w-3.5 h-3.5" />
-                  </span>
-                  <span>{property.features.bathrooms} Baño</span>
-                </div>
-              )}
-              {!!property.features.floors && property.features.floors > 1 && (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Plantas / Pisos">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <Building className="w-3.5 h-3.5" />
-                  </span>
-                  <span>{property.features.floors} Plantas</span>
-                </div>
-              )}
-              {!!property.features.builtAreaM2 && property.features.builtAreaM2 > 0 && (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Superficie Edificada">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <Building className="w-3.5 h-3.5" />
-                  </span>
-                  <span>{property.features.builtAreaM2} m² edif.</span>
-                </div>
-              )}
-              {!property.features?.hectaresAmount && !property.features?.isHectares && !!property.features.plotAreaM2 && property.features.plotAreaM2 > 0 && (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Superficie del Terreno">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <Maximize2 className="w-3.5 h-3.5" />
-                  </span>
-                  <span>{property.features.plotAreaM2.toLocaleString('es-UY')} m² terr.</span>
-                </div>
-              )}
-              {!!property.features.frontMeters && property.features.frontMeters > 0 && !property.features.routeFrontage && (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Metros de Frente">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <Compass className="w-3.5 h-3.5" />
-                  </span>
-                  <span>{property.features.frontMeters}m Frente</span>
-                </div>
-              )}
-              {(property.features.fondo || property.features.garden) && (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Fondo">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <Trees className="w-3.5 h-3.5" />
-                  </span>
-                  <span>Fondo</span>
-                </div>
-              )}
-              {property.features.patio && (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Patio">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <Trees className="w-3.5 h-3.5" />
-                  </span>
-                  <span>Patio</span>
-                </div>
-              )}
-              {property.features.barbacoa && (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Barbacoa">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <Flame className="w-3.5 h-3.5" />
-                  </span>
-                  <span>Barbacoa</span>
-                </div>
-              )}
-              {(property.features.parrillero || property.features.barbecue) && (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Parrillero">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <Flame className="w-3.5 h-3.5" />
-                  </span>
-                  <span>Parrillero</span>
-                </div>
-              )}
-              {(property.features.cochera || (property.features.carAccess && !property.features.cocheraTechada && !property.features.garage)) && (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Cochera">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <Car className="w-3.5 h-3.5" />
-                  </span>
-                  <span>Cochera</span>
-                </div>
-              )}
-              {(property.features.cocheraTechada || property.features.garage) && (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Cochera Techada">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <Car className="w-3.5 h-3.5" />
-                  </span>
-                  <span>Cochera Techada</span>
-                </div>
-              )}
-              {property.features.oseWater && (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Agua de OSE">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <Droplets className="w-3.5 h-3.5" />
-                  </span>
-                  <span>Agua OSE</span>
-                </div>
-              )}
-              {!!property.features.coneatIndex && property.features.coneatIndex > 0 && (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Índice CONEAT">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <Trees className="w-3.5 h-3.5" />
-                  </span>
-                  <span>CONEAT {property.features.coneatIndex}</span>
-                </div>
-              )}
-              {property.guarantees && property.guarantees.length > 0 && (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Garantías Aceptadas">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <ShieldCheck className="w-3.5 h-3.5" />
-                  </span>
-                  <span>Garantías: {property.guarantees.join(', ')}</span>
-                </div>
-              )}
-              {property.features.titlesUpToDate && (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Títulos al Día">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <FileCheck className="w-3.5 h-3.5" />
-                  </span>
-                  <span>Títulos al Día</span>
-                </div>
-              )}
-              {property.features.bankCreditEligible && (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Apta Crédito Bancario">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <Landmark className="w-3.5 h-3.5" />
-                  </span>
-                  <span>Apta Crédito</span>
-                </div>
-              )}
-              {property.features.acceptsTradeIn && (
-                <div className="flex items-center space-x-1.5 px-2 py-1 bg-white rounded-lg border border-slate-200/60 shadow-2xs whitespace-nowrap" title="Acepta Permuta">
-                  <span className="p-0.5 rounded-md bg-[#5e1754]/10 text-[#5e1754]">
-                    <ArrowLeftRight className="w-3.5 h-3.5" />
-                  </span>
-                  <span>Acepta Permuta</span>
-                </div>
-              )}
-            </div>
+              );
+            })()}
           </div>
         </div>
       </Link>

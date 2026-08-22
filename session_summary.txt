@@ -504,3 +504,39 @@
      - Íconos y contenedores alineados 100% a la paleta de identidad visual de la web (`#5E1754` púrpura corporativo + `#E85D04` / `#FF6B00` naranja vibrante).
   6. Verificado con `npx tsc --noEmit` (0 errores) y `npm run build` (34 rutas compiladas exitosamente).
   7. Despliegue completado: Cambios subidos a GitHub (`origin/main`, commit `ef0f87a`).
+
+- **Auditoría de Consumo de Operaciones Vercel Blob (Advanced Requests):**
+  1. Analizado el aviso de Vercel sobre el 75% consumido de 2.000 operaciones en la cuenta `kamaluso`.
+  2. Mapeado el uso de `@vercel/blob` en el proyecto: la única invocación a `put()` ocurre en `src/app/api/upload/route.ts` al subir fotos manualmente. No existen bucles, cron jobs ni peticiones automáticas descontroladas en el código.
+  3. Identificadas las causas: cuota global por cuenta Vercel Hobby (2.000 ops compartidas entre todos los proyectos y navegación en el Dashboard de Vercel) y subida de galerías de fotos durante fases de pruebas.
+  4. Entregado diagnóstico con recomendaciones de optimización y alternativas ilimitadas gratuitas (Cloudflare R2 / Cloudinary / carga por URL).
+
+- **Guía de Migración de Almacenamiento (Cloudflare R2 / Cloudinary):**
+  1. Detallado el flujo conceptual y pasos de configuración para Cloudflare R2 (1.000.000 ops gratis/mes, $0 egress, compatible con S3).
+  2. Detallado el flujo para Cloudinary (25 GB / créditos gratis).
+  3. Explicadas las variables de entorno requeridas y la transición sin código.
+
+=== Sesión 2026-08-22 ===
+- Realizado diagnóstico y benchmarking exhaustivo de UX y diseño responsivo multi-dispositivo comparando la plataforma con los 5 líderes de la industria (Airbnb, Idealista, InfoCasas, MercadoLibre Inmuebles, Zillow).
+- Analizados puntos críticos en móviles (< 640px): reducción de altura de tarjetas (badges compactos), selector deslizable de categorías, safe area en iOS, soporte Web Share API nativo y colapso de texto largo en descripciones.
+- Analizada la arquitectura para tablets (640-834px), laptops (834-1280px con split view mapa/lista 60/40) y monitores grandes (≥1280px con cuadrícula mosaico 5 fotos 1+4), manteniendo intacta la paleta de marca y regla 60-30-10 de Inmobiliaria Montaño.
+- Iniciado y verificado el servidor de desarrollo local de Next.js (`npm run dev`) respondiendo correctamente en http://localhost:3000.
+- Implementada la optimización responsiva multi-dispositivo en todo el código fuente:
+  1. `layout.tsx`: Configurada la exportación de `viewport` (`width: device-width`, `initialScale: 1`, `themeColor: #5E1754`).
+  2. `OwnerLeadSection.tsx`: Corregido el bug de auto-zoom en iOS Safari (`text-base sm:text-sm` en todos los inputs y selects) y activado el formulario inline en tablets (`md:block`).
+  3. `HeroSearch.tsx`: Optimizado el padding superior e inferior en smartphones (`pt-20 pb-10 sm:pt-32 sm:pb-20`).
+  4. `CategoryChips.tsx`: Desarrollada la tira táctil horizontal deslizable con etiquetas responsivas inteligentes (`shortLabel` en laptops/tablets) y centrado simétrico `sm:justify-center`, garantizando que el 100% de las 9 categorías se visualicen completas sin recortes en los extremos tanto en PC como en móviles.
+  5. `PropertyCard.tsx`: Reemplazado el bloque de 20 badges por una barra compacta de métricas primarias (dormitorios, baños, m² y cochera) más píldora `+N más`, reduciendo la altura de la tarjeta en celulares de 700px a ~390px.
+  6. `CatalogSection.tsx`: En modo mapa, implementada la tarjeta flotante (*Snap Card*) en celulares al tocar cualquier pin del mapa, y habilitado el panel dividido en tablets (`md:`).
+  7. `PropertyDescriptionRenderer.tsx`: Tipografía optimizada a `text-sm sm:text-base` con viñetas limpias y visualización completa y transparente del 100% del texto sin interrupciones ni colapsos artificiales.
+  8. `PropertyGallery.tsx`: Proporciones óptimas `aspect-[4/3] sm:aspect-auto` y soporte de safe areas (`safe-area-inset-top` / `safe-area-inset-bottom`) en el Lightbox.
+  9. `SharePropertyModal.tsx`: Integrada la Web Share API nativa (`navigator.share`) para compartir en 1 toque en smartphones con fallback a modal en PC.
+  10. `propiedad/[slug]/page.tsx`: Barra fija inferior adaptada con `pb-[max(0.75rem,env(safe-area-inset-bottom))]` (evita solapar la barra Home de iPhone) e incorporado el módulo universal de *Propiedades Similares* (con epígrafe *"Te Puede Interesar"* sin ataduras geográficas fijas).
+- Verificada la compilación completa de producción con `npm run build` (34 rutas compiladas con código 0 y 0 errores de TypeScript).
+- Creado el documento de verificación y recorrido [`walkthrough.md`](file:///C:/Users/LENOVO/.gemini/antigravity/brain/92480682-bacf-4aae-b5e5-ac3bd97faff1/walkthrough.md).
+
+
+
+
+
+

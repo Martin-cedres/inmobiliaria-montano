@@ -127,10 +127,10 @@ export const PropertyGallery: React.FC<PropertyGalleryProps> = ({ property }) =>
   };
 
   return (
-    <div className="space-y-4 select-none">
+    <div className="space-y-3 sm:space-y-4 select-none">
       {/* Main Image Viewport with Touch Swipe & Hover Arrows */}
       <div 
-        className="relative h-80 sm:h-96 lg:h-[480px] bg-slate-100 rounded-3xl overflow-hidden shadow-xl border border-purple-100 group"
+        className="relative aspect-[4/3] sm:aspect-auto sm:h-96 lg:h-[480px] bg-slate-100 rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border border-purple-100 group"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -148,15 +148,15 @@ export const PropertyGallery: React.FC<PropertyGalleryProps> = ({ property }) =>
         />
 
         {/* Top Left: Operation Badge */}
-        <div className="absolute top-4 left-4 z-10 pointer-events-none">
-          <span className="bg-[#E85D04] text-white text-xs font-black uppercase px-3.5 py-1.5 rounded-full shadow">
+        <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10 pointer-events-none">
+          <span className="bg-[#E85D04] text-white text-[11px] sm:text-xs font-black uppercase px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full shadow">
             {property.operation === 'alquiler' ? 'Alquiler' : property.operation === 'proyecto' ? 'Proyecto' : 'En Venta'}
           </span>
         </div>
 
         {/* Top Right: Camera Counter Badge */}
-        <div className="absolute top-4 right-4 flex items-center space-x-2 z-10">
-          <span className="bg-black/60 text-white text-xs font-extrabold px-3 py-1.5 rounded-full backdrop-blur-md border border-white/20 flex items-center space-x-1.5 shadow">
+        <div className="absolute top-3 right-3 sm:top-4 sm:right-4 flex items-center space-x-2 z-10">
+          <span className="bg-black/60 text-white text-[11px] sm:text-xs font-extrabold px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full backdrop-blur-md border border-white/20 flex items-center space-x-1.5 shadow">
             <Camera className="w-3.5 h-3.5 text-amber-400" />
             <span>{activeIndex + 1} / {normalizedImages.length || 1}</span>
           </span>
@@ -170,20 +170,20 @@ export const PropertyGallery: React.FC<PropertyGalleryProps> = ({ property }) =>
                 e.stopPropagation();
                 handlePrev();
               }}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-[#E85D04] text-white p-3 rounded-full backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-200 shadow-xl z-10 hover:scale-110 active:scale-95"
+              className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-[#E85D04] text-white p-2.5 sm:p-3 rounded-full backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-200 shadow-xl z-10 hover:scale-110 active:scale-95 hidden sm:block"
               title="Foto Anterior (←)"
             >
-              <ChevronLeft className="w-6 h-6" />
+              <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 handleNext();
               }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-[#E85D04] text-white p-3 rounded-full backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-200 shadow-xl z-10 hover:scale-110 active:scale-95"
+              className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-[#E85D04] text-white p-2.5 sm:p-3 rounded-full backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-200 shadow-xl z-10 hover:scale-110 active:scale-95 hidden sm:block"
               title="Siguiente Foto (→)"
             >
-              <ChevronRight className="w-6 h-6" />
+              <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
           </>
         )}
@@ -192,23 +192,23 @@ export const PropertyGallery: React.FC<PropertyGalleryProps> = ({ property }) =>
         {!imageError && (
           <button
             onClick={() => setIsLightboxOpen(true)}
-            className="absolute bottom-4 right-4 bg-black/60 hover:bg-black/80 text-white px-3.5 py-1.5 rounded-full text-xs font-bold backdrop-blur-md flex items-center space-x-1.5 opacity-90 hover:opacity-100 transition-all z-10 shadow border border-white/10"
+            className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 bg-black/60 hover:bg-black/80 text-white px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-bold backdrop-blur-md flex items-center space-x-1.5 opacity-90 hover:opacity-100 transition-all z-10 shadow border border-white/10"
           >
             <Maximize2 className="w-3.5 h-3.5" />
-            <span>Ver Pantalla Completa</span>
+            <span>Pantalla Completa</span>
           </button>
         )}
       </div>
 
       {/* Overflow Scrollable Thumbnail Strip with Auto-Scroll */}
       {normalizedImages.length > 1 && (
-        <div className="flex items-center gap-2.5 overflow-x-auto py-2 scrollbar-thin scroll-smooth px-2.5">
+        <div className="flex items-center gap-2 overflow-x-auto py-1.5 no-scrollbar scroll-smooth px-1">
           {normalizedImages.map((img, idx) => (
             <button
               key={img.id || idx}
               ref={(el) => { thumbnailRefs.current[idx] = el; }}
               onClick={() => changeImage(idx)}
-              className={`relative flex-shrink-0 w-20 h-16 sm:w-24 sm:h-20 rounded-2xl overflow-hidden border-2 transition-all duration-200 ${
+              className={`relative flex-shrink-0 w-16 h-14 sm:w-24 sm:h-20 rounded-xl sm:rounded-2xl overflow-hidden border-2 transition-all duration-200 ${
                 activeIndex === idx
                   ? 'border-[#E85D04] ring-2 ring-[#E85D04]/40 scale-105 shadow-md z-10'
                   : 'border-slate-200/80 opacity-70 hover:opacity-100 hover:border-slate-300'
@@ -224,8 +224,8 @@ export const PropertyGallery: React.FC<PropertyGalleryProps> = ({ property }) =>
                 className="w-full h-full object-cover"
               />
               {img.isMain && (
-                <span className="absolute top-1 left-1 bg-amber-400 text-slate-950 text-[9px] font-black px-1.5 py-0.5 rounded shadow-sm">
-                  ★ Portada
+                <span className="absolute top-0.5 left-0.5 bg-amber-400 text-slate-950 text-[8px] sm:text-[9px] font-black px-1 py-0.5 rounded shadow-xs">
+                  ★
                 </span>
               )}
             </button>
@@ -235,7 +235,7 @@ export const PropertyGallery: React.FC<PropertyGalleryProps> = ({ property }) =>
 
       {/* Fullscreen Lightbox Zoom Modal */}
       {isLightboxOpen && (
-        <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex flex-col justify-between p-4 sm:p-6 animate-fade-in select-none">
+        <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex flex-col justify-between p-4 sm:p-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] animate-fade-in select-none">
           {/* Lightbox Top Bar */}
           <div className="flex justify-between items-center text-white z-10 max-w-7xl mx-auto w-full">
             <div className="flex items-center space-x-3 text-xs sm:text-sm font-bold">

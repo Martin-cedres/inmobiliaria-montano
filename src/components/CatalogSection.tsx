@@ -124,19 +124,75 @@ export function CatalogSection({ initialProperties }: CatalogSectionProps) {
             </div>
           ) : (
             /* Split View: Mapa a la izquierda / Lista interactiva a la derecha */
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
               
               {/* Columna Izquierda: Mapa Interactivo */}
-              <div className="lg:col-span-7 xl:col-span-7">
+              <div className="md:col-span-7 lg:col-span-7 xl:col-span-7 relative">
                 <CatalogMapWrapper
                   properties={filteredProperties}
                   activePropertyId={activePropertyId}
                   onSelectProperty={handleSelectProperty}
                 />
+
+                {/* Mobile Active Property Snap Card (solo visible en pantallas < md al seleccionar un pin) */}
+                {activePropertyId && (() => {
+                  const activeProp = filteredProperties.find((p) => p.id === activePropertyId);
+                  if (!activeProp) return null;
+                  const mainImg = activeProp.images.find((img) => img.isMain)?.webpUrl || activeProp.images[0]?.webpUrl || '/logo.png';
+                  const priceMode = activeProp.price.priceMode || (activeProp.price.amount === 0 ? 'consultar' : 'visible');
+                  const priceText =
+                    priceMode === 'consultar' ? 'Consultar Precio' :
+                    priceMode === 'reservado' ? '🔒 Reservado' :
+                    `${priceMode === 'desde' ? 'Desde ' : ''}${activeProp.price.currency === 'USD' ? 'USD' : 'UYU $'} ${activeProp.price.amount.toLocaleString('es-UY')}`;
+
+                  return (
+                    <div className="md:hidden mt-3 p-3 rounded-2xl bg-white border border-[#E85D04] ring-2 ring-[#E85D04]/30 shadow-xl flex gap-3 animate-in fade-in slide-in-from-bottom-2 duration-200">
+                      <div className="relative w-24 h-20 rounded-xl overflow-hidden bg-slate-100 flex-shrink-0">
+                        <Image
+                          src={mainImg}
+                          alt={activeProp.title}
+                          fill
+                          unoptimized={true}
+                          className="object-cover w-full h-full"
+                        />
+                        <span className="absolute top-1 left-1 bg-[#5E1754] text-white text-[9px] font-black uppercase px-1.5 py-0.5 rounded-md z-10">
+                          {activeProp.category}
+                        </span>
+                      </div>
+
+                      <div className="flex-1 flex flex-col justify-between min-w-0">
+                        <div>
+                          <span className="text-xs font-black text-[#5E1754] block">
+                            {priceText}
+                          </span>
+                          <h4 className="text-xs font-extrabold text-slate-900 truncate mt-0.5">
+                            {activeProp.title}
+                          </h4>
+                          <p className="text-[10px] font-medium text-slate-500 truncate">
+                            {activeProp.location.neighborhood}, San José
+                          </p>
+                        </div>
+
+                        <div className="flex items-center justify-between pt-1 border-t border-slate-100 text-[10px] font-bold">
+                          <span className="text-slate-500">
+                            {activeProp.features.bedrooms ? `${activeProp.features.bedrooms} dorm` : ''} {activeProp.features.builtAreaM2 ? `• ${activeProp.features.builtAreaM2}m²` : ''}
+                          </span>
+                          <Link
+                            href={`/propiedad/${activeProp.slug}`}
+                            className="bg-[#E85D04] text-white px-2.5 py-1 rounded-lg font-black text-[10px] flex items-center gap-1 shadow-xs"
+                          >
+                            <span>Ver Ficha</span>
+                            <span>➔</span>
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })()}
               </div>
 
               {/* Columna Derecha: Panel Lateral Desplazable */}
-              <div className="lg:col-span-5 xl:col-span-5 hidden lg:flex flex-col h-[650px]">
+              <div className="md:col-span-5 lg:col-span-5 xl:col-span-5 hidden md:flex flex-col h-[520px] lg:h-[650px]">
                 <div className="bg-slate-100/90 border border-slate-200 p-3 rounded-2xl mb-3 flex items-center justify-between">
                   <span className="text-xs font-black text-slate-700 uppercase tracking-wider">
                     {filteredProperties.length} Inmuebles Encontrados

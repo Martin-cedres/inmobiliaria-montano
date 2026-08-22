@@ -9,7 +9,7 @@ export const HeroSearch: React.FC = () => {
   const whatsappUrl = buildGeneralWhatsAppLink('general');
 
   return (
-    <section className="relative bg-gradient-to-br from-[#2D0B28] via-[#43123C] to-[#5E1754] text-white pt-24 pb-14 sm:pt-32 sm:pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section className="relative bg-gradient-to-br from-[#2D0B28] via-[#43123C] to-[#5E1754] text-white pt-20 pb-10 sm:pt-32 sm:pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
       
       {/* Halo Blur radial de fondo para efecto 3D sutil */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#E85D04]/15 rounded-full blur-3xl pointer-events-none" />

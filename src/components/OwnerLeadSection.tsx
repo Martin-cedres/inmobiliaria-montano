@@ -54,7 +54,7 @@ export const OwnerLeadSection: React.FC = () => {
                 placeholder="ej. Carlos Montaño"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5e1754]"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-base sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5e1754]"
               />
             </div>
             <div>
@@ -65,7 +65,7 @@ export const OwnerLeadSection: React.FC = () => {
                 placeholder="ej. 099 123 456"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5e1754]"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-base sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5e1754]"
               />
             </div>
           </div>
@@ -76,7 +76,7 @@ export const OwnerLeadSection: React.FC = () => {
               <select
                 value={operationType}
                 onChange={(e) => setOperationType(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5e1754]"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-base sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5e1754]"
               >
                 <option value="venta">Vender mi propiedad</option>
                 <option value="alquiler">Alquilar mi propiedad</option>
@@ -88,7 +88,7 @@ export const OwnerLeadSection: React.FC = () => {
               <select
                 value={propertyType}
                 onChange={(e) => setPropertyType(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5e1754]"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-base sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5e1754]"
               >
                 <option value="casa">🏡 Casa</option>
                 <option value="apartamento">🏢 Apartamento</option>
@@ -106,7 +106,7 @@ export const OwnerLeadSection: React.FC = () => {
               placeholder="ej. Barrio Centro, Plaza Arriaga, etc."
               value={neighborhood}
               onChange={(e) => setNeighborhood(e.target.value)}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5e1754]"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-base sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5e1754]"
             />
           </div>
 
@@ -117,7 +117,7 @@ export const OwnerLeadSection: React.FC = () => {
               placeholder="ej. Casa con 2 dormitorios, parrillero y fondo..."
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5e1754]"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-base sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5e1754]"
             />
           </div>
 
@@ -140,10 +140,10 @@ export const OwnerLeadSection: React.FC = () => {
       <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-[#e85d04]/15 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center">
           
           {/* Left Column - Copy & Trust Factors */}
-          <div className="lg:col-span-6 space-y-6 text-left">
+          <div className="md:col-span-6 space-y-6 text-left">
             <span className="inline-flex items-center space-x-2 bg-amber-400/15 text-amber-300 border border-amber-400/30 px-3.5 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-wider">
               <Calculator className="w-4 h-4 text-amber-400" />
               <span>Para Propietarios en San José</span>
@@ -215,8 +215,8 @@ export const OwnerLeadSection: React.FC = () => {
               </div>
             </div>
 
-            {/* Mobile Compact High-Converting CTA Card (< lg:hidden) */}
-            <div className="lg:hidden mt-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-5 text-center space-y-3.5 shadow-2xl">
+            {/* Mobile Compact High-Converting CTA Card (< md:hidden) */}
+            <div className="md:hidden mt-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-5 text-center space-y-3.5 shadow-2xl">
               <div className="inline-flex items-center space-x-2 bg-amber-400/20 text-amber-300 border border-amber-400/30 px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider">
                 <Building className="w-3.5 h-3.5" />
                 <span>Tasación / Publicación Rápida</span>
@@ -242,8 +242,8 @@ export const OwnerLeadSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column - Desktop Inline Form (hidden lg:block) */}
-          <div className="hidden lg:block lg:col-span-6">
+          {/* Right Column - Desktop & Tablet Inline Form (hidden md:block) */}
+          <div className="hidden md:block md:col-span-6">
             <div className="bg-white rounded-3xl p-6 sm:p-8 text-slate-900 shadow-2xl border border-slate-200/80">
               <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
                 <div>

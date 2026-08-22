@@ -11,6 +11,7 @@ import { PropertyMapWrapper } from '@/components/PropertyMapWrapper';
 import { SharePropertyModal } from '@/components/SharePropertyModal';
 import { PropertyGallery } from '@/components/PropertyGallery';
 import { PropertyDescriptionRenderer } from '@/components/PropertyDescriptionRenderer';
+import { PropertyCard } from '@/components/PropertyCard';
 import JsonLdProperty from '@/components/seo/JsonLdProperty';
 import { PropertyTracker } from '@/components/analytics/PropertyTracker';
 import { WhatsAppTrackButton } from '@/components/analytics/WhatsAppTrackButton';
@@ -53,6 +54,10 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
   const jsonLd = generatePropertyJsonLd(property);
   const whatsappUrl = buildPropertyWhatsAppLink(property);
   const mainImage = property.images.find((img) => img.isMain) || property.images[0];
+
+  const similarProperties = allProperties
+    .filter((p) => p.id !== property.id && (p.category === property.category || p.operation === property.operation))
+    .slice(0, 3);
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50">
@@ -515,10 +520,39 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
 
         </div>
 
+        {/* Similar Properties Section */}
+        {similarProperties.length > 0 && (
+          <div className="mt-12 sm:mt-16 pt-8 border-t border-slate-200">
+            <div className="flex items-center justify-between mb-6 text-left">
+              <div>
+                <span className="text-xs font-black uppercase tracking-wider text-[#E85D04]">
+                  Te Puede Interesar
+                </span>
+                <h3 className="text-xl sm:text-2xl font-black text-[#5E1754]">
+                  Propiedades Similares
+                </h3>
+              </div>
+              <Link
+                href="/#catalogo"
+                className="hidden sm:inline-flex items-center space-x-1.5 text-xs font-extrabold text-[#5E1754] hover:text-[#E85D04] bg-purple-50 hover:bg-purple-100 px-3.5 py-1.5 rounded-full transition-colors"
+              >
+                <span>Ver todo el catálogo</span>
+                <span>➔</span>
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {similarProperties.map((prop, idx) => (
+                <PropertyCard key={prop.id} property={prop} index={idx} />
+              ))}
+            </div>
+          </div>
+        )}
+
       </main>
 
-      {/* Sticky Bottom CTA Bar for Mobile Screens (< 1024px / lg:hidden) */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-200/80 p-2.5 sm:p-3 shadow-2xl flex items-center justify-between gap-2.5 animate-slideUp">
+      {/* Sticky Bottom CTA Bar for Mobile Screens (< 1024px / lg:hidden) with iOS Safe Area Inset */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-200/80 p-2.5 sm:p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-2xl flex items-center justify-between gap-2.5 animate-slideUp">
         <div className="flex items-center space-x-2.5 overflow-hidden text-left pl-1">
           <div className="w-10 h-10 rounded-full border-2 border-[#E85D04] overflow-hidden flex-shrink-0">
             <img

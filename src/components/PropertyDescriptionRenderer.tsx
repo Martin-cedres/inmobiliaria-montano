@@ -10,6 +10,7 @@ interface PropertyDescriptionRendererProps {
  * Renderiza de forma segura y semántica el texto enriquecido de la descripción
  * soportando negritas (**texto**), cursivas (*texto*), subtítulos (### Título),
  * viñetas (- o • o *), listas numeradas (1. 2.) y bloques destacados (>).
+ * Muestra el contenido completo de forma transparente con tipografía optimizada.
  */
 export const PropertyDescriptionRenderer: React.FC<PropertyDescriptionRendererProps> = ({
   description,
@@ -25,19 +26,19 @@ export const PropertyDescriptionRenderer: React.FC<PropertyDescriptionRendererPr
   if (isHtml) {
     return (
       <div 
-        className={`text-slate-800 text-base sm:text-lg leading-relaxed prose max-w-none 
-          [&_h2]:text-xl [&_h2]:sm:text-2xl [&_h2]:font-black [&_h2]:text-[#5E1754] [&_h2]:mt-6 [&_h2]:mb-3
-          [&_h3]:text-lg [&_h3]:sm:text-xl [&_h3]:font-black [&_h3]:text-slate-900 [&_h3]:mt-5 [&_h3]:mb-2
-          [&_h4]:text-base [&_h4]:sm:text-lg [&_h4]:font-bold [&_h4]:text-slate-800 [&_h4]:mt-4 [&_h4]:mb-1
-          [&_p]:my-3 [&_p]:leading-relaxed
+        className={`text-slate-800 text-sm sm:text-base leading-relaxed prose max-w-none 
+          [&_h2]:text-lg [&_h2]:sm:text-xl [&_h2]:font-black [&_h2]:text-[#5E1754] [&_h2]:mt-5 [&_h2]:mb-2.5
+          [&_h3]:text-base [&_h3]:sm:text-lg [&_h3]:font-black [&_h3]:text-slate-900 [&_h3]:mt-4 [&_h3]:mb-2
+          [&_h4]:text-sm [&_h4]:sm:text-base [&_h4]:font-bold [&_h4]:text-slate-800 [&_h4]:mt-3 [&_h4]:mb-1
+          [&_p]:my-2.5 [&_p]:leading-relaxed
           [&_strong]:font-black [&_strong]:text-slate-900
           [&_em]:italic [&_em]:text-slate-800
           [&_u]:underline [&_u]:decoration-[#5E1754]/60
-          [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:my-4 [&_ul]:space-y-2
-          [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:my-4 [&_ol]:space-y-2
+          [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:my-3 [&_ul]:space-y-1.5
+          [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:my-3 [&_ol]:space-y-1.5
           [&_li]:text-slate-800 [&_li]:leading-relaxed
-          [&_blockquote]:border-l-4 [&_blockquote]:border-[#5E1754] [&_blockquote]:bg-purple-50/70 [&_blockquote]:p-4 [&_blockquote]:rounded-r-2xl [&_blockquote]:italic [&_blockquote]:my-4
-          [&_hr]:my-6 [&_hr]:border-slate-200
+          [&_blockquote]:border-l-4 [&_blockquote]:border-[#5E1754] [&_blockquote]:bg-purple-50/70 [&_blockquote]:p-3.5 [&_blockquote]:rounded-r-2xl [&_blockquote]:italic [&_blockquote]:my-3
+          [&_hr]:my-5 [&_hr]:border-slate-200
           [&_a]:text-[#5E1754] [&_a]:underline [&_a]:font-bold ${className}`}
         dangerouslySetInnerHTML={{ __html: description }}
       />
@@ -46,7 +47,6 @@ export const PropertyDescriptionRenderer: React.FC<PropertyDescriptionRendererPr
 
   // Helper para renderizar negritas e itálicas dentro de una línea (Fallback texto heredado)
   const renderInlineFormatted = (text: string): React.ReactNode[] => {
-    // Regex para capturar **bold** e *italic*
     const parts: React.ReactNode[] = [];
     const regex = /(\*\*[^*]+\*\*|\*[^*]+\*|__[^_]+__)/g;
     let lastIndex = 0;
@@ -98,10 +98,10 @@ export const PropertyDescriptionRenderer: React.FC<PropertyDescriptionRendererPr
     if (!currentList) return;
     if (currentList.type === 'ul') {
       elements.push(
-        <ul key={`ul-${keyPrefix}`} className="my-3 space-y-2 pl-1">
+        <ul key={`ul-${keyPrefix}`} className="my-2.5 space-y-1.5 pl-1">
           {currentList.items.map((item, idx) => (
-            <li key={idx} className="flex items-start gap-2.5 text-slate-800 text-base sm:text-lg leading-relaxed">
-              <span className="mt-1.5 w-2 h-2 rounded-full bg-[#E85D04] shrink-0" />
+            <li key={idx} className="flex items-start gap-2 text-slate-800 text-sm sm:text-base leading-relaxed">
+              <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#E85D04] shrink-0" />
               <span>{renderInlineFormatted(item)}</span>
             </li>
           ))}
@@ -109,9 +109,9 @@ export const PropertyDescriptionRenderer: React.FC<PropertyDescriptionRendererPr
       );
     } else {
       elements.push(
-        <ol key={`ol-${keyPrefix}`} className="my-3 space-y-2 pl-4 list-decimal marker:font-black marker:text-[#5E1754]">
+        <ol key={`ol-${keyPrefix}`} className="my-2.5 space-y-1.5 pl-4 list-decimal marker:font-black marker:text-[#5E1754]">
           {currentList.items.map((item, idx) => (
-            <li key={idx} className="text-slate-800 text-base sm:text-lg leading-relaxed pl-1">
+            <li key={idx} className="text-slate-800 text-sm sm:text-base leading-relaxed pl-1">
               {renderInlineFormatted(item)}
             </li>
           ))}
@@ -137,9 +137,9 @@ export const PropertyDescriptionRenderer: React.FC<PropertyDescriptionRendererPr
       elements.push(
         <h4
           key={`h-${index}`}
-          className="text-lg sm:text-xl font-black text-[#5E1754] pt-4 pb-1 border-b border-purple-100 flex items-center gap-2"
+          className="text-base sm:text-lg font-black text-[#5E1754] pt-3 pb-1 border-b border-purple-100 flex items-center gap-1.5"
         >
-          <ChevronRight className="w-5 h-5 text-[#E85D04]" />
+          <ChevronRight className="w-4 h-4 text-[#E85D04]" />
           <span>{renderInlineFormatted(titleText)}</span>
         </h4>
       );
@@ -153,9 +153,9 @@ export const PropertyDescriptionRenderer: React.FC<PropertyDescriptionRendererPr
       elements.push(
         <div
           key={`quote-${index}`}
-          className="bg-purple-50/70 border-l-4 border-[#5E1754] p-4 rounded-r-2xl my-3 text-slate-800 font-medium text-base sm:text-lg flex items-start gap-3 shadow-2xs"
+          className="bg-purple-50/70 border-l-4 border-[#5E1754] p-3 rounded-r-2xl my-2.5 text-slate-800 font-medium text-sm sm:text-base flex items-start gap-2.5 shadow-2xs"
         >
-          <Info className="w-5 h-5 text-[#5E1754] shrink-0 mt-0.5" />
+          <Info className="w-4 h-4 text-[#5E1754] shrink-0 mt-0.5" />
           <div className="leading-relaxed">{renderInlineFormatted(quoteText)}</div>
         </div>
       );
@@ -189,7 +189,7 @@ export const PropertyDescriptionRenderer: React.FC<PropertyDescriptionRendererPr
     // Párrafo normal
     flushList(index);
     elements.push(
-      <p key={`p-${index}`} className="text-slate-800 text-base sm:text-lg leading-relaxed font-normal tracking-normal">
+      <p key={`p-${index}`} className="text-slate-800 text-sm sm:text-base leading-relaxed font-normal tracking-normal">
         {renderInlineFormatted(trimmed)}
       </p>
     );
@@ -198,7 +198,7 @@ export const PropertyDescriptionRenderer: React.FC<PropertyDescriptionRendererPr
   flushList(rawLines.length);
 
   return (
-    <div className={`space-y-3 text-left ${className}`}>
+    <div className={`space-y-2.5 text-left ${className}`}>
       {elements}
     </div>
   );
