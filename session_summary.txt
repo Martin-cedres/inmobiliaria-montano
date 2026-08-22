@@ -551,8 +551,11 @@
   - Creado el componente [`src/components/seo/PropertyBreadcrumbs.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/seo/PropertyBreadcrumbs.tsx) con navegación visual y marcado Schema.org `@type: "BreadcrumbList"`.
   - Implementado el bloque de Interlinking Contextual de retorno hacia las páginas pilares en todas las fichas de propiedad.
 - Verificada la compilación completa de producción con `npm run build` (34 rutas compiladas con código 0 y 0 errores de TypeScript).
-- Actualizado el documento de recorrido y verificación [`walkthrough.md`](file:///C:/Users/LENOVO/.gemini/antigravity/brain/92480682-bacf-4aae-b5e5-ac3bd97faff1/walkthrough.md).
-
+- **Restauración del Enlace Cliqueable en las Tarjetas Popup del Mapa:**
+  1. En [`src/components/CatalogMap.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/CatalogMap.tsx), se envolvió la tarjeta de vista previa dentro del `<Popup>` del mapa en un componente `<Link href={`/propiedad/${prop.slug}`}>` de Next.js.
+  2. Se añadieron efectos de hover interactivos (zoom sutil de fotografía, cambio de color corporativo en el título) y el botón/llamado a la acción *"Ver ficha ➔"*.
+  3. Se añadieron reglas CSS de anulación en el bloque de estilos del popup para evitar que Leaflet altere el aspecto y colores de los enlaces.
+  4. Verificado con `npm run build` (34 rutas compiladas exitosamente, 0 errores).
 
 
 

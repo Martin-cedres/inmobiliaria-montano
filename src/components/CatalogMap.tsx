@@ -1,12 +1,13 @@
 'use client';
 
 import React, { useMemo, useEffect, useState } from 'react';
+import Link from 'next/link';
 import { MapContainer, TileLayer, Marker, Circle, Popup, useMap } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Property } from '@/types/property';
-import { Bed, Bath, MapPin, ShieldCheck, Layers, Compass, Plus, Minus } from 'lucide-react';
+import { Bed, Bath, MapPin, ShieldCheck, Layers, Compass, Plus, Minus, ArrowRight } from 'lucide-react';
 
 interface CatalogMapProps {
   properties: Property[];
@@ -168,13 +169,16 @@ const ClusteredMarkersLayer = React.memo(function ClusteredMarkersLayer({
               autoPan={true}
               autoPanPadding={[25, 25]}
             >
-              <div className="overflow-hidden rounded-2xl text-left bg-white font-sans shadow-lg">
+              <Link
+                href={`/propiedad/${prop.slug}`}
+                className="block overflow-hidden rounded-2xl text-left bg-white font-sans shadow-lg hover:shadow-2xl transition-all group cursor-pointer text-slate-900 no-underline"
+              >
                 {/* Img Header */}
                 <div className="relative h-32 w-full overflow-hidden bg-slate-100">
                   <img
                     src={mainImg}
                     alt={prop.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     onError={(e) => {
                       (e.target as HTMLImageElement).src = '/logo.png';
                     }}
@@ -199,7 +203,7 @@ const ClusteredMarkersLayer = React.memo(function ClusteredMarkersLayer({
 
                 {/* Card Content */}
                 <div className="p-3 space-y-2">
-                  <h4 className="font-bold text-slate-900 text-xs sm:text-sm leading-snug line-clamp-2">
+                  <h4 className="font-bold text-slate-900 group-hover:text-[#5E1754] text-xs sm:text-sm leading-snug line-clamp-2 transition-colors">
                     {prop.title}
                   </h4>
 
@@ -208,23 +212,29 @@ const ClusteredMarkersLayer = React.memo(function ClusteredMarkersLayer({
                     <span className="truncate">{prop.location.neighborhood}, San José</span>
                   </div>
 
-                  {/* Quick Stats */}
-                  <div className="flex items-center space-x-3 text-[11px] text-slate-600 font-semibold pt-1 border-t border-slate-100">
-                    {!!prop.features.bedrooms && prop.features.bedrooms > 0 && (
-                      <div className="flex items-center space-x-1">
-                        <Bed className="w-3 h-3 text-[#5E1754]" />
-                        <span>{prop.features.bedrooms} Dorm</span>
-                      </div>
-                    )}
-                    {!!prop.features.bathrooms && prop.features.bathrooms > 0 && (
-                      <div className="flex items-center space-x-1">
-                        <Bath className="w-3 h-3 text-[#5E1754]" />
-                        <span>{prop.features.bathrooms} Baño</span>
-                      </div>
-                    )}
+                  {/* Quick Stats & CTA Link */}
+                  <div className="flex items-center justify-between pt-2 border-t border-slate-100 text-[11px]">
+                    <div className="flex items-center space-x-3 text-slate-600 font-semibold">
+                      {!!prop.features.bedrooms && prop.features.bedrooms > 0 && (
+                        <div className="flex items-center space-x-1">
+                          <Bed className="w-3 h-3 text-[#5E1754]" />
+                          <span>{prop.features.bedrooms} Dorm</span>
+                        </div>
+                      )}
+                      {!!prop.features.bathrooms && prop.features.bathrooms > 0 && (
+                        <div className="flex items-center space-x-1">
+                          <Bath className="w-3 h-3 text-[#5E1754]" />
+                          <span>{prop.features.bathrooms} Baño</span>
+                        </div>
+                      )}
+                    </div>
+                    <span className="inline-flex items-center gap-1 text-[11px] font-black text-[#E85D04] group-hover:text-[#5E1754] group-hover:translate-x-0.5 transition-all ml-auto">
+                      <span>Ver ficha</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </span>
                   </div>
                 </div>
-              </div>
+              </Link>
             </Popup>
           </Marker>
         );
@@ -452,6 +462,10 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
         .catalog-map-popup .leaflet-popup-content {
           margin: 0 !important;
           line-height: inherit !important;
+        }
+        .catalog-map-popup .leaflet-popup-content a {
+          color: inherit !important;
+          text-decoration: none !important;
         }
         .catalog-map-popup .leaflet-popup-tip-container {
           margin-top: -1px;
