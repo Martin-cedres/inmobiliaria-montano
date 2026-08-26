@@ -45,6 +45,7 @@ import {
   ShieldAlert,
   Cpu,
   Plus,
+  Copy,
 } from 'lucide-react';
 
 export default function AdminSeoConversionesPage() {
@@ -797,11 +798,52 @@ export default function AdminSeoConversionesPage() {
                 )}
 
                 {selectedDecisionModal.authorityReport && (
-                  <div className="space-y-2 bg-blue-50/50 p-4 rounded-2xl border border-blue-100">
-                    <div className="font-bold text-blue-900">Nota de Prensa para Medios Departamentales:</div>
-                    <p className="text-slate-700 italic">
-                      "{selectedDecisionModal.authorityReport.suggestedPressReleaseNote}"
-                    </p>
+                  <div className="space-y-4 bg-blue-50/60 p-5 rounded-2xl border border-blue-200">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-blue-200/80 pb-3">
+                      <div>
+                        <div className="text-[10px] font-bold text-blue-800 uppercase tracking-wider">
+                          Informe de Autoridad Trimestral
+                        </div>
+                        <h4 className="font-black text-blue-950 text-sm">
+                          📰 {selectedDecisionModal.authorityReport.reportTitle}
+                        </h4>
+                      </div>
+                      <button
+                        onClick={() => {
+                          navigator.clipboard.writeText(selectedDecisionModal.authorityReport!.suggestedPressReleaseNote);
+                          showToast('📋 Nota de prensa copiada al portapapeles');
+                        }}
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[11px] px-3.5 py-1.5 rounded-xl transition-all flex items-center space-x-1.5 cursor-pointer shadow-xs self-start sm:self-auto"
+                      >
+                        <Copy className="w-3.5 h-3.5" />
+                        <span>Copiar Nota de Prensa</span>
+                      </button>
+                    </div>
+
+                    <div className="bg-white p-4 rounded-xl border border-blue-200 space-y-2 shadow-2xs">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                        Texto redactado listo para publicar o difundir:
+                      </span>
+                      <p className="text-slate-800 leading-relaxed text-xs whitespace-pre-line font-medium">
+                        {selectedDecisionModal.authorityReport.suggestedPressReleaseNote}
+                      </p>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <span className="text-[10px] font-bold text-blue-900 uppercase tracking-wider">
+                        Medios y Organizaciones Locales Sugeridas:
+                      </span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {selectedDecisionModal.authorityReport.targetOutlets.map((outlet, i) => (
+                          <span
+                            key={i}
+                            className="bg-white text-blue-900 border border-blue-200 px-2.5 py-1 rounded-lg text-[11px] font-semibold"
+                          >
+                            📻 {outlet}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
