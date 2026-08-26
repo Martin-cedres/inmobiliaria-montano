@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     const gscResult = await fetchLiveGscPerformance(days);
 
     if (gscResult.success && gscResult.records && gscResult.records.length > 0) {
-      await importSeoTelemetryRecords(gscResult.records);
+      await importSeoTelemetryRecords(gscResult.records, true);
       return NextResponse.json({
         success: true,
         source: 'gsc_api_live',

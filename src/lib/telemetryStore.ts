@@ -464,7 +464,8 @@ export async function getSeoPerformanceSummary(): Promise<SeoPerformanceSummary>
  * Importa o añade registros de telemetría de Search Console (GSC).
  */
 export async function importSeoTelemetryRecords(
-  records: Partial<SeoTelemetryRecord>[]
+  records: Partial<SeoTelemetryRecord>[],
+  replace: boolean = false
 ): Promise<{ imported: number }> {
   const storage = ensureTelemetryStorage();
 
@@ -487,7 +488,11 @@ export async function importSeoTelemetryRecords(
       operation: r.operation,
     }));
 
-  storage.seoRecords.push(...validRecords);
+  if (replace) {
+    storage.seoRecords = validRecords;
+  } else {
+    storage.seoRecords.push(...validRecords);
+  }
   saveTelemetryStorage(storage);
 
   return { imported: validRecords.length };
