@@ -117,15 +117,20 @@ export default function AdminSeoConversionesPage() {
 
   const handleApproveDecision = async (id: string) => {
     try {
-      await fetch('/api/admin/decision-center', {
+      const res = await fetch('/api/admin/decision-center', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ actionId: id, actionType: 'approve' }),
       });
-      setDecisionCards((prev) =>
-        prev.map((c) => (c.id === id ? { ...c, status: 'approved' } : c))
-      );
-      showToast('✅ Acción aprobada por la Dirección');
+      const data = await res.json();
+      if (data.success && data.data) {
+        setDecisionCards(data.data);
+      } else {
+        setDecisionCards((prev) =>
+          prev.map((c) => (c.id === id ? { ...c, status: 'approved' } : c))
+        );
+      }
+      showToast('✅ Acción aprobada y guardada por la Dirección');
       setSelectedDecisionModal(null);
     } catch {
       showToast('Error al registrar aprobación');
@@ -134,18 +139,45 @@ export default function AdminSeoConversionesPage() {
 
   const handleDismissDecision = async (id: string) => {
     try {
-      await fetch('/api/admin/decision-center', {
+      const res = await fetch('/api/admin/decision-center', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ actionId: id, actionType: 'dismiss' }),
       });
-      setDecisionCards((prev) =>
-        prev.map((c) => (c.id === id ? { ...c, status: 'dismissed' } : c))
-      );
+      const data = await res.json();
+      if (data.success && data.data) {
+        setDecisionCards(data.data);
+      } else {
+        setDecisionCards((prev) =>
+          prev.map((c) => (c.id === id ? { ...c, status: 'dismissed' } : c))
+        );
+      }
       showToast('Acción descartada');
       setSelectedDecisionModal(null);
     } catch {
       showToast('Error al descartar acción');
+    }
+  };
+
+  const handleReopenDecision = async (id: string) => {
+    try {
+      const res = await fetch('/api/admin/decision-center', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ actionId: id, actionType: 'pending' }),
+      });
+      const data = await res.json();
+      if (data.success && data.data) {
+        setDecisionCards(data.data);
+      } else {
+        setDecisionCards((prev) =>
+          prev.map((c) => (c.id === id ? { ...c, status: 'pending' } : c))
+        );
+      }
+      showToast('Acción restablecida a Pendiente');
+      setSelectedDecisionModal(null);
+    } catch {
+      showToast('Error al restablecer acción');
     }
   };
 
@@ -671,7 +703,7 @@ export default function AdminSeoConversionesPage() {
                       Ver evidencia →
                     </button>
 
-                    {card.status === 'pending' && (
+                    {card.status === 'pending' ? (
                       <div className="flex items-center space-x-1.5">
                         <button
                           onClick={() => handleApproveDecision(card.id)}
@@ -684,6 +716,26 @@ export default function AdminSeoConversionesPage() {
                           className="bg-white/10 hover:bg-white/20 text-slate-300 font-medium text-[11px] px-2.5 py-1.5 rounded-xl transition-all cursor-pointer"
                         >
                           Descartar
+                        </button>
+                      </div>
+                    ) : card.status === 'approved' ? (
+                      <div className="flex items-center space-x-2">
+                        <span className="text-emerald-400 font-bold text-xs">✓ Aprobada</span>
+                        <button
+                          onClick={() => handleReopenDecision(card.id)}
+                          className="text-[10px] text-slate-400 hover:text-white underline cursor-pointer"
+                        >
+                          Reabrir
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="flex items-center space-x-2">
+                        <span className="text-slate-400 font-medium text-xs italic">Descartada</span>
+                        <button
+                          onClick={() => handleReopenDecision(card.id)}
+                          className="text-[10px] text-slate-400 hover:text-white underline cursor-pointer"
+                        >
+                          Reabrir
                         </button>
                       </div>
                     )}
@@ -756,19 +808,35 @@ export default function AdminSeoConversionesPage() {
 
               {/* Botones de Acción del Modal */}
               <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
-                <button
-                  onClick={() => handleDismissDecision(selectedDecisionModal.id)}
-                  className="px-4 py-2 text-xs font-bold text-slate-500 hover:text-slate-800 cursor-pointer"
-                >
-                  Descartar
-                </button>
-                <button
-                  onClick={() => handleApproveDecision(selectedDecisionModal.id)}
-                  className="bg-[#5E1754] hover:bg-[#7A1E6E] text-white font-bold text-xs px-6 py-2.5 rounded-xl transition-all cursor-pointer shadow-md flex items-center space-x-1.5"
-                >
-                  <Check className="w-4 h-4" />
-                  <span>Aprobar y Registrar</span>
-                </button>
+                {selectedDecisionModal.status === 'pending' ? (
+                  <>
+                    <button
+                      onClick={() => handleDismissDecision(selectedDecisionModal.id)}
+                      className="px-4 py-2 text-xs font-bold text-slate-500 hover:text-slate-800 cursor-pointer"
+                    >
+                      Descartar
+                    </button>
+                    <button
+                      onClick={() => handleApproveDecision(selectedDecisionModal.id)}
+                      className="bg-[#5E1754] hover:bg-[#7A1E6E] text-white font-bold text-xs px-6 py-2.5 rounded-xl transition-all cursor-pointer shadow-md flex items-center space-x-1.5"
+                    >
+                      <Check className="w-4 h-4" />
+                      <span>Aprobar y Registrar</span>
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <span className="text-xs font-bold text-emerald-700 mr-auto">
+                      Estado actual: {selectedDecisionModal.status === 'approved' ? '🟢 Aprobada y Guardada' : '⚪ Descartada'}
+                    </span>
+                    <button
+                      onClick={() => handleReopenDecision(selectedDecisionModal.id)}
+                      className="px-4 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 border border-slate-200 rounded-xl cursor-pointer"
+                    >
+                      Restablecer a Pendiente
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </div>

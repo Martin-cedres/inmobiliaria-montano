@@ -202,7 +202,8 @@ export function generateObservatorioPressReport(allProperties: Property[]): Obse
 export function getDecisionCenterCards(
   allProperties: Property[],
   seoSummary: SeoPerformanceSummary,
-  conversionSummary: ConversionFunnelSummary
+  conversionSummary: ConversionFunnelSummary,
+  savedStatuses?: Record<string, 'pending' | 'approved' | 'dismissed'>
 ): DecisionCard[] {
   const cards: DecisionCard[] = [];
 
@@ -218,7 +219,7 @@ export function getDecisionCenterCards(
       summary: `${opp.impressions} impresiones · Posición #${opp.observedPosition} · CTR actual ${opp.observedCtr}%`,
       evidence: `GSC API: Consulta "${opp.gscQuery}" con CTR observado del ${opp.observedCtr}%. Objetivo proyectado: ${opp.targetCtr}%.`,
       impact: 'high',
-      status: 'pending',
+      status: savedStatuses?.['dec_ctr_casas_sanjose'] || 'pending',
       ctrProposal: opp,
     });
   }
@@ -235,7 +236,7 @@ export function getDecisionCenterCards(
       summary: `Inventario verificado N = ${bancoTrigger.currentInventoryCount} ≥ 2 · ${bancoTrigger.gscImpressions} impresiones GSC`,
       evidence: `BD verificada con ${bancoTrigger.currentInventoryCount} propiedades aptas para crédito bancario + Guía temática publicada.`,
       impact: 'high',
-      status: 'pending',
+      status: savedStatuses?.['dec_activate_banco_landing'] || 'pending',
       inventoryProposal: bancoTrigger,
     });
   }
@@ -251,7 +252,7 @@ export function getDecisionCenterCards(
       summary: `${libertadTrigger.gscImpressions} impresiones GSC (Pos #${libertadTrigger.gscPosition}) · Inventario N = ${libertadTrigger.currentInventoryCount} < 2`,
       evidence: `Demanda detectada en Google, pero inventario insuficiente. Se mantiene en modo transición noindex para evitar thin content.`,
       impact: 'medium',
-      status: 'pending',
+      status: savedStatuses?.['dec_latent_libertad'] || 'pending',
       inventoryProposal: libertadTrigger,
     });
   }
@@ -260,15 +261,16 @@ export function getDecisionCenterCards(
   const anomalies = detectConversionAnomalies(allProperties, conversionSummary);
   const highConverting = anomalies.find((a) => a.anomalyType === 'high_converting_asset');
   if (highConverting) {
+    const cardId = `dec_conv_${highConverting.propertyId}`;
     cards.push({
-      id: `dec_conv_${highConverting.propertyId}`,
+      id: cardId,
       category: 'conversion_alert',
       urgency: 'medium',
       title: `Activo con Alta Tracción: ${highConverting.title.substring(0, 40)}...`,
       summary: `${highConverting.views} visitas · ${highConverting.whatsappClicks + highConverting.phoneClicks} contactos (${highConverting.engagementRate}% engagement)`,
       evidence: `Telemetría interna registra alta conversión a WhatsApp directo.`,
       impact: 'medium',
-      status: 'approved',
+      status: savedStatuses?.[cardId] || 'approved',
       conversionAlert: highConverting,
     });
   }
@@ -283,7 +285,7 @@ export function getDecisionCenterCards(
     summary: 'Informe de precios y metodologías listo para difusión en prensa departamental y cámaras',
     evidence: 'Datos derivados exclusivamente de propiedades activas sin mezclar monedas.',
     impact: 'medium',
-    status: 'pending',
+    status: savedStatuses?.['dec_observatorio_press'] || 'pending',
     authorityReport: pressReport,
   });
 

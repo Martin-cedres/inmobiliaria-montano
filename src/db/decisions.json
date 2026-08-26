@@ -1,0 +1,12 @@
+{
+  "decisions": {
+    "dec_ctr_casas_sanjose": "approved"
+  },
+  "history": [
+    {
+      "actionId": "dec_ctr_casas_sanjose",
+      "status": "approved",
+      "updatedAt": "2026-08-26T04:07:19.371Z"
+    }
+  ]
+}
