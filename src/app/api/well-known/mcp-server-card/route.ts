@@ -18,6 +18,16 @@ export async function GET() {
       type: 'http',
       endpoint: `${baseUrl}/api/properties`,
     },
+    authentication: {
+      type: 'oauth2',
+      authorizationServer: `${baseUrl}/.well-known/oauth-authorization-server`,
+      protectedResource: `${baseUrl}/.well-known/oauth-protected-resource`,
+      scopes: ['public:read', 'properties:read'],
+    },
+    auth: {
+      discovery_uri: `${baseUrl}/.well-known/oauth-authorization-server`,
+      protected_resource: `${baseUrl}/.well-known/oauth-protected-resource`,
+    },
     capabilities: {
       tools: true,
       resources: true,

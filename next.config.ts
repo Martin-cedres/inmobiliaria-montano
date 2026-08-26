@@ -29,7 +29,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/.well-known/oauth-authorization-server',
-        destination: '/api/well-known/openid-configuration',
+        destination: '/api/well-known/oauth-authorization-server',
       },
       {
         source: '/.well-known/oauth-protected-resource',
