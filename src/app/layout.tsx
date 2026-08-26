@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { WebMcpProvider } from "@/components/seo/WebMcpProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -52,6 +53,11 @@ export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   alternates: {
     canonical: BASE_URL,
+    types: {
+      'text/markdown': `${BASE_URL}/llms.txt`,
+      'application/json': `${BASE_URL}/.well-known/ai-catalog.json`,
+      'application/linkset+json': `${BASE_URL}/.well-known/api-catalog`,
+    },
   },
   icons: {
     icon: [
@@ -104,6 +110,9 @@ export const metadata: Metadata = {
     'geo.placename': 'San José de Mayo, San José, Uruguay',
     'geo.position': '-34.3375;-56.7136',
     'ICBM': '-34.3375, -56.7136',
+    'ai-catalog': `${BASE_URL}/.well-known/ai-catalog.json`,
+    'mcp-server-card': `${BASE_URL}/.well-known/mcp/server-card.json`,
+    'api-catalog': `${BASE_URL}/.well-known/api-catalog`,
   },
 };
 
@@ -119,6 +128,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body suppressHydrationWarning className="min-h-full flex flex-col">
+        <WebMcpProvider />
         {children}
       </body>
     </html>

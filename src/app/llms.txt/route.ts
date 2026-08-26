@@ -55,8 +55,10 @@ ${SAN_JOSE_LOCATIONS.map((loc) => `- **${loc.name}** (CP ${loc.postalCode}, ${lo
   return new Response(content, {
     status: 200,
     headers: {
-      'Content-Type': 'text/plain; charset=utf-8',
+      'Content-Type': 'text/markdown; charset=utf-8',
       'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=43200',
+      'x-markdown-tokens': 'true',
+      'Access-Control-Allow-Origin': '*',
     },
   });
 }

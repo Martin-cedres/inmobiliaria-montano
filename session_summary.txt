@@ -630,9 +630,19 @@
 - **P5.2 (Disparadores de Inventario N >= 2):** Motor de expansión condicionada que detecta demanda en GSC y cruza con la base de datos en tiempo real; propone activación e indexación plena para `/casas-aptas-para-banco-san-jose` ($N=2$) y mantiene en transición noindex a `/casas-en-venta-libertad` ($N=0 < 2$) protegiendo la web contra thin content.
 - **P5.3 (Autoridad Local del Observatorio):** Generador de informes y notas de prensa trimestrales para medios locales y cámaras empresariales con datos 100% reales sin mezclar monedas.
 - **P5.4 (Diagnóstico & Anomalías de Conversión):** Clasificador de velocidad comercial por propiedad (detecta activos con alto engagement para potenciar en campañas y alerta sobre inmuebles de alto tráfico con 0 contactos para revisión comercial).
-- **Centro de Decisiones Estratégicas (🎯):** Componente interactivo en `/admin/seo-conversiones` y endpoint `/api/admin/decision-center` que permite a Martín revisar evidencia, aprobar o descartar recomendaciones en 30 segundos con modal de inspección técnica.
+- **Centro de Decisiones Estratégicas (🎯):** Componente interactivo en `/admin/seo-conversiones` y endpoint `/api/admin/decision-center` que permite a la Dirección revisar evidencia, aprobar o descartar recomendaciones en 30 segundos con modal de inspección técnica.
 - **Panel Ejecutivo (📊 Resumen del Mes):** Integrada la tarjeta superior de dirección ejecutiva en `/admin/seo-conversiones` que consolida en un solo vistazo el volumen de visitas a inmuebles, impresiones Google, clics orgánicos, contactos WhatsApp, llamadas telefónicas, propiedad más consultada, localidad de mayor demanda, oportunidad emergente y estado de gobernanza de acciones.
-- **Compilación de producción:** `npm run build` completado exitosamente con código 0 y 0 errores en 56 rutas.
+- **Suite de Agent-Readiness (IsItAgentReady / Estándares IA 2026):**
+  - **Encabezados HTTP Link (RFC 8288):** Implementados en `next.config.ts` vinculando `/llms.txt`, `/.well-known/ai-catalog.json`, `/.well-known/api-catalog` y `/.well-known/mcp/server-card.json`.
+  - **Negociación de Contenido Markdown (Cloudflare Spec):** Middleware en `src/middleware.ts` que intercepta peticiones con `Accept: text/markdown` para entregar directamente la versión Markdown estructurada de la web y fichas de propiedades con cabeceras `Content-Type: text/markdown` y `x-markdown-tokens: true`.
+  - **Content-Signal en `robots.txt` (IETF/ContentSignals):** Directiva `Content-Signal: ai-train=no, search=yes, ai-input=yes` que autoriza la búsqueda en motores IA protegiendo el contenido contra scraping no autorizado.
+  - **API Catalog RFC 9727 (`/.well-known/api-catalog`):** Endpoint con formato `application/linkset+json` que describe el inventario, status y documentación para agentes.
+  - **ARD (Agentic Resource Discovery en `/.well-known/ai-catalog.json`):** Manifiesto JSON con `specVersion: 1.0`, host y catálogo de capacidades con representationQueries para embedding semántico.
+  - **Tarjeta Servidor MCP SEP-1649 (`/.well-known/mcp/server-card.json`):** Definición de servidor y herramientas MCP para búsqueda y tasaciones.
+  - **Índice de Habilidades (`/.well-known/agent-skills/index.json`):** Índice de capacidades para agentes según estándar Agent Skills.
+  - **Autenticación Pública (`/auth.md` y `/.well-known/oauth-protected-resource`):** Políticas de acceso público directo para agentes sin requerimiento de credenciales para consultar el catálogo.
+  - **WebMCP Provider (`src/components/seo/WebMcpProvider.tsx`):** Declaración de contexto y herramientas para navegadores con soporte WebMCP.
+- **Compilación de producción:** `npm run build` completado exitosamente con código 0 y 0 errores en 63 rutas.
 
 
 
