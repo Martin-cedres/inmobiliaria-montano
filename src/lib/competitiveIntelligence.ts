@@ -442,7 +442,7 @@ export function getCompetitiveIntelligenceSummary(
       internalTelemetry: '🟢 TELEMETRÍA PROPIA: Visualizaciones de ficha de propiedad, clics en WhatsApp y llamadas telefónicas registradas en el sitio.',
       manualBenchmark: '⚪ AUDITORÍA MANUAL / BENCHMARK: Análisis manual de la primera página de Google Uruguay (competidores Top 1-3, portales vs locales, inventario estimado).',
       targetProjection: '🔵 OBJETIVO / PROYECCIÓN: Metas de rendimiento estimadas (ej. Objetivo de CTR = 12%). No son datos medidos.',
-      recommendation: '🟡 RECOMENDACIÓN ESTRATÉGICA: Propuestas generadas por el sistema sujetas a gobernanza (El sistema propone → Martín aprueba).',
+      recommendation: '🟡 RECOMENDACIÓN ESTRATÉGICA: Propuestas generadas por el sistema sujetas a gobernanza (El sistema propone → La Dirección aprueba).',
     },
     serpQueries: getSerpIntelligence(seoSummary),
     semanticGaps: getSemanticGaps(allProperties),

@@ -125,7 +125,7 @@ export default function AdminSeoConversionesPage() {
       setDecisionCards((prev) =>
         prev.map((c) => (c.id === id ? { ...c, status: 'approved' } : c))
       );
-      showToast('✅ Acción aprobada por Martín');
+      showToast('✅ Acción aprobada por la Dirección');
       setSelectedDecisionModal(null);
     } catch {
       showToast('Error al registrar aprobación');
@@ -436,7 +436,7 @@ export default function AdminSeoConversionesPage() {
                 <span>📊 Resumen del Mes — Agosto 2026</span>
               </h2>
               <p className="text-xs text-slate-500">
-                Métricas consolidadas de demanda en Google, visitas web y contactos comerciales directos.
+                Métricas consolidadas de demanda en Google, visitas a la web y contactos comerciales directos.
               </p>
             </div>
 
@@ -451,17 +451,19 @@ export default function AdminSeoConversionesPage() {
             </div>
           </div>
 
-          {/* Grid de Métricas Principales */}
+          {/* Grid de Métricas Principales Ilustradas */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
             <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 space-y-1">
               <div className="flex items-center space-x-1.5 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
                 <span>👁️</span>
-                <span>Visitas Fichas</span>
+                <span>Visitas a Fichas</span>
               </div>
               <div className="text-2xl sm:text-3xl font-black text-slate-900">
                 {(conversionsData?.totalViews || 24).toLocaleString('es-UY')}
               </div>
-              <p className="text-[10px] text-slate-400">Tráfico calificado en inmuebles</p>
+              <p className="text-[10px] text-slate-500 leading-tight">
+                Personas que abrieron y miraron propiedades en la web
+              </p>
             </div>
 
             <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 space-y-1">
@@ -472,31 +474,35 @@ export default function AdminSeoConversionesPage() {
               <div className="text-2xl sm:text-3xl font-black text-[#5E1754]">
                 {(seoData?.totalImpressions || 5420).toLocaleString('es-UY')}
               </div>
-              <p className="text-[11px] text-slate-400">Demanda en Search Console</p>
+              <p className="text-[10px] text-slate-500 leading-tight">
+                Veces que la web apareció en búsquedas de Google
+              </p>
             </div>
 
             <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 space-y-1">
               <div className="flex items-center space-x-1.5 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
                 <span>🖱️</span>
-                <span>Clics Orgánicos</span>
+                <span>Clics desde Google</span>
               </div>
               <div className="text-2xl sm:text-3xl font-black text-[#E85D04]">
                 {(seoData?.totalClicks || 398).toLocaleString('es-UY')}
               </div>
-              <p className="text-[10px] text-slate-400">
-                CTR medio: <strong>{seoData?.averageCtr || 7.34}%</strong>
+              <p className="text-[10px] text-slate-500 leading-tight">
+                Visitas que entraron al sitio (CTR: <strong>{seoData?.averageCtr || 7.34}%</strong>)
               </p>
             </div>
 
             <div className="bg-emerald-50/60 p-4 rounded-2xl border border-emerald-200 space-y-1">
               <div className="flex items-center space-x-1.5 text-[11px] font-bold text-emerald-800 uppercase tracking-wider">
                 <span>💬</span>
-                <span>WhatsApp</span>
+                <span>WhatsApp Directo</span>
               </div>
               <div className="text-2xl sm:text-3xl font-black text-emerald-700">
                 {conversionsData?.totalWhatsappClicks || 1}
               </div>
-              <p className="text-[10px] text-emerald-700">Consultas directas</p>
+              <p className="text-[10px] text-emerald-700 leading-tight">
+                Consultas comerciales iniciadas por clientes
+              </p>
             </div>
 
             <div className="bg-indigo-50/60 p-4 rounded-2xl border border-indigo-200 space-y-1">
@@ -507,7 +513,9 @@ export default function AdminSeoConversionesPage() {
               <div className="text-2xl sm:text-3xl font-black text-indigo-900">
                 {conversionsData?.totalPhoneClicks || 0}
               </div>
-              <p className="text-[10px] text-indigo-700">Contacto telefónico</p>
+              <p className="text-[10px] text-indigo-700 leading-tight">
+                Clics directos para llamar al teléfono oficial
+              </p>
             </div>
           </div>
 
@@ -522,24 +530,33 @@ export default function AdminSeoConversionesPage() {
                 <div className="flex items-start space-x-2">
                   <span>🏠</span>
                   <div>
-                    <strong>Propiedad más consultada:</strong>{' '}
+                    <strong>Propiedad con más interés:</strong>{' '}
                     <span className="text-[#5E1754] font-bold">
                       {conversionsData?.pagePerformanceTable?.[0]?.pageTitle || 'Casa 2 Dormitorios en PH (San José de Mayo)'}
                     </span>
+                    <p className="text-[10px] text-slate-500 font-normal">
+                      El inmueble con mayor volumen de visitas y consultas de interesados.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-2">
                   <span>📍</span>
                   <div>
-                    <strong>Localidad con mayor demanda:</strong>{' '}
+                    <strong>Localidad más demandada:</strong>{' '}
                     <span className="text-slate-900 font-bold">San José de Mayo (Centro y Barrios)</span>
+                    <p className="text-[10px] text-slate-500 font-normal">
+                      La zona que concentra la mayor cantidad de búsquedas en Google Uruguay.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-2">
                   <span>🚀</span>
                   <div>
-                    <strong>Nueva oportunidad detectada:</strong>{' '}
-                    <span className="text-[#E85D04] font-bold">Libertad (620 impr GSC · Oportunidad de captación N≥2)</span>
+                    <strong>Oportunidad de captación:</strong>{' '}
+                    <span className="text-[#E85D04] font-bold">Libertad (620 búsquedas en Google)</span>
+                    <p className="text-[10px] text-slate-500 font-normal">
+                      Hay demanda comprobada en Google; conviene captar 2 casas para activar la landing.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -557,7 +574,7 @@ export default function AdminSeoConversionesPage() {
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-600 mt-1">
-                  El sistema detecta con evidencia → Martín mantiene el control y aprueba cada cambio estratégico.
+                  El sistema detecta con evidencia → La Dirección mantiene el control y aprueba cada cambio estratégico.
                 </p>
               </div>
 
@@ -607,7 +624,7 @@ export default function AdminSeoConversionesPage() {
                 Acciones Prioritarias ({decisionCards.filter((c) => c.status === 'pending').length} Pendientes)
               </h2>
               <p className="text-xs text-slate-300">
-                El sistema detecta con evidencia real de Google y telemetría → Martín aprueba o descarta en 30 segundos.
+                El sistema detecta con evidencia real de Google y telemetría → La Dirección aprueba o descarta con un solo clic.
               </p>
             </div>
 
@@ -1399,7 +1416,7 @@ export default function AdminSeoConversionesPage() {
 
               <div className="text-xs text-right bg-white/5 p-3 rounded-2xl border border-white/10">
                 <div className="font-bold text-orange-400">Gobernanza:</div>
-                <div className="text-slate-300">El sistema propone → Martín aprueba</div>
+                <div className="text-slate-300">El sistema propone → La Dirección aprueba</div>
               </div>
             </div>
 
@@ -1473,7 +1490,7 @@ export default function AdminSeoConversionesPage() {
                     tierLabel = '🟢 Autoejecutable';
                   } else if (item.executionTier === 'requires_approval') {
                     tierBadge = 'bg-amber-100 text-amber-800 border-amber-300';
-                    tierLabel = '🟡 Requiere Aprobación de Martín';
+                    tierLabel = '🟡 Requiere Aprobación de la Dirección';
                   } else {
                     tierBadge = 'bg-rose-100 text-rose-800 border-rose-300';
                     tierLabel = '🔴 Desestimado / Bloqueado';
