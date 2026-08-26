@@ -1,6 +1,35 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      {
+        source: '/alquileres-san-jose',
+        destination: '/alquileres-san-jose-de-mayo',
+        permanent: true,
+      },
+      {
+        source: '/casas-en-venta-san-jose',
+        destination: '/casas-en-venta-san-jose-de-mayo',
+        permanent: true,
+      },
+      {
+        source: '/tasaciones-san-jose',
+        destination: '/tasaciones-san-jose-de-mayo',
+        permanent: true,
+      },
+      {
+        source: '/inmobiliaria-san-jose-de-mayo',
+        destination: '/inmobiliaria-san-jose',
+        permanent: true,
+      },
+      {
+        source: '/propiedades-san-jose-de-mayo',
+        destination: '/propiedades-san-jose',
+        permanent: true,
+      },
+    ];
+  },
   async rewrites() {
     return [
       {

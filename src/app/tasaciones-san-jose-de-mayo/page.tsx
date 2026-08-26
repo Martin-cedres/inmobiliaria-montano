@@ -27,14 +27,17 @@ const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamo
 const PAGE_URL = `${BASE_URL}/tasaciones-san-jose-de-mayo`;
 
 export const metadata: Metadata = {
-  title: 'Tasaciones Inmobiliarias en San José de Mayo | Daniel Montaño',
+  title: 'Tasaciones Inmobiliarias en San José y San José de Mayo | Daniel Montaño',
   description:
-    'Tasación profesional, objetiva y real de casas, apartamentos, solares y chacras en San José de Mayo. Conocé el verdadero valor de mercado de tu propiedad con Daniel Montaño.',
+    'Tasación profesional, objetiva y real de propiedades en San José y San José de Mayo, Uruguay. Casas, apartamentos, solares y chacras. Conocé el verdadero valor de mercado con Daniel Montaño al 092 776 715.',
   keywords: [
-    'tasaciones inmobiliarias san jose de mayo',
+    'tasaciones inmobiliarias san jose',
+    'tasaciones san jose',
+    'tasador inmobiliario san jose',
+    'tasador profesional san jose',
     'tasar casa en san jose uruguay',
     'cuanto vale mi propiedad en san jose',
-    'tasador inmobiliario san jose',
+    'tasaciones inmobiliarias san jose de mayo',
     'tasacion de terrenos y campos san jose',
     'inmobiliaria montaño tasaciones',
     'daniel montaño tasador',
@@ -43,7 +46,7 @@ export const metadata: Metadata = {
     canonical: PAGE_URL,
   },
   openGraph: {
-    title: 'Tasaciones Inmobiliarias en San José de Mayo — Inmobiliaria Montaño',
+    title: 'Tasaciones Inmobiliarias en San José y San José de Mayo — Inmobiliaria Montaño',
     description:
       'Conocé el verdadero valor de mercado de tu inmueble en San José. Tasaciones objetivas y honestas con Daniel Montaño.',
     url: PAGE_URL,
@@ -55,20 +58,20 @@ export const metadata: Metadata = {
         url: `${BASE_URL}/og-logo.png`,
         width: 1200,
         height: 630,
-        alt: 'Tasaciones Inmobiliarias en San José de Mayo — Inmobiliaria Montaño',
+        alt: 'Tasaciones Inmobiliarias en San José — Inmobiliaria Montaño',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Tasaciones Inmobiliarias en San José de Mayo — Inmobiliaria Montaño',
+    title: 'Tasaciones Inmobiliarias en San José y San José de Mayo — Inmobiliaria Montaño',
     description:
-      'Conocé el verdadero valor de mercado de tu inmueble en San José de Mayo.',
+      'Conocé el verdadero valor de mercado de tu inmueble en San José.',
     images: [`${BASE_URL}/og-logo.png`],
   },
   other: {
     'geo.region': 'UY-SJ',
-    'geo.placename': 'San José de Mayo, San José, Uruguay',
+    'geo.placename': 'San José, San José de Mayo, Uruguay',
     'geo.position': '-34.3375;-56.7136',
     'ICBM': '-34.3375, -56.7136',
   },
@@ -132,11 +135,11 @@ export default function TasacionesPage() {
             <div className="space-y-3 max-w-3xl mx-auto">
               <span className="inline-flex items-center space-x-1.5 bg-amber-400/10 text-amber-300 border border-amber-400/20 px-3.5 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider">
                 <MapPin className="w-3.5 h-3.5" />
-                <span>San José de Mayo • Asesoramiento Oficial</span>
+                <span>San José • San José de Mayo • Asesoramiento Notarial</span>
               </span>
 
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
-                Tasaciones Inmobiliarias en <span className="text-amber-300">San José</span>
+                Tasaciones Inmobiliarias en <span className="text-amber-300">San José</span> y San José de Mayo
               </h1>
 
               <p className="text-slate-200 text-sm sm:text-base font-normal leading-relaxed max-w-2xl mx-auto">

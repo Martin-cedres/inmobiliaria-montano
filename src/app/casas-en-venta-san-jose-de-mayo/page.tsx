@@ -30,13 +30,15 @@ const PAGE_URL = `${BASE_URL}/casas-en-venta-san-jose-de-mayo`;
 export const revalidate = 86400; // 24 horas ISR
 
 export const metadata: Metadata = {
-  title: 'Casas en Venta en San José de Mayo | Inmobiliaria Montaño',
+  title: 'Casas en Venta en San José y San José de Mayo | Inmobiliaria Montaño',
   description:
-    'Catálogo exclusivo de casas en venta en San José de Mayo, Uruguay. Opciones céntricas, residenciales, con fondo, parrillero, garage y aptas para crédito bancario. Asesoramiento con Daniel Montaño.',
+    'Catálogo exclusivo de casas en venta en San José y San José de Mayo, Uruguay. Opciones residenciales y céntricas con títulos al día y aptitud para crédito bancario. Asesoramiento con Daniel Montaño al 092 776 715.',
   keywords: [
-    'casas en venta san jose de mayo',
-    'comprar casa en san jose uruguay',
     'casas en venta san jose',
+    'casas en venta en san jose',
+    'comprar casa en san jose uruguay',
+    'casas en venta san jose uruguay',
+    'casas en venta san jose de mayo',
     'casas aptas para banco san jose de mayo',
     'casas centro san jose',
     'casas arroyo mallada',
@@ -47,9 +49,9 @@ export const metadata: Metadata = {
     canonical: PAGE_URL,
   },
   openGraph: {
-    title: 'Casas en Venta en San José de Mayo — Inmobiliaria Montaño',
+    title: 'Casas en Venta en San José y San José de Mayo — Inmobiliaria Montaño',
     description:
-      'Encontrá tu casa en San José de Mayo con títulos verificados, opciones aptas para banco y atención directa de Daniel Montaño.',
+      'Encontrá tu casa en San José y San José de Mayo con títulos verificados, opciones aptas para banco y atención directa de Daniel Montaño.',
     url: PAGE_URL,
     siteName: 'Inmobiliaria Montaño',
     locale: 'es_UY',
@@ -59,20 +61,20 @@ export const metadata: Metadata = {
         url: `${BASE_URL}/og-logo.png`,
         width: 1200,
         height: 630,
-        alt: 'Casas en Venta en San José de Mayo — Inmobiliaria Montaño',
+        alt: 'Casas en Venta en San José y San José de Mayo — Inmobiliaria Montaño',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Casas en Venta en San José de Mayo — Inmobiliaria Montaño',
+    title: 'Casas en Venta en San José y San José de Mayo — Inmobiliaria Montaño',
     description:
-      'Encontrá tu casa en San José de Mayo con títulos verificados y atención directa de Daniel Montaño.',
+      'Encontrá tu casa en San José con títulos verificados y atención directa de Daniel Montaño.',
     images: [`${BASE_URL}/og-logo.png`],
   },
   other: {
     'geo.region': 'UY-SJ',
-    'geo.placename': 'San José de Mayo, San José, Uruguay',
+    'geo.placename': 'San José, San José de Mayo, Uruguay',
     'geo.position': '-34.3375;-56.7136',
     'ICBM': '-34.3375, -56.7136',
   },
@@ -143,11 +145,11 @@ export default async function CasasEnVentaPage() {
             <div className="space-y-3 max-w-3xl mx-auto">
               <span className="inline-flex items-center space-x-1.5 bg-amber-400/10 text-amber-300 border border-amber-400/20 px-3.5 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider">
                 <MapPin className="w-3.5 h-3.5" />
-                <span>San José de Mayo • Uruguay</span>
+                <span>San José • San José de Mayo • Uruguay</span>
               </span>
 
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
-                Casas en Venta en <span className="text-amber-300">San José de Mayo</span>
+                Casas en Venta en <span className="text-amber-300">San José</span> y San José de Mayo
               </h1>
 
               <p className="text-slate-200 text-sm sm:text-base font-normal leading-relaxed max-w-2xl mx-auto">
