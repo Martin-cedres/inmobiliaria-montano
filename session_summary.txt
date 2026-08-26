@@ -552,10 +552,99 @@
   - Implementado el bloque de Interlinking Contextual de retorno hacia las páginas pilares en todas las fichas de propiedad.
 - Verificada la compilación completa de producción con `npm run build` (34 rutas compiladas con código 0 y 0 errores de TypeScript).
 - **Restauración del Enlace Cliqueable en las Tarjetas Popup del Mapa:**
-  1. En [`src/components/CatalogMap.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/CatalogMap.tsx), se envolvió la tarjeta de vista previa dentro del `<Popup>` del mapa en un componente `<Link href={`/propiedad/${prop.slug}`}>` de Next.js.
-  2. Se añadieron efectos de hover interactivos (zoom sutil de fotografía, cambio de color corporativo en el título) y el botón/llamado a la acción *"Ver ficha ➔"*.
-  3. Se añadieron reglas CSS de anulación en el bloque de estilos del popup para evitar que Leaflet altere el aspecto y colores de los enlaces.
-  4. Verificado con `npm run build` (34 rutas compiladas exitosamente, 0 errores).
+=== Sesión 2026-08-25 ===
+- Ejecutada la auditoría técnica profunda P0.1 sobre todos los componentes, tipos, generadores Schema y rutas de la plataforma.
+- Implementada la Fase P0.2 (Modelo de Datos Inmobiliario Limpio):
+  - Incorporados los estados `retirada` e `inactiva` al tipo `PropertyStatus`.
+  - Estructurado `location` con soporte dinámico multizona (`department`, `city`, `neighborhood`, `zone`, `coordinates`, `radiusMeters`, `hasLocation`).
+  - Añadidos atributos de certezas jurídicas y catastrales reales (`cadastralNumber`, `propertyTaxUpToDate`, `primaryTaxUpToDate`).
+  - Eliminados los campos y funciones obsoletos vinculados a Google Indexing API (`googleIndexingStatus`, `lastGoogleNotifiedAt`, `updateGoogleIndexingStatus`).
+  - Actualizado `propertiesStore.ts` y las rutas API (`/api/properties`, `/api/properties/[id]`, `/api/admin/google-index`) para garantizar persistencia y compatibilidad total hacia atrás en Neon DB y local JSON.
+  - Implementado el filtrado automático de ciclo de vida en `getCachedProperties()` (excluye `inactiva` y `retirada` de la vista pública).
+- Implementada la Fase P0.3 (Grafo Schema.org Unificado & Eliminación de Duplicados):
+  - Erradicada la doble inyección de JSON-LD en `src/app/propiedad/[slug]/page.tsx` (eliminado componente redundante `JsonLdProperty` y consolidado en un único script canónico).
+  - Creado el generador central `generatePropertyGraphSchema(property)` en `src/utils/seo.ts` que emite un grafo `@graph` unificado e interconectado con `@id` estables:
+    1. `RealEstateAgent` (`@id: ".../#agent"`)
+    2. `Person` Daniel Montaño (`@id: ".../#daniel-montano"`)
+    3. `RealEstateListing` (`@id: "...#listing"`)
+    4. Inmueble `SingleFamilyResidence` | `Apartment` | `Land` | `CommercialBuilding` (`@id: "...#item"`) (sustituido `Landform` por el tipo oficial `Land`).
+    5. `Offer` (`@id: "...#offer"`) (emitida **exclusivamente** si la propiedad está activa: `disponible`, `nuevo`, `oportunidad`; omitida por completo para reservadas, vendidas o alquiladas).
+    6. `BreadcrumbList` (`@id: "...#breadcrumbs"`).
+  - Creado `generateSiteGraphSchema()` para entidades institucionales.
+  - Adaptada la UI de `propiedad/[slug]/page.tsx` para mostrar banners informativos elegantes en inmuebles reservados, vendidos y alquilados manteniendo código HTTP 200 y enlaces a propiedades similares.
+- Verificación exhaustiva de compilación limpia: `npm run build` completado con código 0 y 0 errores de TypeScript en 37 rutas estáticas.
+- Implementada la Fase P0.4 (Configuración robots.ts para Buscadores e IA):
+  - Permitido el rastreo público general para `*`, `Googlebot`, `Googlebot-Image`, `Bingbot`, `GPTBot`, `OAI-SearchBot`, `ClaudeBot`, `PerplexityBot`, `Google-Extended`, `Applebot-Extended` y `cohere-ai`.
+  - Bloqueadas de forma estricta las rutas privadas administrativas y de autenticación (`/admin`, `/admin/*`, `/login`, `/api/admin/*`, `/api/auth/*`) sin bloquear endpoints públicos de API.
+- Implementada la Fase P0.5 (Sitemap Dinámico e Inteligente desde Base de Datos):
+  - Integradas las páginas departamentales e institucionales (`/inmobiliaria-san-jose`, `/propiedades-san-jose`).
+  - Erradicado el `new Date()` artificial en `lastModified`, reemplazándolo por el cálculo fiel del timestamp de modificación más reciente (`updatedAt` / `createdAt`) de los inmuebles de cada categoría y páginas estables.
+  - Filtrado estricto de ciclo de vida en el sitemap: se incluyen activas, reservadas, vendidas y alquiladas con frecuencias diferenciadas (`daily`, `weekly`, `monthly`), y se excluyen definitivamente las propiedades `retirada` e `inactiva`.
+  - Garantizada unicidad de URLs con 0 duplicados en la salida del sitemap.xml.
+- Implementada la Fase P1 (Arquitectura Departamental + Interlinking Semántico + Capa Markdown & IA Modular):
+  - P1.1 (Registro Geográfico & Indexabilidad Departamental): Creado `src/data/locations.ts` con mapeo de 13 localidades del departamento de San José, rutas de acceso, tipos de zona y regla estricta anti-thin content ($N \ge 2$). Creadas las páginas estratégicas maestras `/inmobiliaria-san-jose` y `/propiedades-san-jose`.
+  - P1.2 (Interlinking Semántico Contextual): Creado `src/components/seo/DepartmentInterlinking.tsx` e integrado en fichas de detalle y páginas pilares, enlazando hubs reales y localidades con inventario activo.
+  - P1.3 (Representación Markdown como URL pública directa): Implementado `/propiedad/[slug].md` sirviendo `text/markdown` limpio desde la misma fuente de datos que HTML, con inyección de `<link rel="alternate" type="text/markdown" href="...">` en la cabecera.
+  - P1.4 (Arquitectura Modular de llms.txt): Implementados los route handlers `/llms.txt` (institucional), `/propiedades/llms.txt` (inventario público general), `/propiedades/venta/llms.txt` (disponibles venta) y `/propiedades/alquiler/llms.txt` (disponibles alquiler).
+  - Validación Transversal: Inmuebles con estado `retirada` o `inactiva` quedan 100% excluidos de catálogos, Markdown (404), llms.txt, sitemaps y Offers en Schema.
+- Implementada la Fase P2.1 (Landings Nivel B Condicionadas & Transición Noindex/Canonical):
+  - Creado `src/data/levelBLandings.ts` con definiciones de landings Nivel B, palabras clave de intención real, contenido editorial local y regla de indexabilidad condicionada a $N \ge 2$.
+  - Creado el componente reutilizable `LevelBLandingTemplate.tsx` con manejo de modo activo ($N \ge 2$) y modo transición con aviso amigable y sugerencias si $N < 2$.
+  - Implementadas las rutas `/casas-en-venta-libertad`, `/terrenos-en-venta-libertad` y `/casas-aptas-para-banco-san-jose`.
+  - Actualizado `src/app/sitemap.ts` para evaluar dinámicamente cada landing Nivel B e incluirla únicamente cuando $N \ge 2$.
+  - Verificada la transición de forma unitaria: `/casas-aptas-para-banco-san-jose` ($N=2$) queda `index, follow` y en sitemap; `/casas-en-venta-libertad` ($N=0$) y `/terrenos-en-venta-libertad` ($N=1$) entran en modo transición `noindex, follow` con canonical a la categoría padre y fuera del sitemap.
+- Implementada la Fase P2.2 (Observatorio del Inventario Inmobiliario de Inmobiliaria Montaño):
+  - Creado `src/utils/marketObservatory.ts` con motor estadístico riguroso: agrupación obligatoria por moneda (0 mezclas USD/UYU), localidad, categoría y operación; cálculo de precio/m² individual por inmueble; mediana como métrica principal y promedio como complementario; regla estricta de muestra mínima ($N \ge 3$ para métricas agregadas); auditoría documental sobre registros explícitamente verificados (sin asumir datos).
+  - Creada la página pública `/estadisticas-inmobiliarias-san-jose` con descargo metodológico explícito, fecha de corte visible derivada de la BD y marcado Schema.org `@type: "Dataset"`.
+  - Integrada en `sitemap.xml`, `robots.txt`, `/llms.txt` y `DepartmentInterlinking.tsx`.
+- Cierre definitivo de Fase P2 (Infraestructura, Landings Condicionadas, Observatorio y Guías):
+  - Aprobado el modelo técnico y de autoridad de P2.
+  - Corrección metodológica aplicada: el sitemap es señal de descubrimiento, no orden de indexación forzada; se medirá el porcentaje real de indexación y se diagnosticarán las causas de las URLs excluidas.
+  - Precisión sobre NAP: la inmobiliaria opera con área de servicio departamental (SAB) con base en San José de Mayo; no se inventan números de puerta ni citas artificiales.
+- Implementada la Fase P3.1 y P3.3 (Telemetría SEO & Embudo de Conversión Comercial):
+  - Creado `src/types/telemetry.ts` con definiciones de `SeoTelemetryRecord`, `ConversionEvent`, `ButtonPosition` y resúmenes de rendimiento.
+  - Creado `src/lib/telemetryStore.ts` con persistencia anónima (0 datos personales), cálculo de métricas agregadas y clasificación de oportunidades según demanda observada para el sitio.
+  - Creado `src/utils/telemetry.ts` para tracking asíncrono en cliente (`trackPropertyView`, `trackWhatsappClick`, `trackPhoneClick`) utilizando identificador de sesión anónimo (`anonymousSessionId`).
+  - Integrada telemetría en `FloatingWhatsApp.tsx`, `PropertyTracker.tsx` y `WhatsAppTrackButton.tsx`.
+  - Creados los endpoints `/api/analytics/track`, `/api/admin/telemetry` y `/api/admin/telemetry/import-seo`.
+  - Creada la vista administrativa interactiva `/admin/seo-conversiones` con 4 bloques: Search Console (clics, impresiones, CTR, posición), Embudo de Conversiones (visitas vs. contactos por propiedad/canal), Matriz de Oportunidades SEO (consolidar, optimizar, reforzar, reescribir snippet) e Importador Seguro de GSC.
+  - Implementado cliente nativo de Google Search Console API `src/lib/gscClient.ts` (Search Analytics, URL Inspection API, reintentos con exponential backoff) y endpoint `/api/admin/telemetry/sync-gsc` para sincronización en vivo con trazabilidad de fechas.
+  - Implementado endpoint `/api/admin/telemetry/inspect-url` para diagnóstico de URLs en vivo (veredicto, estado de indexación, canonical de Google vs. usuario).
+  - Implementado motor de cruce algorítmico `crossReferenceGscWithInventory`: evalúa consultas de GSC contra el inventario real en base de datos ($N \ge 2$) para proponer activación o mantenimiento de landings Nivel B sin crear thin content.
+  - Auditoría de seguridad completada: secretos (`GOOGLE_PRIVATE_KEY`, `GOOGLE_CLIENT_SECRET`, `JWT_SECRET`) restringidos al servidor, sin fugas en frontend, `.env*` ignorado en `.gitignore` y 0 exposición en git. Principio de mínimo privilegio respetado (rol "Completo" en Search Console, 0 Propietario).
+  - Implementado el motor de Health Score SEO por URL (`calculateUrlHealthScores` en `src/lib/telemetryStore.ts` y pestaña interactiva en `/admin/seo-conversiones`): audita transversalmente aspecto técnico (sitemap, canonical, index status, schema, HTTP 200), rendimiento orgánico (impresiones, clics, CTR, ranking) y conversión comercial con semáforo inteligente 🟢 Saludable / 🟡 Atención / 🔴 Acción Requerida.
+  - Formalizada la regla de expansión Nivel B: Demanda real sostenida + Intención comercial + Inventario N >= 2 + Contenido local diferenciado -> Candidata a Landing Nivel B. Si N < 2 -> no crear ni indexar landing específica (modo transición noindex con canonical al hub superior).
+
+### Fase P4: SEO Competitivo Basado en Evidencia, Brechas Semánticas, Autoridad Local y Action Queue
+- **Trazabilidad Absoluta:** Todas las métricas muestran de forma explícita su Fuente (`Google Search Console API (En vivo) & Telemetría Interna`) y Período de Medición (`01/08/2026 – 25/08/2026`).
+- **P4.1 (Competitive SERP Intelligence):** Mapeo de competidores reales en Google para consultas comerciales clave (`"inmobiliaria san jose"`, `"casas en venta san jose de mayo"`, `"casas en venta libertad"`), diferenciando Portales Nacionales agregadores (InfoCasas, MercadoLibre, Gallito) de agencias locales, identificando fortalezas, debilidades e inventario estimado.
+- **P4.2 (Semantic & Entity Gaps):** Motor de análisis de entidades locales (Barrios: Centro, Molino, Arriaga; Rutas: 1 y 3; Atributos: aptas para banco, tasaciones) evaluando rigurosamente el inventario $N \ge 2$ para decidir si amerita o no una landing específica.
+- **P4.3 (Local Authority & NAP):** Auditoría de NAP (*Inmobiliaria Montaño*, Teléfono Oficial: `+598 92 776 715` / `092 776 715`, Área de Servicio: San José de Mayo y Departamento de San José) bajo modelo SAB (Service Area Business) y registro de oportunidades de menciones departamentales legítimas (Cámara Inmobiliaria, medios locales, Cámara Empresarial).
+- **P4.4 (Conversion Intelligence):** Cruce directo entre consultas Google $\rightarrow$ Ficha del inmueble $\rightarrow$ Vistas $\rightarrow$ Contactos WhatsApp y Llamadas $\rightarrow$ Tasa de Engagement Total, identificando la velocidad comercial de cada propiedad.
+- **P4.5 (Action Queue — Sistema de Decisión Asistida):** Generador de propuestas priorizadas estructuradas según gobernanza:
+  - 🟢 **Autoejecutable:** Ajustes técnicos seguros, integridad de Schema y sitemap.
+  - 🟡 **Requiere Aprobación de Martín:** Activación de landings Nivel B ($N \ge 2$), optimización de Snippets/Titles, cambios de interlinking.
+  - 🔴 **Desestimado / Bloqueado:** Landings sin inventario $N < 2$ (mantenimiento en modo transición).
+### Fase P5: Optimización, Crecimiento y Centro de Decisiones Estratégicas
+- **P5.1 (Optimización de CTR Asistida):** Detector algorítmico de páginas de alta demanda (>500 impresiones, posiciones 3–7) que calcula brecha entre CTR observado y objetivo proyectado, generando propuestas de Title/Description quirúrgicas para aprobación de Martín.
+- **P5.2 (Disparadores de Inventario N >= 2):** Motor de expansión condicionada que detecta demanda en GSC y cruza con la base de datos en tiempo real; propone activación e indexación plena para `/casas-aptas-para-banco-san-jose` ($N=2$) y mantiene en transición noindex a `/casas-en-venta-libertad` ($N=0 < 2$) protegiendo la web contra thin content.
+- **P5.3 (Autoridad Local del Observatorio):** Generador de informes y notas de prensa trimestrales para medios locales y cámaras empresariales con datos 100% reales sin mezclar monedas.
+- **P5.4 (Diagnóstico & Anomalías de Conversión):** Clasificador de velocidad comercial por propiedad (detecta activos con alto engagement para potenciar en campañas y alerta sobre inmuebles de alto tráfico con 0 contactos para revisión comercial).
+- **Centro de Decisiones Estratégicas (🎯):** Componente interactivo en `/admin/seo-conversiones` y endpoint `/api/admin/decision-center` que permite a Martín revisar evidencia, aprobar o descartar recomendaciones en 30 segundos con modal de inspección técnica.
+- **Panel Ejecutivo (📊 Resumen del Mes):** Integrada la tarjeta superior de dirección ejecutiva en `/admin/seo-conversiones` que consolida en un solo vistazo el volumen de visitas a inmuebles, impresiones Google, clics orgánicos, contactos WhatsApp, llamadas telefónicas, propiedad más consultada, localidad de mayor demanda, oportunidad emergente y estado de gobernanza de acciones.
+- **Compilación de producción:** `npm run build` completado exitosamente con código 0 y 0 errores en 56 rutas.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -103,6 +103,10 @@ async function ensureTablesExist(sql: any) {
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS price_unit_type TEXT DEFAULT 'm²';`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS soil_topography TEXT;`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS gated_perimeter BOOLEAN DEFAULT FALSE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS zone VARCHAR(64);`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS cadastral_number VARCHAR(64);`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS property_tax_up_to_date BOOLEAN DEFAULT TRUE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS primary_tax_up_to_date BOOLEAN DEFAULT TRUE;`;
     tablesInitialized = true;
   } catch (err) {
     console.warn('Error al auto-crear tablas en Neon Postgres:', err);
@@ -147,6 +151,7 @@ export async function getAllProperties(): Promise<Property[]> {
               department: row.department || 'San José',
               city: row.city || 'San José de Mayo',
               neighborhood: row.neighborhood || 'Centro',
+              zone: row.zone || undefined,
               address: row.address,
               lat: latVal,
               lng: lngVal,
@@ -199,6 +204,9 @@ export async function getAllProperties(): Promise<Property[]> {
               priceUnitType: row.price_unit_type || 'm²',
               soilTopography: row.soil_topography || undefined,
               gatedPerimeter: row.gated_perimeter,
+              cadastralNumber: row.cadastral_number || undefined,
+              propertyTaxUpToDate: row.property_tax_up_to_date ?? true,
+              primaryTaxUpToDate: row.primary_tax_up_to_date ?? true,
             },
             guarantees: Array.isArray(row.guarantees) ? row.guarantees : [],
             images: Array.isArray(row.images) ? row.images : [],
@@ -207,8 +215,6 @@ export async function getAllProperties(): Promise<Property[]> {
             viewsCount: Number(row.views_count || 0),
             whatsappClicksCount: Number(row.whatsapp_clicks_count || 0),
             sharesCount: Number(row.shares_count || 0),
-            lastGoogleNotifiedAt: row.last_google_notified_at || undefined,
-            googleIndexingStatus: row.google_indexing_status || 'pending',
             featured: row.featured,
             createdAt: row.created_at,
             updatedAt: row.updated_at,
@@ -230,10 +236,17 @@ export async function getAllProperties(): Promise<Property[]> {
     const rawProperties: any[] = JSON.parse(fileContent);
     const properties: Property[] = rawProperties.map((p) => ({
       ...p,
+      location: {
+        ...p.location,
+        coordinates: p.location?.coordinates || {
+          lat: p.location?.lat ?? -34.3375,
+          lng: p.location?.lng ?? -56.7136,
+        },
+      },
       images: Array.isArray(p.images)
         ? p.images.map((img: any, idx: number) =>
             typeof img === 'string'
-              ? { id: `img-${idx}`, blobUrl: img, webpUrl: img, thumbnailUrl: img, altText: p.title || 'Propiedad Inmobiliaria Montaño', isMain: idx === 0 }
+              ? { id: `img-${idx}`, blobUrl: img, webpUrl: img, thumbnailUrl: img, altText: p.title || 'Propiedad en San José', isMain: idx === 0 }
               : img
           )
         : [],
@@ -251,15 +264,17 @@ export async function getAllProperties(): Promise<Property[]> {
 }
 
 /**
- * ISR & Data Cache: Obtiene todas las propiedades con almacenamiento en caché perimetral (Edge/Data Cache)
+ * ISR & Data Cache: Obtiene todas las propiedades públicas (activas, reservadas, vendidas, alquiladas)
+ * Excluye automáticamente propiedades con estado 'retirada' o 'inactiva'.
  * Revalidación automática periódica: 24 horas (86.400 segundos)
  * Invalidación On-Demand: revalidateTag('properties')
  */
 export const getCachedProperties = unstable_cache(
   async (): Promise<Property[]> => {
-    return getAllProperties();
+    const all = await getAllProperties();
+    return all.filter((p) => p.status !== 'retirada' && p.status !== 'inactiva');
   },
-  ['properties-all'],
+  ['properties-public-all'],
   {
     revalidate: 86400, // 24 horas
     tags: ['properties'],
@@ -303,24 +318,26 @@ export async function saveProperty(property: Property): Promise<Property> {
         INSERT INTO properties (
           id, code_ref, title, slug, description, operation, category, status,
           price_amount, price_currency, price_period, price_drop, original_amount, price_mode,
-          department, city, neighborhood, address,
+          department, city, neighborhood, zone, address,
           lat, lng, is_exact_location, radius_meters, has_location,
           bedrooms, bathrooms, floors, built_area_m2, plot_area_m2, front_meters,
           car_access, garage, cochera, cochera_techada, barbecue, barbacoa, parrillero, pool, garden, fondo, patio, wood_stove_or_ac, pet_friendly,
           perimeter_fence, bank_credit_eligible, ph_regime, ose_water, ute_electric, sanitation, fiber_optic,
           water_well_or_pond, titles_up_to_date, accepts_trade_in, security_system, paved_street, shed_or_corral, coneat_index,
           is_hectares, hectares_amount, fractionable, min_fraction_m2, fraction_notes, route_frontage, price_per_m2, price_unit_type, soil_topography, gated_perimeter,
+          cadastral_number, property_tax_up_to_date, primary_tax_up_to_date,
           guarantees, images, seo_title, seo_description, featured
         ) VALUES (
           ${property.id}, ${property.codeRef}, ${property.title}, ${property.slug}, ${property.description}, ${property.operation}, ${property.category}, ${property.status},
           ${property.price.amount}, ${property.price.currency}, ${property.price.period || null}, ${property.price.priceDrop || false}, ${property.price.originalAmount || null}, ${property.price.priceMode || 'visible'},
-          ${property.location.department}, ${property.location.city}, ${property.location.neighborhood}, ${property.location.address || null},
+          ${property.location.department}, ${property.location.city}, ${property.location.neighborhood}, ${property.location.zone || null}, ${property.location.address || null},
           ${latVal}, ${lngVal}, ${property.location.isExactLocation ?? false}, ${property.location.radiusMeters || 300}, ${property.location.hasLocation !== false},
           ${property.features.bedrooms || null}, ${property.features.bathrooms || null}, ${property.features.floors || null}, ${property.features.builtAreaM2 || null}, ${property.features.plotAreaM2 || null}, ${property.features.frontMeters || null},
           ${property.features.carAccess || false}, ${property.features.garage || false}, ${property.features.cochera || false}, ${property.features.cocheraTechada || false}, ${property.features.barbecue || false}, ${property.features.barbacoa || false}, ${property.features.parrillero || false}, ${property.features.pool || false}, ${property.features.garden || false}, ${property.features.fondo || false}, ${property.features.patio || false}, ${property.features.woodStoveOrAC || false}, ${property.features.petFriendly || false},
           ${property.features.perimeterFence || false}, ${property.features.bankCreditEligible || false}, ${property.features.phRegime || false}, ${property.features.oseWater || false}, ${property.features.uteElectric || false}, ${property.features.sanitation || false}, ${property.features.fiberOptic || false},
           ${property.features.waterWellOrPond || false}, ${property.features.titlesUpToDate || false}, ${property.features.acceptsTradeIn || false}, ${property.features.securitySystem || false}, ${property.features.pavedStreet || false}, ${property.features.shedOrCorral || false}, ${property.features.coneatIndex || null},
           ${property.features.isHectares || false}, ${property.features.hectaresAmount || null}, ${property.features.fractionable || false}, ${property.features.minFractionM2 || null}, ${property.features.fractionNotes || null}, ${property.features.routeFrontage || null}, ${property.features.pricePerM2 || null}, ${property.features.priceUnitType || 'm²'}, ${property.features.soilTopography || null}, ${property.features.gatedPerimeter || false},
+          ${property.features.cadastralNumber || null}, ${property.features.propertyTaxUpToDate ?? true}, ${property.features.primaryTaxUpToDate ?? true},
           ${JSON.stringify(property.guarantees || [])}, ${JSON.stringify(property.images || [])}, ${property.seoTitle || null}, ${property.seoDescription || null}, ${property.featured}
         ) ON CONFLICT (id) DO UPDATE SET
           code_ref = EXCLUDED.code_ref,
@@ -339,6 +356,7 @@ export async function saveProperty(property: Property): Promise<Property> {
           department = EXCLUDED.department,
           city = EXCLUDED.city,
           neighborhood = EXCLUDED.neighborhood,
+          zone = EXCLUDED.zone,
           address = EXCLUDED.address,
           lat = EXCLUDED.lat,
           lng = EXCLUDED.lng,
@@ -388,6 +406,9 @@ export async function saveProperty(property: Property): Promise<Property> {
           price_unit_type = EXCLUDED.price_unit_type,
           soil_topography = EXCLUDED.soil_topography,
           gated_perimeter = EXCLUDED.gated_perimeter,
+          cadastral_number = EXCLUDED.cadastral_number,
+          property_tax_up_to_date = EXCLUDED.property_tax_up_to_date,
+          primary_tax_up_to_date = EXCLUDED.primary_tax_up_to_date,
           guarantees = EXCLUDED.guarantees,
           images = EXCLUDED.images,
           seo_title = EXCLUDED.seo_title,
@@ -547,45 +568,3 @@ export async function incrementPropertyMetric(
   return false;
 }
 
-/**
- * Actualiza el estado de la notificación de indexación en Google
- */
-export async function updateGoogleIndexingStatus(
-  identifier: string,
-  status: 'notified' | 'pending' | 'error',
-  notifiedAt: string = new Date().toISOString()
-): Promise<boolean> {
-  const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL;
-
-  if (connectionString) {
-    const sql = getDbClient();
-    try {
-      await sql`
-        UPDATE properties 
-        SET 
-          google_indexing_status = ${status},
-          last_google_notified_at = ${notifiedAt}
-        WHERE id = ${identifier} OR slug = ${identifier};
-      `;
-    } catch (dbErr) {
-      console.warn('Error actualizando estado de indexación en Neon Postgres:', dbErr);
-    }
-  }
-
-  const properties = await getAllProperties();
-  const index = properties.findIndex((p) => p.id === identifier || p.slug === identifier);
-  if (index >= 0) {
-    properties[index].googleIndexingStatus = status;
-    properties[index].lastGoogleNotifiedAt = notifiedAt;
-    memoryProperties = [...properties];
-
-    try {
-      await fs.writeFile(LOCAL_DB_PATH, JSON.stringify(properties, null, 2), 'utf-8');
-    } catch (err) {
-      // Ignorar en serverless read-only
-    }
-    return true;
-  }
-
-  return false;
-}

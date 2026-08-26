@@ -267,8 +267,8 @@ export default function EditarPropiedadPage() {
 
           setSeoTitle(p.seoTitle || '');
           setSeoDescription(p.seoDescription || '');
-          setLastGoogleNotifiedAt(p.lastGoogleNotifiedAt);
-          setGoogleIndexingStatus(p.googleIndexingStatus || 'pending');
+          setLastGoogleNotifiedAt((p as any).lastGoogleNotifiedAt);
+          setGoogleIndexingStatus((p as any).googleIndexingStatus || 'pending');
 
           setImages(Array.isArray(p.images) ? p.images : []);
           setLoadedProperty(p);

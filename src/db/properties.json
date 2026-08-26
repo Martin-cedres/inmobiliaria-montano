@@ -207,5 +207,195 @@
     "featured": true,
     "createdAt": "2026-08-02T14:30:00.000Z",
     "updatedAt": "2026-08-02T14:30:00.000Z"
+  },
+  {
+    "id": "3",
+    "codeRef": "MON-103",
+    "title": "Casa 3 Dormitorios con Gran Patio en Barrio Arriaga",
+    "slug": "casa-3-dormitorios-barrio-arriaga-san-jose",
+    "description": "Excelente propiedad familiar en Barrio Arriaga, San José de Mayo. 3 dormitorios, living comedor con estufa a leña, cocina definida, baño completo, amplio patio con parrillero y cochera techada. Propiedad actualmente en proceso de reserva.",
+    "operation": "venta",
+    "category": "casa",
+    "status": "reservado",
+    "price": {
+      "amount": 115000,
+      "currency": "USD",
+      "period": "total",
+      "priceMode": "visible"
+    },
+    "location": {
+      "department": "San José",
+      "city": "San José de Mayo",
+      "neighborhood": "Barrio Arriaga",
+      "zone": "Urbana",
+      "address": "Calle Rivera casi Artigas",
+      "coordinates": {
+        "lat": -34.344,
+        "lng": -56.711
+      },
+      "isExactLocation": false,
+      "radiusMeters": 300,
+      "hasLocation": true
+    },
+    "features": {
+      "bedrooms": 3,
+      "bathrooms": 1,
+      "floors": 1,
+      "builtAreaM2": 95,
+      "plotAreaM2": 280,
+      "carAccess": true,
+      "garage": true,
+      "barbecue": true,
+      "woodStoveOrAC": true,
+      "oseWater": true,
+      "uteElectric": true,
+      "sanitation": true,
+      "titlesUpToDate": true,
+      "bankCreditEligible": true,
+      "propertyTaxUpToDate": true,
+      "primaryTaxUpToDate": true
+    },
+    "guarantees": [],
+    "legalCertainties": {
+      "titlesUpToDate": true,
+      "bankCreditEligible": true,
+      "acceptsTradeIn": false
+    },
+    "images": [
+      {
+        "id": "img-103-0",
+        "blobUrl": "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1200&q=80",
+        "webpUrl": "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1200&q=80",
+        "thumbnailUrl": "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1200&q=80",
+        "altText": "Casa 3 Dormitorios en Barrio Arriaga",
+        "isMain": true
+      }
+    ],
+    "featured": false,
+    "createdAt": "2026-08-05T11:00:00.000Z",
+    "updatedAt": "2026-08-15T16:00:00.000Z"
+  },
+  {
+    "id": "4",
+    "codeRef": "MON-104",
+    "title": "Apartamento 2 Dormitorios con Cochera en Centro San José",
+    "slug": "apartamento-2-dormitorios-centro-san-jose-vendido",
+    "description": "Excelente oportunidad en el corazón de San José de Mayo. Apartamento de 2 dormitorios, living comedor con ventanal al frente, cocina equipada, baño completo y cochera fija. Inmueble vendido con éxito por Inmobiliaria Montaño.",
+    "operation": "venta",
+    "category": "apartamento",
+    "status": "vendido",
+    "price": {
+      "amount": 92000,
+      "currency": "USD",
+      "period": "total",
+      "priceMode": "visible"
+    },
+    "location": {
+      "department": "San José",
+      "city": "San José de Mayo",
+      "neighborhood": "Centro",
+      "zone": "Urbana",
+      "address": "Calle 18 de Julio casi Treinta y Tres",
+      "coordinates": {
+        "lat": -34.339,
+        "lng": -56.714
+      },
+      "isExactLocation": true,
+      "radiusMeters": 0,
+      "hasLocation": true
+    },
+    "features": {
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "floors": 1,
+      "builtAreaM2": 58,
+      "plotAreaM2": 58,
+      "garage": true,
+      "oseWater": true,
+      "uteElectric": true,
+      "sanitation": true,
+      "titlesUpToDate": true,
+      "bankCreditEligible": true
+    },
+    "guarantees": [],
+    "legalCertainties": {
+      "titlesUpToDate": true,
+      "bankCreditEligible": true,
+      "acceptsTradeIn": false
+    },
+    "images": [
+      {
+        "id": "img-104-0",
+        "blobUrl": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80",
+        "webpUrl": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80",
+        "thumbnailUrl": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80",
+        "altText": "Apartamento en Centro San José",
+        "isMain": true
+      }
+    ],
+    "featured": false,
+    "createdAt": "2026-07-20T09:00:00.000Z",
+    "updatedAt": "2026-08-18T14:00:00.000Z"
+  },
+  {
+    "id": "5",
+    "codeRef": "MON-105",
+    "title": "Terreno Solar de 650 m² Nivelado y Listo para Edificar en Libertad",
+    "slug": "terreno-650m2-zona-residencial-libertad-san-jose",
+    "description": "Excelente solar de terreno ubicado en zona residencial en expansión de la ciudad de Libertad, departamento de San José. 650 m² con 15 metros de frente a calle con servicios de OSE y UTE disponibles en la puerta. Títulos perfectos y contribución al día.",
+    "operation": "venta",
+    "category": "terreno",
+    "status": "disponible",
+    "price": {
+      "amount": 34000,
+      "currency": "USD",
+      "period": "total",
+      "priceMode": "visible"
+    },
+    "location": {
+      "department": "San José",
+      "city": "Libertad",
+      "neighborhood": "Barrio Colón",
+      "zone": "Urbana",
+      "address": "Calle 25 de Agosto",
+      "coordinates": {
+        "lat": -34.634,
+        "lng": -56.621
+      },
+      "isExactLocation": false,
+      "radiusMeters": 300,
+      "hasLocation": true
+    },
+    "features": {
+      "plotAreaM2": 650,
+      "frontMeters": 15,
+      "oseWater": true,
+      "uteElectric": true,
+      "sanitation": false,
+      "pavedStreet": true,
+      "titlesUpToDate": true,
+      "bankCreditEligible": true,
+      "propertyTaxUpToDate": true,
+      "primaryTaxUpToDate": true
+    },
+    "guarantees": [],
+    "legalCertainties": {
+      "titlesUpToDate": true,
+      "bankCreditEligible": true,
+      "acceptsTradeIn": true
+    },
+    "images": [
+      {
+        "id": "img-105-0",
+        "blobUrl": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80",
+        "webpUrl": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80",
+        "thumbnailUrl": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80",
+        "altText": "Terreno de 650 m² en Libertad, San José",
+        "isMain": true
+      }
+    ],
+    "featured": true,
+    "createdAt": "2026-08-12T10:00:00.000Z",
+    "updatedAt": "2026-08-12T10:00:00.000Z"
   }
 ]

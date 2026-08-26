@@ -180,72 +180,237 @@ export function stripMarkdown(text: string): string {
 }
 
 /**
- * Genera automáticamente el Schema.org JSON-LD (RealEstateListing / SingleFamilyResidence / Apartment / Landform)
+ * Genera el Schema.org @graph unificado y canónico para una propiedad inmobiliaria.
+ * Tipos oficiales Schema.org / W3C: RealEstateAgent, Person, RealEstateListing, SingleFamilyResidence / Apartment / Land / CommercialBuilding, Offer, BreadcrumbList.
+ * No emite Offer para propiedades vendidas, alquiladas o retiradas.
+ * No emite atributos ficticios que no existan en los datos reales.
  */
-export function generatePropertyJsonLd(property: Property) {
+export function generatePropertyGraphSchema(property: Property) {
+  const canonicalUrl = `${BASE_URL}/propiedad/${property.slug}`;
+  const pillar = getPillarPageForProperty(property);
   const mainImage = property.images?.find((img) => img.isMain) || property.images?.[0];
   const imageUrl = mainImage?.webpUrl || mainImage?.blobUrl || `${BASE_URL}/logo.png`;
-  const canonicalUrl = `${BASE_URL}/propiedad/${property.slug}`;
+  const absoluteImages = property.images?.map((img) => {
+    const src = img.webpUrl || img.blobUrl;
+    return src.startsWith('http') ? src : `${BASE_URL}${src}`;
+  }) || [imageUrl.startsWith('http') ? imageUrl : `${BASE_URL}${imageUrl}`];
 
+  // Determinar tipo de entidad inmobiliaria Schema.org oficial
   let schemaType = 'SingleFamilyResidence';
   if (property.category === 'apartamento') schemaType = 'Apartment';
-  else if (property.category === 'terreno' || property.category === 'chacra') schemaType = 'Landform';
+  else if (property.category === 'terreno' || property.category === 'chacra') schemaType = 'Land';
+  else if (property.category === 'local' || property.category === 'deposito') schemaType = 'CommercialBuilding';
 
   const title = property.seoTitle || property.title;
   const description = stripMarkdown(property.seoDescription || property.description);
 
-  return {
-    '@context': 'https://schema.org',
+  // Determinar si la propiedad está activa para emitir Offer
+  const isOfferActive = property.status === 'disponible' || property.status === 'nuevo' || property.status === 'oportunidad';
+
+  // Entidad del Inmueble (Item)
+  const itemEntity: any = {
+    '@type': schemaType,
+    '@id': `${canonicalUrl}#item`,
+    name: property.title,
+    description: stripMarkdown(property.description),
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: property.location?.city || 'San José de Mayo',
+      addressRegion: property.location?.department || 'San José',
+      addressCountry: 'UY',
+      streetAddress: property.location?.address || property.location?.neighborhood,
+    },
+  };
+
+  // Coordenadas solo si están disponibles y válidas
+  if (property.location?.coordinates?.lat && property.location?.coordinates?.lng) {
+    itemEntity.geo = {
+      '@type': 'GeoCoordinates',
+      latitude: property.location.coordinates.lat,
+      longitude: property.location.coordinates.lng,
+    };
+  }
+
+  // Atributos cuantitativos reales (solo si existen y son mayores a cero)
+  if (property.features?.bedrooms && property.features.bedrooms > 0) {
+    itemEntity.numberOfBedrooms = property.features.bedrooms;
+  }
+  if (property.features?.bathrooms && property.features.bathrooms > 0) {
+    itemEntity.numberOfBathroomsTotal = property.features.bathrooms;
+  }
+  if (property.features?.builtAreaM2 && property.features.builtAreaM2 > 0) {
+    itemEntity.floorSize = {
+      '@type': 'QuantitativeValue',
+      value: property.features.builtAreaM2,
+      unitCode: 'MTK',
+    };
+  }
+  if (property.features?.plotAreaM2 && property.features.plotAreaM2 > 0) {
+    itemEntity.landArea = {
+      '@type': 'QuantitativeValue',
+      value: property.features.plotAreaM2,
+      unitCode: 'MTK',
+    };
+  }
+
+  // Entidad de Publicación (RealEstateListing)
+  const listingEntity: any = {
     '@type': 'RealEstateListing',
-    '@id': `${canonicalUrl}#identity`,
+    '@id': `${canonicalUrl}#listing`,
     url: canonicalUrl,
     name: title,
     description: description,
-    image: property.images?.map((img) => img.webpUrl || img.blobUrl) || [imageUrl],
+    image: absoluteImages,
     datePosted: property.createdAt,
-    dateModified: property.updatedAt,
-    mainEntity: {
-      '@type': schemaType,
-      name: property.title,
-      description: property.description,
+    dateModified: property.updatedAt || property.createdAt,
+    mainEntity: { '@id': `${canonicalUrl}#item` },
+  };
+
+  // Oferta comercial (Offer) - SOLO se emite si la propiedad está activa
+  const offerEntity: any = isOfferActive && property.price?.amount
+    ? {
+        '@type': 'Offer',
+        '@id': `${canonicalUrl}#offer`,
+        price: property.price.amount,
+        priceCurrency: property.price.currency || 'USD',
+        availability: 'https://schema.org/InStock',
+        seller: { '@id': `${BASE_URL}/#agent` },
+      }
+    : null;
+
+  if (offerEntity) {
+    listingEntity.offers = { '@id': `${canonicalUrl}#offer` };
+  }
+
+  // Grafo unificado
+  const graph: any[] = [
+    // 1. Agencia Inmobiliaria
+    {
+      '@type': 'RealEstateAgent',
+      '@id': `${BASE_URL}/#agent`,
+      name: 'Inmobiliaria Montaño',
+      url: BASE_URL,
+      logo: `${BASE_URL}/logo.png`,
+      image: `${BASE_URL}/og-logo.png`,
+      telephone: '+59892776715',
+      email: 'inmobiliariadaniel247@gmail.com',
       address: {
         '@type': 'PostalAddress',
-        addressLocality: property.location?.city || 'San José de Mayo',
-        addressRegion: property.location?.department || 'San José',
+        addressLocality: 'San José de Mayo',
+        addressRegion: 'San José',
+        postalCode: '80000',
         addressCountry: 'UY',
-        streetAddress: property.location?.address || property.location?.neighborhood,
       },
-      geo: {
-        '@type': 'GeoCoordinates',
-        latitude: property.location?.coordinates?.lat || -34.3375,
-        longitude: property.location?.coordinates?.lng || -56.7136,
-      },
-      numberOfBedrooms: property.features?.bedrooms || undefined,
-      numberOfBathroomsTotal: property.features?.bathrooms || undefined,
-      floorSize: property.features?.builtAreaM2
-        ? {
-            '@type': 'QuantitativeValue',
-            value: property.features.builtAreaM2,
-            unitCode: 'MTK',
-          }
-        : undefined,
+      founder: { '@id': `${BASE_URL}/#daniel-montano` },
+      areaServed: [
+        { '@type': 'AdministrativeArea', name: 'San José' },
+        { '@type': 'City', name: 'San José de Mayo' },
+        { '@type': 'City', name: 'Libertad' },
+        { '@type': 'City', name: 'Ciudad del Plata' },
+      ],
     },
-    offers: {
-      '@type': 'Offer',
-      price: property.price?.amount,
-      priceCurrency: property.price?.currency || 'USD',
-      availability:
-        property.status === 'disponible' || property.status === 'nuevo'
-          ? 'https://schema.org/InStock'
-          : 'https://schema.org/OutOfStock',
-      seller: {
+    // 2. Persona / Asesor
+    {
+      '@type': 'Person',
+      '@id': `${BASE_URL}/#daniel-montano`,
+      name: 'Daniel Montaño',
+      jobTitle: 'Director & Asesor Inmobiliario',
+      telephone: '+59892776715',
+      image: `${BASE_URL}/daniel-montano.webp`,
+      worksFor: { '@id': `${BASE_URL}/#agent` },
+    },
+    // 3. Ficha Listing
+    listingEntity,
+    // 4. Inmueble
+    itemEntity,
+    // 5. Breadcrumbs
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${canonicalUrl}#breadcrumbs`,
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Inicio',
+          item: BASE_URL,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: pillar.title,
+          item: `${BASE_URL}${pillar.href}`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: property.title,
+          item: canonicalUrl,
+        },
+      ],
+    },
+  ];
+
+  if (offerEntity) {
+    graph.push(offerEntity);
+  }
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': graph,
+  };
+}
+
+export const generatePropertyJsonLd = generatePropertyGraphSchema;
+
+/**
+ * Genera el Schema.org @graph institucional para páginas principales y de servicios.
+ */
+export function generateSiteGraphSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
         '@type': 'RealEstateAgent',
+        '@id': `${BASE_URL}/#agent`,
         name: 'Inmobiliaria Montaño',
+        url: BASE_URL,
+        logo: `${BASE_URL}/logo.png`,
+        image: `${BASE_URL}/og-logo.png`,
         telephone: '+59892776715',
         email: 'inmobiliariadaniel247@gmail.com',
-        url: BASE_URL,
+        description: 'Inmobiliaria de referencia en San José de Mayo, Uruguay. Especialistas en venta de casas, alquileres garantizados, terrenos, chacras y tasaciones oficiales con Daniel Montaño.',
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: 'San José de Mayo',
+          addressRegion: 'San José',
+          postalCode: '80000',
+          addressCountry: 'UY',
+        },
+        founder: { '@id': `${BASE_URL}/#daniel-montano` },
+        areaServed: [
+          { '@type': 'AdministrativeArea', name: 'Departamento de San José' },
+          { '@type': 'City', name: 'San José de Mayo' },
+          { '@type': 'City', name: 'Libertad' },
+          { '@type': 'City', name: 'Ciudad del Plata' },
+        ],
       },
-    },
+      {
+        '@type': 'Person',
+        '@id': `${BASE_URL}/#daniel-montano`,
+        name: 'Daniel Montaño',
+        jobTitle: 'Director & Asesor Inmobiliario',
+        telephone: '+59892776715',
+        image: `${BASE_URL}/daniel-montano.webp`,
+        worksFor: { '@id': `${BASE_URL}/#agent` },
+      },
+      {
+        '@type': 'WebSite',
+        '@id': `${BASE_URL}/#website`,
+        url: BASE_URL,
+        name: 'Inmobiliaria Montaño',
+        publisher: { '@id': `${BASE_URL}/#agent` },
+      },
+    ],
   };
 }
 
@@ -274,6 +439,9 @@ export function generatePropertyMetadata(property: Property): Metadata {
     ],
     alternates: {
       canonical: canonicalUrl,
+      types: {
+        'text/markdown': `${canonicalUrl}.md`,
+      },
     },
     openGraph: {
       title: titleStr,

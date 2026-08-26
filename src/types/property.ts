@@ -11,7 +11,15 @@ export type PropertyCategory =
   | 'local'
   | 'modulo';
 
-export type PropertyStatus = 'disponible' | 'nuevo' | 'reservado' | 'vendido' | 'alquilado' | 'oportunidad';
+export type PropertyStatus = 
+  | 'disponible' 
+  | 'nuevo' 
+  | 'reservado' 
+  | 'vendido' 
+  | 'alquilado' 
+  | 'oportunidad' 
+  | 'retirada' 
+  | 'inactiva';
 
 export type GuaranteeType = 'ANDA' | 'CGN' | 'Porto' | 'Sura' | 'Mapfre' | 'Depósito' | 'Propia' | 'Otra';
 
@@ -42,9 +50,10 @@ export interface Property {
     priceMode?: 'visible' | 'consultar' | 'reservado' | 'desde';
   };
   location: {
-    department: string;   // "San José"
-    city: string;         // "San José de Mayo", "Libertad", etc.
-    neighborhood: string; // "Centro", "Plaza Arriaga", "Zona Sub Urbana", etc.
+    department: string;   // "San José", "Colonia", "Montevideo", etc.
+    city: string;         // "San José de Mayo", "Libertad", "Ciudad del Plata", "Rodríguez", "Ecilda Paullier", "Kiyú", etc.
+    neighborhood: string; // "Centro", "Barrio Molino", "Plaza Arriaga", etc.
+    zone?: string;        // "Urbana", "Sub Urbana", "Rural", "Balneario", "Ruta 1", "Ruta 3", etc.
     address?: string;
     coordinates?: {
       lat: number;
@@ -99,6 +108,9 @@ export interface Property {
     priceUnitType?: string;     // Tipo de unidad (ej. "m²", "Ha", "Fracción")
     soilTopography?: string;    // Topografía (ej. "100% Nivelado - Listo para edificar")
     gatedPerimeter?: boolean;   // Predio Cerrado & Acceso Controlado
+    cadastralNumber?: string;   // Número de padrón catastral (si está informado)
+    propertyTaxUpToDate?: boolean; // Contribución inmobiliaria al día
+    primaryTaxUpToDate?: boolean;  // Impuesto de Primaria al día
   };
   guarantees?: GuaranteeType[];
   legalCertainties?: {
@@ -112,8 +124,6 @@ export interface Property {
   viewsCount?: number;
   whatsappClicksCount?: number;
   sharesCount?: number;
-  lastGoogleNotifiedAt?: string;
-  googleIndexingStatus?: 'notified' | 'pending' | 'error';
   featured: boolean;
   createdAt: string;
   updatedAt: string;

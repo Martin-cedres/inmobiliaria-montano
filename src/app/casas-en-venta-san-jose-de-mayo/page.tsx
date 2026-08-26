@@ -8,6 +8,7 @@ import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
 import { PropertyCard } from '@/components/PropertyCard';
 import { FaqAccordion, FaqItem } from '@/components/ui/FaqAccordion';
 import { CasasEnVentaJsonLd } from '@/components/seo/CasasEnVentaJsonLd';
+import { DepartmentInterlinking } from '@/components/seo/DepartmentInterlinking';
 import { getCachedProperties } from '@/lib/propertiesStore';
 import { buildGeneralWhatsAppLink } from '@/utils/whatsapp';
 import {

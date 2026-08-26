@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { notifySearchEngines } from '@/lib/googleIndexing';
-import { updateGoogleIndexingStatus } from '@/lib/propertiesStore';
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { propertyId, url, type = 'URL_UPDATED' } = body;
+    const { url, type = 'URL_UPDATED' } = body;
 
     if (!url) {
       return NextResponse.json(
@@ -15,14 +14,6 @@ export async function POST(request: NextRequest) {
     }
 
     const result = await notifySearchEngines(url, type);
-
-    if (propertyId) {
-      await updateGoogleIndexingStatus(
-        propertyId,
-        result.success ? 'notified' : 'error',
-        result.timestamp
-      );
-    }
 
     return NextResponse.json({
       success: result.success,

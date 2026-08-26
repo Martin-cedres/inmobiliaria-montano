@@ -12,8 +12,8 @@ import { SharePropertyModal } from '@/components/SharePropertyModal';
 import { PropertyGallery } from '@/components/PropertyGallery';
 import { PropertyDescriptionRenderer } from '@/components/PropertyDescriptionRenderer';
 import { PropertyCard } from '@/components/PropertyCard';
-import JsonLdProperty from '@/components/seo/JsonLdProperty';
 import PropertyBreadcrumbs from '@/components/seo/PropertyBreadcrumbs';
+import { DepartmentInterlinking } from '@/components/seo/DepartmentInterlinking';
 import { PropertyTracker } from '@/components/analytics/PropertyTracker';
 import { WhatsAppTrackButton } from '@/components/analytics/WhatsAppTrackButton';
 
@@ -66,9 +66,12 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
     })
     .slice(0, 3);
 
+  const isSoldOrRented = property.status === 'vendido' || property.status === 'alquilado';
+  const isReserved = property.status === 'reservado';
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-50">
-      {/* Inyección Automática de Schema.org JSON-LD para Google Search Console */}
+      {/* Inyección ÚNICA de Schema.org JSON-LD (@graph canónico) */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -77,7 +80,6 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
       <Header />
 
       <main className="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 pb-24 lg:pb-8">
-        <JsonLdProperty property={property} />
         <PropertyTracker propertyId={property.id} />
         
         {/* Navigation & Breadcrumbs */}
@@ -91,6 +93,37 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
             <span>Volver al Catálogo</span>
           </Link>
         </div>
+
+        {/* Banner de estado si la propiedad está reservada, vendida o alquilada */}
+        {isSoldOrRented && (
+          <div className="mb-6 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-between gap-4">
+            <div className="flex items-center space-x-3">
+              <span className="p-2 rounded-xl bg-amber-500 text-white font-black text-xs uppercase">
+                {property.status === 'vendido' ? 'Propiedad Vendida' : 'Propiedad Alquilada'}
+              </span>
+              <p className="text-xs sm:text-sm font-bold text-amber-900">
+                Esta propiedad ya fue {property.status === 'vendido' ? 'vendida' : 'alquilada'}. Podés consultar opciones similares disponibles en nuestro catálogo.
+              </p>
+            </div>
+            <Link
+              href={getPillarPageForProperty(property).href}
+              className="text-xs font-black text-white bg-amber-600 hover:bg-amber-700 px-3.5 py-2 rounded-xl transition-all flex-shrink-0"
+            >
+              Ver Similares
+            </Link>
+          </div>
+        )}
+
+        {isReserved && (
+          <div className="mb-6 p-4 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center space-x-3">
+            <span className="p-2 rounded-xl bg-[#5E1754] text-white font-black text-xs uppercase">
+              Reservada
+            </span>
+            <p className="text-xs sm:text-sm font-bold text-purple-900">
+              Esta propiedad se encuentra actualmente en proceso de reserva. Consultá por propiedades similares.
+            </p>
+          </div>
+        )}
 
         {/* Main Content Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -107,7 +140,7 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                 <div className="flex flex-wrap items-center gap-3">
                   <div className="flex items-center space-x-1.5 text-xs font-bold text-[#E85D04]">
                     <MapPin className="w-4 h-4" />
-                    <span>{property.location.neighborhood || property.location.address}</span>
+                    <span>{property.location.neighborhood || property.location.address || property.location.city}</span>
                   </div>
                   <span className="font-mono text-xs font-extrabold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md border border-slate-200/80">
                     Ref. #{property.codeRef}
@@ -132,15 +165,19 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                   >
                     Consultar Precio
                   </a>
-                ) : property.price.priceMode === 'reservado' ? (
+                ) : property.price.priceMode === 'reservado' || isReserved ? (
                   <a
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center text-base sm:text-xl font-black text-slate-800 bg-slate-100 hover:bg-slate-200 border border-slate-200 px-6 py-2.5 rounded-2xl shadow-2xs transition-all cursor-pointer"
                   >
-                    Precio Reservado
+                    {isReserved ? 'Inmueble Reservado' : 'Precio Reservado'}
                   </a>
+                ) : isSoldOrRented ? (
+                  <span className="text-2xl sm:text-3xl font-black text-slate-400 line-through">
+                    {property.price.currency === 'USD' ? 'USD' : 'UYU $'} {property.price.amount.toLocaleString('es-UY')}
+                  </span>
                 ) : (
                   <span className="text-3xl sm:text-4xl font-black text-[#5E1754]">
                     {property.price.priceMode === 'desde' && <span className="text-lg font-extrabold text-slate-500 mr-2">Desde</span>}
@@ -167,8 +204,8 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                     <MapPin className="w-5 h-5 text-[#E85D04]" />
                     <span>Ubicación & Entorno</span>
                   </h3>
-                  <span className="text-xs text-slate-500 font-semibold bg-purple-50 text-[#5E1754] px-3 py-1 rounded-full border border-purple-200">
-                    San José de Mayo
+                  <span className="text-xs font-semibold bg-purple-50 text-[#5E1754] px-3 py-1 rounded-full border border-purple-200">
+                    {property.location.city || 'San José de Mayo'}
                   </span>
                 </div>
 
@@ -569,32 +606,8 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
           </div>
         )}
 
-        {/* Contextual SEO Pillar Link Banner (Interlinking para Google) */}
-        {(() => {
-          const pillar = getPillarPageForProperty(property);
-          return (
-            <div className="mt-12 sm:mt-16 bg-gradient-to-r from-purple-50 via-slate-50 to-orange-50/50 rounded-3xl p-6 sm:p-8 border border-purple-100/80 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-              <div>
-                <span className="text-xs font-black uppercase tracking-wider text-[#E85D04] block">
-                  Explorá el Mercado en San José
-                </span>
-                <h4 className="text-base sm:text-lg font-extrabold text-[#5E1754] mt-1">
-                  ¿Buscás más opciones de {pillar.shortTitle.toLowerCase()}?
-                </h4>
-                <p className="text-xs text-slate-500 font-medium mt-0.5">
-                  Conocé nuestro catálogo completo y actualizado de {pillar.title.toLowerCase()}.
-                </p>
-              </div>
-              <Link
-                href={pillar.href}
-                className="inline-flex items-center space-x-2 bg-[#5E1754] hover:bg-[#43123C] text-white text-xs font-black px-6 py-3 rounded-2xl shadow-md hover:shadow-lg transition-all flex-shrink-0 active:scale-95 cursor-pointer"
-              >
-                <span>Ver {pillar.title}</span>
-                <span>➔</span>
-              </Link>
-            </div>
-          );
-        })()}
+        {/* Interlinking Semántico Contextual Departamental */}
+        <DepartmentInterlinking property={property} currentPath={`/propiedad/${property.slug}`} />
 
       </main>
 

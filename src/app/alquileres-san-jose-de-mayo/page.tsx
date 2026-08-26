@@ -8,6 +8,7 @@ import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
 import { PropertyCard } from '@/components/PropertyCard';
 import { FaqAccordion, FaqItem } from '@/components/ui/FaqAccordion';
 import { AlquileresJsonLd } from '@/components/seo/AlquileresJsonLd';
+import { DepartmentInterlinking } from '@/components/seo/DepartmentInterlinking';
 import { getCachedProperties } from '@/lib/propertiesStore';
 import { buildGeneralWhatsAppLink } from '@/utils/whatsapp';
 import {
@@ -289,6 +290,11 @@ export default async function AlquileresPage() {
             title="Preguntas Frecuentes sobre Alquileres en San José"
             subtitle="Respuestas a las dudas más comunes de inquilinos y propietarios."
           />
+        </section>
+
+        {/* 5.5. Interlinking Departamental Semántico */}
+        <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <DepartmentInterlinking currentPath={PAGE_URL} />
         </section>
 
         {/* 6. Bloque de Compromiso Personal & Captación */}

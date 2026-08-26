@@ -285,6 +285,13 @@ ${link}`;
             </div>
 
             <div className="flex items-center gap-3">
+              <Link
+                href="/admin/seo-conversiones"
+                className="flex items-center gap-2 bg-[#5E1754] hover:bg-[#7A1E6E] text-white px-3.5 py-2 rounded-xl text-xs font-semibold shadow-xs transition-all"
+              >
+                <TrendingUp className="w-4 h-4 text-orange-400" />
+                <span>SEO & Conversiones</span>
+              </Link>
               {currentUser.role === 'superadmin' && (
                 <Link
                   href="/admin/usuarios"
@@ -304,6 +311,55 @@ ${link}`;
             </div>
           </div>
         )}
+
+        {/* Barra Rápida de Módulos */}
+        <div className="bg-white p-2 sm:p-2.5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center gap-2 overflow-x-auto text-xs font-bold">
+          <Link
+            href="/admin"
+            className="flex items-center gap-1.5 bg-[#5E1754] text-white px-3.5 py-2 rounded-xl shadow-xs shrink-0"
+          >
+            <Building2 className="w-4 h-4 text-orange-400" />
+            <span>1. Catálogo Inmuebles</span>
+          </Link>
+          <Link
+            href="/admin/nueva"
+            className="flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl transition-all shrink-0"
+          >
+            <Plus className="w-4 h-4 text-[#E85D04]" />
+            <span>2. Nueva Propiedad</span>
+          </Link>
+          <Link
+            href="/admin/seo-conversiones"
+            className="flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl transition-all shrink-0"
+          >
+            <TrendingUp className="w-4 h-4 text-purple-700" />
+            <span>3. SEO & Decisiones (P5)</span>
+          </Link>
+          <Link
+            href="/estadisticas-inmobiliarias-san-jose"
+            target="_blank"
+            className="flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl transition-all shrink-0"
+          >
+            <Flame className="w-4 h-4 text-amber-600" />
+            <span>4. Observatorio San José</span>
+          </Link>
+          <Link
+            href="/guia-tasacion-inmobiliaria-san-jose"
+            target="_blank"
+            className="flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl transition-all shrink-0"
+          >
+            <Sparkles className="w-4 h-4 text-blue-600" />
+            <span>5. Guías Temáticas</span>
+          </Link>
+          <Link
+            href="/"
+            target="_blank"
+            className="flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl transition-all shrink-0 ml-auto"
+          >
+            <Eye className="w-4 h-4 text-slate-500" />
+            <span>Ver Web Pública ↗</span>
+          </Link>
+        </div>
 
         {/* Header Admin & Action CTA */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 sm:p-8 rounded-3xl border border-purple-100 shadow-xs">
