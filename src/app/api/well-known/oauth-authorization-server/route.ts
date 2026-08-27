@@ -15,11 +15,22 @@ export async function GET() {
     response_types_supported: ['code', 'token'],
     grant_types_supported: ['authorization_code', 'client_credentials'],
     scopes_supported: ['openid', 'profile', 'email', 'properties:read', 'public:read'],
+    bearer_methods_supported: ['header'],
     token_endpoint_auth_methods_supported: ['client_secret_post', 'client_secret_basic', 'none'],
     agent_auth: {
+      skill: 'https://isitagentready.com/.well-known/agent-skills/auth-md/SKILL.md',
       register_uri: `${baseUrl}/auth.md`,
-      supported_identity_types: ['public_agent', 'registered_user'],
-      supported_credential_types: ['none_for_public', 'jwt_bearer'],
+      identity_types_supported: ['anonymous', 'identity_assertion'],
+      anonymous: {
+        credential_types_supported: ['none'],
+      },
+      identity_assertion: {
+        assertion_types_supported: [
+          'verified_email',
+          'urn:ietf:params:oauth:token-type:id-jag',
+        ],
+        credential_types_supported: ['jwt_bearer'],
+      },
     },
   };
 
@@ -28,6 +39,7 @@ export async function GET() {
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
       'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, OPTIONS',
       'Cache-Control': 'public, max-age=86400, s-maxage=86400',
     },
   });

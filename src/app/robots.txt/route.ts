@@ -67,6 +67,7 @@ Content-Signal: ai-train=no, search=yes, ai-input=yes
 
 # Discovery
 Sitemap: ${baseUrl}/sitemap.xml
+Agentmap: ${baseUrl}/.well-known/ai-catalog.json
 Host: ${baseUrl}
 `;
 

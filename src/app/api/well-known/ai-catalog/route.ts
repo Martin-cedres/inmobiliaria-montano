@@ -5,22 +5,21 @@ export const revalidate = 86400;
 
 export async function GET() {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
+  const hostname = new URL(baseUrl).hostname;
 
   const ardCatalog = {
     specVersion: '1.0',
     host: {
-      name: 'Inmobiliaria Montaño',
-      url: baseUrl,
-      description:
-        'Inmobiliaria en San José de Mayo, Uruguay. Venta y alquiler de casas, apartamentos, chacras y tasaciones con Daniel Montaño.',
+      displayName: 'Inmobiliaria Montaño',
+      identifier: `did:web:${hostname}`,
     },
     entries: [
       {
-        id: 'urn:air:inmobiliariamontano.uy:properties:search',
+        identifier: `urn:air:${hostname}:properties:search`,
         displayName: 'Catálogo y Buscador de Propiedades en San José',
         type: 'application/json',
         url: `${baseUrl}/api/properties`,
-        representationQueries: [
+        representativeQueries: [
           'buscar casas en venta en san jose de mayo',
           'alquileres en san jose de mayo uruguay',
           'terrenos y chacras en san jose',
@@ -29,23 +28,35 @@ export async function GET() {
         ],
       },
       {
-        id: 'urn:air:inmobiliariamontano.uy:llms:manifest',
-        displayName: 'Manifiesto LLMs y Formato Markdown para Agentes de IA',
-        type: 'text/markdown',
-        url: `${baseUrl}/llms.txt`,
-        representationQueries: [
-          'catalogo completo de propiedades formato markdown',
-          'llms.txt inmobiliaria montaño uruguay',
+        identifier: `urn:air:${hostname}:mcp:server`,
+        displayName: 'Servidor MCP (Model Context Protocol)',
+        type: 'application/mcp-server-card+json',
+        url: `${baseUrl}/.well-known/mcp/server-card.json`,
+        representativeQueries: [
+          'mcp server inmobiliaria montaño',
+          'herramientas mcp consulta de inmuebles uruguay',
+          'real estate mcp tools san jose',
         ],
       },
       {
-        id: 'urn:air:inmobiliariamontano.uy:mcp:server',
-        displayName: 'Servidor MCP (Model Context Protocol)',
-        type: 'application/json',
-        url: `${baseUrl}/.well-known/mcp/server-card.json`,
-        representationQueries: [
-          'mcp server inmobiliaria montaño',
-          'herramientas mcp consulta de inmuebles uruguay',
+        identifier: `urn:air:${hostname}:llms:manifest`,
+        displayName: 'Manifiesto LLMs y Formato Markdown para Agentes de IA',
+        type: 'text/markdown',
+        url: `${baseUrl}/llms.txt`,
+        representativeQueries: [
+          'catalogo completo de propiedades formato markdown',
+          'llms.txt inmobiliaria montaño uruguay',
+          'markdown property listings san jose',
+        ],
+      },
+      {
+        identifier: `urn:air:${hostname}:api:catalog`,
+        displayName: 'Catálogo de APIs RFC 9727',
+        type: 'application/linkset+json',
+        url: `${baseUrl}/.well-known/api-catalog`,
+        representativeQueries: [
+          'api catalog inmobiliaria montaño',
+          'rfc 9727 api linkset san jose real estate',
         ],
       },
     ],
@@ -56,6 +67,7 @@ export async function GET() {
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
       'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, OPTIONS',
       'Cache-Control': 'public, max-age=86400, s-maxage=86400',
     },
   });
