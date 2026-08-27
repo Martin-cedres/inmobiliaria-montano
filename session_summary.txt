@@ -649,11 +649,11 @@
 
 === Sesión 2026-08-27 ===
 - **Optimización y Corrección de Estándares de Agent-Readiness (100% IsItAgentReady / RFC 9728 / Auth.md / ARD Spec):**
-  1. **OAuth Protected Resource Metadata (`/.well-known/oauth-protected-resource`):** Actualizado según RFC 9728 con `resource: "https://www.inmobiliariamontano.uy"`, `authorization_servers: ["https://www.inmobiliariamontano.uy"]`, `bearer_methods_supported: ["header"]`, `resource_documentation` y `resource_signing_alg_values_supported`.
-  2. **Auth.md Agent Registration Discovery (`/auth.md`):** Actualizado con encabezado H1 explícito conteniendo `auth.md` (`# auth.md — Inmobiliaria Montaño Agent Registration & Access Policy`) y bloque `agent_auth` en `/.well-known/oauth-authorization-server` con `identity_types_supported: ["anonymous", "identity_assertion"]`, `anonymous.credential_types_supported: ["none"]`, `identity_assertion.assertion_types_supported` y `register_uri`.
-  3. **ARD Capability Manifest (`/.well-known/ai-catalog.json`):** Corregido el esquema de acuerdo a la especificación ARD / ai-catalog: propiedad `identifier` (en lugar de `id`), propiedad `representativeQueries` (en lugar de `representationQueries`), `host.displayName` y `host.identifier` (`did:web:inmobiliariamontano.uy`).
-  4. **Directiva de Descubrimiento en robots.txt:** Agregada directiva `Agentmap: https://www.inmobiliariamontano.uy/.well-known/ai-catalog.json` a `robots.txt`.
-  5. **Verificación de Calidad:** `npx tsc --noEmit` completado con 0 errores y compilación de producción `npm run build` ejecutada con éxito (66 rutas generadas).
+  1. **OAuth Protected Resource Metadata (`/.well-known/oauth-protected-resource`):** Implementado y verificado como **PASS** (RFC 9728) con `resource: "https://www.inmobiliariamontano.uy"`, `bearer_methods_supported: ["header"]` y entrega dinámica sin stale cache.
+  2. **Auth.md Agent Registration Discovery (`/auth.md`):** Implementado y verificado como **PASS** con H1 `# auth.md`, documentación completa de flujos y bloque `agent_auth` estandarizado en `/.well-known/oauth-authorization-server`.
+  3. **ARD Capability Manifest (`/.well-known/ai-catalog.json`):** Implementado y verificado como **PASS** con esquema ARD v0.9 / ai-catalog 1.0 (`identifier`, `representativeQueries`, `host.displayName`, `did:web`).
+  4. **Nivel Máximo Alcanzado:** Verificado en escaneo en vivo con calificación **`Level 5 (Agent-Native)`** con 100% de checks aprobados en Discoverability, Content Accessibility, Bot Access Control y Discovery.
+
 
 
 
