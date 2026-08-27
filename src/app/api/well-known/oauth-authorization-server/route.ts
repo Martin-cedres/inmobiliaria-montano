@@ -18,7 +18,7 @@ export async function GET() {
     bearer_methods_supported: ['header'],
     token_endpoint_auth_methods_supported: ['client_secret_post', 'client_secret_basic', 'none'],
     agent_auth: {
-      skill: 'https://isitagentready.com/.well-known/agent-skills/auth-md/SKILL.md',
+      skill: `${baseUrl}/auth.md`,
       register_uri: `${baseUrl}/auth.md`,
       identity_types_supported: ['anonymous', 'identity_assertion'],
       anonymous: {
@@ -40,7 +40,7 @@ export async function GET() {
       'Content-Type': 'application/json; charset=utf-8',
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, OPTIONS',
-      'Cache-Control': 'public, max-age=86400, s-maxage=86400',
+      'Cache-Control': 'public, max-age=60, s-maxage=60, stale-while-revalidate=300',
     },
   });
 }

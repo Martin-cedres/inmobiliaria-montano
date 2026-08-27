@@ -11,31 +11,35 @@ export async function GET() {
 ## Overview
 Inmobiliaria Montaño publishes this document according to the [auth.md specification](https://workos.com/auth-md) to describe agent registration, public access, and authentication mechanisms for autonomous AI systems, search engines, and real estate aggregators.
 
-## Agent Audience & Public Access (No Credentials Required)
-All public real estate listings, search parameters, pricing data, market statistics, and photos are **100% publicly queryable without authentication**:
-- **JSON API:** \`GET ${baseUrl}/api/properties\`
-- **Markdown Listing:** \`GET ${baseUrl}/propiedad/:slug.md\`
+## Public Access (Zero Credentials)
+Public real estate listings, pricing data, property images, and market guides are **100% publicly queryable without authentication**:
+- **API Endpoint:** \`GET ${baseUrl}/api/properties\`
+- **Individual Property Markdown:** \`GET ${baseUrl}/propiedad/:slug.md\`
 - **LLM Manifest:** \`GET ${baseUrl}/llms.txt\`
 - **MCP Server Card:** \`GET ${baseUrl}/.well-known/mcp/server-card.json\`
 - **ARD Capability Catalog:** \`GET ${baseUrl}/.well-known/ai-catalog.json\`
 - **API Catalog (RFC 9727):** \`GET ${baseUrl}/.well-known/api-catalog\`
 
-Autonomous agents can query, index, and cite these resources freely without registering or presenting API keys.
+No API keys, OAuth tokens, or client credentials are required for AI agents to query the public property inventory.
 
-## Agent Registration & Authentication Flows
-For agents and integrators requiring authenticated actions (e.g., submitting property leads, valuation requests, or partner integrations):
+## Registration & Authentication Instructions
+For automated agents integrating with Inmobiliaria Montaño:
 
-1. **OAuth 2.0 Discovery:**
-   - **Protected Resource Metadata (RFC 9728):** \`GET ${baseUrl}/.well-known/oauth-protected-resource\`
-   - **Authorization Server Metadata:** \`GET ${baseUrl}/.well-known/oauth-authorization-server\`
-   - **OpenID Connect Configuration:** \`GET ${baseUrl}/.well-known/openid-configuration\`
+### 1. Discovery Endpoints
+- **Protected Resource Metadata (RFC 9728):** \`GET ${baseUrl}/.well-known/oauth-protected-resource\`
+- **OAuth 2.0 Authorization Server:** \`GET ${baseUrl}/.well-known/oauth-authorization-server\`
+- **OpenID Connect Configuration:** \`GET ${baseUrl}/.well-known/openid-configuration\`
 
-2. **Supported Registration Methods:**
-   - **Anonymous Agents:** \`identity_types_supported: ["anonymous"]\` — zero-credential public discovery.
-   - **Identity Assertion (ID-JAG & Verified Email):** \`identity_types_supported: ["identity_assertion"]\` with JWT bearer tokens for verified partner agents.
+### 2. Registration Flow
+- **Registration Endpoint:** \`POST ${baseUrl}/auth.md\`
+- **Supported Identity Types:**
+  - \`anonymous\`: Zero-credential public catalog consumption.
+  - \`identity_assertion\`: Verified agent assertions using \`verified_email\` or \`urn:ietf:params:oauth:token-type:id-jag\`.
+- **Token Endpoint:** \`POST ${baseUrl}/api/auth/google\`
+- **Token Method:** \`Authorization: Bearer <access_token>\`
 
-3. **Administrative Access (Restricted):**
-   Management endpoints (\`/api/admin/*\`) require authorized Google OAuth2 / JWT bearer credentials restricted to Inmobiliaria Montaño staff.
+### 3. Administrative Access
+Administrative endpoints (\`/api/admin/*\`) require authorized Google OAuth2 session cookies or JWT bearer tokens restricted to Inmobiliaria Montaño staff.
 `;
 
   return new NextResponse(content, {
@@ -44,7 +48,7 @@ For agents and integrators requiring authenticated actions (e.g., submitting pro
       'Content-Type': 'text/markdown; charset=utf-8',
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, OPTIONS',
-      'Cache-Control': 'public, max-age=86400, s-maxage=86400',
+      'Cache-Control': 'public, max-age=60, s-maxage=60, stale-while-revalidate=300',
     },
   });
 }
