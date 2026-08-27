@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 
-export const dynamic = 'force-static';
-export const revalidate = 86400;
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
@@ -68,7 +67,7 @@ export async function GET() {
       'Content-Type': 'application/json; charset=utf-8',
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, OPTIONS',
-      'Cache-Control': 'public, max-age=86400, s-maxage=86400',
+      'Cache-Control': 'public, max-age=60, s-maxage=60, stale-while-revalidate=300',
     },
   });
 }

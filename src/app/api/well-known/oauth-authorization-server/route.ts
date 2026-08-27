@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 
-export const dynamic = 'force-static';
-export const revalidate = 86400;
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
