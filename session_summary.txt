@@ -645,8 +645,7 @@
 - **Suite de Descubrimiento OAuth y MCP Auth Discovery:** Implementados `/.well-known/openid-configuration`, `/.well-known/oauth-authorization-server`, `/.well-known/oauth-protected-resource`, `/auth.md` y bloque `authentication` en `/.well-known/mcp/server-card.json`.
 - **Persistencia Permanente del Centro de Decisiones:** Creado `src/lib/decisionStore.ts` y `src/db/decisions.json` para almacenar estados de aprobación, descarte y reapertura con fecha y hora.
 - **Visualizador y Copiado Rápido de Notas de Prensa:** Añadido modal enriquecido con botón de 1-clic para copiar la nota de prensa generada por el Observatorio Inmobiliario de San José.
-- **Sincronización en Vivo de Google Search Console API:** Habilitada la API en Google Cloud y sincronizada con éxito la propiedad `sc-domain:inmobiliariamontano.uy`, reemplazando datos de prueba por 20 consultas reales (20 clics, 81 impresiones, CTR 24.69%).
-- **Compilaciones y Despliegue:** `npm run build` verificado con código 0 en 66 rutas y commits `bfbab50`, `d090976` y `a786133` subidos a GitHub.
+- **Activación de Cloudflare Global CDN, DNSSEC y DNS-AID:** Dominio `inmobiliariamontano.uy` delegado a Cloudflare (`ignacio.ns.cloudflare.com`, `nucum.ns.cloudflare.com`), SSL/TLS en modo Completo con Vercel, registros DNS-AID `_a2a._agents` y `_index._agents` creados y registro DS de DNSSEC firmado y propagado.
 
 
 
