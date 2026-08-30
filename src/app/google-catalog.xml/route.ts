@@ -37,9 +37,11 @@ export async function GET() {
         const isReserved = property.status === 'reservado';
         const availability = isSoldOrRented || isReserved ? 'out_of_stock' : 'in_stock';
 
-        const amount = property.price?.amount || 0;
+        const rawAmount = property.price?.amount || 0;
+        // Google Merchant Center exige un precio mayor a 0. Para inmuebles "a consultar" se establece 1.00 como valor técnico base
+        const validAmount = rawAmount > 0 ? rawAmount : 1;
         const currency = property.price?.currency === 'UYU' ? 'UYU' : 'USD';
-        const priceFormatted = `${amount > 0 ? amount.toFixed(2) : '0.00'} ${currency}`;
+        const priceFormatted = `${validAmount.toFixed(2)} ${currency}`;
 
         const cleanTitle = escapeXml(property.seoTitle || property.title);
         const cleanDesc = escapeXml(stripMarkdown(property.seoDescription || property.description));
@@ -75,6 +77,11 @@ export async function GET() {
       <g:brand>Inmobiliaria Montaño</g:brand>
       <g:product_type>Inmuebles &gt; ${escapeXml(categoryLabel)}</g:product_type>
       <g:google_product_category>Real Estate</g:google_product_category>
+      <g:shipping>
+        <g:country>UY</g:country>
+        <g:service>Servicio Inmobiliario</g:service>
+        <g:price>0.00 UYU</g:price>
+      </g:shipping>
       <g:custom_label_0>${escapeXml(property.operation)}</g:custom_label_0>
       <g:custom_label_1>${cleanCity}</g:custom_label_1>
       <g:custom_label_2>${isAptaBanco ? 'Apta Banco' : 'No Aplica'}</g:custom_label_2>

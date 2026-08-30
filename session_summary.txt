@@ -673,6 +673,8 @@
   9. Confirmada la dinámica del Feed XML en vivo: integra inmediatamente los 5 inmuebles actuales y absorberá automáticamente cada nueva propiedad, edición o cambio de estado a futuro en tiempo real.
   10. Auditado y verificado en vivo el catálogo real de producción desde Neon Postgres API (`https://www.inmobiliariamontano.uy/api/properties`), identificando las 11 propiedades reales publicadas (descartando datos residuales de desarrollo local).
   11. Implementados los endpoints de sincronización automática `/google-catalog.xml`, `/api/feeds/google-catalog.xml` y `/api/feeds/google-catalog.json` bajo estándar Google Merchant Center RSS 2.0; integrados disparadores automáticos de revalidación instantánea y push notifications a Google Indexing API / IndexNow ante cualquier alta, edición o cambio de estado (disponible/vendido/alquilado) desde el panel admin. Compilación de producción exitosa (0 errores, 60 rutas).
+  12. Desplegados exitosamente los cambios a producción en Vercel (`git push origin main`, commit `dc8836a`); verificado en vivo el feed `https://www.inmobiliariamontano.uy/google-catalog.xml` respondiendo HTTP 200 OK con 16.4 KB y las 11 propiedades reales sincronizadas para Google Merchant Center.
+  13. Clarificado el funcionamiento del catálogo en Google Maps: los productos del feed se asocian a la ubicación de San José de Mayo vía vinculación de Google Business Profile, desplegando el carrusel de propiedades con precios y enlaces a la web en la ficha del mapa.
 
 
 
