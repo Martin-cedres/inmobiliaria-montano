@@ -654,6 +654,26 @@
   3. **ARD Capability Manifest (`/.well-known/ai-catalog.json`):** Implementado y verificado como **PASS** con esquema ARD v0.9 / ai-catalog 1.0 (`identifier`, `representativeQueries`, `host.displayName`, `did:web`).
   4. **Nivel Máximo Alcanzado:** Verificado en escaneo en vivo con calificación **`Level 5 (Agent-Native)`** con 100% de checks aprobados en Discoverability, Content Accessibility, Bot Access Control y Discovery.
 
+=== Sesión 2026-08-28 ===
+- **Estrategia de Posicionamiento Rápido (SEO Local, GEO & LLMs):**
+  1. Elaborada la hoja de ruta de aceleración inmediata tras la implementación de Agent-Readiness y Schema.org.
+=== Sesión 2026-08-29 ===
+- **Diagnóstico y Análisis de Reporte de Indexación en Google Search Console:**
+  1. Analizadas las 3 categorías de URLs no indexadas reportadas por GSC: "Página alternativa con etiqueta canónica adecuada" (3 páginas), "Página con redirección" (2 páginas) y "Descubierta: actualmente sin indexar" (2 páginas).
+  2. Confirmado que las dos primeras categorías corresponden a buenas prácticas de SEO (evitar contenido duplicado y redirección de URLs) y que la tercera corresponde a páginas en cola de rastreo de Googlebot listas para acelerar vía solicitud de indexación.
+- **Estrategia y Plan de Acción Inmediata (Off-Page, Google Maps & Tracción Local):**
+  1. Diagnosticada la causa raíz del desfase orgánico frente a competidores históricos: la arquitectura técnica (Schema.org JSON-LD @graph, Sitemap dinámico, Landings por categoría, velocidad, Agent-Readiness) está 100% implementada; el cuello de botella actual es la autoridad fuera del sitio (Off-Page), señales locales y el Local Pack de Google Maps.
+  2. Definidas las 4 acciones inmediatas prioritarias: Campaña relámpago de 15-20 reseñas en Google Business Profile con palabras clave locales, enlaces/directorios uruguayos (NAP unificado), carga continua de inventario para long-tail y tracción de marca vía WhatsApp/redes.
+  3. Aclarada la arquitectura de Landings Canónicas: crear páginas con canonical apuntando a una sola URL causa que Google las ignore por duplicadas; la estrategia correcta es crear Landings Nivel B independientes con su PROPIA URL canónica, indexables y condicionadas a inventario real ($N \ge 2$) para evitar penalizaciones por thin content / doorway pages.
+  4. Optimizada la Landing Temática `/casas-aptas-para-banco-san-jose` y su interlinking: ampliados los títulos, meta-descripciones y palabras clave hacia "préstamos hipotecarios" y "préstamo bancario" (BHU, Santander, Itaú, BBVA), integrado enlace directo en el Footer (`Búsquedas Frecuentes`) y en la red de interlinking departamental. Compilación `npm run build` verificada con éxito (0 errores, 59 rutas).
+  5. Realizada la investigación y mapa de demanda de términos más buscados en San José de Mayo y Departamento de San José (Venta, Alquileres con garantías, Terrenos/Chacras, Localidades satélite y Búsquedas de Servicios/Marcas).
+  6. Diseñada la Estrategia Agresiva de Posicionamiento Inmediato (4 frentes: Asalto a Google Maps / Local 3-Pack con reseñas ricas en keywords, Títulos Atrapa-Clics con certezas jurídicas, Difusión del Observatorio en prensa departamental de San José e Inyección de tráfico directo vía WhatsApp/QR).
+  7. Preparadas y redactadas las 5 fichas completas del catálogo de propiedades optimizadas para la sección "Productos" de Google Business Profile (Google Maps) con nombres SEO, precios, descripciones ricas en palabras clave y URLs canónicas de conversión.
+  8. Planteada la arquitectura de sincronización automática de catálogo: explicación de la diferencia entre indexación orgánica automática (Schema.org / Indexing API ya activa) y sincronización de productos en Maps vía Feed XML/JSON automatizado de Google Merchant Center.
+  9. Confirmada la dinámica del Feed XML en vivo: integra inmediatamente los 5 inmuebles actuales y absorberá automáticamente cada nueva propiedad, edición o cambio de estado a futuro en tiempo real.
+  10. Auditado y verificado en vivo el catálogo real de producción desde Neon Postgres API (`https://www.inmobiliariamontano.uy/api/properties`), identificando las 11 propiedades reales publicadas (descartando datos residuales de desarrollo local).
+  11. Implementados los endpoints de sincronización automática `/google-catalog.xml`, `/api/feeds/google-catalog.xml` y `/api/feeds/google-catalog.json` bajo estándar Google Merchant Center RSS 2.0; integrados disparadores automáticos de revalidación instantánea y push notifications a Google Indexing API / IndexNow ante cualquier alta, edición o cambio de estado (disponible/vendido/alquilado) desde el panel admin. Compilación de producción exitosa (0 errores, 60 rutas).
+
 
 
 

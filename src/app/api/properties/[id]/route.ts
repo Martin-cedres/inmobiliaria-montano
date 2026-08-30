@@ -142,9 +142,16 @@ export async function PUT(
     revalidatePath('/');
     revalidatePath('/admin');
     revalidatePath('/sitemap.xml');
+    revalidatePath('/google-catalog.xml');
+    revalidatePath('/api/feeds/google-catalog.xml');
+    revalidatePath('/api/feeds/google-catalog.json');
     if (saved.slug) {
       revalidateTag(`property-${saved.slug}`, { expire: 0 });
       revalidatePath(`/propiedad/${saved.slug}`);
+      const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
+      import('@/lib/googleIndexing').then(({ notifySearchEngines }) => {
+        notifySearchEngines(`${baseUrl}/propiedad/${saved.slug}`, 'URL_UPDATED').catch(() => null);
+      });
     }
     if (existing.slug && existing.slug !== saved.slug) {
       revalidateTag(`property-${existing.slug}`, { expire: 0 });
@@ -194,9 +201,17 @@ export async function PATCH(
     revalidatePath('/');
     revalidatePath('/admin');
     revalidatePath('/sitemap.xml');
+    revalidatePath('/google-catalog.xml');
+    revalidatePath('/api/feeds/google-catalog.xml');
+    revalidatePath('/api/feeds/google-catalog.json');
     if (updated.slug) {
       revalidateTag(`property-${updated.slug}`, { expire: 0 });
       revalidatePath(`/propiedad/${updated.slug}`);
+      const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
+      const notificationType = status === 'retirada' || status === 'inactiva' ? 'URL_DELETED' : 'URL_UPDATED';
+      import('@/lib/googleIndexing').then(({ notifySearchEngines }) => {
+        notifySearchEngines(`${baseUrl}/propiedad/${updated.slug}`, notificationType).catch(() => null);
+      });
     }
 
     return NextResponse.json({
@@ -229,9 +244,16 @@ export async function DELETE(
     revalidatePath('/');
     revalidatePath('/admin');
     revalidatePath('/sitemap.xml');
+    revalidatePath('/google-catalog.xml');
+    revalidatePath('/api/feeds/google-catalog.xml');
+    revalidatePath('/api/feeds/google-catalog.json');
     if (targetProp?.slug) {
       revalidateTag(`property-${targetProp.slug}`, { expire: 0 });
       revalidatePath(`/propiedad/${targetProp.slug}`);
+      const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
+      import('@/lib/googleIndexing').then(({ notifySearchEngines }) => {
+        notifySearchEngines(`${baseUrl}/propiedad/${targetProp.slug}`, 'URL_DELETED').catch(() => null);
+      });
     }
 
     return NextResponse.json({

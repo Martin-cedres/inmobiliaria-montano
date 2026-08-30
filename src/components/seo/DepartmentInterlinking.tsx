@@ -25,6 +25,13 @@ export function DepartmentInterlinking({ property, currentPath = '' }: Departmen
       category: 'casa',
     },
     {
+      title: 'Casas Aptas para Préstamo Bancario e Hipotecario',
+      shortTitle: 'Aptas para Banco',
+      href: '/casas-aptas-para-banco-san-jose',
+      icon: Landmark,
+      category: 'casa',
+    },
+    {
       title: 'Alquileres Garantizados en San José de Mayo',
       shortTitle: 'Alquileres',
       href: '/alquileres-san-jose-de-mayo',

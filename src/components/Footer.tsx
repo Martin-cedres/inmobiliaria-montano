@@ -115,6 +115,15 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
               </li>
               <li>
                 <Link
+                  href="/casas-aptas-para-banco-san-jose"
+                  className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
+                >
+                  <Landmark className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
+                  <span>Casas Aptas para Banco</span>
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/inversiones-inmobiliarias-san-jose"
                   className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
                 >

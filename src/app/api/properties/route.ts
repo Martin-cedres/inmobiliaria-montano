@@ -146,9 +146,16 @@ export async function POST(request: Request) {
     revalidatePath('/');
     revalidatePath('/admin');
     revalidatePath('/sitemap.xml');
+    revalidatePath('/google-catalog.xml');
+    revalidatePath('/api/feeds/google-catalog.xml');
+    revalidatePath('/api/feeds/google-catalog.json');
     if (saved.slug) {
       revalidateTag(`property-${saved.slug}`, { expire: 0 });
       revalidatePath(`/propiedad/${saved.slug}`);
+      const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
+      import('@/lib/googleIndexing').then(({ notifySearchEngines }) => {
+        notifySearchEngines(`${baseUrl}/propiedad/${saved.slug}`, 'URL_UPDATED').catch(() => null);
+      });
     }
 
     return NextResponse.json({
