@@ -675,6 +675,8 @@
   11. Implementados los endpoints de sincronización automática `/google-catalog.xml`, `/api/feeds/google-catalog.xml` y `/api/feeds/google-catalog.json` bajo estándar Google Merchant Center RSS 2.0; integrados disparadores automáticos de revalidación instantánea y push notifications a Google Indexing API / IndexNow ante cualquier alta, edición o cambio de estado (disponible/vendido/alquilado) desde el panel admin. Compilación de producción exitosa (0 errores, 60 rutas).
   12. Desplegados exitosamente los cambios a producción en Vercel (`git push origin main`, commit `dc8836a`); verificado en vivo el feed `https://www.inmobiliariamontano.uy/google-catalog.xml` respondiendo HTTP 200 OK con 16.4 KB y las 11 propiedades reales sincronizadas para Google Merchant Center.
   13. Clarificado el funcionamiento del catálogo en Google Maps: los productos del feed se asocian a la ubicación de San José de Mayo vía vinculación de Google Business Profile, desplegando el carrusel de propiedades con precios y enlaces a la web en la ficha del mapa.
+  14. Corregidas y desplegadas a producción las validaciones de Google Merchant Center (commit `4d74562`): inyectado el nodo `<g:shipping>` con costo `0.00 UYU` y ajustado el valor numérico base para propiedades en modalidad "A consultar", resolviendo las alertas de precios no válidos y costes de envío.
+  15. Confirmada la importación exitosa de todo el catálogo en Google Merchant Center: fotos, títulos, precios en USD/UYU y estados en stock renderizados correctamente desde el feed en vivo, dejando el pipeline de sincronización continua 100% operativo.
 
 
 
