@@ -821,3 +821,14 @@
            - **Endpoint Automatizado (/api/admin/migrate-slugs):** Creado endpoint que recorre todas las propiedades de Neon Postgres, genera los nuevos slugs canonicos, archiva los viejos en previous_slugs, persiste en Postgres y purga el cache perimetral (revalidateTag, revalidatePath).
            - **Boton Visual en Panel Admin:** Integrado boton interactivo en /admin para ejecutar la normalizacion en 1-clic.
            - **Soporte de Webhook:** Permite ejecucion con clave secreta (?secret=montano_revalidate_secret_2026) permitida en middleware.
+
+       19. **Rediseño del Estudio de Fichas Graficas JPG (Alta Conversion Digital):**
+           - **Erradicacion de Recortes Destructivos:** Se elimino la mascara poligonal diagonal SVG que cortaba mas del 40% de las fotos, adoptando contenedores rectangulares con proporcion fotografica panoramica limpia y controles finos de escala (zoom) y desplazamiento (X/Y).
+           - **Selector de los 3 Formatos Estandar:** Implementado selector de 1-clic con previsualizaciones nativas:
+             1. 1:1 Cuadrado (1080x1080 px base 720x720): optimizado para chats de WhatsApp y feed de Instagram/Facebook.
+             2. 9:16 Vertical (1080x1920 px base 720x1280): optimizado para Estados de WhatsApp e Stories.
+             3. 4:5 Retrato (1080x1350 px base 720x900): formato de maxima visibilidad para publicidad Meta Ads y Facebook Feed.
+           - **Modo Dual de Fotografias:** Soporte para 1 Foto Hero Protagonica o Modo Collage (1 Principal + 2 Secundarias apiladas) con selector interactivo desde la galeria del inmueble.
+           - **Codigo QR Dinamico Vectorial:** Generacion automatica con libreria qrcode en base64 DataURL apuntando a la URL canonica de la propiedad, integrado en el footer junto con el contacto directo de WhatsApp de Daniel Montaño.
+           - **Exportacion Retina 2.5x HD:** Renderizado en alta resolucion y boton para copiar al portapapeles y pegar directo en WhatsApp Web.
+           - **Verificacion:** Compilacion limpia en TypeScript (npx tsc --noEmit, 0 errores) y build de produccion con npm run build (75 rutas, 100% exito). Servidor activo en localhost:3000.
