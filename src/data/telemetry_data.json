@@ -33,6 +33,272 @@
       "pagePath": "/inmobiliaria-san-jose",
       "location": "San José de Mayo",
       "anonymousSessionId": "anon_test_session_456"
+    },
+    {
+      "id": "evt_1788747833726_rpumn1",
+      "timestamp": "2026-09-07T02:23:53.726Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788747833758_fg5hgw",
+      "timestamp": "2026-09-07T02:23:53.758Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788749701895_hrn51q",
+      "timestamp": "2026-09-07T02:55:01.895Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788749701931_cbtiup",
+      "timestamp": "2026-09-07T02:55:01.931Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788751012226_ibnr46",
+      "timestamp": "2026-09-07T03:16:52.227Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788751012254_kee0es",
+      "timestamp": "2026-09-07T03:16:52.254Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788751279720_h7fj4e",
+      "timestamp": "2026-09-07T03:21:19.720Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788751279744_ph5fp6",
+      "timestamp": "2026-09-07T03:21:19.744Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788751283663_5lx4j8",
+      "timestamp": "2026-09-07T03:21:23.663Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788751283708_2g54jj",
+      "timestamp": "2026-09-07T03:21:23.708Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788751367951_9twy7u",
+      "timestamp": "2026-09-07T03:22:47.951Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788751368008_q7yizy",
+      "timestamp": "2026-09-07T03:22:48.008Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788751424749_8h9ccx",
+      "timestamp": "2026-09-07T03:23:44.749Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788751424986_wmpksk",
+      "timestamp": "2026-09-07T03:23:44.986Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788751580761_1u264r",
+      "timestamp": "2026-09-07T03:26:20.761Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788751580850_17t4f7",
+      "timestamp": "2026-09-07T03:26:20.850Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788751587985_s1e37h",
+      "timestamp": "2026-09-07T03:26:27.985Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788751588010_wqcw9q",
+      "timestamp": "2026-09-07T03:26:28.010Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788751648324_t03ika",
+      "timestamp": "2026-09-07T03:27:28.324Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788751648359_b9mc77",
+      "timestamp": "2026-09-07T03:27:28.359Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788751667128_2kz7f2",
+      "timestamp": "2026-09-07T03:27:47.128Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788751667184_k11ain",
+      "timestamp": "2026-09-07T03:27:47.184Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788751686871_sa8an5",
+      "timestamp": "2026-09-07T03:28:06.871Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788751686914_4aoqzb",
+      "timestamp": "2026-09-07T03:28:06.914Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788751700178_ik1wdl",
+      "timestamp": "2026-09-07T03:28:20.178Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788751700217_xs8kht",
+      "timestamp": "2026-09-07T03:28:20.217Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788772252640_i3mr6m",
+      "timestamp": "2026-09-07T09:10:52.640Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788772252783_fphxjv",
+      "timestamp": "2026-09-07T09:10:52.783Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788772263590_jpp0np",
+      "timestamp": "2026-09-07T09:11:03.590Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788772263701_uhpi74",
+      "timestamp": "2026-09-07T09:11:03.701Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788772291143_45fp3b",
+      "timestamp": "2026-09-07T09:11:31.143Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788772291181_228mh6",
+      "timestamp": "2026-09-07T09:11:31.181Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788772327011_il0y93",
+      "timestamp": "2026-09-07T09:12:07.011Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788772327297_nt4bi5",
+      "timestamp": "2026-09-07T09:12:07.297Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788772685065_1wv94k",
+      "timestamp": "2026-09-07T09:18:05.065Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788772685114_9uf9px",
+      "timestamp": "2026-09-07T09:18:05.114Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788772692820_wyfx6k",
+      "timestamp": "2026-09-07T09:18:12.820Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1788772692889_olrhjp",
+      "timestamp": "2026-09-07T09:18:12.889Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
     }
   ],
   "seoRecords": [

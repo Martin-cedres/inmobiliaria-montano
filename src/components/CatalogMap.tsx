@@ -8,6 +8,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Property } from '@/types/property';
 import { Bed, Bath, MapPin, ShieldCheck, Layers, Compass, Plus, Minus, ArrowRight } from 'lucide-react';
+import { MAP_TILE_LAYERS } from '@/lib/mapConfig';
 
 interface CatalogMapProps {
   properties: Property[];
@@ -382,7 +383,7 @@ function FloatingMapControls({
 
 export const CatalogMap: React.FC<CatalogMapProps> = ({
   properties,
-  heightClass = 'h-[500px] lg:h-[650px]',
+  heightClass = 'h-[400px] sm:h-[500px] lg:h-[650px]',
   activePropertyId,
   onSelectProperty,
 }) => {
@@ -499,25 +500,25 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
         attributionControl={false}
         className="w-full h-full"
       >
-        {/* Capa de Azulejos: Callejero Voyager o Satélite HD con etiquetas superpuestas */}
+        {/* Capa de Azulejos: Callejero Esri World Street o Satélite HD con etiquetas superpuestas libres */}
         {mapLayer === 'voyager' ? (
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
-            url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
-            maxZoom={19}
+            attribution={MAP_TILE_LAYERS.street.attribution}
+            url={MAP_TILE_LAYERS.street.url}
+            maxZoom={MAP_TILE_LAYERS.street.maxZoom}
           />
         ) : (
           <>
             <TileLayer
-              attribution='Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-              url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-              maxZoom={19}
+              attribution={MAP_TILE_LAYERS.satellite.attribution}
+              url={MAP_TILE_LAYERS.satellite.url}
+              maxZoom={MAP_TILE_LAYERS.satellite.maxZoom}
             />
-            {/* Superposición sutil de calles y nombres sobre el satélite */}
+            {/* Superposición sutil de calles y nombres sobre el satélite libre de marcas de agua */}
             <TileLayer
-              attribution='&copy; CARTO'
-              url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png"
-              maxZoom={19}
+              attribution={MAP_TILE_LAYERS.satelliteLabels.attribution}
+              url={MAP_TILE_LAYERS.satelliteLabels.url}
+              maxZoom={MAP_TILE_LAYERS.satelliteLabels.maxZoom}
               opacity={0.9}
             />
           </>

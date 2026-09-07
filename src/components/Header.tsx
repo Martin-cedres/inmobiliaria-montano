@@ -2,12 +2,28 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Calculator, Menu, X, Building2, Phone, Home } from 'lucide-react';
+import { Calculator, Menu, X, Building2, Phone, Home, Compass } from 'lucide-react';
 import { buildGeneralWhatsAppLink } from '@/utils/whatsapp';
 
 export const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const whatsappLink = buildGeneralWhatsAppLink('general');
+
+  const handleMapClick = (e: React.MouseEvent) => {
+    if (typeof window !== 'undefined' && window.location.pathname === '/') {
+      e.preventDefault();
+      window.dispatchEvent(new CustomEvent('set-catalog-view', { detail: { view: 'map', scroll: true } }));
+      window.history.replaceState(null, '', '/?view=map#catalogo');
+    }
+    setMobileMenuOpen(false);
+  };
+
+  const handleCatalogClick = (e: React.MouseEvent) => {
+    if (typeof window !== 'undefined' && window.location.pathname === '/') {
+      window.dispatchEvent(new CustomEvent('set-catalog-view', { detail: { view: 'grid', scroll: true } }));
+    }
+    setMobileMenuOpen(false);
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-all">
@@ -35,9 +51,18 @@ export const Header: React.FC = () => {
           <nav className="hidden md:flex items-center space-x-8 text-sm font-semibold text-slate-600">
             <Link
               href="/#catalogo"
+              onClick={handleCatalogClick}
               className="hover:text-[#5e1754] transition-colors relative py-1.5 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#5e1754] hover:after:w-full after:transition-all duration-300"
             >
               Propiedades
+            </Link>
+            <Link
+              href="/?view=map#catalogo"
+              onClick={handleMapClick}
+              className="hover:text-[#5e1754] transition-colors relative py-1.5 flex items-center gap-1.5 text-slate-700 font-bold after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#e85d04] hover:after:w-full after:transition-all duration-300"
+            >
+              <Compass className="w-4 h-4 text-[#E85D04]" />
+              <span>Mapa</span>
             </Link>
             <Link
               href="/#tasaciones"
@@ -81,11 +106,20 @@ export const Header: React.FC = () => {
         <div className="md:hidden bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 pt-4 pb-6 space-y-3 shadow-2xl animate-in slide-in-from-top-2 duration-200">
           <Link
             href="/#catalogo"
-            onClick={() => setMobileMenuOpen(false)}
+            onClick={handleCatalogClick}
             className="flex items-center space-x-3 p-3 rounded-xl hover:bg-purple-50 text-slate-800 font-bold text-sm group transition-colors"
           >
             <Home className="w-5 h-5 text-[#5E1754] group-hover:text-[#E85D04] transition-colors" />
             <span>Ver Catálogo de Propiedades</span>
+          </Link>
+
+          <Link
+            href="/?view=map#catalogo"
+            onClick={handleMapClick}
+            className="flex items-center space-x-3 p-3 rounded-xl hover:bg-orange-50 text-slate-800 font-bold text-sm group transition-colors"
+          >
+            <Compass className="w-5 h-5 text-[#E85D04] group-hover:rotate-45 transition-transform" />
+            <span className="text-[#E85D04]">Mapa Interactivo de Inmuebles</span>
           </Link>
 
           <Link

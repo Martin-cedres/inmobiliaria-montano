@@ -7,6 +7,7 @@ import { Property } from '@/types/property';
 import { buildPropertyWhatsAppLink } from '@/utils/whatsapp';
 import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon';
 import { Bed, Bath, Maximize2, Car, MapPin, Landmark, ShieldCheck, Sparkles, Clock, CheckCircle2, AlertCircle, FileCheck, ArrowLeftRight, Compass, Trees, Building, Ruler, Flame, Droplets, LayoutGrid, Milestone, DollarSign, Layers, Zap } from 'lucide-react';
+import { SharePropertyModal } from '@/components/SharePropertyModal';
 
 interface PropertyCardProps {
   property: Property;
@@ -146,19 +147,22 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
             {renderOperationBadge()}
           </div>
 
-          {/* Commercial Status Badge (Upper Right - Only if applies) */}
-          <div className="absolute top-3 right-3 z-20">
+          {/* Commercial Status Badge & Share Micro-Button (Upper Right) */}
+          <div className="absolute top-3 right-3 z-20 flex items-center gap-1.5">
             {renderStatusBadge()}
+            <SharePropertyModal
+              property={property}
+              variant="icon"
+              className="!w-7 !h-7 sm:!w-8 sm:!h-8 bg-black/35 hover:bg-[#5E1754] text-white/90 hover:text-white backdrop-blur-md border border-white/25 hover:border-amber-400/60 shadow-xs hover:scale-105 active:scale-95 transition-all"
+            />
           </div>
 
           {/* Location Overlay (Bottom Left on Image) */}
-          <div className="absolute bottom-3 left-3 right-3 z-20 flex justify-between items-end">
-            <div className="flex items-center space-x-1.5 text-white text-xs font-bold drop-shadow">
-              <MapPin className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
-              <span className="truncate">
-                {property.location.neighborhood || property.location.address}
-              </span>
-            </div>
+          <div className="absolute bottom-3 left-3 right-3 z-20 flex items-center space-x-1.5 text-white text-xs font-bold drop-shadow truncate">
+            <MapPin className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
+            <span className="truncate">
+              {property.location.neighborhood || property.location.address}
+            </span>
           </div>
         </div>
 
@@ -178,27 +182,31 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
             {/* Price Header */}
             <div className="flex items-baseline space-x-1.5 mb-1.5 min-h-[2rem]">
               {property.price.priceMode === 'consultar' || property.price.amount === 0 ? (
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    window.open(whatsappUrl, '_blank');
+                  }}
                   className="inline-flex items-center justify-center text-xs sm:text-sm font-black text-white bg-[#5e1754] hover:bg-[#45103e] active:scale-95 px-3.5 py-1.5 rounded-xl shadow-xs hover:shadow-md transition-all cursor-pointer"
                   title="Consultar precio"
                 >
                   Consultar Precio
-                </a>
+                </button>
               ) : property.price.priceMode === 'reservado' ? (
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    window.open(whatsappUrl, '_blank');
+                  }}
                   className="inline-flex items-center justify-center text-xs sm:text-sm font-black text-slate-800 bg-slate-100 hover:bg-slate-200 border border-slate-200 px-3.5 py-1.5 rounded-xl shadow-2xs hover:shadow-xs transition-all cursor-pointer"
                   title="Precio Reservado"
                 >
                   Precio Reservado
-                </a>
+                </button>
               ) : (
                 <>
                   <span className="text-2xl font-black text-[#5e1754]">

@@ -35,13 +35,28 @@ export async function POST(request: Request) {
     }
 
     const codeRef = body.codeRef || `MON-${Math.floor(100 + Math.random() * 900)}`;
-    const autoSlug = generatePropertySlug(body.title, codeRef);
+    const autoSlug = generatePropertySlug({
+      title: body.title,
+      codeRef,
+      category: body.category,
+      operation: body.operation,
+      neighborhood: body.neighborhood,
+      address: body.address,
+      city: body.city,
+      features: {
+        bedrooms: body.bedrooms,
+        builtAreaM2: body.builtAreaM2,
+        plotAreaM2: body.plotAreaM2,
+        isHectares: body.isHectares,
+        hectaresAmount: body.hectaresAmount,
+      },
+    });
 
     const newProperty: Property = {
       id: body.id || String(Date.now()),
       codeRef,
       title: body.title,
-      slug: body.slug || autoSlug,
+      slug: body.slug ? body.slug.trim().toLowerCase().replace(/[^a-z0-9-]/g, '-') : autoSlug,
       description: body.description || '',
       operation: body.operation,
       category: body.category,
@@ -134,6 +149,9 @@ export async function POST(request: Request) {
           ],
       seoTitle: body.seoTitle || undefined,
       seoDescription: body.seoDescription || undefined,
+      focusKeywords: body.focusKeywords || undefined,
+      noIndex: Boolean(body.noIndex),
+      previousSlugs: Array.isArray(body.previousSlugs) ? body.previousSlugs : [],
       featured: body.featured ?? true,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),

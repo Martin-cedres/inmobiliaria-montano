@@ -8,21 +8,41 @@ import { CategoryChips } from '@/components/CategoryChips';
 import { PropertyCard } from '@/components/PropertyCard';
 import { CatalogMapWrapper } from '@/components/CatalogMapWrapper';
 import { Property, PropertyCategory } from '@/types/property';
-import { Building2, SearchX, RotateCcw, LayoutGrid, MapPin } from 'lucide-react';
+import { SharePropertyModal } from '@/components/SharePropertyModal';
+import { Building2, SearchX, RotateCcw, LayoutGrid, MapPin, Compass } from 'lucide-react';
 
-function SearchCategoryHandler({ onCategoryFound }: { onCategoryFound: (cat: PropertyCategory) => void }) {
+function CatalogUrlSyncHandler({
+  onCategoryFound,
+  onViewModeFound,
+  onFocusFound,
+}: {
+  onCategoryFound: (cat: PropertyCategory) => void;
+  onViewModeFound: (mode: 'grid' | 'map') => void;
+  onFocusFound: (id: string) => void;
+}) {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get('category') as PropertyCategory | null;
+  const viewParam = searchParams.get('view');
+  const focusParam = searchParams.get('focus') || searchParams.get('propertyId');
 
   useEffect(() => {
     if (categoryParam) {
       onCategoryFound(categoryParam);
+    }
+    if (viewParam === 'map') {
+      onViewModeFound('map');
+    }
+    if (focusParam) {
+      onFocusFound(focusParam);
+      onViewModeFound('map');
+    }
+    if (categoryParam || viewParam || focusParam) {
       setTimeout(() => {
         const el = document.getElementById('catalogo');
         if (el) el.scrollIntoView({ behavior: 'smooth' });
       }, 100);
     }
-  }, [categoryParam, onCategoryFound]);
+  }, [categoryParam, viewParam, focusParam, onCategoryFound, onViewModeFound, onFocusFound]);
 
   return null;
 }
@@ -37,12 +57,40 @@ export function CatalogSection({ initialProperties }: CatalogSectionProps) {
   const [viewMode, setViewMode] = useState<'grid' | 'map'>('grid');
   const [activePropertyId, setActivePropertyId] = useState<string | null>(null);
 
-  // Scroll automático en el panel lateral al seleccionar pin en el mapa
+  // Escuchar eventos globales de cambio de vista (Navbar y Hero)
+  useEffect(() => {
+    const handleCustomViewEvent = (e: Event) => {
+      const customEvent = e as CustomEvent<{ view: 'grid' | 'map'; scroll?: boolean; propertyId?: string }>;
+      if (customEvent.detail?.view) {
+        setViewMode(customEvent.detail.view);
+      }
+      if (customEvent.detail?.propertyId) {
+        setActivePropertyId(customEvent.detail.propertyId);
+      }
+      if (customEvent.detail?.scroll !== false) {
+        setTimeout(() => {
+          const el = document.getElementById('catalogo');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 50);
+      }
+    };
+
+    window.addEventListener('set-catalog-view', handleCustomViewEvent);
+    return () => window.removeEventListener('set-catalog-view', handleCustomViewEvent);
+  }, []);
+
+  // Scroll automático y centrado suave en el panel lateral al seleccionar pin en el mapa
   const handleSelectProperty = (id: string) => {
     setActivePropertyId(id);
     const cardEl = document.getElementById(`side-card-${id}`);
     if (cardEl) {
-      cardEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      const container = cardEl.parentElement;
+      if (container) {
+        const topOffset = cardEl.offsetTop - container.offsetTop - 16;
+        container.scrollTo({ top: Math.max(0, topOffset), behavior: 'smooth' });
+      } else {
+        cardEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
     }
   };
 
@@ -62,7 +110,11 @@ export function CatalogSection({ initialProperties }: CatalogSectionProps) {
   return (
     <div id="catalogo" className="scroll-mt-20 sm:scroll-mt-24 flex-grow">
       <Suspense fallback={null}>
-        <SearchCategoryHandler onCategoryFound={setSelectedCategory} />
+        <CatalogUrlSyncHandler
+          onCategoryFound={setSelectedCategory}
+          onViewModeFound={setViewMode}
+          onFocusFound={setActivePropertyId}
+        />
       </Suspense>
 
       {/* Category Chips Bar */}
@@ -73,45 +125,15 @@ export function CatalogSection({ initialProperties }: CatalogSectionProps) {
 
       <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
         
-        {/* Section Title & View Switcher Header */}
-        <div className="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4 text-left">
-          <div>
-            <div className="inline-flex items-center space-x-1.5 text-xs font-black uppercase tracking-wider text-[#E85D04] mb-2">
-              <Building2 className="w-4 h-4 text-[#E85D04]" />
-              <span>Catálogo Inmobiliario</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
-              Encontrá tu Próximo Inmueble
-            </h2>
+        {/* Section Title Header */}
+        <div className="mb-8 text-left">
+          <div className="inline-flex items-center space-x-1.5 text-xs font-black uppercase tracking-wider text-[#E85D04] mb-2">
+            <Building2 className="w-4 h-4 text-[#E85D04]" />
+            <span>Catálogo Inmobiliario</span>
           </div>
-
-          {/* View Mode Toggle Button Pill */}
-          <div className="inline-flex items-center space-x-1 bg-slate-200/80 p-1 rounded-2xl border border-slate-300 shadow-inner self-start sm:self-auto">
-            <button
-              type="button"
-              onClick={() => setViewMode('grid')}
-              className={`px-3.5 py-1.5 rounded-xl font-black text-xs transition-all flex items-center space-x-1.5 ${
-                viewMode === 'grid'
-                  ? 'bg-[#5E1754] text-white shadow-md'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-300/50'
-              }`}
-            >
-              <LayoutGrid className="w-3.5 h-3.5" />
-              <span>Tarjetas</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setViewMode('map')}
-              className={`px-3.5 py-1.5 rounded-xl font-black text-xs transition-all flex items-center space-x-1.5 ${
-                viewMode === 'map'
-                  ? 'bg-[#E85D04] text-white shadow-md'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-300/50'
-              }`}
-            >
-              <MapPin className="w-3.5 h-3.5 text-amber-300" />
-              <span>Mapa Interactivo</span>
-            </button>
-          </div>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
+            Encontrá tu Próximo Inmueble
+          </h2>
         </div>
 
         {/* Property Catalog Content (Grid or Interactive Map Split View) */}
@@ -119,7 +141,11 @@ export function CatalogSection({ initialProperties }: CatalogSectionProps) {
           viewMode === 'grid' ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {filteredProperties.map((property, index) => (
-                <PropertyCard key={property.id} property={property} index={index} />
+                <PropertyCard
+                  key={property.id}
+                  property={property}
+                  index={index}
+                />
               ))}
             </div>
           ) : (
@@ -177,18 +203,33 @@ export function CatalogSection({ initialProperties }: CatalogSectionProps) {
                           <span className="text-slate-500">
                             {activeProp.features.bedrooms ? `${activeProp.features.bedrooms} dorm` : ''} {activeProp.features.builtAreaM2 ? `• ${activeProp.features.builtAreaM2}m²` : ''}
                           </span>
-                          <Link
-                            href={`/propiedad/${activeProp.slug}`}
-                            className="bg-[#E85D04] text-white px-2.5 py-1 rounded-lg font-black text-[10px] flex items-center gap-1 shadow-xs"
-                          >
-                            <span>Ver Ficha</span>
-                            <span>➔</span>
-                          </Link>
+                          <div className="flex items-center gap-1.5">
+                            <SharePropertyModal
+                              property={activeProp}
+                              variant="icon"
+                              className="!p-1.5 !w-7 !h-7 bg-slate-100/90 hover:bg-[#5E1754] text-slate-600 hover:text-white border border-slate-200/60 shadow-2xs"
+                            />
+                            <Link
+                              href={`/propiedad/${activeProp.slug}`}
+                              className="bg-[#E85D04] text-white px-2.5 py-1 rounded-lg font-black text-[10px] flex items-center gap-1 shadow-xs hover:bg-[#5E1754] transition-colors"
+                            >
+                              <span>Ver Ficha</span>
+                              <span>➔</span>
+                            </Link>
+                          </div>
                         </div>
                       </div>
                     </div>
                   );
                 })()}
+
+                {/* Mobile Helper Banner when no pin is selected */}
+                {!activePropertyId && (
+                  <div className="md:hidden mt-3 p-3 rounded-2xl bg-white border border-slate-200/90 shadow-xs flex items-center justify-center gap-2 text-xs font-bold text-slate-700 animate-in fade-in duration-200">
+                    <MapPin className="w-4 h-4 text-[#E85D04] animate-pulse flex-shrink-0" />
+                    <span>Tocá un pin en el mapa para ver los detalles</span>
+                  </div>
+                )}
               </div>
 
               {/* Columna Derecha: Panel Lateral Desplazable */}
@@ -218,7 +259,7 @@ export function CatalogSection({ initialProperties }: CatalogSectionProps) {
                         id={`side-card-${property.id}`}
                         onMouseEnter={() => setActivePropertyId(property.id)}
                         onClick={() => handleSelectProperty(property.id)}
-                        className={`p-3 rounded-2xl bg-white border transition-all duration-200 cursor-pointer flex gap-3.5 shadow-xs ${
+                        className={`p-3 rounded-2xl bg-white border transition-all duration-200 cursor-pointer flex gap-3.5 shadow-xs scroll-mt-4 ${
                           isActive
                             ? 'border-[#E85D04] ring-2 ring-[#E85D04]/30 shadow-md bg-amber-50/20 translate-x-1'
                             : 'border-slate-200 hover:border-slate-300 hover:shadow-sm'
@@ -257,13 +298,20 @@ export function CatalogSection({ initialProperties }: CatalogSectionProps) {
 
                           <div className="flex items-center justify-between pt-2 border-t border-slate-100 text-[10px] font-bold text-slate-600">
                             <span>{property.features.bedrooms ? `${property.features.bedrooms} dorm` : ''} {property.features.builtAreaM2 ? `• ${property.features.builtAreaM2}m²` : ''}</span>
-                            <Link
-                              href={`/propiedad/${property.slug}`}
-                              className="text-[#E85D04] hover:text-[#5E1754] font-black text-[11px] flex items-center gap-1"
-                            >
-                              <span>Ver</span>
-                              <span>➔</span>
-                            </Link>
+                            <div className="flex items-center gap-2">
+                              <SharePropertyModal
+                                property={property}
+                                variant="icon"
+                                className="!p-1.5 !w-6 !h-6 bg-slate-100/90 hover:bg-[#5E1754] text-slate-600 hover:text-white border border-slate-200/60 shadow-2xs"
+                              />
+                              <Link
+                                href={`/propiedad/${property.slug}`}
+                                className="text-[#E85D04] hover:text-[#5E1754] font-black text-[11px] flex items-center gap-1 transition-colors"
+                              >
+                                <span>Ver</span>
+                                <span>➔</span>
+                              </Link>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -295,6 +343,32 @@ export function CatalogSection({ initialProperties }: CatalogSectionProps) {
         )}
 
       </main>
+
+      {/* Botón Flotante Omnipresente Estilo Airbnb / Idealista */}
+      <aside aria-label="Cambiar vista de catálogo" className="fixed bottom-5 sm:bottom-6 left-1/2 -translate-x-1/2 z-40 pointer-events-auto select-none max-w-[92vw]">
+        <button
+          type="button"
+          onClick={() => {
+            const nextMode = viewMode === 'grid' ? 'map' : 'grid';
+            setViewMode(nextMode);
+            const el = document.getElementById('catalogo');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }}
+          className="group inline-flex items-center gap-2 sm:gap-2.5 px-4 sm:px-6 py-2.5 sm:py-3.5 rounded-full font-black text-xs sm:text-sm tracking-wide shadow-2xl transition-all duration-300 transform active:scale-95 cursor-pointer bg-gradient-to-r from-[#5E1754] via-[#43123C] to-[#2D0B28] text-white border-2 border-white/50 hover:border-amber-300 hover:shadow-orange-500/40 hover:scale-105 whitespace-nowrap"
+        >
+          {viewMode === 'grid' ? (
+            <>
+              <MapPin className="w-4 h-4 text-amber-300 animate-bounce" />
+              <span>Ver en Mapa</span>
+            </>
+          ) : (
+            <>
+              <LayoutGrid className="w-4 h-4 text-amber-300" />
+              <span>Ver Lista</span>
+            </>
+          )}
+        </button>
+      </aside>
     </div>
   );
 }

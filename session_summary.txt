@@ -678,33 +678,134 @@
   14. Corregidas y desplegadas a producción las validaciones de Google Merchant Center (commit `4d74562`): inyectado el nodo `<g:shipping>` con costo `0.00 UYU` y ajustado el valor numérico base para propiedades en modalidad "A consultar", resolviendo las alertas de precios no válidos y costes de envío.
   15. Confirmada la importación exitosa de todo el catálogo en Google Merchant Center: fotos, títulos, precios en USD/UYU y estados en stock renderizados correctamente desde el feed en vivo, dejando el pipeline de sincronización continua 100% operativo.
 
+=== Sesión 2026-09-02 ===
+- **Vinculación Oficial de Google Maps / Google Business Profile en Toda la Plataforma:**
+  1. Integrado el enlace oficial del perfil de Google Maps (`https://share.google/6I1gbffV5ZTS5heXV`) en el pie de página (`Footer.tsx`), tanto en la columna de marca institucional (*"San José de Mayo, Uruguay — Ver en Google Maps"*) como en la columna de contacto directo interactivo (*"Google Maps: Inmobiliaria Montaño"*).
+  2. Actualizado el Schema.org canónico en `src/utils/seo.ts` (`generatePropertyGraphSchema` y `generateSiteGraphSchema`) inyectando las propiedades oficiales `hasMap: 'https://share.google/6I1gbffV5ZTS5heXV'` y `sameAs: ['https://share.google/6I1gbffV5ZTS5heXV', 'https://wa.me/59892776715']` en la entidad `RealEstateAgent`, conectando el Knowledge Graph de Google con la ficha física del negocio.
+  3. Actualizado el componente `RealEstateAgentJsonLd.tsx` y los proveedores en `TasacionesJsonLd.tsx` y `VenderPropiedadJsonLd.tsx` con el enlace directo y `hasMap` verificado.
+- **Refuerzo de Rich Snippets de Preguntas Frecuentes (FAQPage Schema + UI) en Páginas Pilares:**
+  1. Inyectado el marcado estructurado Schema.org `@type: "FAQPage"` en la plantilla de landings Nivel B (`src/components/seo/LevelBLandingTemplate.tsx`), activando los Rich Snippets de Google para `/casas-aptas-para-banco-san-jose`.
+  2. Ampliadas las preguntas estratégicas de alta demanda en `levelBLandings.ts` para crédito hipotecario (porcentajes de financiamiento bancario 70-80-90%, ahorro previo requerido y plazos reales de aprobación/escrituración de 45-60 días).
+  3. Activado el Schema.org `FAQPage` en la página maestra departamental `/inmobiliaria-san-jose` e incorporada pregunta clave sobre coordinación presencial y tasaciones directas con Daniel Montaño.
+  4. Implementada la sección completa visual de Preguntas Frecuentes (`FaqAccordion`) y el Schema.org `FAQPage` en el catálogo general `/propiedades-san-jose` (4 preguntas de alta conversión sobre tipos de inmuebles, certezas jurídicas, garantías y visitas).
+- **Optimización de Respuesta en Google AI Overviews (GEO - Generative Engine Optimization):**
+  1. Identificada la citación exitosa de Google AI Overview donde Inmobiliaria Montaño ya forma parte del Top 5 de agencias recomendadas en San José de Mayo con su dirección física `25 de Mayo 338`.
+  2. Implementada la sección específica `## Destacado y Especialidad` en `src/app/llms.txt/route.ts` orientada a que el LLM de Google extraiga una recomendación de liderazgo: venta de casas residenciales, casas aptas para crédito hipotecario (BHU y banca privada) y atención directa de Daniel Montaño.
+  3. Sincronizada la dirección física exacta `streetAddress: '25 de Mayo 338'` en Schema.org `RealEstateAgent` (`RealEstateAgentJsonLd.tsx`, `seo.ts`) y metadatos de `layout.tsx`.
+  4. Inyectada la propiedad `slogan: 'Líder en venta de casas verificadas, créditos hipotecarios y tasaciones en San José de Mayo'` y actualizada la descripción institucional en el grafo Schema.org.
+  5. Sincronizada la dirección física `25 de Mayo 338` y el liderazgo en crédito bancario en todos los sub-índices Markdown para agentes (`propiedades/llms.txt`, `propiedades/venta/llms.txt`, `propiedades/alquiler/llms.txt`).
+- **Posicionamiento y Optimización Multi-IA (ChatGPT, SearchGPT, Perplexity, Claude, Meta AI, Copilot, Apple):**
+  1. Creado el endpoint canónico `/llms-full.txt` bajo el estándar oficial de `llmstxt.org`, integrando la base de conocimiento institucional completa, fortalezas comerciales, cobertura de las 13 localidades de San José y el 100% del catálogo de propiedades activas con precios, certezas jurídicas (crédito bancario BHU, contribución, primaria, padrón) y enlaces directos a WhatsApp de Daniel Montaño.
+  2. Actualizado `robots.txt` con autorización explícita para los rastreadores de búsqueda e indexación de IA líderes: `OAI-SearchBot` (SearchGPT), `ChatGPT-User` (navegación web ChatGPT), `meta-externalagent` (Meta AI / WhatsApp), `Applebot` (Apple Intelligence / Siri), `anthropic-ai` / `ClaudeBot` (Claude), `cohere-ai` y `Amazonbot`, con directivas RFC de Content-Signal (`search=yes, ai-input=yes`).
+  3. Integrado el descubrimiento de `/llms-full.txt` en cabeceras HTTP Link (RFC 8288 en `next.config.ts`), metadatos HTML de `layout.tsx` y catálogo ARD de capacidades de IA (`/.well-known/ai-catalog.json`).
+- **Verificación de Compilación de Producción:**
+  - Ejecutado `npm run build` con Turbopack y TypeScript estricto: compilado exitosamente con código 0 y 61 rutas estáticas/SSG listas. Cero errores de compilación.
+
+=== Sesión 2026-09-06 ===
+- **Auditoría Integral y Diagnóstico del Proyecto Inmobiliaria Montaño:**
+  1. **Estado de Compilación y Salud:** Verificado `npm run build` con Next.js 16.3.0 (Turbopack) y TypeScript estricto. Compilación 100% limpia (código de salida 0) con 61 rutas estáticas/SSG y proxies dinámicos operativos.
+  2. **Arquitectura y Stack:** Next.js 16 (App Router), React 19, Tailwind CSS v4, base de datos Neon Serverless Postgres con fallback resiliente local (`properties.json`, `decisions.json`, `users.json`), Vercel Blob + Sharp, Leaflet, autenticación Google OAuth + JWT (`jose`).
+  3. **Agent-Readiness y SEO Avanzado:** Cumplimiento de estándares RFC 9728, llms.txt, llms-full.txt, ai-catalog, Schema.org @graph con FAQPage y vinculación a Google Business Profile / Google Maps.
+  4. **Seguridad y Despliegues:** Confirmada observancia estricta de la directiva de no realizar `git push` ni despliegues automáticos a producción sin solicitud expresa del usuario.
+  5. **Análisis Arquitectónico de Middleware a Proxy:** Evaluada la convención de Next.js 16 para transición de `middleware.ts` a `proxy.ts`, impactos de rendimiento y compatibilidad futura sin alterar código.
+  6. **Modernización Integral del Sistema de Mapas y Descubrimiento Omnipresente:**
+     - **Erradicación de la Marca de Agua Cartográfica:** Creado `src/lib/mapConfig.ts` integrando Esri World Street Map (ArcGIS) y OpenStreetMap sin API key ni marcas de agua en `CatalogMap.tsx`, `PropertyMap.tsx` y `AdminLocationPicker.tsx`.
+     - **Corrección de Scroll en Panel Lateral:** Implementado desplazamiento relativo con margen superior de 16px en `CatalogSection.tsx`, eliminando el corte superior de las tarjetas al seleccionar un pin.
+     - **Mapa Omnipresente (UX Airbnb / Idealista):** Añadido botón flotante persistente `Ver en Mapa ↔ Ver Lista` en `CatalogSection.tsx`, acceso "Mapa" en Header (desktop y móvil), botón en Hero (`HeroSearch.tsx`) y micro-botón interactivo "En Mapa" en cada tarjeta (`PropertyCard.tsx`).
+     - **Super-Asistente en Admin:** Dotado `AdminLocationPicker.tsx` de buscador de calles/esquinas con Nominatim, pegado inteligente de coordenadas de Google Maps, marcador arrastrable (draggable), botones de 1-clic para localidades de San José y captura GPS.
+     - **Verificación Local:** Servidor activo en puerto 3000 (`http://localhost:3000`), TypeScript limpio (0 errores) y compilación de producción exitosa (61 rutas). Sin commits ni deploys a remoto conforme a directiva.
+     - **Optimización y Aseguramiento Responsive Multi-Dispositivo:**
+       1. **Altura Dinámica del Mapa:** Ajustada la escala en `CatalogMap.tsx` y `CatalogMapWrapper.tsx` a `h-[400px] sm:h-[500px] lg:h-[650px]`, optimizando el espacio visual en smartphones.
+       2. **Banner Asistente en Móvil:** Agregado banner orientativo en `CatalogSection.tsx` cuando no hay pin seleccionado en móviles (*"Tocá un pin en el mapa para ver los detalles"*).
+       3. **Botón Flotante Ultra-Adaptable:** Configuradas clases `bottom-5 sm:bottom-6 max-w-[92vw] px-4 sm:px-6 py-2.5 sm:py-3.5 whitespace-nowrap`, evitando colisiones con WhatsApp flotante en pantallas angostas (320px - 360px).
+       4. **Micro-interacción "En Mapa":** Corregido a texto visible con icono en `PropertyCard.tsx` para todas las resoluciones.
+
+       5. **Integración de Micro-Botones de Compartir en Redes Sociales:**
+          - **Tarjetas de Catálogo (PropertyCard.tsx):** Micro-botón con efecto glassmorphism sobre la esquina superior derecha (SharePropertyModal variante icon) junto al badge de estado, con e.stopPropagation() para evitar navegación no deseada al abrir el modal.
+          - **Vista Mapa Móvil (CatalogSection.tsx):** Micro-botón integrado en la tarjeta emergente (snap card) junto al enlace "Ver Ficha".
+          - **Panel Lateral de Mapa Desktop (CatalogSection.tsx):** Micro-botón integrado en la fila de acciones de cada inmueble resaltado junto al enlace "Ver".
+          - **Opciones de Difusión:** Integración nativa con Web Share API (móviles), WhatsApp con texto comercial enriquecido (Ref, precio, ubicación y enlace directo con OpenGraph), Instagram, Facebook, correo electrónico y copiado rápido al portapapeles.
+       6. **Verificación:** Código 0 en TypeScript (npx tsc --noEmit) y servidor activo en http://localhost:3000 (HTTP 200). Cero commits y cero despliegues a remoto conforme a directiva explícita.
+
+       7. **Optimización de Navegación y Unificación de Selectores de Vista (CEO / Senior Dev):**
+          - **Solución a Botones "Mapa" (Navbar) y "Ver en el Mapa" (Hero):**
+            * Corregida la estructura de URL a `/?view=map#catalogo` conforme a RFC 3986.
+            * Implementado canal de comunicación reactivo en el cliente mediante `window.dispatchEvent(new CustomEvent('set-catalog-view', ...))` y `useEffect` en `CatalogSection.tsx`. Al hacer clic desde cualquier punto de la página principal, activa de inmediato `viewMode = 'map'` y realiza desplazamiento suave al catálogo sin depender de recargas.
+            * Sincronización automática de historial con `window.history.replaceState`.
+          - **Eliminación de Redundancia Superior:**
+            * Retirada la botonera estática duplicada (`[Tarjetas] [Mapa Interactivo]`) en la cabecera de `CatalogSection.tsx`, eliminando conflicto visual y recuperando espacio vertical valioso.
+            * Integrada píldora informativa sobria con conteo dinámico de inmuebles disponibles (*"Mostrando X inmuebles"*).
+            * El botón flotante inferior pegajoso (`fixed bottom`) queda como el selector universal único y ergonómico (Airbnb UX).
+          - **Verificación Técnica:** `npx tsc --noEmit` exitoso (0 errores), servidor en `http://localhost:3000` respondiendo HTTP 200 OK. Cero commits y cero despliegues a remoto conforme a directiva.
+
+       8. **Perfeccionamiento Integral de la Experiencia de Compartir (UX Móvil & OpenGraph):**
+          - **Micro-Botón Traslúcido Frosted Glass:** Eliminado el fondo blanco opaco rígido; sustituido por un círculo de cristal traslúcido (`bg-black/35 backdrop-blur-md border border-white/20 text-white/90`) en tarjetas fotográficas y tonos suaves en listas, fundiéndose con la estética de las fotos.
+          - **Bottom Sheet Ergonómico en Móviles:** Rediseñado el modal para que en celulares aparezca como un panel inferior deslizante (*Bottom Sheet*) de apenas ~240px de altura con manija táctil. Se eliminó la pesada tarjeta previa redundante de 120px que bloqueaba la visibilidad completa de la pantalla, dejando el contenido y el mapa siempre a la vista y cerrable al toque exterior.
+          - **Solución a la Previsualización de Foto en WhatsApp:**
+            * Diagnóstico raíz: en el entorno local se generaban enlaces con slugs de prueba que daban 404 en el servidor de producción donde rastrea el bot de WhatsApp (`WhatsApp/2.x`).
+            * Sincronizadas las 20 propiedades reales de producción en `src/db/properties.json` con sus slugs canónicos oficiales y almacenamiento CDN.
+            * Optimizada la metaetiqueta `og:image` en `src/utils/seo.ts` incluyendo atributo de tipo MIME explícito (`image/webp`).
+          - **Verificación Técnica:** Compilación limpia con `npx tsc --noEmit` (0 errores) y servidor en `http://localhost:3000` (HTTP 200). Cero commits y cero deploys a producción conforme a directiva.
+
+       9. **Aplicación de la Recomendación Ejecutiva en Portada (CRO & Foco Visual):**
+          - **Hero Limpio (Regla de 2 CTAs):** Se retiró el botón redundante "Ver en el Mapa" del componente HeroSearch.tsx. El Hero queda enfocado en dos acciones de alto impacto:
+            1. Primaria: "Explorar Propiedades" (lleva directamente al catálogo).
+            2. Secundaria: "Contacto Directo" (conversión inmediata por WhatsApp con Daniel Montaño).
+          - **Conservación Estratégica de "Mapa" en Navbar:** Mantenido en la barra superior y en el menú móvil para permitir navegación directa hacia el mapa interactivo desde páginas internas (fichas de inmuebles, tasaciones, etc.).
+          - **Verificación Técnica:** Código 0 en TypeScript (npx tsc --noEmit) y servidor activo en http://localhost:3000 (HTTP 200). Sin commits ni despliegues a producción.
+
+       10. **Simplificación del Botón Flotante de Vista:**
+           - Removido el contador numérico de propiedades del botón flotante pegajoso (`CatalogSection.tsx`). Ahora muestra etiquetas minimalistas y directas: "Ver en Mapa" y "Ver Lista", reduciendo su ancho y evitando redundancia con el contador superior.
+           - Verificación: `npx tsc --noEmit` exitoso (0 errores), servidor en `http://localhost:3000` (HTTP 200). Sin commits ni despliegues a remoto conforme a directiva.
+
+       11. **Limpieza Visual de Portada y Tarjetas:**
+           - Removido el botón "En Mapa" sobre la imagen de las tarjetas de inmueble (`PropertyCard.tsx`), despejando el overlay inferior y dando espacio completo al barrio y dirección.
+           - Removida la píldora informativa "Mostrando X inmuebles" en la cabecera del catálogo (`CatalogSection.tsx`), logrando una cabecera minimalista y limpia sin elementos redundantes.
+           - Verificación: `npx tsc --noEmit` con 0 errores, servidor activo en `http://localhost:3000` (HTTP 200). Sin commits ni despliegues a producción.
+
+       12. **Erradicación del Menú Nativo de Windows (navigator.share) y Unificación de UI:**
+           - Diagnóstico exacto: en Windows (Chrome/Edge), la llamada a la Web API `navigator.share` disparaba el panel nativo negro del sistema operativo ("Mi teléfono", "OneNote", "Outlook"), arruinando la experiencia estética y deformándose en el emulador móvil de DevTools.
+           - Solución: se removió la delegación a `navigator.share`, abriendo directa y exclusivamente nuestro modal/bottom-sheet corporativo personalizado con WhatsApp, Instagram, Facebook y copiado de enlace.
+           - Verificación: `npx tsc --noEmit` exitoso (0 errores), servidor activo en `http://localhost:3000` (HTTP 200). Sin commits ni despliegues a remoto conforme a directiva.
+
+       13. **Tooltip Flotante con Identidad Visual Inmobiliaria Montaño:**
+           - Removido el atributo `title="Compartir esta propiedad"` que disparaba el tosco recuadro rectangular negro por defecto del navegador en Windows.
+           - Implementado un micro-badge flotante al hacer hover con los colores corporativos: fondo morado (`bg-[#5E1754]/95`), efecto glassmorphic (`backdrop-blur-md`), borde sutil, tipografía blanca nítida y punto ámbar/naranja (`bg-[#E85D04]`), logrando armonía visual total con el diseño de Inmobiliaria Montaño.
+           - Verificación: `npx tsc --noEmit` con 0 errores, servidor activo en `http://localhost:3000` (HTTP 200). Sin commits ni despliegues a remoto conforme a directiva.
+
+       14. **Simplificación de Micro-interacción en Botón de Compartir:**
+           - Eliminado cualquier tooltip flotante de texto para mantener la interfaz ultra limpia y ágil.
+           - En escritorio (hover de ratón): transición sutil de color hacia el púrpura institucional (`hover:bg-[#5E1754] text-white/90 hover:text-white border-white/20 hover:border-amber-400/50`).
+           - Al hacer clic (PC) o tap táctil con el dedo (móviles/tablets): se despliega el menú corporativo de compartir.
+
+       15. **Corrección Definitiva del Solapamiento de Ubicación sobre el Menú de Compartir:**
+           - Diagnóstico exacto: el badge de ubicación (`📍 Plaza Arriaga`) poseía `z-20` dentro del contenedor de la tarjeta (`PropertyCard.tsx`). Debido a que la tarjeta aplica transformaciones CSS (`transform hover:-translate-y-1.5`) y `overflow-hidden`, se generaba un contexto de apilamiento local (*stacking context*) que hacía que el badge sobresaliera visualmente sobre el fondo del menú de compartir.
+           - Solución arquitectónica: se envolvió el modal en `createPortal(..., document.body)` con verificación de cliente montado (`mounted`). De esta forma el modal se renderiza directamente en el root del DOM del navegador con `z-[99999]`, garantizando que quede 100% por encima de cualquier elemento, badge o imagen de la página.
+           - Verificación: `npx tsc --noEmit` exitoso (0 errores), servidor activo en `http://localhost:3000` (HTTP 200). Sin commits ni despliegues a producción conforme a directiva.
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+       16. **Sistema Integral de SEO Técnico, Normalización de Slugs y Redirecciones 301/308:**
+           - **Estandarización Centralizada de Slugs (`generatePropertySlug`):**
+             - Nueva arquitectura semántica: `[operacion]-[tipo_inmueble]-[caracteristica_clave]-[calle_o_barrio]-[ciudad]-[id]`.
+             - Depuración automática de stopwords y palabras redundantes (`de`, `en`, `con`, `propiedad`, etc.).
+             - Detección inteligente de medidas (`112m2`, `10ha`, `3-dormitorios`).
+             - Limpieza de ciudades compuestas (`san-jose-de-mayo` -> `san-jose`).
+             - Sufijo invariable único de referencia (`-monXXX`).
+           - **Control Total en Panel de Administración (`SeoEditorSection.tsx`, `admin/nueva`, `admin/editar/[id]`):**
+             - Campo de slug personalizable con prefijo en vivo `/propiedad/` y botón *[ 🔄 Auto-Generar ]*.
+             - Meta Title con medidor de longitud recomendado (50-60 caracteres).
+             - Meta Description con medidor de longitud recomendado (140-160 caracteres).
+             - Campo de Focus Keywords (palabras clave objetivo).
+             - Atributo de texto alternativo (`altText`) editable por cada fotografía en el subidor de imágenes (`ImageUploader.tsx`) con fallback inteligente.
+             - Selector de Indexación para motores de búsqueda (Robots: `index, follow` vs `noindex, nofollow`).
+           - **Motor de Redirecciones Permanentes Cero 404 (`previousSlugs` y Fallback por ID):**
+             - Historial acumulativo `previousSlugs` tanto en base de datos Neon Postgres (`previous_slugs JSONB`) como en JSON local.
+             - Al guardar o editar una publicación con un nuevo slug, el slug anterior se archiva automáticamente en `previousSlugs`, con protección contra bucles circulares.
+             - Resolución inteligente (`findPropertyBySlugOrPrevious`): si se solicita una URL antigua archivada o un enlace roto/parcial que conserve el sufijo de referencia (`-mon955`), el servidor ejecuta una redirección permanente HTTP 308/301 instantánea hacia el slug canónico oficial (`permanentRedirect`).
+           - **Migración Exitosa de Publicaciones:**
+             - Ejecutado script de migración sobre las 20 propiedades existentes en `src/db/properties.json`.
+             - Caso crítico verificado en vivo: la propiedad MON-955 fue migrada de su slug previo (`venta-propiedad-local-comercial-de-112-m-en-alquiler-pleno-centro-sarandi-y-18-de-julio-san-jose-de-mayo-san-jose-mon955`) al canónico (`alquiler-local-comercial-112m2-sarandi-san-jose-mon955`), comprobando mediante cURL la redirección HTTP 308 inmediata tanto desde el slug antiguo como desde cualquier enlace con sufijo `-mon955`.
+           - **Verificación Técnica:**
+             - `npx tsc --noEmit` ejecutado con 0 errores.
+             - Servidor local activo en `http://localhost:3000`.
+             - Sin `git push` ni despliegues a producción respetando la directiva explícita.

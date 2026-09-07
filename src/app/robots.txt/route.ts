@@ -62,6 +62,62 @@ Disallow: /login
 Disallow: /api/admin/*
 Disallow: /api/auth/*
 
+User-Agent: Applebot
+Allow: /
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /login
+Disallow: /api/admin/*
+Disallow: /api/auth/*
+
+User-Agent: OAI-SearchBot
+Allow: /
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /login
+Disallow: /api/admin/*
+Disallow: /api/auth/*
+
+User-Agent: ChatGPT-User
+Allow: /
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /login
+Disallow: /api/admin/*
+Disallow: /api/auth/*
+
+User-Agent: meta-externalagent
+Allow: /
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /login
+Disallow: /api/admin/*
+Disallow: /api/auth/*
+
+User-Agent: anthropic-ai
+Allow: /
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /login
+Disallow: /api/admin/*
+Disallow: /api/auth/*
+
+User-Agent: cohere-ai
+Allow: /
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /login
+Disallow: /api/admin/*
+Disallow: /api/auth/*
+
+User-Agent: Amazonbot
+Allow: /
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /login
+Disallow: /api/admin/*
+Disallow: /api/auth/*
+
 # Content Signals for AI Agents (contentsignals.org / IETF RFC draft)
 Content-Signal: ai-train=no, search=yes, ai-input=yes
 
@@ -69,6 +125,8 @@ Content-Signal: ai-train=no, search=yes, ai-input=yes
 Sitemap: ${baseUrl}/sitemap.xml
 Catalog: ${baseUrl}/google-catalog.xml
 Agentmap: ${baseUrl}/.well-known/ai-catalog.json
+LLMs: ${baseUrl}/llms.txt
+LLMs-Full: ${baseUrl}/llms-full.txt
 Host: ${baseUrl}
 `;
 
@@ -77,7 +135,7 @@ Host: ${baseUrl}
     headers: {
       'Content-Type': 'text/plain; charset=utf-8',
       'Cache-Control': 'public, max-age=86400, s-maxage=86400',
-      Link: `</llms.txt>; rel="alternate"; type="text/markdown", </.well-known/ai-catalog.json>; rel="service-desc"`,
+      Link: `</llms.txt>; rel="alternate"; type="text/markdown", </llms-full.txt>; rel="alternate"; type="text/markdown", </.well-known/ai-catalog.json>; rel="service-desc"`,
     },
   });
 }

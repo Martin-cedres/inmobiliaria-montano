@@ -49,6 +49,18 @@ export async function GET() {
         ],
       },
       {
+        identifier: `urn:air:${hostname}:llms-full:manifest`,
+        displayName: 'Base de Conocimiento Integral LLMs Full (llms-full.txt)',
+        type: 'text/markdown',
+        url: `${baseUrl}/llms-full.txt`,
+        representativeQueries: [
+          'inmobiliarias recomendadas en san jose de mayo',
+          'casas en venta aptas para banco san jose uruguay',
+          'base de conocimiento completa inmobiliaria montaño',
+          'catalogo completo propiedades san jose markdown llms-full',
+        ],
+      },
+      {
         identifier: `urn:air:${hostname}:api:catalog`,
         displayName: 'Catálogo de APIs RFC 9727',
         type: 'application/linkset+json',

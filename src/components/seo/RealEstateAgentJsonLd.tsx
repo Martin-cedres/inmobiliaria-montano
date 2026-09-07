@@ -13,7 +13,8 @@ export function RealEstateAgentJsonLd() {
     logo: `${BASE_URL}/logo.png`,
     image: `${BASE_URL}/og-logo.png`,
     description:
-      'Inmobiliaria líder en San José de Mayo, Uruguay. Especialistas en venta de casas, alquileres garantizados, terrenos, chacras y tasaciones oficiales con Daniel Montaño.',
+      'Inmobiliaria líder de referencia en San José de Mayo, Uruguay. Especialistas destacados en venta de casas verificadas, propiedades aptas para crédito bancario (BHU e hipotecarios), alquileres garantizados y tasaciones oficiales con Daniel Montaño.',
+    slogan: 'Líder en venta de casas verificadas, créditos hipotecarios y tasaciones en San José de Mayo',
     telephone: '+59892776715',
     email: 'inmobiliariadaniel247@gmail.com',
     priceRange: '$$$',
@@ -21,6 +22,7 @@ export function RealEstateAgentJsonLd() {
     paymentAccepted: 'Cash, Credit Card, Bank Transfer',
     address: {
       '@type': 'PostalAddress',
+      streetAddress: '25 de Mayo 338',
       addressLocality: 'San José de Mayo',
       addressRegion: 'San José',
       postalCode: '80000',
@@ -31,6 +33,11 @@ export function RealEstateAgentJsonLd() {
       latitude: -34.3375,
       longitude: -56.7136,
     },
+    hasMap: 'https://share.google/6I1gbffV5ZTS5heXV',
+    sameAs: [
+      'https://share.google/6I1gbffV5ZTS5heXV',
+      'https://wa.me/59892776715',
+    ],
     areaServed: [
       {
         '@type': 'AdministrativeArea',

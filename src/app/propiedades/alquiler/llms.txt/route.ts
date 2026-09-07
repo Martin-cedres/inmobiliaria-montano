@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
   );
 
   let content = `# Propiedades en Alquiler — Inmobiliaria Montaño\n`;
-  content += `> Catálogo de inmuebles en alquiler garantizado en el Departamento de San José, Uruguay.\n\n`;
+  content += `> Catálogo de inmuebles en alquiler garantizado en San José de Mayo y todo el departamento de San José, Uruguay. Gestión con garantías ANDA, Porto Seguro, SURA, CGN y Mapfre. Asesoramiento directo con Daniel Montaño en 25 de Mayo 338, San José de Mayo (WhatsApp: 092 776 715).\n\n`;
   content += `Total de propiedades en alquiler disponibles: ${rentalProperties.length}\n\n`;
 
   for (const p of rentalProperties) {

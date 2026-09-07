@@ -49,11 +49,24 @@ export async function PUT(
       );
     }
 
+    const newSlug = body.slug ? body.slug.trim().toLowerCase().replace(/[^a-z0-9-]/g, '-') : existing.slug;
+    let prevSlugs = Array.isArray(body.previousSlugs)
+      ? [...body.previousSlugs]
+      : (Array.isArray(existing.previousSlugs) ? [...existing.previousSlugs] : []);
+
+    if (existing.slug && newSlug && existing.slug !== newSlug) {
+      if (!prevSlugs.includes(existing.slug)) {
+        prevSlugs.push(existing.slug);
+      }
+    }
+    prevSlugs = prevSlugs.filter((s) => s !== newSlug);
+
     const updatedProperty = {
       ...existing,
       codeRef: body.codeRef || existing.codeRef,
       title: body.title || existing.title,
-      slug: body.slug || existing.slug,
+      slug: newSlug,
+      previousSlugs: prevSlugs,
       description: body.description || existing.description,
       operation: body.operation || existing.operation,
       category: body.category || existing.category,
@@ -131,6 +144,8 @@ export async function PUT(
       images: Array.isArray(body.images) && body.images.length > 0 ? body.images : existing.images,
       seoTitle: body.seoTitle !== undefined ? body.seoTitle : existing.seoTitle,
       seoDescription: body.seoDescription !== undefined ? body.seoDescription : existing.seoDescription,
+      focusKeywords: body.focusKeywords !== undefined ? body.focusKeywords : existing.focusKeywords,
+      noIndex: body.noIndex !== undefined ? Boolean(body.noIndex) : existing.noIndex,
       featured: body.featured !== undefined ? body.featured : existing.featured,
       updatedAt: new Date().toISOString(),
     };

@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
   );
 
   let content = `# Inventario General de Propiedades — Inmobiliaria Montaño\n`;
-  content += `> Catálogo público completo de inmuebles en el Departamento de San José, Uruguay.\n\n`;
+  content += `> Catálogo público completo de inmuebles en San José de Mayo y todo el Departamento de San José, Uruguay. Casas, apartamentos, terrenos, chacras y locales comerciales con títulos al día y aptitud para crédito hipotecario. Atención directa con Daniel Montaño en 25 de Mayo 338, San José de Mayo (WhatsApp: 092 776 715).\n\n`;
   content += `Total de propiedades públicas: ${validProperties.length}\n\n`;
 
   for (const p of validProperties) {

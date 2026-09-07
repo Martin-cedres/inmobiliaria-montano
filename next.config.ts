@@ -78,7 +78,7 @@ const nextConfig: NextConfig = {
           {
             key: 'Link',
             value:
-              '</llms.txt>; rel="alternate"; type="text/markdown", </.well-known/ai-catalog.json>; rel="service-desc", </.well-known/api-catalog>; rel="api-catalog", </.well-known/mcp/server-card.json>; rel="service-desc"',
+              '</llms.txt>; rel="alternate"; type="text/markdown", </llms-full.txt>; rel="alternate"; type="text/markdown", </.well-known/ai-catalog.json>; rel="service-desc", </.well-known/api-catalog>; rel="api-catalog", </.well-known/mcp/server-card.json>; rel="service-desc"',
           },
           {
             key: 'Vary',

@@ -8,6 +8,12 @@ import { buildGeneralWhatsAppLink } from '@/utils/whatsapp';
 export const HeroSearch: React.FC = () => {
   const whatsappUrl = buildGeneralWhatsAppLink('general');
 
+  const handleExploreClick = () => {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('set-catalog-view', { detail: { view: 'grid', scroll: true } }));
+    }
+  };
+
   return (
     <section className="relative bg-gradient-to-br from-[#2D0B28] via-[#43123C] to-[#5E1754] text-white pt-20 pb-10 sm:pt-32 sm:pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
       
@@ -31,10 +37,11 @@ export const HeroSearch: React.FC = () => {
           </p>
         </div>
 
-        {/* Botones de Acción Directa en el Hero (60-30-10 Regla Visual) */}
+        {/* Botones de Acción Directa en el Hero (CRO 2-CTA Regla de Oro) */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 pt-2">
           <a
             href="#catalogo"
+            onClick={handleExploreClick}
             className="inline-flex items-center justify-center space-x-2.5 bg-[#E85D04] hover:bg-[#FF8500] active:scale-95 text-white font-extrabold px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl sm:rounded-full shadow-lg shadow-orange-500/25 transition-all text-sm sm:text-base flex-shrink-0"
           >
             <Building2 className="w-4 h-4 text-amber-200" />
@@ -46,7 +53,7 @@ export const HeroSearch: React.FC = () => {
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center space-x-2 bg-white/15 hover:bg-white/25 active:scale-95 text-white font-bold px-4 sm:px-6 py-3 sm:py-3.5 rounded-xl sm:rounded-full backdrop-blur-md border border-white/20 transition-all text-xs sm:text-sm flex-shrink-0"
+            className="inline-flex items-center justify-center space-x-2 bg-white/10 hover:bg-white/20 active:scale-95 text-white font-bold px-4 sm:px-6 py-3 sm:py-3.5 rounded-xl sm:rounded-full backdrop-blur-md border border-white/20 transition-all text-xs sm:text-sm flex-shrink-0"
           >
             <WhatsAppIcon className="w-4 h-4 text-white" />
             <span>Contacto Directo</span>

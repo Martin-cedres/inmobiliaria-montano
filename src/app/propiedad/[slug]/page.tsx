@@ -1,9 +1,9 @@
 import React from 'react';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import Link from 'next/link';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
-import { getAllProperties, getCachedProperties, getCachedPropertyBySlug } from '@/lib/propertiesStore';
+import { getAllProperties, getCachedProperties, getCachedPropertyBySlug, findPropertyBySlugOrPrevious } from '@/lib/propertiesStore';
 import { generatePropertyMetadata, generatePropertyJsonLd, getPillarPageForProperty } from '@/utils/seo';
 import { buildPropertyWhatsAppLink } from '@/utils/whatsapp';
 import { MapPin, Bed, Bath, Maximize2, Car, Building, CheckCircle2, MessageCircle, ArrowLeft, ShieldCheck, Share2, Compass, Trees, Droplets, FileCheck, Landmark, ArrowLeftRight, Wifi, Flame, Zap, Dog, Waves, LayoutGrid, Milestone, DollarSign, Layers } from 'lucide-react';
@@ -38,19 +38,28 @@ export async function generateStaticParams() {
 // Generación automática de Metadata SEO para Google y Redes Sociales desde Data Cache
 export async function generateMetadata({ params }: PropertyDetailPageProps) {
   const resolvedParams = await params;
-  const property = await getCachedPropertyBySlug(resolvedParams.slug);
-  if (!property) return {};
-  return generatePropertyMetadata(property);
+  const result = await findPropertyBySlugOrPrevious(resolvedParams.slug);
+  if (!result) return {};
+  return generatePropertyMetadata(result.property);
 }
 
 export default async function PropertyDetailPage({ params }: PropertyDetailPageProps) {
   const resolvedParams = await params;
-  const allProperties = await getCachedProperties();
-  const property = allProperties.find((p) => p.slug === resolvedParams.slug);
+  const requestedSlug = resolvedParams.slug;
+  const result = await findPropertyBySlugOrPrevious(requestedSlug);
 
-  if (!property) {
+  if (!result) {
     notFound();
   }
+
+  // Si la URL consultada es un slug anterior o fue encontrada por ID,
+  // ejecutar redirección permanente 301/308 al slug canónico actual
+  if (result.isPrevious || result.property.slug !== requestedSlug) {
+    permanentRedirect(`/propiedad/${result.property.slug}`);
+  }
+
+  const property = result.property;
+  const allProperties = await getCachedProperties();
 
   const jsonLd = generatePropertyJsonLd(property);
   const whatsappUrl = buildPropertyWhatsAppLink(property);

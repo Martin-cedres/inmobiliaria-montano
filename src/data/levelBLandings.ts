@@ -140,6 +140,14 @@ export const LEVEL_B_LANDINGS: LevelBLandingDefinition[] = [
         question: '¿Qué bancos financian la compra de casas en San José de Mayo?',
         answer: 'Trabajamos con todas las entidades bancarias de plaza: Banco Hipotecario del Uruguay (BHU), Banco Santander, Banco Itaú, BBVA y Scotiabank, asesorándote en los requisitos de cada institución.',
       },
+      {
+        question: '¿Cuánto porcentaje financian los bancos y cuánto ahorro previo se necesita?',
+        answer: 'Por regla general, los bancos en Uruguay financian entre el 70% y el 80% (y hasta el 90% en líneas especiales de primera vivienda) del valor de tasación del inmueble. El comprador debe disponer aproximadamente de un 10% a 20% de ahorro previo más los gastos de escrituración e ITP.',
+      },
+      {
+        question: '¿Cuánto tiempo demora la aprobación y tasación del crédito hipotecario en San José?',
+        answer: 'El proceso completo suele tomar entre 45 y 60 días corridos: comprende la precalificación crediticia del comprador, la visita del tasador pericial del banco, el estudio de títulos por parte de los escribanos y la firma final de la escritura con hipoteca.',
+      },
     ],
   },
 ];

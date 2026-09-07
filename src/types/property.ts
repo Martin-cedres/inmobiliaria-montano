@@ -121,6 +121,9 @@ export interface Property {
   images: ImageAsset[];
   seoTitle?: string;
   seoDescription?: string;
+  focusKeywords?: string;
+  noIndex?: boolean;
+  previousSlugs?: string[];
   viewsCount?: number;
   whatsappClicksCount?: number;
   sharesCount?: number;

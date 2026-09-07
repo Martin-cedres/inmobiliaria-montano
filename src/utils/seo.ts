@@ -82,26 +82,291 @@ export function generatePropertyBreadcrumbJsonLd(property: Property) {
 }
 
 /**
- * Genera un slug SEO amigable optimizado con Palabras Clave Locales.
- * Ej: "casa-venta-2-dormitorios-arroyo-mallada-san-jose-mon-101"
+ * Normaliza y limpia una cadena de texto eliminando acentos, stopwords y caracteres especiales.
  */
-export function generatePropertySlug(title: string, codeRef: string, category?: string, operation?: string, neighborhood?: string): string {
-  const op = (operation || 'venta').toLowerCase();
-  const cat = (category || 'propiedad').toLowerCase();
-  const hood = (neighborhood || '').toLowerCase();
-  
-  const baseText = `${op}-${cat}-${title} ${hood} san jose`;
-
-  const cleanSlug = baseText
+function cleanSlugText(text: string): string {
+  if (!text) return '';
+  return text
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '') // Eliminar acentos
-    .replace(/[^a-z0-9\s-]/g, '')    // Eliminar caracteres especiales
-    .trim()
-    .replace(/\s+/g, '-');           // Reemplazar espacios por guiones
+    .replace(/[\u0300-\u036f]/g, '') // Quitar acentos
+    .replace(/ñ/g, 'n')
+    .replace(/[^a-z0-9\s-]/g, ' ')   // Mantener solo alfanuméricos y guiones
+    .trim();
+}
 
-  const cleanRef = codeRef.toLowerCase().replace(/[^a-z0-9]/g, '');
-  return `${cleanSlug}-${cleanRef}`;
+/**
+ * Normaliza unidades de medida a formato estándar (ej. "112 m²", "112-m", "112 metros" -> "112m2").
+ */
+function normalizeMeasurementsInText(text: string): string {
+  if (!text) return '';
+  return text
+    .replace(/(\d+)\s*(?:m2|m²|mts2|mts|metros\s*cuadrados|metros|m\b)/gi, '$1m2')
+    .replace(/(\d+)\s*(?:ha|has|hectareas|hectarea\b)/gi, '$1ha');
+}
+
+/**
+ * Extrae o sintetiza la característica clave para el slug (ej. "112m2", "3-dormitorios", "10ha").
+ */
+function extractKeyFeature(
+  category: string,
+  features?: {
+    bedrooms?: number;
+    builtAreaM2?: number;
+    plotAreaM2?: number;
+    isHectares?: boolean;
+    hectaresAmount?: number;
+  },
+  title?: string
+): string {
+  // 1. Si es vivienda (casa, apartamento) y tiene dormitorios informados
+  if ((category === 'casa' || category === 'apartamento') && features?.bedrooms && features.bedrooms > 0) {
+    return `${features.bedrooms}-dormitorios`;
+  }
+
+  // 2. Si tiene superficie construida (locales, depósitos, casas)
+  if (features?.builtAreaM2 && features.builtAreaM2 > 0) {
+    return `${Math.round(features.builtAreaM2)}m2`;
+  }
+
+  // 3. Si tiene hectáreas o terreno (chacras, campos, terrenos)
+  if (features?.isHectares && features?.hectaresAmount && features.hectaresAmount > 0) {
+    return `${features.hectaresAmount}ha`;
+  }
+  if (features?.plotAreaM2 && features.plotAreaM2 > 0) {
+    if (category === 'chacra' && features.plotAreaM2 >= 10000) {
+      return `${Math.round(features.plotAreaM2 / 10000)}ha`;
+    }
+    return `${Math.round(features.plotAreaM2)}m2`;
+  }
+
+  // 4. Extracción heurística desde el título si no está en features
+  if (title) {
+    const normTitle = normalizeMeasurementsInText(title.toLowerCase());
+    
+    // Buscar dormitorios
+    const dormMatch = normTitle.match(/(\d+)\s*(?:dormitorios|dormitorio|dorms|dorm\b)/i);
+    if (dormMatch && (category === 'casa' || category === 'apartamento')) {
+      return `${dormMatch[1]}-dormitorios`;
+    }
+
+    // Buscar m2
+    const m2Match = normTitle.match(/(\d+)\s*m2/i);
+    if (m2Match) {
+      return `${m2Match[1]}m2`;
+    }
+
+    // Buscar hectáreas
+    const haMatch = normTitle.match(/(\d+)\s*ha/i);
+    if (haMatch) {
+      return `${haMatch[1]}ha`;
+    }
+  }
+
+  return '';
+}
+
+/**
+ * Normaliza y extrae el barrio o calle limpia para el slug.
+ */
+function extractLocationSlug(neighborhood?: string, address?: string, title?: string): string {
+  // Conectores y palabras a omitir en nombres de calle/barrio
+  const stopwords = new Set(['de', 'en', 'y', 'el', 'la', 'del', 'los', 'las', 'al', 'o', 'un', 'una', 'con', 'pleno', 'zona', 'calle', 'avda', 'av']);
+
+  // Si hay dirección específica como "Sarandí y 18 de Julio" o "Av. Nicolás Guerra"
+  let candidate = '';
+  if (address && address.trim()) {
+    // Tomar la primera calle principal
+    const rawClean = cleanSlugText(address);
+    const words = rawClean.split(/\s+/).filter(w => !stopwords.has(w) && w.length > 1);
+    if (words.length > 0) {
+      candidate = words.slice(0, 2).join('-');
+    }
+  }
+
+  if (!candidate && neighborhood && neighborhood.trim() && neighborhood.toLowerCase() !== 'centro') {
+    const rawClean = cleanSlugText(neighborhood);
+    const words = rawClean.split(/\s+/).filter(w => !stopwords.has(w) && w.length > 1);
+    if (words.length > 0) {
+      candidate = words.join('-');
+    }
+  }
+
+  if (!candidate && title) {
+    // Buscar nombres conocidos de calles o barrios de San José en el título
+    const lowerTitle = cleanSlugText(title);
+    const knownSpots = [
+      'sarandi', 'plaza arriaga', 'arroyo mallada', 'nicolas guerra', 'barrio industrial',
+      'picada de las tunas', 'parque rodo', 'bypass', 'treinta y tres', 'colon',
+      'ruta 3', 'ruta 11', 'ruta 1', 'libertad', 'playa pascual', 'kuyu', 'ciudad del plata', 'centro'
+    ];
+    for (const spot of knownSpots) {
+      if (lowerTitle.includes(spot)) {
+        candidate = spot.replace(/\s+/g, '-');
+        break;
+      }
+    }
+  }
+
+  if (!candidate && neighborhood && neighborhood.trim()) {
+    candidate = cleanSlugText(neighborhood).replace(/\s+/g, '-');
+  }
+
+  return candidate || 'san-jose';
+}
+
+export interface GenerateSlugParams {
+  title?: string;
+  codeRef: string;
+  category?: string;
+  operation?: string;
+  neighborhood?: string;
+  address?: string;
+  city?: string;
+  features?: {
+    bedrooms?: number;
+    builtAreaM2?: number;
+    plotAreaM2?: number;
+    isHectares?: boolean;
+    hectaresAmount?: number;
+  };
+}
+
+/**
+ * Genera un slug SEO amigable y estandarizado con la regla:
+ * [operacion]-[tipo_inmueble]-[caracteristica_clave]-[calle_o_barrio]-[ciudad]-[id]
+ *
+ * Ejemplos:
+ * - Alquiler: alquiler-local-comercial-112m2-sarandi-san-jose-mon955
+ * - Venta: venta-casa-3-dormitorios-plaza-arriaga-san-jose-mon956
+ * - Depósito: alquiler-deposito-300m2-av-nicolas-guerra-san-jose-mon957
+ */
+export function generatePropertySlug(
+  titleOrParams: string | GenerateSlugParams,
+  codeRefParam?: string,
+  categoryParam?: string,
+  operationParam?: string,
+  neighborhoodParam?: string,
+  featuresParam?: any
+): string {
+  let p: GenerateSlugParams;
+
+  if (typeof titleOrParams === 'object' && titleOrParams !== null) {
+    p = titleOrParams;
+  } else {
+    p = {
+      title: titleOrParams,
+      codeRef: codeRefParam || 'mon',
+      category: categoryParam,
+      operation: operationParam,
+      neighborhood: neighborhoodParam,
+      features: featuresParam,
+    };
+  }
+
+  // 1. Operación
+  let op = (p.operation || '').toLowerCase().trim();
+  if (!op || op === 'todos') {
+    // Detección heurística desde el título
+    const lowerTitle = (p.title || '').toLowerCase();
+    if (lowerTitle.includes('alquiler') || lowerTitle.includes('alquila')) {
+      op = 'alquiler';
+    } else if (lowerTitle.includes('pozo') || lowerTitle.includes('proyecto')) {
+      op = 'proyecto';
+    } else {
+      op = 'venta';
+    }
+  }
+
+  // 2. Tipo de Inmueble
+  const cat = (p.category || '').toLowerCase().trim();
+  let tipo = 'inmueble';
+  switch (cat) {
+    case 'local':
+      tipo = 'local-comercial';
+      break;
+    case 'deposito':
+      tipo = 'deposito';
+      break;
+    case 'modulo':
+      tipo = 'modulo-habitacional';
+      break;
+    case 'casa':
+      tipo = 'casa';
+      break;
+    case 'apartamento':
+      tipo = 'apartamento';
+      break;
+    case 'terreno':
+      tipo = 'terreno';
+      break;
+    case 'chacra':
+      tipo = 'chacra';
+      break;
+    case 'proyecto':
+      tipo = 'proyecto';
+      break;
+    default:
+      if (p.title) {
+        const t = p.title.toLowerCase();
+        if (t.includes('local')) tipo = 'local-comercial';
+        else if (t.includes('deposito') || t.includes('galpon')) tipo = 'deposito';
+        else if (t.includes('apartamento') || t.includes('apto')) tipo = 'apartamento';
+        else if (t.includes('terreno') || t.includes('solar')) tipo = 'terreno';
+        else if (t.includes('chacra') || t.includes('campo')) tipo = 'chacra';
+        else if (t.includes('casa')) tipo = 'casa';
+      }
+      break;
+  }
+
+  // 3. Característica Clave
+  const keyFeature = extractKeyFeature(cat, p.features, p.title);
+
+  // 4. Calle o Barrio
+  const locationPart = extractLocationSlug(p.neighborhood, p.address, p.title);
+
+  // 5. Ciudad
+  let ciudad = 'san-jose';
+  const rawCity = (p.city || '').toLowerCase();
+  if (rawCity.includes('libertad')) ciudad = 'libertad';
+  else if (rawCity.includes('ciudad del plata') || rawCity.includes('playa pascual')) ciudad = 'ciudad-del-plata';
+  else if (rawCity.includes('rodriguez')) ciudad = 'rodriguez';
+  else if (rawCity.includes('ecilda')) ciudad = 'ecilda-paullier';
+
+  // 6. ID Limpio
+  const cleanId = (p.codeRef || 'mon')
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '');
+
+  // 7. Ensamble de piezas evitando repeticiones
+  const rawParts = [op, tipo, keyFeature, locationPart, ciudad, cleanId].filter(Boolean);
+  
+  // Limpieza y deduplicación de tokens repetidos
+  const tokens: string[] = [];
+  for (const part of rawParts) {
+    const subTokens = cleanSlugText(part).split(/[\s-]+/).filter(Boolean);
+    for (const token of subTokens) {
+      // Evitar stopwords en la cadena final (salvo que formen parte de medidas como '112m2' o '3-dormitorios')
+      if (['de', 'en', 'y', 'el', 'la', 'del', 'los', 'las', 'al', 'o', 'un', 'una', 'con'].includes(token)) {
+        continue;
+      }
+      // Evitar repetir token adyacente (ej. 'san-jose-san-jose' o 'alquiler-alquiler')
+      if (tokens.length > 0 && tokens[tokens.length - 1] === token) {
+        continue;
+      }
+      tokens.push(token);
+    }
+  }
+
+  // Asegurar que el ID no se haya perdido y quede exactamente al final
+  if (tokens.length === 0 || tokens[tokens.length - 1] !== cleanId) {
+    // Si cleanId ya está en alguna parte anterior, eliminarlo para ponerlo al final
+    const filtered = tokens.filter(t => t !== cleanId);
+    filtered.push(cleanId);
+    return filtered.join('-');
+  }
+
+  return tokens.join('-');
 }
 
 /**
@@ -294,8 +559,15 @@ export function generatePropertyGraphSchema(property: Property) {
       image: `${BASE_URL}/og-logo.png`,
       telephone: '+59892776715',
       email: 'inmobiliariadaniel247@gmail.com',
+      hasMap: 'https://share.google/6I1gbffV5ZTS5heXV',
+      sameAs: [
+        'https://share.google/6I1gbffV5ZTS5heXV',
+        'https://wa.me/59892776715',
+      ],
+      slogan: 'Líder en venta de casas verificadas, créditos hipotecarios y tasaciones en San José de Mayo',
       address: {
         '@type': 'PostalAddress',
+        streetAddress: '25 de Mayo 338',
         addressLocality: 'San José de Mayo',
         addressRegion: 'San José',
         postalCode: '80000',
@@ -378,9 +650,16 @@ export function generateSiteGraphSchema() {
         image: `${BASE_URL}/og-logo.png`,
         telephone: '+59892776715',
         email: 'inmobiliariadaniel247@gmail.com',
-        description: 'Inmobiliaria de referencia en San José de Mayo, Uruguay. Especialistas en venta de casas, alquileres garantizados, terrenos, chacras y tasaciones oficiales con Daniel Montaño.',
+        hasMap: 'https://share.google/6I1gbffV5ZTS5heXV',
+        sameAs: [
+          'https://share.google/6I1gbffV5ZTS5heXV',
+          'https://wa.me/59892776715',
+        ],
+        slogan: 'Líder en venta de casas verificadas, créditos hipotecarios y tasaciones en San José de Mayo',
+        description: 'Inmobiliaria líder de referencia en San José de Mayo, Uruguay. Especialistas destacados en venta de casas verificadas, propiedades aptas para crédito bancario (BHU e hipotecarios), alquileres garantizados y tasaciones oficiales con Daniel Montaño.',
         address: {
           '@type': 'PostalAddress',
+          streetAddress: '25 de Mayo 338',
           addressLocality: 'San José de Mayo',
           addressRegion: 'San José',
           postalCode: '80000',
@@ -426,17 +705,38 @@ export function generatePropertyMetadata(property: Property): Metadata {
   const titleStr = property.seoTitle || generateSmartSeoTitle(property);
   const descriptionStr = property.seoDescription || generateSmartSeoDescription(property);
 
+  const focusKeys = property.focusKeywords
+    ? property.focusKeywords.split(',').map((k) => k.trim()).filter(Boolean)
+    : [];
+
+  const keywordsList = [
+    ...focusKeys,
+    property.title,
+    `${property.category} en ${property.location?.neighborhood || 'San José de Mayo'}`,
+    `${property.operation === 'alquiler' ? 'alquiler' : 'venta de casas'} en San José de Mayo`,
+    'Inmobiliaria Montaño San José',
+    'Daniel Montaño Inmobiliaria',
+    'Inmuebles en San José Uruguay',
+  ];
+
+  const robotsConfig = property.noIndex
+    ? {
+        index: false,
+        follow: false,
+      }
+    : {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large' as const,
+        'max-snippet': -1,
+      };
+
   return {
     title: titleStr,
     description: descriptionStr,
-    keywords: [
-      property.title,
-      `${property.category} en ${property.location?.neighborhood || 'San José de Mayo'}`,
-      `${property.operation === 'alquiler' ? 'alquiler' : 'venta de casas'} en San José de Mayo`,
-      'Inmobiliaria Montaño San José',
-      'Daniel Montaño Inmobiliaria',
-      'Inmuebles en San José Uruguay',
-    ],
+    keywords: keywordsList,
+    robots: robotsConfig,
     alternates: {
       canonical: canonicalUrl,
       types: {
@@ -453,7 +753,8 @@ export function generatePropertyMetadata(property: Property): Metadata {
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: property.title,
+          alt: mainImage?.altText || property.title,
+          type: imageUrl.endsWith('.webp') ? 'image/webp' : imageUrl.endsWith('.png') ? 'image/png' : 'image/jpeg',
         },
       ],
       locale: 'es_UY',

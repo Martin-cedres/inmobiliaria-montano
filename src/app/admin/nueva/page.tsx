@@ -70,8 +70,11 @@ export default function NuevaPropiedadPage() {
   const [codeRef, setCodeRef] = useState(`MON-${Math.floor(100 + Math.random() * 900)}`);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [slug, setSlug] = useState('');
   const [seoTitle, setSeoTitle] = useState('');
   const [seoDescription, setSeoDescription] = useState('');
+  const [focusKeywords, setFocusKeywords] = useState('');
+  const [noIndex, setNoIndex] = useState<boolean>(false);
   const [images, setImages] = useState<ImageAsset[]>([]);
   const [operation, setOperation] = useState<OperationType>('venta');
   const [category, setCategory] = useState<PropertyCategory>('casa');
@@ -171,7 +174,26 @@ export default function NuevaPropiedadPage() {
     setIsSubmitting(true);
     setSuccessMessage(null);
 
-    const autoSlug = generatePropertySlug(title || `${category} en ${operation} ${neighborhood}`, codeRef);
+    const autoSlug = generatePropertySlug({
+      title: title || `${category} en ${operation} ${neighborhood}`,
+      codeRef,
+      category,
+      operation,
+      neighborhood,
+      address,
+      city: 'San José de Mayo',
+      features: {
+        bedrooms: isLandOrFarm ? undefined : bedrooms,
+        builtAreaM2: isLandOrFarm ? undefined : builtAreaM2,
+        plotAreaM2,
+        isHectares,
+        hectaresAmount,
+      },
+    });
+
+    const finalSlug = slug && slug.trim()
+      ? slug.trim().toLowerCase().replace(/[^a-z0-9-]/g, '-')
+      : autoSlug;
 
     try {
       const response = await fetch('/api/properties', {
@@ -180,7 +202,7 @@ export default function NuevaPropiedadPage() {
         body: JSON.stringify({
           codeRef: codeRef.trim(),
           title: title.trim(),
-          slug: autoSlug,
+          slug: finalSlug,
           description: description.trim(),
           operation,
           category,
@@ -242,6 +264,8 @@ export default function NuevaPropiedadPage() {
           images,
           seoTitle: seoTitle.trim() || undefined,
           seoDescription: seoDescription.trim() || undefined,
+          focusKeywords: focusKeywords.trim() || undefined,
+          noIndex,
           featured: true,
         }),
       });
@@ -1268,6 +1292,13 @@ export default function NuevaPropiedadPage() {
                 setSeoTitle={setSeoTitle}
                 seoDescription={seoDescription}
                 setSeoDescription={setSeoDescription}
+                slug={slug}
+                setSlug={setSlug}
+                focusKeywords={focusKeywords}
+                setFocusKeywords={setFocusKeywords}
+                noIndex={noIndex}
+                setNoIndex={setNoIndex}
+                address={address}
               />
 
               {/* Botones de Navegación & Publicar */}

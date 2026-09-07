@@ -104,6 +104,11 @@ const FAQS: FaqItem[] = [
     answer:
       'Sí. Cada propiedad comercializada por Inmobiliaria Montaño pasa por una rigurosa revisión de títulos de propiedad, padrones, situación contributiva ante la Intendencia de San José y BPS, verificando su aptitud para créditos hipotecarios bancarios (BHU, Santander, Itaú, BBVA, Scotiabank).',
   },
+  {
+    question: '¿Cómo puedo coordinar una visita presencial o una tasación con Daniel Montaño?',
+    answer:
+      'Podés comunicarte de forma directa y sin intermediarios a través de WhatsApp al 092 776 715 o llamando al mismo número. Coordinamos visitas los 7 días de la semana según la disponibilidad de compradores y propietarios en todo el departamento de San José.',
+  },
 ];
 
 export default async function InmobiliariaSanJosePage() {
@@ -115,7 +120,25 @@ export default async function InmobiliariaSanJosePage() {
   const featuredProperties = publicProperties.slice(0, 6);
   const whatsappContactUrl = buildGeneralWhatsAppLink('general');
 
-  const schemaJsonLd = generateSiteGraphSchema();
+  const siteGraph = generateSiteGraphSchema();
+  const schemaJsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      ...siteGraph['@graph'],
+      {
+        '@type': 'FAQPage',
+        '@id': `${PAGE_URL}#faq`,
+        mainEntity: FAQS.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.answer,
+          },
+        })),
+      },
+    ],
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800">

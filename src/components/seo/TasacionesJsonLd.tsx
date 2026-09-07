@@ -42,6 +42,11 @@ export function TasacionesJsonLd({ faqs }: TasacionesJsonLdProps) {
           telephone: '+59892776715',
           email: 'inmobiliariadaniel247@gmail.com',
           url: BASE_URL,
+          hasMap: 'https://share.google/6I1gbffV5ZTS5heXV',
+          sameAs: [
+            'https://share.google/6I1gbffV5ZTS5heXV',
+            'https://wa.me/59892776715',
+          ],
         },
         areaServed: {
           '@type': 'AdministrativeArea',

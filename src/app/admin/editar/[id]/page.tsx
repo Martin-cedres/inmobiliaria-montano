@@ -77,8 +77,12 @@ export default function EditarPropiedadPage() {
   const [codeRef, setCodeRef] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [slug, setSlug] = useState('');
   const [seoTitle, setSeoTitle] = useState('');
   const [seoDescription, setSeoDescription] = useState('');
+  const [focusKeywords, setFocusKeywords] = useState('');
+  const [noIndex, setNoIndex] = useState<boolean>(false);
+  const [previousSlugs, setPreviousSlugs] = useState<string[]>([]);
   const [images, setImages] = useState<ImageAsset[]>([]);
   const [operation, setOperation] = useState<OperationType>('venta');
   const [category, setCategory] = useState<PropertyCategory>('casa');
@@ -265,8 +269,12 @@ export default function EditarPropiedadPage() {
 
           setSelectedGuarantees(p.guarantees || []);
 
+          setSlug(p.slug || '');
           setSeoTitle(p.seoTitle || '');
           setSeoDescription(p.seoDescription || '');
+          setFocusKeywords(p.focusKeywords || '');
+          setNoIndex(Boolean(p.noIndex));
+          setPreviousSlugs(Array.isArray(p.previousSlugs) ? p.previousSlugs : []);
           setLastGoogleNotifiedAt((p as any).lastGoogleNotifiedAt);
           setGoogleIndexingStatus((p as any).googleIndexingStatus || 'pending');
 
@@ -290,7 +298,26 @@ export default function EditarPropiedadPage() {
     setIsSubmitting(true);
     setSuccessMessage(null);
 
-    const autoSlug = generatePropertySlug(title, codeRef);
+    const autoSlug = generatePropertySlug({
+      title: title || `${category} en ${operation} ${neighborhood}`,
+      codeRef,
+      category,
+      operation,
+      neighborhood,
+      address,
+      city: 'San José de Mayo',
+      features: {
+        bedrooms: isLandOrFarm ? undefined : bedrooms,
+        builtAreaM2: isLandOrFarm ? undefined : builtAreaM2,
+        plotAreaM2,
+        isHectares,
+        hectaresAmount,
+      },
+    });
+
+    const finalSlug = slug && slug.trim()
+      ? slug.trim().toLowerCase().replace(/[^a-z0-9-]/g, '-')
+      : autoSlug;
 
     try {
       const response = await fetch(`/api/properties/${propertyId}`, {
@@ -299,7 +326,8 @@ export default function EditarPropiedadPage() {
         body: JSON.stringify({
           codeRef,
           title,
-          slug: autoSlug,
+          slug: finalSlug,
+          previousSlugs,
           description,
           operation,
           category,
@@ -361,6 +389,8 @@ export default function EditarPropiedadPage() {
           images,
           seoTitle: seoTitle.trim() || undefined,
           seoDescription: seoDescription.trim() || undefined,
+          focusKeywords: focusKeywords.trim() || undefined,
+          noIndex,
         }),
       });
 
@@ -1397,6 +1427,13 @@ export default function EditarPropiedadPage() {
                 setSeoTitle={setSeoTitle}
                 seoDescription={seoDescription}
                 setSeoDescription={setSeoDescription}
+                slug={slug}
+                setSlug={setSlug}
+                focusKeywords={focusKeywords}
+                setFocusKeywords={setFocusKeywords}
+                noIndex={noIndex}
+                setNoIndex={setNoIndex}
+                address={address}
                 propertyId={propertyId}
                 googleIndexingStatus={googleIndexingStatus}
                 lastGoogleNotifiedAt={lastGoogleNotifiedAt}

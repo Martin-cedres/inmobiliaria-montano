@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
   );
 
   let content = `# Propiedades en Venta — Inmobiliaria Montaño\n`;
-  content += `> Catálogo exclusivo de inmuebles disponibles para la venta en el Departamento de San José, Uruguay.\n\n`;
+  content += `> Catálogo exclusivo de casas, apartamentos y terrenos disponibles para la venta en San José de Mayo y todo el departamento de San José, Uruguay. Inmuebles verificados aptos para crédito bancario (BHU, Santander, Itaú, BBVA). Atención directa con Daniel Montaño en 25 de Mayo 338, San José de Mayo (WhatsApp: 092 776 715).\n\n`;
   content += `Total de propiedades en venta disponibles: ${saleProperties.length}\n\n`;
 
   for (const p of saleProperties) {

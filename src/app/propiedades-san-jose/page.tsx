@@ -5,6 +5,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
 import { PropertyCard } from '@/components/PropertyCard';
+import { FaqAccordion, FaqItem } from '@/components/ui/FaqAccordion';
 import { DepartmentInterlinking } from '@/components/seo/DepartmentInterlinking';
 import { getAllProperties } from '@/lib/propertiesStore';
 import { SAN_JOSE_LOCATIONS } from '@/data/locations';
@@ -57,13 +58,54 @@ export const metadata: Metadata = {
   },
 };
 
+const FAQS: FaqItem[] = [
+  {
+    question: '¿Qué tipos de inmuebles comercializa Inmobiliaria Montaño en San José?',
+    answer:
+      'Comercializamos casas unifamiliares, apartamentos, terrenos y solares urbanos, chacras productivas y de recreación, locales comerciales, galpones industriales y proyectos modulares en San José de Mayo, Libertad, Ciudad del Plata y todo el interior del departamento.',
+  },
+  {
+    question: '¿Las propiedades publicadas cuentan con títulos y documentación verificada?',
+    answer:
+      'Sí, todas las propiedades cuentan con estudio notarial y catastral previo. Verificamos situación ante la Intendencia de San José, BPS, número de padrón y aptitud para préstamos bancarios e hipotecarios.',
+  },
+  {
+    question: '¿Cómo puedo agendar una visita a cualquiera de los inmuebles?',
+    answer:
+      'Podés comunicarte directamente con Daniel Montaño al WhatsApp 092 776 715 o utilizar el botón de contacto en cada ficha. Coordinamos visitas los 7 días de la semana según la disponibilidad de las partes.',
+  },
+  {
+    question: '¿Qué garantías se solicitan para alquilar una propiedad en San José?',
+    answer:
+      'Aceptamos las principales pólizas de aseguradoras (Porto Seguro, SURA, Mapfre) y convenios de garantía de alquiler como ANDA y Contaduría General de la Nación (CGN).',
+  },
+];
+
 export default async function PropiedadesSanJosePage() {
   const allProperties = await getAllProperties();
   const validProperties = allProperties.filter(
     (p) => p.status !== 'retirada' && p.status !== 'inactiva'
   );
 
-  const schemaJsonLd = generateSiteGraphSchema();
+  const siteGraph = generateSiteGraphSchema();
+  const schemaJsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      ...siteGraph['@graph'],
+      {
+        '@type': 'FAQPage',
+        '@id': `${PAGE_URL}#faq`,
+        mainEntity: FAQS.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.answer,
+          },
+        })),
+      },
+    ],
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800">
@@ -140,6 +182,15 @@ export default async function PropiedadesSanJosePage() {
             <p className="text-xs text-slate-500">Contactanos por WhatsApp para consultar ingresos recientes fuera de catálogo.</p>
           </div>
         )}
+
+        {/* Sección de Preguntas Frecuentes */}
+        <section className="max-w-4xl mx-auto w-full pt-6 pb-2 text-left">
+          <FaqAccordion
+            items={FAQS}
+            title="Preguntas Frecuentes sobre Inmuebles en San José"
+            subtitle="Información clave sobre operaciones de compra, alquiler, documentación y garantías en el departamento."
+          />
+        </section>
 
         {/* Interlinking Semántico Contextual */}
         <DepartmentInterlinking currentPath={PAGE_URL} />

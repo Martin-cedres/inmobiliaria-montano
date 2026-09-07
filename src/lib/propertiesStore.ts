@@ -89,6 +89,9 @@ async function ensureTablesExist(sql: any) {
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS coneat_index INT;`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS seo_title TEXT;`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS seo_description TEXT;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS previous_slugs JSONB DEFAULT '[]'::jsonb;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS focus_keywords TEXT;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS no_index BOOLEAN DEFAULT FALSE;`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS views_count INT DEFAULT 0;`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS whatsapp_clicks_count INT DEFAULT 0;`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS last_google_notified_at TIMESTAMP WITH TIME ZONE;`;
@@ -212,6 +215,9 @@ export async function getAllProperties(): Promise<Property[]> {
             images: Array.isArray(row.images) ? row.images : [],
             seoTitle: row.seo_title || undefined,
             seoDescription: row.seo_description || undefined,
+            focusKeywords: row.focus_keywords || undefined,
+            noIndex: Boolean(row.no_index),
+            previousSlugs: Array.isArray(row.previous_slugs) ? row.previous_slugs : [],
             viewsCount: Number(row.views_count || 0),
             whatsappClicksCount: Number(row.whatsapp_clicks_count || 0),
             sharesCount: Number(row.shares_count || 0),
@@ -326,7 +332,7 @@ export async function saveProperty(property: Property): Promise<Property> {
           water_well_or_pond, titles_up_to_date, accepts_trade_in, security_system, paved_street, shed_or_corral, coneat_index,
           is_hectares, hectares_amount, fractionable, min_fraction_m2, fraction_notes, route_frontage, price_per_m2, price_unit_type, soil_topography, gated_perimeter,
           cadastral_number, property_tax_up_to_date, primary_tax_up_to_date,
-          guarantees, images, seo_title, seo_description, featured
+          guarantees, images, seo_title, seo_description, previous_slugs, focus_keywords, no_index, featured
         ) VALUES (
           ${property.id}, ${property.codeRef}, ${property.title}, ${property.slug}, ${property.description}, ${property.operation}, ${property.category}, ${property.status},
           ${property.price.amount}, ${property.price.currency}, ${property.price.period || null}, ${property.price.priceDrop || false}, ${property.price.originalAmount || null}, ${property.price.priceMode || 'visible'},
@@ -338,7 +344,7 @@ export async function saveProperty(property: Property): Promise<Property> {
           ${property.features.waterWellOrPond || false}, ${property.features.titlesUpToDate || false}, ${property.features.acceptsTradeIn || false}, ${property.features.securitySystem || false}, ${property.features.pavedStreet || false}, ${property.features.shedOrCorral || false}, ${property.features.coneatIndex || null},
           ${property.features.isHectares || false}, ${property.features.hectaresAmount || null}, ${property.features.fractionable || false}, ${property.features.minFractionM2 || null}, ${property.features.fractionNotes || null}, ${property.features.routeFrontage || null}, ${property.features.pricePerM2 || null}, ${property.features.priceUnitType || 'm²'}, ${property.features.soilTopography || null}, ${property.features.gatedPerimeter || false},
           ${property.features.cadastralNumber || null}, ${property.features.propertyTaxUpToDate ?? true}, ${property.features.primaryTaxUpToDate ?? true},
-          ${JSON.stringify(property.guarantees || [])}, ${JSON.stringify(property.images || [])}, ${property.seoTitle || null}, ${property.seoDescription || null}, ${property.featured}
+          ${JSON.stringify(property.guarantees || [])}, ${JSON.stringify(property.images || [])}, ${property.seoTitle || null}, ${property.seoDescription || null}, ${JSON.stringify(property.previousSlugs || [])}, ${property.focusKeywords || null}, ${property.noIndex ?? false}, ${property.featured}
         ) ON CONFLICT (id) DO UPDATE SET
           code_ref = EXCLUDED.code_ref,
           title = EXCLUDED.title,
@@ -413,6 +419,9 @@ export async function saveProperty(property: Property): Promise<Property> {
           images = EXCLUDED.images,
           seo_title = EXCLUDED.seo_title,
           seo_description = EXCLUDED.seo_description,
+          previous_slugs = EXCLUDED.previous_slugs,
+          focus_keywords = EXCLUDED.focus_keywords,
+          no_index = EXCLUDED.no_index,
           featured = EXCLUDED.featured,
           updated_at = CURRENT_TIMESTAMP;
       `;
@@ -427,7 +436,26 @@ export async function saveProperty(property: Property): Promise<Property> {
   const existingIndex = properties.findIndex((p) => p.id === property.id);
 
   if (existingIndex >= 0) {
-    properties[existingIndex] = { ...properties[existingIndex], ...property, updatedAt: new Date().toISOString() };
+    const prev = properties[existingIndex];
+    let prevSlugs = Array.isArray(property.previousSlugs)
+      ? [...property.previousSlugs]
+      : (Array.isArray(prev.previousSlugs) ? [...prev.previousSlugs] : []);
+
+    // Si el slug cambió, registrar el slug anterior en previousSlugs
+    if (prev.slug && property.slug && prev.slug !== property.slug) {
+      if (!prevSlugs.includes(prev.slug)) {
+        prevSlugs.push(prev.slug);
+      }
+    }
+    // Evitar autorreferencia circular
+    prevSlugs = prevSlugs.filter((s) => s !== property.slug);
+
+    properties[existingIndex] = {
+      ...prev,
+      ...property,
+      previousSlugs: prevSlugs,
+      updatedAt: new Date().toISOString(),
+    };
   } else {
     properties.unshift(property);
   }
@@ -440,7 +468,46 @@ export async function saveProperty(property: Property): Promise<Property> {
     console.warn('Ignorando escritura en disco en entorno serverless read-only:', err);
   }
 
-  return property;
+  return properties[existingIndex >= 0 ? existingIndex : 0];
+}
+
+/**
+ * Busca una propiedad por su slug canónico actual, en su historial de previousSlugs,
+ * o por su identificador único / código de referencia al final de la URL.
+ */
+export async function findPropertyBySlugOrPrevious(slug: string): Promise<{ property: Property; isPrevious: boolean } | null> {
+  const all = await getAllProperties();
+  const cleanRequested = (slug || '').toLowerCase().trim();
+
+  // 1. Coincidencia directa con slug actual
+  const direct = all.find((p) => (p.slug || '').toLowerCase() === cleanRequested);
+  if (direct) {
+    return { property: direct, isPrevious: false };
+  }
+
+  // 2. Coincidencia en historial de previousSlugs
+  const byPrevious = all.find((p) =>
+    p.previousSlugs?.some((s) => (s || '').toLowerCase() === cleanRequested)
+  );
+  if (byPrevious) {
+    return { property: byPrevious, isPrevious: true };
+  }
+
+  // 3. Coincidencia por ID o código de referencia al final del slug (ej. -mon955 o -1788748093952)
+  const idMatch = cleanRequested.match(/-([a-z0-9]+)$/i);
+  if (idMatch) {
+    const refSuffix = idMatch[1].toLowerCase();
+    const candidate = all.find((p) => {
+      const cleanRef = (p.codeRef || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+      const cleanId = (p.id || '').toLowerCase();
+      return cleanRef === refSuffix || cleanId === refSuffix || cleanRef.endsWith(refSuffix);
+    });
+    if (candidate) {
+      return { property: candidate, isPrevious: true };
+    }
+  }
+
+  return null;
 }
 
 /**

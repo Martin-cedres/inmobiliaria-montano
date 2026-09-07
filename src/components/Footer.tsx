@@ -53,14 +53,14 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
             </p>
 
             <a
-              href="https://maps.google.com/?q=San+Jos%C3%A9+de+Mayo,+Uruguay"
+              href="https://share.google/6I1gbffV5ZTS5heXV"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center space-x-1.5 text-xs text-slate-200 hover:text-[#E85D04] font-bold transition-colors pt-1 group"
-              title="Abrir ubicación en Google Maps"
+              title="Ver ficha oficial y opiniones en Google Maps"
             >
               <MapPin className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
-              <span>San José de Mayo, Uruguay</span>
+              <span>San José de Mayo, Uruguay — Ver en Google Maps</span>
             </a>
           </div>
 
@@ -210,16 +210,16 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
 
               {/* Ubicación Interactiva Google Maps */}
               <a
-                href="https://maps.google.com/?q=San+Jos%C3%A9+de+Mayo,+Uruguay"
+                href="https://share.google/6I1gbffV5ZTS5heXV"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center space-x-2.5 text-slate-200 hover:text-[#E85D04] transition-colors font-semibold group"
-                title="Abrir ubicación en Google Maps"
+                title="Ver ubicación, teléfono y opiniones en Google Maps"
               >
                 <span className="p-1.5 rounded-lg bg-purple-500/20 text-purple-300 group-hover:bg-[#E85D04] group-hover:text-white transition-colors">
                   <MapPin className="w-4 h-4" />
                 </span>
-                <span>San José de Mayo, Uruguay</span>
+                <span>Google Maps: Inmobiliaria Montaño</span>
               </a>
             </div>
           </div>

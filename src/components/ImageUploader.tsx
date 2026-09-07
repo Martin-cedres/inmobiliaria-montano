@@ -160,6 +160,16 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
     onChange(updated);
   };
 
+  // Actualizar texto alternativo (altText) para SEO y accesibilidad
+  const updateAltText = (index: number, newAlt: string) => {
+    const updated = [...images];
+    updated[index] = {
+      ...updated[index],
+      altText: newAlt,
+    };
+    onChange(updated);
+  };
+
   return (
     <div className="space-y-4">
       {/* Banner de Mensaje de Error */}
@@ -264,90 +274,110 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
             Galería & Foto Principal (Tocá ⭐ para elegir portada)
           </label>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             {images.map((img, idx) => {
               const url = img.webpUrl || img.blobUrl;
+              const defaultAlt = `${propertyTitle} - Inmobiliaria Montaño - Foto ${idx + 1}`;
               return (
                 <div
                   key={img.id || idx}
-                  className={`relative group rounded-xl overflow-hidden border-2 transition-all aspect-[4/3] ${
+                  className={`flex flex-col bg-white rounded-xl overflow-hidden border transition-all ${
                     img.isMain
                       ? 'border-[#E85D04] shadow-md ring-2 ring-[#E85D04]/30'
-                      : 'border-slate-200 hover:border-slate-400'
+                      : 'border-slate-200 hover:border-slate-300 shadow-2xs'
                   }`}
                 >
-                  <img
-                    src={url}
-                    alt={img.altText || 'Foto'}
-                    className="w-full h-full object-cover"
-                  />
+                  <div className="relative group aspect-[4/3] bg-slate-100 overflow-hidden">
+                    <img
+                      src={url}
+                      alt={img.altText || defaultAlt}
+                      className="w-full h-full object-cover"
+                    />
 
-                  {/* Overlay en Hover con Acciones */}
-                  <div className="absolute inset-0 bg-slate-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-2">
-                    
-                    {/* Top Row: Botón Estrella Portada */}
-                    <div className="flex justify-between items-center">
-                      <button
-                        type="button"
-                        onClick={() => setMainCover(idx)}
-                        title={img.isMain ? 'Foto de Portada Actual' : 'Marcar como Portada Principal'}
-                        className={`p-1.5 rounded-lg text-xs font-bold transition-colors flex items-center space-x-1 ${
-                          img.isMain
-                            ? 'bg-[#E85D04] text-white'
-                            : 'bg-white/80 hover:bg-white text-slate-800'
-                        }`}
-                      >
-                        <Star className={`w-3.5 h-3.5 ${img.isMain ? 'fill-white' : ''}`} />
-                        <span>{img.isMain ? 'Portada' : 'Elegir'}</span>
-                      </button>
+                    {/* Overlay en Hover con Acciones */}
+                    <div className="absolute inset-0 bg-slate-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-2">
+                      
+                      {/* Top Row: Botón Estrella Portada */}
+                      <div className="flex justify-between items-center">
+                        <button
+                          type="button"
+                          onClick={() => setMainCover(idx)}
+                          title={img.isMain ? 'Foto de Portada Actual' : 'Marcar como Portada Principal'}
+                          className={`p-1.5 rounded-lg text-xs font-bold transition-colors flex items-center space-x-1 ${
+                            img.isMain
+                              ? 'bg-[#E85D04] text-white'
+                              : 'bg-white/80 hover:bg-white text-slate-800'
+                          }`}
+                        >
+                          <Star className={`w-3.5 h-3.5 ${img.isMain ? 'fill-white' : ''}`} />
+                          <span>{img.isMain ? 'Portada' : 'Elegir'}</span>
+                        </button>
 
-                      {/* Botón Eliminar */}
-                      <button
-                        type="button"
-                        onClick={() => removeImage(idx)}
-                        title="Eliminar foto"
-                        className="bg-red-600/80 hover:bg-red-600 text-white p-1.5 rounded-lg transition-colors"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
+                        {/* Botón Eliminar */}
+                        <button
+                          type="button"
+                          onClick={() => removeImage(idx)}
+                          title="Eliminar foto"
+                          className="bg-red-600/80 hover:bg-red-600 text-white p-1.5 rounded-lg transition-colors"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+
+                      {/* Bottom Row: Botones de Reordenamiento (Flechas) */}
+                      <div className="flex justify-between items-center">
+                        <button
+                          type="button"
+                          disabled={idx === 0}
+                          onClick={() => moveLeft(idx)}
+                          title="Mover a la izquierda"
+                          className="bg-white/80 hover:bg-white text-slate-800 p-1 rounded-md disabled:opacity-30 disabled:cursor-not-allowed"
+                        >
+                          <ArrowLeft className="w-3.5 h-3.5" />
+                        </button>
+
+                        <span className="text-[10px] font-bold text-white bg-slate-800/80 px-1.5 py-0.5 rounded">
+                          #{idx + 1}
+                        </span>
+
+                        <button
+                          type="button"
+                          disabled={idx === images.length - 1}
+                          onClick={() => moveRight(idx)}
+                          title="Mover a la derecha"
+                          className="bg-white/80 hover:bg-white text-slate-800 p-1 rounded-md disabled:opacity-30 disabled:cursor-not-allowed"
+                        >
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+
                     </div>
 
-                    {/* Bottom Row: Botones de Reordenamiento (Flechas) */}
-                    <div className="flex justify-between items-center">
-                      <button
-                        type="button"
-                        disabled={idx === 0}
-                        onClick={() => moveLeft(idx)}
-                        title="Mover a la izquierda"
-                        className="bg-white/80 hover:bg-white text-slate-800 p-1 rounded-md disabled:opacity-30 disabled:cursor-not-allowed"
-                      >
-                        <ArrowLeft className="w-3.5 h-3.5" />
-                      </button>
-
-                      <span className="text-[10px] font-bold text-white bg-slate-800/80 px-1.5 py-0.5 rounded">
-                        #{idx + 1}
-                      </span>
-
-                      <button
-                        type="button"
-                        disabled={idx === images.length - 1}
-                        onClick={() => moveRight(idx)}
-                        title="Mover a la derecha"
-                        className="bg-white/80 hover:bg-white text-slate-800 p-1 rounded-md disabled:opacity-30 disabled:cursor-not-allowed"
-                      >
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-
+                    {/* Badge Fijo de Portada Principal si aplica */}
+                    {img.isMain && (
+                      <div className="absolute top-2 left-2 bg-[#E85D04] text-white text-[10px] font-black px-2 py-0.5 rounded-md shadow flex items-center space-x-1 pointer-events-none">
+                        <Star className="w-3 h-3 fill-white" />
+                        <span>PORTADA</span>
+                      </div>
+                    )}
                   </div>
 
-                  {/* Badge Fijo de Portada Principal si aplica */}
-                  {img.isMain && (
-                    <div className="absolute top-2 left-2 bg-[#E85D04] text-white text-[10px] font-black px-2 py-0.5 rounded-md shadow flex items-center space-x-1 pointer-events-none">
-                      <Star className="w-3 h-3 fill-white" />
-                      <span>PORTADA</span>
-                    </div>
-                  )}
+                  {/* Campo de Texto Alternativo Alt (SEO y Accesibilidad) */}
+                  <div className="p-2 bg-slate-50 border-t border-slate-100 flex flex-col space-y-1 text-left">
+                    <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider flex items-center justify-between">
+                      <span>Texto Alt (SEO):</span>
+                      <span className="text-[9px] text-slate-400 font-normal">Google Imágenes</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={img.altText ?? ''}
+                      onChange={(e) => updateAltText(idx, e.target.value)}
+                      placeholder={defaultAlt}
+                      title="Texto alternativo descriptivo para Google Imágenes y lectores de pantalla"
+                      className="w-full text-xs bg-white border border-slate-200 rounded-md px-2 py-1 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-[#5E1754]"
+                    />
+                  </div>
+
                 </div>
               );
             })}

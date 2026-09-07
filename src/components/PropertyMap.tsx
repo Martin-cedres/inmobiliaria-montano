@@ -5,6 +5,7 @@ import { MapContainer, TileLayer, Marker, Circle, Popup, ZoomControl } from 'rea
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Layers, MapPin, Navigation, ShieldCheck, Eye } from 'lucide-react';
+import { MAP_TILE_LAYERS } from '@/lib/mapConfig';
 
 interface PropertyMapProps {
   lat: number;
@@ -62,14 +63,8 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
   const [mapType, setMapType] = useState<'vector' | 'satellite'>('vector');
 
   const tileLayers = {
-    vector: {
-      url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    },
-    satellite: {
-      url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-      attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
-    },
+    vector: MAP_TILE_LAYERS.street,
+    satellite: MAP_TILE_LAYERS.satellite,
   };
 
   const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
@@ -148,9 +143,9 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
           />
           {mapType === 'satellite' && (
             <TileLayer
-              attribution='&copy; CARTO'
-              url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png"
-              maxZoom={19}
+              attribution={MAP_TILE_LAYERS.satelliteLabels.attribution}
+              url={MAP_TILE_LAYERS.satelliteLabels.url}
+              maxZoom={MAP_TILE_LAYERS.satelliteLabels.maxZoom}
               opacity={0.9}
             />
           )}
