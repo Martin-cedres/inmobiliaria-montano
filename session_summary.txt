@@ -809,3 +809,9 @@
              - `npx tsc --noEmit` ejecutado con 0 errores.
              - Servidor local activo en `http://localhost:3000`.
              - Sin `git push` ni despliegues a producción respetando la directiva explícita.
+
+       17. **Diagnostico de Fotografias, Correccion de Hidratacion y Despliegue a GitHub:**
+           - **Causa Raiz de Imagenes con Logo:** Se detecto una falla momentanea de resolucion DNS local contra Vercel Blob (curl: (6) Could not resolve host: iwnrsnsinadum7mb.public.blob.vercel-storage.com). Al fallar la red local del cliente, las etiquetas de imagen dispararon onError mostrando el logo de respaldo. La resolucion DNS se restablecio y todas las 20 propiedades conservan sus URLs validas e intactas en Vercel Blob (HTTP 200).
+           - **Correccion de Hidratacion HTML en PropertyCard:** Se corrigio el anidamiento invalido de enlaces (<a> dentro de <Link>) en los botones de Consultar Precio y Precio Reservado, reemplazandolos por botones semanticos con parada de propagacion y apertura de WhatsApp.
+           - **Verificacion de Build:** Compilacion de produccion con npm run build completada con 100% de exito (75 rutas estaticas/dinamicas, 0 errores).
+           - **Despliegue a GitHub:** Cambios commiteados y subidos a origin/main (Commit 58a8da1) bajo solicitud expresa del usuario.
