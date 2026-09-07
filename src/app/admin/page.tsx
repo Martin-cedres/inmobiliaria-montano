@@ -20,6 +20,7 @@ export default function AdminDashboardPage() {
   const [properties, setProperties] = useState<Property[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isRevalidating, setIsRevalidating] = useState<boolean>(false);
+  const [isMigratingSlugs, setIsMigratingSlugs] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [statusFilter, setStatusFilter] = useState<'todos' | 'venta' | 'alquiler' | 'disponible' | 'reservado' | 'vendido'>('todos');
   const [categoryFilter, setCategoryFilter] = useState<string>('todos');
@@ -57,6 +58,27 @@ export default function AdminDashboardPage() {
       showToast('Error de red al revalidar caché');
     } finally {
       setIsRevalidating(false);
+    }
+  };
+
+  const handleMigrateSlugs = async () => {
+    if (!confirm('¿Deseas normalizar y actualizar todos los slugs SEO en la base de datos de producción? Los enlaces antiguos seguirán funcionando con redirección 301/308.')) {
+      return;
+    }
+    setIsMigratingSlugs(true);
+    try {
+      const response = await fetch('/api/admin/migrate-slugs', { method: 'POST' });
+      const data = await response.json();
+      if (data.success) {
+        showToast(`✅ ${data.message}`);
+        fetchProperties();
+      } else {
+        showToast(data.error || 'Error al migrar slugs');
+      }
+    } catch {
+      showToast('Error de red al sincronizar slugs');
+    } finally {
+      setIsMigratingSlugs(false);
     }
   };
 
@@ -377,6 +399,14 @@ ${link}`;
           </div>
 
           <div className="flex items-center space-x-3 w-full sm:w-auto">
+            <button
+              onClick={handleMigrateSlugs}
+              disabled={isMigratingSlugs}
+              className="p-3 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200/60 rounded-full transition-all flex items-center justify-center cursor-pointer"
+              title="Normalizar y Sincronizar Slugs SEO en Base de Datos"
+            >
+              <Tag className={`w-4 h-4 text-amber-700 ${isMigratingSlugs ? 'animate-spin text-amber-500' : ''}`} />
+            </button>
             <button
               onClick={handleRevalidateCache}
               disabled={isRevalidating}

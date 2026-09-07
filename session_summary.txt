@@ -815,3 +815,9 @@
            - **Correccion de Hidratacion HTML en PropertyCard:** Se corrigio el anidamiento invalido de enlaces (<a> dentro de <Link>) en los botones de Consultar Precio y Precio Reservado, reemplazandolos por botones semanticos con parada de propagacion y apertura de WhatsApp.
            - **Verificacion de Build:** Compilacion de produccion con npm run build completada con 100% de exito (75 rutas estaticas/dinamicas, 0 errores).
            - **Despliegue a GitHub:** Cambios commiteados y subidos a origin/main (Commit 58a8da1) bajo solicitud expresa del usuario.
+
+       18. **Endpoint de Sincronizacion de Slugs en Neon Postgres y Control Admin:**
+           - **Diagnostico de Produccion vs Local:** En local se lee properties.json (migrado), mientras que en produccion (Vercel) el sistema se conecta a la base de datos Neon PostgreSQL (DATABASE_URL), la cual contenia los slugs anteriores y el cache perimetral ISR de 24 horas.
+           - **Endpoint Automatizado (/api/admin/migrate-slugs):** Creado endpoint que recorre todas las propiedades de Neon Postgres, genera los nuevos slugs canonicos, archiva los viejos en previous_slugs, persiste en Postgres y purga el cache perimetral (revalidateTag, revalidatePath).
+           - **Boton Visual en Panel Admin:** Integrado boton interactivo en /admin para ejecutar la normalizacion en 1-clic.
+           - **Soporte de Webhook:** Permite ejecucion con clave secreta (?secret=montano_revalidate_secret_2026) permitida en middleware.

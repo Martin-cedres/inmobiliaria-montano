@@ -11,7 +11,8 @@ export async function middleware(request: NextRequest) {
     pathname.startsWith('/api/auth') ||
     pathname === '/login' ||
     pathname.startsWith('/_next') ||
-    pathname.startsWith('/favicon')
+    pathname.startsWith('/favicon') ||
+    request.nextUrl.searchParams.get('secret') === (process.env.REVALIDATE_SECRET_TOKEN || 'montano_revalidate_secret_2026')
   ) {
     return NextResponse.next();
   }
