@@ -25,11 +25,14 @@ export const HeroSearch: React.FC = () => {
         {/* Titular Principal Institucional */}
         <div className="space-y-3">
           <span className="inline-flex items-center space-x-2 bg-amber-400/10 text-amber-300 border border-amber-400/20 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider">
-            <span>Inmobiliaria Montaño • San José de Mayo</span>
+            <span>Inmobiliaria Montaño • Daniel Montaño</span>
           </span>
 
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
-            Tu próxima propiedad <span className="text-amber-300">te está esperando.</span>
+            Inmobiliaria en San José de Mayo
+            <span className="block text-xl sm:text-3xl lg:text-4xl font-extrabold text-amber-300 mt-2 sm:mt-3">
+              Tu próxima propiedad te está esperando
+            </span>
           </h1>
 
           <p className="text-slate-200 text-sm sm:text-lg max-w-2xl mx-auto font-normal leading-relaxed">
@@ -52,7 +55,7 @@ export const HeroSearch: React.FC = () => {
           <a
             href={whatsappUrl}
             target="_blank"
-            rel="noopener noreferrer"
+            rel="nofollow noopener noreferrer"
             className="inline-flex items-center justify-center space-x-2 bg-white/10 hover:bg-white/20 active:scale-95 text-white font-bold px-4 sm:px-6 py-3 sm:py-3.5 rounded-xl sm:rounded-full backdrop-blur-md border border-white/20 transition-all text-xs sm:text-sm flex-shrink-0"
           >
             <WhatsAppIcon className="w-4 h-4 text-white" />

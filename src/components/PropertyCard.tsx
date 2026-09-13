@@ -122,7 +122,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
       }`}
     >
       {/* Clickable Card Area linking to /propiedad/[slug] */}
-      <Link href={`/propiedad/${property.slug}`} className="flex flex-col flex-1 text-left cursor-pointer group/link">
+      <Link href={`/propiedad/${property.slug}`} aria-label={property.title} className="flex flex-col flex-1 text-left cursor-pointer group/link">
         
         {/* Aspect Ratio 4:3 Image Container */}
         <div className="relative aspect-[4/3] bg-slate-100 overflow-hidden">
@@ -226,9 +226,9 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
             </div>
 
             {/* Title */}
-            <h3 className="font-bold text-slate-900 text-sm sm:text-base leading-snug line-clamp-2 min-h-[2.75rem] flex items-center group-hover/link:text-[#5e1754] transition-colors">
+            <p className="font-bold text-slate-900 text-sm sm:text-base leading-snug line-clamp-2 min-h-[2.75rem] flex items-center group-hover/link:text-[#5e1754] transition-colors">
               {property.title}
-            </h3>
+            </p>
 
             {/* Compact Primary Features Bar */}
             {(() => {
@@ -344,7 +344,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
         <a
           href={whatsappUrl}
           target="_blank"
-          rel="noopener noreferrer"
+          rel="nofollow noopener noreferrer"
           className="w-full bg-[#e85d04] hover:bg-[#ff7518] active:scale-98 text-white py-2.5 px-4 rounded-xl font-extrabold text-xs sm:text-sm shadow-xs flex items-center justify-center space-x-2 transition-all hover:shadow-orange-500/20"
         >
           <WhatsAppIcon className="w-4 h-4 text-white" />

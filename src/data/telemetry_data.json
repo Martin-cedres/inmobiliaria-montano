@@ -341,6 +341,48 @@
       "eventType": "property_view",
       "pagePath": "/",
       "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1789291552458_txy30a",
+      "timestamp": "2026-09-13T09:25:52.458Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1789291552496_7nsftk",
+      "timestamp": "2026-09-13T09:25:52.496Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1789292041914_kqa66r",
+      "timestamp": "2026-09-13T09:34:01.914Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1789292042005_evsrvc",
+      "timestamp": "2026-09-13T09:34:02.005Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1789292097165_3xvoyy",
+      "timestamp": "2026-09-13T09:34:57.165Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1789292097241_8es2fx",
+      "timestamp": "2026-09-13T09:34:57.241Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
     }
   ],
   "seoRecords": [

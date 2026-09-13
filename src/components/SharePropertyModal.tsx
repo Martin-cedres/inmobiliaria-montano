@@ -54,9 +54,9 @@ export const SharePropertyModal: React.FC<SharePropertyModalProps> = ({
 
   const priceLine = hasValidPrice ? `💰 *Precio:* ${formattedPrice}\n` : '';
 
-  // Redacción comercial optimizada con foto y tarjeta rica en WhatsApp
-  const shareText = `🏡 Mirá esta propiedad ${operationText} en Inmobiliaria Montaño:\n\n*${property.title}*\n${priceLine}📍 *Ubicación:* ${property.location.neighborhood}, ${property.location.city}\n🔖 *Ref:* #${property.codeRef}\n\n🔗 *Ver fotos y detalles:* ${prodShareUrl}`;
-
+  // Al compartir se envía únicamente la URL canónica.
+  // Las plataformas sociales (WhatsApp, Facebook, etc.) usan sus bots OpenGraph
+  // para desplegar automáticamente la tarjeta con la foto grande del inmueble y el link.
   const handleShareClick = (e?: React.MouseEvent) => {
     if (e) {
       e.preventDefault();
@@ -84,7 +84,7 @@ export const SharePropertyModal: React.FC<SharePropertyModalProps> = ({
 
   const handleInstagramShare = async () => {
     try {
-      await navigator.clipboard.writeText(shareText);
+      await navigator.clipboard.writeText(prodShareUrl);
     } catch {
       // Ignore copy error
     }
@@ -95,9 +95,9 @@ export const SharePropertyModal: React.FC<SharePropertyModalProps> = ({
     }, 1800);
   };
 
-  const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
+  const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(prodShareUrl)}`;
   const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(prodShareUrl)}`;
-  const emailUrl = `mailto:?subject=${encodeURIComponent(`Inmobiliaria Montaño Ref #${property.codeRef}: ${property.title}`)}&body=${encodeURIComponent(shareText)}`;
+  const emailUrl = `mailto:?subject=${encodeURIComponent(`Inmobiliaria Montaño: ${property.title}`)}&body=${encodeURIComponent(prodShareUrl)}`;
 
   const handlePrint = () => {
     if (typeof window !== 'undefined') {
@@ -178,10 +178,25 @@ export const SharePropertyModal: React.FC<SharePropertyModalProps> = ({
               </button>
             </div>
 
-            {/* Fila Informativa Breve (Sin tapar la pantalla) */}
-            <div className="px-5 py-2 bg-slate-50 border-b border-slate-100 flex items-center justify-between gap-2 text-xs flex-shrink-0">
-              <span className="font-bold text-slate-700 truncate">{property.title}</span>
-              <span className="font-black text-[#5E1754] flex-shrink-0">{formattedPrice}</span>
+            {/* Vista previa de lo que se comparte: Foto principal + Título + Enlace */}
+            <div className="px-4 py-3 bg-slate-50 border-b border-slate-100 flex items-center gap-3 flex-shrink-0">
+              <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-slate-200 border border-slate-200 flex-shrink-0">
+                <img
+                  src={photoUrl}
+                  alt={property.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-[10px] font-extrabold uppercase text-[#E85D04] tracking-wider">
+                    Enlace & Foto HD
+                  </span>
+                  <span className="font-black text-xs text-[#5E1754]">{formattedPrice}</span>
+                </div>
+                <p className="font-bold text-xs text-slate-800 truncate leading-tight mt-0.5">{property.title}</p>
+                <p className="text-[10px] text-slate-400 font-mono truncate mt-0.5">{prodShareUrl}</p>
+              </div>
             </div>
 
             {/* Notificaciones Breves de Confirmación */}
@@ -195,7 +210,7 @@ export const SharePropertyModal: React.FC<SharePropertyModalProps> = ({
             {instagramToast && (
               <div className="bg-purple-50 border-b border-purple-200 text-purple-900 px-4 py-2 text-[11px] font-bold flex items-center justify-center space-x-1.5 animate-in fade-in">
                 <Sparkles className="w-3.5 h-3.5 text-pink-600 flex-shrink-0" />
-                <span>¡Texto copiado! Abriendo Instagram...</span>
+                <span>¡Enlace copiado! Abriendo Instagram...</span>
               </div>
             )}
 

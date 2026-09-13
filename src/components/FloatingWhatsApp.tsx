@@ -33,7 +33,7 @@ export const FloatingWhatsApp: React.FC = () => {
     <a
       href={whatsappUrl}
       target="_blank"
-      rel="noopener noreferrer"
+      rel="nofollow noopener noreferrer"
       aria-label="Contactar por WhatsApp"
       onClick={handleClick}
       className={`group fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-50 bg-[#25D366] hover:bg-[#20bd5a] active:scale-95 text-white p-3.5 sm:p-4 rounded-full shadow-2xl flex items-center border-2 border-white/90 transition-all duration-300 transform ${

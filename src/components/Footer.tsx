@@ -55,7 +55,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
             <a
               href="https://share.google/6I1gbffV5ZTS5heXV"
               target="_blank"
-              rel="noopener noreferrer"
+              rel="nofollow noopener noreferrer"
               className="inline-flex items-center space-x-1.5 text-xs text-slate-200 hover:text-[#E85D04] font-bold transition-colors pt-1 group"
               title="Ver ficha oficial y opiniones en Google Maps"
             >
@@ -169,7 +169,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
                 <a
                   href={notarialWhatsappUrl}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="nofollow noopener noreferrer"
                   className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
                 >
                   <ShieldCheck className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
@@ -187,7 +187,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
               <a
                 href={generalWhatsappUrl}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="nofollow noopener noreferrer"
                 className="flex items-center space-x-2.5 text-slate-200 hover:text-[#E85D04] transition-colors font-bold group"
               >
                 <span className="p-1.5 rounded-lg bg-purple-500/20 text-purple-300 group-hover:bg-[#E85D04] group-hover:text-white transition-colors">
@@ -212,7 +212,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
               <a
                 href="https://share.google/6I1gbffV5ZTS5heXV"
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="nofollow noopener noreferrer"
                 className="flex items-center space-x-2.5 text-slate-200 hover:text-[#E85D04] transition-colors font-semibold group"
                 title="Ver ubicación, teléfono y opiniones en Google Maps"
               >
@@ -244,7 +244,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
             <a
               href="https://wa.me/59891090705?text=Hola,%20vi%20la%20web%20de%20Inmobiliaria%20Monta%C3%B1o,%20me%20interesa%20desarrollar%20un%20proyecto%20web%20a%20medida"
               target="_blank"
-              rel="noopener noreferrer"
+              rel="nofollow noopener noreferrer"
               className="text-[#E85D04] font-bold hover:underline hover:text-amber-400 transition-colors ml-1"
             >
               Consultá por WhatsApp

@@ -59,6 +59,7 @@ export const Header: React.FC = () => {
             <Link
               href="/?view=map#catalogo"
               onClick={handleMapClick}
+              rel="nofollow"
               className="hover:text-[#5e1754] transition-colors relative py-1.5 flex items-center gap-1.5 text-slate-700 font-bold after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#e85d04] hover:after:w-full after:transition-all duration-300"
             >
               <Compass className="w-4 h-4 text-[#E85D04]" />
@@ -116,6 +117,7 @@ export const Header: React.FC = () => {
           <Link
             href="/?view=map#catalogo"
             onClick={handleMapClick}
+            rel="nofollow"
             className="flex items-center space-x-3 p-3 rounded-xl hover:bg-orange-50 text-slate-800 font-bold text-sm group transition-colors"
           >
             <Compass className="w-5 h-5 text-[#E85D04] group-hover:rotate-45 transition-transform" />

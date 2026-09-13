@@ -24,11 +24,11 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: "Inmobiliaria Montaño — San José de Mayo | Casas, Alquileres & Tasaciones",
-    template: "%s | Inmobiliaria Montaño — San José de Mayo",
+    default: "Inmobiliaria Montaño | Casas y Alquileres en San José",
+    template: "%s | Inmobiliaria Montaño",
   },
   description:
-    "Portal inmobiliario de referencia en San José de Mayo, Uruguay. Venta de casas, alquileres garantizados, terrenos, chacras y tasaciones oficiales con Daniel Montaño.",
+    "Inmobiliaria en San José de Mayo. Venta de casas, alquileres, terrenos y tasaciones oficiales con Daniel Montaño. Encontrá tu propiedad ideal.",
   keywords: [
     "inmobiliaria san jose de mayo",
     "inmobiliarias en san jose",
@@ -82,9 +82,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Inmobiliaria Montaño — San José de Mayo",
+    title: "Inmobiliaria Montaño | Casas y Alquileres en San José",
     description:
-      "Venta de casas, alquileres garantizados, terrenos, chacras y tasaciones profesionales en San José de Mayo. Atención personalizada con Daniel Montaño.",
+      "Inmobiliaria en San José de Mayo. Venta de casas, alquileres, terrenos y tasaciones oficiales con Daniel Montaño. Encontrá tu propiedad ideal.",
     url: BASE_URL,
     siteName: "Inmobiliaria Montaño",
     locale: "es_UY",
@@ -100,9 +100,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Inmobiliaria Montaño — San José de Mayo",
+    title: "Inmobiliaria Montaño | Casas y Alquileres en San José",
     description:
-      "Venta de casas, alquileres garantizados, terrenos, chacras y tasaciones profesionales en San José de Mayo.",
+      "Inmobiliaria en San José de Mayo. Venta de casas, alquileres, terrenos y tasaciones oficiales con Daniel Montaño.",
     images: [`${BASE_URL}/og-logo.png`],
   },
   other: {

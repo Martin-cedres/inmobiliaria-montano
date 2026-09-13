@@ -751,6 +751,7 @@ export function generatePropertyMetadata(property: Property): Metadata {
       images: [
         {
           url: imageUrl,
+          secureUrl: imageUrl,
           width: 1200,
           height: 630,
           alt: mainImage?.altText || property.title,

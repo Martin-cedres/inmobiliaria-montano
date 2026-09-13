@@ -826,9 +826,39 @@
            - **Erradicacion de Recortes Destructivos:** Se elimino la mascara poligonal diagonal SVG que cortaba mas del 40% de las fotos, adoptando contenedores rectangulares con proporcion fotografica panoramica limpia y controles finos de escala (zoom) y desplazamiento (X/Y).
            - **Selector de los 3 Formatos Estandar:** Implementado selector de 1-clic con previsualizaciones nativas:
              1. 1:1 Cuadrado (1080x1080 px base 720x720): optimizado para chats de WhatsApp y feed de Instagram/Facebook.
+             1. 1:1 Cuadrado (1080x1080 px base 720x720): optimizado para chats de WhatsApp e feed de Instagram/Facebook.
              2. 9:16 Vertical (1080x1920 px base 720x1280): optimizado para Estados de WhatsApp e Stories.
              3. 4:5 Retrato (1080x1350 px base 720x900): formato de maxima visibilidad para publicidad Meta Ads y Facebook Feed.
            - **Modo Dual de Fotografias:** Soporte para 1 Foto Hero Protagonica o Modo Collage (1 Principal + 2 Secundarias apiladas) con selector interactivo desde la galeria del inmueble.
            - **Codigo QR Dinamico Vectorial:** Generacion automatica con libreria qrcode en base64 DataURL apuntando a la URL canonica de la propiedad, integrado en el footer junto con el contacto directo de WhatsApp de Daniel Montaño.
            - **Exportacion Retina 2.5x HD:** Renderizado en alta resolucion y boton para copiar al portapapeles y pegar directo en WhatsApp Web.
            - **Verificacion:** Compilacion limpia en TypeScript (npx tsc --noEmit, 0 errores) y build de produccion con npm run build (75 rutas, 100% exito). Servidor activo en localhost:3000.
+
+=== Sesión 2026-09-13 ===
+- Servidor de desarrollo Next.js iniciado en segundo plano (`npm run dev`) escuchando en http://localhost:3000.
+- Configurado el sistema de compartir en redes sociales ([`SharePropertyModal.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/SharePropertyModal.tsx)): eliminado el texto publicitario sobrante para enviar únicamente la URL canónica directa de la propiedad.
+- Al compartir solo el enlace, las plataformas (WhatsApp, Facebook, X, etc.) leen automáticamente las metaetiquetas OpenGraph (`og:image`, `og:image:secure_url`, `twitter:card: summary_large_image`) y despliegan la tarjeta interactiva con la foto principal grande y el enlace limpio.
+- Incorporada en el modal una vista previa visual con la foto del inmueble y la URL a compartir.
+- Verificado el tipado con `npx tsc --noEmit` (0 errores) y respuesta HTTP 200 con metaetiquetas `og:image` y `twitter:card` en el servidor local.
+- Aplicada la Opción 3 de simplificación en la ficha de propiedad pública ([`propiedad/[slug]/page.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/propiedad/%5Bslug%5D/page.tsx)):
+  - Removida la sección de "Te Pueden Interesar" (carrusel de propiedades similares) y el bloque de "Explora el mercado inmobiliario" (`DepartmentInterlinking`).
+  - Eliminados más de 800px de scroll innecesario y ruido visual en móviles y escritorio.
+  - La publicación ahora culmina limpiamente en el llamado a la acción comercial de Daniel Montaño (WhatsApp) y un enlace sutil para regresar al catálogo general.
+  - Verificada la compilación en TypeScript (`npx tsc --noEmit`, 0 errores) y respuesta HTTP 200 en local.
+- Optimizada la longitud en píxeles del Título y la Meta Descripción en [`src/app/layout.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/layout.tsx) para resolver advertencias de auditorías SEO (Seobility/Google SERP):
+  - **Título optimizado:** `"Inmobiliaria Montaño | Casas y Alquileres en San José"` (53 caracteres / ~530 px, por debajo del límite de 600 px).
+  - **Template refinado:** `"%s | Inmobiliaria Montaño"` para no sobrecargar los títulos de las páginas internas.
+  - **Meta descripción optimizada:** `"Inmobiliaria en San José de Mayo. Venta de casas, alquileres, terrenos y tasaciones oficiales con Daniel Montaño. Encontrá tu propiedad ideal."` (146 caracteres / ~900 px, por debajo del límite de 960 px).
+  - Alineados OpenGraph y Twitter cards con la nueva descripción y título.
+  - Verificada compilación limpia en TypeScript (`npx tsc --noEmit`, 0 errores) y comprobado renderizado HTML en `localhost:3000`.
+- Optimizado el titular principal `<h1>` en [`src/components/HeroSearch.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/HeroSearch.tsx):
+  - Encabezado principal: `"Inmobiliaria en San José de Mayo"` (palabra clave de búsqueda transaccional directa).
+  - Remate visual comercial: `"Tu próxima propiedad te está esperando"` en color ámbar institucional.
+  - Satisface los requerimientos de densidad semántica del contenido sin perder la estética premium.
+  - Verificada la compilación con `npx tsc --noEmit` (0 errores) y corroborado en el HTML generado de `localhost:3000`.
+- Aplicadas las 4 optimizaciones de auditoría SEO técnica y seguridad:
+  1. **Equilibrio de Encabezados:** En [`src/components/PropertyCard.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/PropertyCard.tsx) se reemplazó `<h3>` por `<p className="font-bold ...">`, reduciendo los encabezados H de la portada de 28 a solo 8 con una jerarquía perfecta.
+  2. **Textos Ancla Limpios:** Agregado `aria-label={property.title}` al `<Link>` de cada tarjeta en [`PropertyCard.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/PropertyCard.tsx) para que Google y lectores de pantalla indexen el título exacto sin acumular las características de la tarjeta.
+  3. **Control de Parámetros y Enlaces Externos:** Añadido `rel="nofollow"` a enlaces internos con parámetros (`/?view=map#catalogo`) en [`Header.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/Header.tsx) y `rel="nofollow noopener noreferrer"` a los botones externos de WhatsApp en [`PropertyCard.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/PropertyCard.tsx), [`HeroSearch.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/HeroSearch.tsx), [`Footer.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/Footer.tsx) y [`FloatingWhatsApp.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/FloatingWhatsApp.tsx).
+  4. **Seguridad y Cabeceras HTTP:** Agregado `poweredByHeader: false` en [`next.config.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/next.config.ts), eliminando la cabecera `X-Powered-By` en las respuestas HTTP.
+  - Verificado en `localhost:3000`: `X-Powered-By` suprimida y compilación limpia con `npx tsc --noEmit` (0 errores).

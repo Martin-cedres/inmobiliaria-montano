@@ -3,7 +3,7 @@ import { notFound, permanentRedirect } from 'next/navigation';
 import Link from 'next/link';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
-import { getAllProperties, getCachedProperties, getCachedPropertyBySlug, findPropertyBySlugOrPrevious } from '@/lib/propertiesStore';
+import { getAllProperties, findPropertyBySlugOrPrevious } from '@/lib/propertiesStore';
 import { generatePropertyMetadata, generatePropertyJsonLd, getPillarPageForProperty } from '@/utils/seo';
 import { buildPropertyWhatsAppLink } from '@/utils/whatsapp';
 import { MapPin, Bed, Bath, Maximize2, Car, Building, CheckCircle2, MessageCircle, ArrowLeft, ShieldCheck, Share2, Compass, Trees, Droplets, FileCheck, Landmark, ArrowLeftRight, Wifi, Flame, Zap, Dog, Waves, LayoutGrid, Milestone, DollarSign, Layers } from 'lucide-react';
@@ -11,9 +11,7 @@ import { PropertyMapWrapper } from '@/components/PropertyMapWrapper';
 import { SharePropertyModal } from '@/components/SharePropertyModal';
 import { PropertyGallery } from '@/components/PropertyGallery';
 import { PropertyDescriptionRenderer } from '@/components/PropertyDescriptionRenderer';
-import { PropertyCard } from '@/components/PropertyCard';
 import PropertyBreadcrumbs from '@/components/seo/PropertyBreadcrumbs';
-import { DepartmentInterlinking } from '@/components/seo/DepartmentInterlinking';
 import { PropertyTracker } from '@/components/analytics/PropertyTracker';
 import { WhatsAppTrackButton } from '@/components/analytics/WhatsAppTrackButton';
 
@@ -59,21 +57,9 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
   }
 
   const property = result.property;
-  const allProperties = await getCachedProperties();
-
   const jsonLd = generatePropertyJsonLd(property);
   const whatsappUrl = buildPropertyWhatsAppLink(property);
   const mainImage = property.images.find((img) => img.isMain) || property.images[0];
-
-  const currentPrice = property.price?.amount || 0;
-  const similarProperties = allProperties
-    .filter((p) => p.id !== property.id && p.category === property.category)
-    .sort((a, b) => {
-      const diffA = Math.abs((a.price?.amount || 0) - currentPrice);
-      const diffB = Math.abs((b.price?.amount || 0) - currentPrice);
-      return diffA - diffB;
-    })
-    .slice(0, 3);
 
   const isSoldOrRented = property.status === 'vendido' || property.status === 'alquilado';
   const isReserved = property.status === 'reservado';
@@ -574,50 +560,16 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
 
         </div>
 
-        {/* Similar Properties Section */}
-        {similarProperties.length > 0 && (
-          <div className="mt-12 sm:mt-16 pt-8 border-t border-slate-200">
-            <div className="flex items-center justify-between mb-4 sm:mb-6 text-left">
-              <div>
-                <span className="text-xs font-black uppercase tracking-wider text-[#E85D04]">
-                  Te Puede Interesar
-                </span>
-                <h3 className="text-xl sm:text-2xl font-black text-[#5E1754]">
-                  Propiedades Similares
-                </h3>
-              </div>
-              <div className="flex items-center space-x-2">
-                {/* Mobile Swipe Hint Badge */}
-                {similarProperties.length > 1 && (
-                  <span className="sm:hidden inline-flex items-center space-x-1 text-[10px] font-extrabold text-[#E85D04] bg-orange-50 border border-orange-200/60 px-2.5 py-1 rounded-full animate-pulse">
-                    <span>Deslizá</span>
-                    <span>➔</span>
-                  </span>
-                )}
-                <Link
-                  href="/#catalogo"
-                  className="hidden sm:inline-flex items-center space-x-1.5 text-xs font-extrabold text-[#5E1754] hover:text-[#E85D04] bg-purple-50 hover:bg-purple-100 px-3.5 py-1.5 rounded-full transition-colors"
-                >
-                  <span>Ver todo el catálogo</span>
-                  <span>➔</span>
-                </Link>
-              </div>
-            </div>
-
-            {/* Mobile horizontal swipe track with card peek & Desktop responsive grid */}
-            <div className="flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-6 sm:pb-0">
-              {similarProperties.map((prop, idx) => (
-                <div key={prop.id} className="w-[82vw] max-w-[340px] flex-shrink-0 snap-start sm:w-auto sm:max-w-none flex flex-col">
-                  <PropertyCard property={prop} index={idx} />
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Interlinking Semántico Contextual Departamental */}
-        <DepartmentInterlinking property={property} currentPath={`/propiedad/${property.slug}`} />
-
+        {/* Enlace sutil para volver al catálogo general */}
+        <div className="mt-8 pt-6 border-t border-slate-200/80 flex items-center justify-between">
+          <Link
+            href="/#catalogo"
+            className="inline-flex items-center space-x-2 text-xs sm:text-sm font-extrabold text-[#5E1754] hover:text-[#E85D04] transition-colors group"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            <span>Volver a ver todas las propiedades</span>
+          </Link>
+        </div>
       </main>
 
       {/* Sticky Bottom CTA Bar for Mobile Screens (< 1024px / lg:hidden) with iOS Safe Area Inset */}
