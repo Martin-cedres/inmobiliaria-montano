@@ -1,7 +1,7 @@
 import { Property } from '@/types/property';
 
 export const MONTAÑO_WHATSAPP_PHONE = '59892776715';
-export const MONTAÑO_OFFICIAL_EMAIL = 'inmobiliariadaniel247@gmail.com';
+export const MONTAÑO_OFFICIAL_EMAIL = 'contacto@inmobiliariamontano.uy';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
 

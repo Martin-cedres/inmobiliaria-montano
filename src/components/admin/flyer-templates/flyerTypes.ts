@@ -27,7 +27,7 @@ export interface FlyerData {
   sloganTop: string; // "EL HOGAR QUE" o "TU NUEVO PROYECTO" o "TU LUGAR"
   sloganBottom: string; // "TU FAMILIA MERECE" o "TE ESTÁ ESPERANDO" o "PARA VIVIR MEJOR"
   phone: string; // "092 776 715"
-  email: string; // "inmobiliariadaniel247@gmail.com"
+  email: string; // "contacto@inmobiliariamontano.uy"
   website: string; // "www.inmobiliariamontano.uy"
   locationCity: string; // "San José"
   imageUrl: string;

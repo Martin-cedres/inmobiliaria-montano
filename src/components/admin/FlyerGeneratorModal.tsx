@@ -137,7 +137,7 @@ export const FlyerGeneratorModal: React.FC<FlyerGeneratorModalProps> = ({
       sloganTop: PRESET_SLOGANS[0].top,
       sloganBottom: PRESET_SLOGANS[0].bottom,
       phone: '092 776 715',
-      email: 'inmobiliariadaniel247@gmail.com',
+      email: 'contacto@inmobiliariamontano.uy',
       website: 'www.inmobiliariamontano.uy',
       locationCity: property.location?.city || 'San José de Mayo',
       imageUrl: initialImgUrl,

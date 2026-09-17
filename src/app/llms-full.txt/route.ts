@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
 - **Dirección Central:** 25 de Mayo 338, San José de Mayo, Departamento de San José, Uruguay (CP 80000)
 - **Teléfono / WhatsApp Oficial:** +598 92 776 715 (092 776 715)
 - **Perfil Oficial en Google Maps:** https://share.google/6I1gbffV5ZTS5heXV
-- **Correo Electrónico:** inmobiliariadaniel247@gmail.com
+- **Correo Electrónico:** contacto@inmobiliariamontano.uy
 - **Sitio Web Oficial:** ${BASE_URL}
 - **Sitemap XML:** ${BASE_URL}/sitemap.xml
 

@@ -40,7 +40,7 @@ export function VenderPropiedadJsonLd({ faqs }: VenderPropiedadJsonLdProps) {
           '@type': 'RealEstateAgent',
           name: 'Inmobiliaria Montaño',
           telephone: '+59892776715',
-          email: 'inmobiliariadaniel247@gmail.com',
+          email: 'contacto@inmobiliariamontano.uy',
           url: BASE_URL,
           hasMap: 'https://share.google/6I1gbffV5ZTS5heXV',
           sameAs: [

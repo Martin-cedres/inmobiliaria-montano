@@ -95,7 +95,7 @@ export function generatePropertyMarkdown(property: Property): string {
   md += `- **Inmobiliaria:** Inmobiliaria Montaño\n`;
   md += `- **Asesor Responsable:** Daniel Montaño (Director & Asesor Inmobiliario)\n`;
   md += `- **Teléfono / WhatsApp:** +598 92 776 715\n`;
-  md += `- **Email:** inmobiliariadaniel247@gmail.com\n`;
+  md += `- **Email:** contacto@inmobiliariamontano.uy\n`;
   md += `- **Ubicación:** San José de Mayo, Departamento de San José, Uruguay\n`;
   md += `- **Ficha Web Canónica:** ${canonicalUrl}\n`;
 

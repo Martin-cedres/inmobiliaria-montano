@@ -864,3 +864,21 @@
   - Verificado en `localhost:3000`: `X-Powered-By` suprimida y compilación limpia con `npx tsc --noEmit` (0 errores).
 - Verificada la compilación completa de producción con `npm run build` (75 rutas estáticas/dinámicas generadas con éxito, 0 errores).
 - Subidos todos los cambios al repositorio GitHub (`main` -> commit `69c6d93`), disparando el despliegue automático en producción en Vercel.
+
+=== Sesión 2026-09-16 ===
+- **Actualización de Correo Corporativo Oficial (`contacto@inmobiliariamontano.uy`):**
+  1. **Constante Central de Contacto ([`src/utils/whatsapp.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/utils/whatsapp.ts)):**
+     - Actualizado `MONTAÑO_OFFICIAL_EMAIL` a `'contacto@inmobiliariamontano.uy'`. Esto actualiza automáticamente [`Footer.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/Footer.tsx), [`ContactSection.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/ContactSection.tsx) y cualquier componente que consuma la constante central.
+  2. **SEO & Datos Estructurados Schema.org / JSON-LD:**
+     - Actualizado en [`src/utils/seo.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/utils/seo.ts) (tanto en el grafo de fichas como en el grafo del sitio `generateSiteGraphSchema`).
+     - Actualizado en [`RealEstateAgentJsonLd.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/seo/RealEstateAgentJsonLd.tsx), [`VenderPropiedadJsonLd.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/seo/VenderPropiedadJsonLd.tsx) y [`TasacionesJsonLd.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/seo/TasacionesJsonLd.tsx).
+  3. **Formatos para Inteligencia Artificial y Markdown:**
+     - Actualizado en [`src/app/llms.txt/route.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/llms.txt/route.ts) y [`src/app/llms-full.txt/route.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/llms-full.txt/route.ts).
+     - Actualizado en la ficha Markdown descargable ([`src/utils/markdown.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/utils/markdown.ts)).
+  4. **Panel Administrativo & Fichas Gráficas:**
+     - Actualizado en el generador de flyers en [`FlyerGeneratorModal.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/admin/FlyerGeneratorModal.tsx) y en [`flyerTypes.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/admin/flyer-templates/flyerTypes.ts).
+  5. **Autenticación y Usuarios:**
+     - Añadido `contacto@inmobiliariamontano.uy` a la lista `SUPERADMIN_EMAILS` en [`src/lib/auth.ts`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/lib/auth.ts) garantizando acceso total como superadministrador manteniendo compatibilidad de login.
+     - Actualizado en la base local [`src/db/users.json`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/db/users.json).
+  6. **Verificación:**
+     - Verificación estricta de tipos con `npx tsc --noEmit` completada exitosamente (0 errores, código 0).

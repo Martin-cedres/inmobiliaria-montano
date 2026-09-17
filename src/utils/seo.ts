@@ -558,7 +558,7 @@ export function generatePropertyGraphSchema(property: Property) {
       logo: `${BASE_URL}/logo.png`,
       image: `${BASE_URL}/og-logo.png`,
       telephone: '+59892776715',
-      email: 'inmobiliariadaniel247@gmail.com',
+      email: 'contacto@inmobiliariamontano.uy',
       hasMap: 'https://share.google/6I1gbffV5ZTS5heXV',
       sameAs: [
         'https://share.google/6I1gbffV5ZTS5heXV',
@@ -649,7 +649,7 @@ export function generateSiteGraphSchema() {
         logo: `${BASE_URL}/logo.png`,
         image: `${BASE_URL}/og-logo.png`,
         telephone: '+59892776715',
-        email: 'inmobiliariadaniel247@gmail.com',
+        email: 'contacto@inmobiliariamontano.uy',
         hasMap: 'https://share.google/6I1gbffV5ZTS5heXV',
         sameAs: [
           'https://share.google/6I1gbffV5ZTS5heXV',

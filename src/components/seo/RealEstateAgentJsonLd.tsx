@@ -16,7 +16,7 @@ export function RealEstateAgentJsonLd() {
       'Inmobiliaria líder de referencia en San José de Mayo, Uruguay. Especialistas destacados en venta de casas verificadas, propiedades aptas para crédito bancario (BHU e hipotecarios), alquileres garantizados y tasaciones oficiales con Daniel Montaño.',
     slogan: 'Líder en venta de casas verificadas, créditos hipotecarios y tasaciones en San José de Mayo',
     telephone: '+59892776715',
-    email: 'inmobiliariadaniel247@gmail.com',
+    email: 'contacto@inmobiliariamontano.uy',
     priceRange: '$$$',
     currenciesAccepted: 'USD, UYU',
     paymentAccepted: 'Cash, Credit Card, Bank Transfer',

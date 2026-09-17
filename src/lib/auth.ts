@@ -6,6 +6,7 @@ import { UserSessionPayload } from '@/types/user';
 export const SUPERADMIN_EMAILS = [
   'martinfernandocedres@gmail.com',
   'inmobiliariadaniel247@gmail.com',
+  'contacto@inmobiliariamontano.uy',
 ];
 export const SUPERADMIN_EMAIL = SUPERADMIN_EMAILS[0];
 export const AUTH_COOKIE_NAME = 'auth_token';
