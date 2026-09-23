@@ -914,3 +914,7 @@
      - Ajustado el ancho y padding a py-2.5 sm:py-3 con escala scale-x-110 e inclinación natural (-3deg).
      - Incorporado micro-borde blanco superior e inferior de 2px (border-y-2 border-white/60).
      - Tipografía definida en font-black con tracking medio (0.28em) y sombra nítida, logrando visibilidad inmediata con una estética limpia e institucional.
+  8. **Optimización de Legibilidad de la Faja en Miniatura de WhatsApp:**
+     - Aumentada la altura de la banda en la imagen generada de 86px a 150px.
+     - Tipografía escalada a 84px en Arial Black / Impact con trazo perimetral para alto contraste visual en pantallas reducidas.
+     - Desplegado a producción en Vercel con respuesta HTTP 200 verificada.
