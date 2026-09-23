@@ -147,6 +147,25 @@ export const PropertyGallery: React.FC<PropertyGalleryProps> = ({ property }) =>
           onClick={() => !imageError && setIsLightboxOpen(true)}
         />
 
+        {/* Banda transversal de lado a lado para propiedades reservadas o vendidas/alquiladas */}
+        {(property.status === 'reservado' || property.status === 'vendido' || property.status === 'alquilado') && (
+          <div
+            className={`absolute inset-x-0 top-1/2 -translate-y-1/2 z-[15] flex items-center justify-center py-3 sm:py-4 rotate-[-3deg] scale-x-110 shadow-xl border-y-2 border-white/60 backdrop-blur-xs pointer-events-none ${
+              property.status === 'reservado'
+                ? 'bg-amber-500 text-white'
+                : 'bg-red-600 text-white'
+            }`}
+          >
+            <span className="text-white font-black text-base sm:text-xl lg:text-2xl uppercase tracking-[0.28em] drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)] flex items-center gap-2">
+              {property.status === 'reservado'
+                ? 'RESERVADA'
+                : property.status === 'vendido'
+                ? 'VENDIDA'
+                : 'ALQUILADA'}
+            </span>
+          </div>
+        )}
+
         {/* Top Left: Operation Badge */}
         <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10 pointer-events-none">
           <span className="bg-[#E85D04] text-white text-[11px] sm:text-xs font-black uppercase px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full shadow">

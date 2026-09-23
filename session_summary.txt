@@ -885,3 +885,32 @@
      - Compilación de producción (`npm run build`) validada con 100% de éxito (75 rutas estáticas y dinámicas generadas).
      - Cambios commiteados y desplegados a producción en GitHub / Vercel vía `git push origin main` (Commit `cae24d3`).
 
+
+=== Sesión 2026-09-23 ===
+- **Bandas Visuales de Estado y Estrategia de Conversión para Propiedades Reservadas y Vendidas:**
+  1. **Tarjeta de Catálogo (PropertyCard.tsx):**
+     - Eliminado el filtro gris (grayscale) y opacidad atenuada para que las fotografías mantengan calidad viva y funcionen como prueba social de transacciones exitosas.
+     - Agregada banda visual transversal de lado a lado sobre la foto con rotación leve (rotate-[-3deg]), sombra y texto en negrita: amarilla (bg-amber-500) con RESERVADA y roja (bg-red-600) con VENDIDA / ALQUILADA.
+     - Actualizado el texto del botón CTA exterior a "Consultar opciones similares" para propiedades reservadas/vendidas/alquiladas.
+  2. **Copywriting & Enlace de WhatsApp (src/utils/whatsapp.ts):**
+     - Generado mensaje contextual específico para consultas de propiedades reservadas/vendidas redirigiendo al usuario a consultar opciones similares o registrarse ante posible liberación.
+     - Creada función modular buildPropertyShareMessage(property) para compartir en redes con el copy exacto:
+       - Reservada: "Esta propiedad (Ref. #[REF]) se acaba de reservar. Podés ver otras opciones similares en San José: [URL]".
+       - Vendida: "Esta propiedad (Ref. #[REF]) ya fue vendida. Podés ver otras opciones similares en San José: [URL]".
+  3. **Modal de Compartir (SharePropertyModal.tsx):**
+     - Integrado buildPropertyShareMessage en los enlaces de compartir por WhatsApp y Email para que el destinatario reciba el texto adaptado según el estado.
+  4. **Metadatos SEO & Previsualización Social (src/utils/seo.ts):**
+     - Añadido prefijo dinámico [RESERVADA], [VENDIDA] o [ALQUILADA] en titleStr y descriptionStr, asegurando que al pegar el enlace en WhatsApp, Facebook o Twitter, la tarjeta de previsualización informe claramente el estado comercial.
+  5. **Verificación:**
+     - Verificación TypeScript npx tsc --noEmit completada con 0 errores (código 0).
+     - Compilación completa de producción (npm run build) completada con 0 errores (75 rutas estáticas y dinámicas pre-renderizadas exitosamente).
+  6. **Ajuste y Calibración Fina de Impacto Visual:**
+     - Eliminada la etiqueta pequeña redundante del extremo superior derecho en PropertyCard.
+     - Incorporada la banda transversal al entrar a la ficha de la propiedad (PropertyGallery.tsx).
+     - Incorporada la banda transversal en la miniatura de SharePropertyModal.
+     - Creado endpoint dinámico OpenGraph /api/og/property para previsualización en WhatsApp y redes sociales con la faja incorporada sobre la imagen.
+     - Suavizado el grosor, inclinación (-2.5deg), tipografía y bordes de las bandas para un acabado sobrio, equilibrado y profesional sin sobrecargar la fotografía.
+  7. **Calibración a Punto Intermedio Exacto:**
+     - Ajustado el ancho y padding a py-2.5 sm:py-3 con escala scale-x-110 e inclinación natural (-3deg).
+     - Incorporado micro-borde blanco superior e inferior de 2px (border-y-2 border-white/60).
+     - Tipografía definida en font-black con tracking medio (0.28em) y sombra nítida, logrando visibilidad inmediata con una estética limpia e institucional.

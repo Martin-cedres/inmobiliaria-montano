@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Property } from '@/types/property';
 import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon';
+import { buildPropertyShareMessage } from '@/utils/whatsapp';
 import { Share2, Copy, Check, Mail, Printer, X, Sparkles, ExternalLink, Image as ImageIcon } from 'lucide-react';
 
 interface SharePropertyModalProps {
@@ -29,9 +30,11 @@ export const SharePropertyModal: React.FC<SharePropertyModalProps> = ({
   }, []);
 
   // Production absolute URL (Essential for WhatsApp / Facebook OpenGraph crawlers to fetch photos)
-  const prodShareUrl = `${PRODUCTION_BASE_URL}/propiedad/${property.slug}`;
+  const isSpecial = property.status === 'reservado' || property.status === 'vendido' || property.status === 'alquilado';
+  const statusParam = isSpecial ? `?estado=${property.status}` : '';
+  const prodShareUrl = `${PRODUCTION_BASE_URL}/propiedad/${property.slug}${statusParam}`;
   const localShareUrl = typeof window !== 'undefined' 
-    ? `${window.location.origin}/propiedad/${property.slug}`
+    ? `${window.location.origin}/propiedad/${property.slug}${statusParam}`
     : prodShareUrl;
 
   const mainImage = property.images.find((img) => img.isMain) || property.images[0];
@@ -95,9 +98,10 @@ export const SharePropertyModal: React.FC<SharePropertyModalProps> = ({
     }, 1800);
   };
 
-  const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(prodShareUrl)}`;
+  const shareMessage = buildPropertyShareMessage(property);
+  const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareMessage)}`;
   const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(prodShareUrl)}`;
-  const emailUrl = `mailto:?subject=${encodeURIComponent(`Inmobiliaria Montaño: ${property.title}`)}&body=${encodeURIComponent(prodShareUrl)}`;
+  const emailUrl = `mailto:?subject=${encodeURIComponent(`Inmobiliaria Montaño: ${property.title}`)}&body=${encodeURIComponent(shareMessage)}`;
 
   const handlePrint = () => {
     if (typeof window !== 'undefined') {
@@ -186,6 +190,17 @@ export const SharePropertyModal: React.FC<SharePropertyModalProps> = ({
                   alt={property.title}
                   className="w-full h-full object-cover"
                 />
+                {(property.status === 'reservado' || property.status === 'vendido' || property.status === 'alquilado') && (
+                  <div
+                    className={`absolute inset-x-0 top-1/2 -translate-y-1/2 py-0.5 text-center text-[8px] font-black uppercase tracking-wider text-white rotate-[-3.5deg] shadow-md border-y border-white/60 pointer-events-none ${
+                      property.status === 'reservado'
+                        ? 'bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600'
+                        : 'bg-gradient-to-r from-red-700 via-red-600 to-red-700'
+                    }`}
+                  >
+                    {property.status === 'reservado' ? 'RESERVADA' : property.status === 'vendido' ? 'VENDIDA' : 'ALQUILADA'}
+                  </div>
+                )}
               </div>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center justify-between gap-2">

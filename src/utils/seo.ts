@@ -702,8 +702,27 @@ export function generatePropertyMetadata(property: Property): Metadata {
   const imageUrl = rawImg.startsWith('http') ? rawImg : `${BASE_URL}${rawImg}`;
   const canonicalUrl = `${BASE_URL}/propiedad/${property.slug}`;
 
-  const titleStr = property.seoTitle || generateSmartSeoTitle(property);
-  const descriptionStr = property.seoDescription || generateSmartSeoDescription(property);
+  const statusPrefix =
+    property.status === 'reservado'
+      ? '[RESERVADA] '
+      : property.status === 'vendido'
+      ? '[VENDIDA] '
+      : property.status === 'alquilado'
+      ? '[ALQUILADA] '
+      : '';
+
+  const baseTitle = property.seoTitle || generateSmartSeoTitle(property);
+  const titleStr = `${statusPrefix}${baseTitle}`;
+
+  const descPrefix =
+    property.status === 'reservado'
+      ? 'Propiedad actualmente reservada. '
+      : property.status === 'vendido'
+      ? 'Propiedad ya vendida. '
+      : property.status === 'alquilado'
+      ? 'Propiedad ya alquilada. '
+      : '';
+  const descriptionStr = `${descPrefix}${property.seoDescription || generateSmartSeoDescription(property)}`;
 
   const focusKeys = property.focusKeywords
     ? property.focusKeywords.split(',').map((k) => k.trim()).filter(Boolean)
@@ -732,6 +751,9 @@ export function generatePropertyMetadata(property: Property): Metadata {
         'max-snippet': -1,
       };
 
+  const isSpecialStatus = property.status === 'reservado' || property.status === 'vendido' || property.status === 'alquilado';
+  const ogImageUrl = isSpecialStatus ? `${BASE_URL}/api/og/property?slug=${property.slug}` : imageUrl;
+
   return {
     title: titleStr,
     description: descriptionStr,
@@ -750,12 +772,12 @@ export function generatePropertyMetadata(property: Property): Metadata {
       siteName: 'Inmobiliaria Montaño',
       images: [
         {
-          url: imageUrl,
-          secureUrl: imageUrl,
+          url: ogImageUrl,
+          secureUrl: ogImageUrl,
           width: 1200,
           height: 630,
-          alt: mainImage?.altText || property.title,
-          type: imageUrl.endsWith('.webp') ? 'image/webp' : imageUrl.endsWith('.png') ? 'image/png' : 'image/jpeg',
+          alt: `${statusPrefix}${mainImage?.altText || property.title}`,
+          type: 'image/jpeg',
         },
       ],
       locale: 'es_UY',
@@ -765,7 +787,7 @@ export function generatePropertyMetadata(property: Property): Metadata {
       card: 'summary_large_image',
       title: titleStr,
       description: descriptionStr,
-      images: [imageUrl],
+      images: [ogImageUrl],
     },
     other: {
       'geo.region': 'UY-SJ',

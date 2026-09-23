@@ -27,30 +27,15 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
             NUEVO INGRESO
           </span>
         );
-      case 'reservado':
-        return (
-          <span className="bg-amber-500/90 backdrop-blur-md text-white text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-lg shadow-sm border border-white/20 tracking-wider">
-            RESERVADO
-          </span>
-        );
-      case 'vendido':
-        return (
-          <span className="bg-slate-700/90 backdrop-blur-md text-white text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-lg shadow-sm border border-white/20 tracking-wider">
-            VENDIDO
-          </span>
-        );
-      case 'alquilado':
-        return (
-          <span className="bg-purple-900/90 backdrop-blur-md text-white text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-lg shadow-sm border border-white/20 tracking-wider">
-            ALQUILADO
-          </span>
-        );
       case 'oportunidad':
         return (
           <span className="bg-orange-500/90 backdrop-blur-md text-white text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-lg shadow-sm border border-white/20 tracking-wider">
             OPORTUNIDAD
           </span>
         );
+      case 'reservado':
+      case 'vendido':
+      case 'alquilado':
       default:
         return null;
     }
@@ -114,10 +99,8 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
   return (
     <div
       className={`bg-white rounded-2xl overflow-hidden border border-slate-200/80 hover:border-[#5e1754]/50 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col group ${
-        isUnavailable
-          ? 'opacity-75 grayscale hover:grayscale-0 transition-all duration-500'
-          : isReserved
-          ? 'opacity-90 hover:-translate-y-1'
+        isUnavailable || isReserved
+          ? 'hover:-translate-y-1'
           : 'hover:-translate-y-1.5'
       }`}
     >
@@ -141,6 +124,25 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
             }`}
             onError={() => setImageError(true)}
           />
+
+          {/* Banda transversal de lado a lado para propiedades reservadas o vendidas/alquiladas */}
+          {(isReserved || isUnavailable) && (
+            <div
+              className={`absolute inset-x-0 top-1/2 -translate-y-1/2 z-[15] flex items-center justify-center py-2.5 sm:py-3 rotate-[-3deg] scale-x-110 shadow-xl pointer-events-none border-y-2 border-white/60 backdrop-blur-xs ${
+                isReserved
+                  ? 'bg-amber-500 text-white'
+                  : 'bg-red-600 text-white'
+              }`}
+            >
+              <span className="text-white font-black text-xs sm:text-sm md:text-base uppercase tracking-[0.28em] drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)] flex items-center gap-1.5">
+                {property.status === 'reservado'
+                  ? 'RESERVADA'
+                  : property.status === 'vendido'
+                  ? 'VENDIDA'
+                  : 'ALQUILADA'}
+              </span>
+            </div>
+          )}
 
           {/* Top Dominant Operation Badge (Upper Left) */}
           <div className="absolute top-3 left-3 z-20">
@@ -348,7 +350,9 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
           className="w-full bg-[#e85d04] hover:bg-[#ff7518] active:scale-98 text-white py-2.5 px-4 rounded-xl font-extrabold text-xs sm:text-sm shadow-xs flex items-center justify-center space-x-2 transition-all hover:shadow-orange-500/20"
         >
           <WhatsAppIcon className="w-4 h-4 text-white" />
-          <span>Consultar por WhatsApp</span>
+          <span>
+            {isUnavailable || isReserved ? 'Consultar opciones similares' : 'Consultar por WhatsApp'}
+          </span>
         </a>
       </div>
     </div>

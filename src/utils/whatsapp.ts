@@ -20,7 +20,13 @@ export function buildPropertyWhatsAppLink(
   const propertyUrl = `${SITE_URL}/propiedad/${property.slug}`;
 
   let text = '';
-  if (!hasValidPrice || priceMode === 'consultar') {
+  if (property.status === 'reservado') {
+    text = `Hola Inmobiliaria Montaño, vi que la propiedad Ref. #${property.codeRef} (${property.title}) se acaba de reservar.\n\n🔗 Ver propiedad: ${propertyUrl}\n\n¿Podrían mostrarme opciones similares disponibles en San José o avisarme si se libera?`;
+  } else if (property.status === 'vendido') {
+    text = `Hola Inmobiliaria Montaño, vi que la propiedad Ref. #${property.codeRef} (${property.title}) ya fue vendida.\n\n🔗 Ver propiedad: ${propertyUrl}\n\n¿Podrían brindarme información sobre opciones similares disponibles en San José?`;
+  } else if (property.status === 'alquilado') {
+    text = `Hola Inmobiliaria Montaño, vi que la propiedad Ref. #${property.codeRef} (${property.title}) ya fue alquilada.\n\n🔗 Ver propiedad: ${propertyUrl}\n\n¿Podrían brindarme información sobre opciones similares disponibles en San José?`;
+  } else if (!hasValidPrice || priceMode === 'consultar') {
     text = `Hola Inmobiliaria Montaño, quisiera consultar el precio y condiciones de la propiedad Ref. #${property.codeRef} (${property.title} en ${property.location.neighborhood}).\n\n🔗 Ver propiedad: ${propertyUrl}\n\n¿Podrían brindarme más información y coordinar una visita?`;
   } else if (priceMode === 'reservado') {
     text = `Hola Inmobiliaria Montaño, quisiera solicitar información confidencial y detalles de la propiedad Ref. #${property.codeRef} (${property.title} en ${property.location.neighborhood}).\n\n🔗 Ver propiedad: ${propertyUrl}\n\n¿Podrían contactarme?`;
@@ -31,6 +37,25 @@ export function buildPropertyWhatsAppLink(
   }
   
   return `https://wa.me/${customPhone}?text=${encodeURIComponent(text)}`;
+}
+
+/**
+ * Genera el texto del mensaje cuando se comparte una propiedad por WhatsApp u otras redes sociales.
+ */
+export function buildPropertyShareMessage(property: Property): string {
+  const isSpecial = property.status === 'reservado' || property.status === 'vendido' || property.status === 'alquilado';
+  const param = isSpecial ? `?estado=${property.status}` : '';
+  const propertyUrl = `${SITE_URL}/propiedad/${property.slug}${param}`;
+  if (property.status === 'reservado') {
+    return `Esta propiedad (Ref. #${property.codeRef}) se acaba de reservar. Podés ver otras opciones similares en San José: ${propertyUrl}`;
+  }
+  if (property.status === 'vendido') {
+    return `Esta propiedad (Ref. #${property.codeRef}) ya fue vendida. Podés ver otras opciones similares en San José: ${propertyUrl}`;
+  }
+  if (property.status === 'alquilado') {
+    return `Esta propiedad (Ref. #${property.codeRef}) ya fue alquilada. Podés ver otras opciones similares en San José: ${propertyUrl}`;
+  }
+  return propertyUrl;
 }
 
 export type WhatsAppServiceSubject = 'tasacion' | 'publicar' | 'notarial' | 'general';
