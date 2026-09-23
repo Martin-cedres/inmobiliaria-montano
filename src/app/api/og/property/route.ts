@@ -90,10 +90,10 @@ export async function GET(request: NextRequest) {
       ${
         statusText
           ? `
-      <!-- Banda transversal de estado con rotación y micro-bordes blancos -->
+      <!-- Banda transversal de estado con rotación y bordes blancos de alto impacto -->
       <g transform="rotate(-3 600 315)">
-        <rect x="-100" y="272" width="1400" height="86" fill="${bannerBg}" stroke="#ffffff" stroke-width="3" stroke-opacity="0.7" />
-        <text x="600" y="333" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="10">${statusText}</text>
+        <rect x="-100" y="240" width="1400" height="150" fill="${bannerBg}" stroke="#ffffff" stroke-width="6" stroke-opacity="0.95" />
+        <text x="600" y="348" font-family="Arial Black, Impact, Arial, sans-serif" font-size="84" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="8" stroke="#000000" stroke-width="3" paint-order="stroke fill">${statusText}</text>
       </g>
       `
           : ''
