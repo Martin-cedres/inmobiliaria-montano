@@ -7,6 +7,14 @@ const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamo
  * Mapea una propiedad a su página pilar SEO correspondiente para enlazado interno y migas de pan.
  */
 export function getPillarPageForProperty(property: Property): { title: string; href: string; shortTitle: string } {
+  if (property.operation === 'busqueda' || property.operation === 'ninguna' || property.price?.priceMode === 'oculto') {
+    return {
+      title: 'Propiedades en San José de Mayo',
+      shortTitle: 'Propiedades',
+      href: '/#catalogo',
+    };
+  }
+
   if (property.operation === 'alquiler') {
     return {
       title: 'Alquileres en San José de Mayo',

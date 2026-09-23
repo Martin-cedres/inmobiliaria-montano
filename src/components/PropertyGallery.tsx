@@ -167,11 +167,29 @@ export const PropertyGallery: React.FC<PropertyGalleryProps> = ({ property }) =>
         )}
 
         {/* Top Left: Operation Badge */}
-        <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10 pointer-events-none">
-          <span className="bg-[#E85D04] text-white text-[11px] sm:text-xs font-black uppercase px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full shadow">
-            {property.operation === 'alquiler' ? 'Alquiler' : property.operation === 'proyecto' ? 'Proyecto' : 'En Venta'}
-          </span>
-        </div>
+        {property.operation !== 'ninguna' && !(property.operation !== 'busqueda' && property.price?.priceMode === 'oculto') && (
+          <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10 pointer-events-none">
+            <span
+              className={`text-white text-[11px] sm:text-xs font-black uppercase px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full shadow ${
+                property.operation === 'busqueda'
+                  ? 'bg-[#5e1754]'
+                  : property.operation === 'alquiler'
+                  ? 'bg-[#5e1754]'
+                  : property.operation === 'proyecto'
+                  ? 'bg-emerald-600'
+                  : 'bg-[#E85D04]'
+              }`}
+            >
+              {property.operation === 'busqueda'
+                ? 'Buscamos'
+                : property.operation === 'alquiler'
+                ? 'Alquiler'
+                : property.operation === 'proyecto'
+                ? 'Proyecto'
+                : 'En Venta'}
+            </span>
+          </div>
+        )}
 
         {/* Top Right: Camera Counter Badge */}
         <div className="absolute top-3 right-3 sm:top-4 sm:right-4 flex items-center space-x-2 z-10">

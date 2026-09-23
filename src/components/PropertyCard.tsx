@@ -43,9 +43,10 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
 
   // Operation Badge
   const renderOperationBadge = () => {
+    if (property.operation === 'ninguna') return null;
+    if (property.operation !== 'busqueda' && property.price?.priceMode === 'oculto') return null;
+
     switch (property.operation) {
-      case 'ninguna':
-        return null;
       case 'busqueda':
         return (
           <span className="bg-[#5e1754]/95 backdrop-blur-md text-white text-[10px] font-black uppercase px-2.5 py-1 rounded-lg shadow-sm border border-white/20 tracking-wider">
