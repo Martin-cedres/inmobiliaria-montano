@@ -751,9 +751,6 @@ export function generatePropertyMetadata(property: Property): Metadata {
         'max-snippet': -1,
       };
 
-  const isSpecialStatus = property.status === 'reservado' || property.status === 'vendido' || property.status === 'alquilado';
-  const ogImageUrl = isSpecialStatus ? `${BASE_URL}/api/og/property?slug=${property.slug}` : imageUrl;
-
   return {
     title: titleStr,
     description: descriptionStr,
@@ -772,12 +769,12 @@ export function generatePropertyMetadata(property: Property): Metadata {
       siteName: 'Inmobiliaria Montaño',
       images: [
         {
-          url: ogImageUrl,
-          secureUrl: ogImageUrl,
+          url: imageUrl,
+          secureUrl: imageUrl,
           width: 1200,
           height: 630,
           alt: `${statusPrefix}${mainImage?.altText || property.title}`,
-          type: 'image/jpeg',
+          type: imageUrl.endsWith('.webp') ? 'image/webp' : imageUrl.endsWith('.png') ? 'image/png' : 'image/jpeg',
         },
       ],
       locale: 'es_UY',
@@ -787,7 +784,7 @@ export function generatePropertyMetadata(property: Property): Metadata {
       card: 'summary_large_image',
       title: titleStr,
       description: descriptionStr,
-      images: [ogImageUrl],
+      images: [imageUrl],
     },
     other: {
       'geo.region': 'UY-SJ',

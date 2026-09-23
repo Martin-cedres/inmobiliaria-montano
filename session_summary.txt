@@ -918,3 +918,7 @@
      - Aumentada la altura de la banda en la imagen generada de 86px a 150px.
      - Tipografía escalada a 84px en Arial Black / Impact con trazo perimetral para alto contraste visual en pantallas reducidas.
      - Desplegado a producción en Vercel con respuesta HTTP 200 verificada.
+  9. **Reversión de la Faja en Redes Sociales (Mantenida en la Web):**
+     - Eliminada la faja en las imágenes compartidas en redes sociales; se preserva la fotografía HD original y limpia para OpenGraph y Twitter Cards.
+     - Conservada la banda de estado transversal en su punto intermedio exacto en las tarjetas del catálogo (PropertyCard.tsx) y en la foto principal al ingresar a la propiedad (PropertyGallery.tsx).
+     - Conservado el texto adaptado de WhatsApp ("Esta propiedad se acaba de reservar..."), el botón CTA exterior y el prefijo de título [RESERVADA] / [VENDIDA].

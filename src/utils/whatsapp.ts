@@ -43,9 +43,7 @@ export function buildPropertyWhatsAppLink(
  * Genera el texto del mensaje cuando se comparte una propiedad por WhatsApp u otras redes sociales.
  */
 export function buildPropertyShareMessage(property: Property): string {
-  const isSpecial = property.status === 'reservado' || property.status === 'vendido' || property.status === 'alquilado';
-  const param = isSpecial ? `?estado=${property.status}` : '';
-  const propertyUrl = `${SITE_URL}/propiedad/${property.slug}${param}`;
+  const propertyUrl = `${SITE_URL}/propiedad/${property.slug}`;
   if (property.status === 'reservado') {
     return `Esta propiedad (Ref. #${property.codeRef}) se acaba de reservar. Podés ver otras opciones similares en San José: ${propertyUrl}`;
   }

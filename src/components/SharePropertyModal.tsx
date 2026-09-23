@@ -30,11 +30,9 @@ export const SharePropertyModal: React.FC<SharePropertyModalProps> = ({
   }, []);
 
   // Production absolute URL (Essential for WhatsApp / Facebook OpenGraph crawlers to fetch photos)
-  const isSpecial = property.status === 'reservado' || property.status === 'vendido' || property.status === 'alquilado';
-  const statusParam = isSpecial ? `?estado=${property.status}` : '';
-  const prodShareUrl = `${PRODUCTION_BASE_URL}/propiedad/${property.slug}${statusParam}`;
+  const prodShareUrl = `${PRODUCTION_BASE_URL}/propiedad/${property.slug}`;
   const localShareUrl = typeof window !== 'undefined' 
-    ? `${window.location.origin}/propiedad/${property.slug}${statusParam}`
+    ? `${window.location.origin}/propiedad/${property.slug}`
     : prodShareUrl;
 
   const mainImage = property.images.find((img) => img.isMain) || property.images[0];
@@ -190,17 +188,6 @@ export const SharePropertyModal: React.FC<SharePropertyModalProps> = ({
                   alt={property.title}
                   className="w-full h-full object-cover"
                 />
-                {(property.status === 'reservado' || property.status === 'vendido' || property.status === 'alquilado') && (
-                  <div
-                    className={`absolute inset-x-0 top-1/2 -translate-y-1/2 py-0.5 text-center text-[8px] font-black uppercase tracking-wider text-white rotate-[-3.5deg] shadow-md border-y border-white/60 pointer-events-none ${
-                      property.status === 'reservado'
-                        ? 'bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600'
-                        : 'bg-gradient-to-r from-red-700 via-red-600 to-red-700'
-                    }`}
-                  >
-                    {property.status === 'reservado' ? 'RESERVADA' : property.status === 'vendido' ? 'VENDIDA' : 'ALQUILADA'}
-                  </div>
-                )}
               </div>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center justify-between gap-2">
