@@ -922,3 +922,12 @@
      - Eliminada la faja en las imágenes compartidas en redes sociales; se preserva la fotografía HD original y limpia para OpenGraph y Twitter Cards.
      - Conservada la banda de estado transversal en su punto intermedio exacto en las tarjetas del catálogo (PropertyCard.tsx) y en la foto principal al ingresar a la propiedad (PropertyGallery.tsx).
      - Conservado el texto adaptado de WhatsApp ("Esta propiedad se acaba de reservar..."), el botón CTA exterior y el prefijo de título [RESERVADA] / [VENDIDA].
+
+=== Sesión 2026-09-23 ===
+- **Implementación de Publicaciones de Búsquedas Activas / Pedidos Concretos y Modo Sin Etiquetas:**
+  1. Tipos TypeScript (src/types/property.ts): Ampliado OperationType con busqueda y ninguna, PropertyCategory con busqueda, y priceMode con oculto.
+  2. Tarjetas de Catálogo (PropertyCard.tsx): Soporte para ocultar badges de operación, badge BUSCAMOS para pedidos, supresión de filas de precio y CTA adaptado a Tengo una propiedad para ofrecer.
+  3. Ficha de Detalle (propiedad/[slug]/page.tsx): Ocultamiento de precio y bloque de características si no hay comodidades, y botones de WhatsApp adaptados.
+  4. WhatsApp (src/utils/whatsapp.ts): Mensaje pre-redactado para propietarios ofreciendo inmuebles para clientes.
+  5. Panel Admin (/admin/nueva y /admin/editar/[id]): Nuevas opciones de operación y modalidad de precio oculto, más botón rápido de 1 clic Modo Búsqueda / Pedido.
+  6. Verificación: Compilación limpia npm run build completada con código 0 y 75 rutas pre-renderizadas.

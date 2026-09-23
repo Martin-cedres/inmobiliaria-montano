@@ -62,7 +62,7 @@ export async function POST(request: Request) {
       category: body.category,
       status: body.status || 'disponible',
       price: {
-        amount: Number(body.priceAmount || body.price?.amount || 50000),
+        amount: Number(body.priceAmount !== undefined ? body.priceAmount : (body.price?.amount !== undefined ? body.price.amount : 0)),
         currency: body.priceCurrency || body.price?.currency || 'USD',
         period: body.pricePeriod || body.price?.period || (body.operation === 'alquiler' ? 'mensual' : 'total'),
         priceDrop: body.priceDrop || false,
@@ -140,10 +140,10 @@ export async function POST(request: Request) {
         : [
             {
               id: 'img-1',
-              blobUrl: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
-              webpUrl: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
-              thumbnailUrl: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
-              altText: body.title || 'Propiedad Inmobiliaria Montaño',
+              blobUrl: body.operation === 'busqueda' || body.operation === 'ninguna' ? '/logo.png' : 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
+              webpUrl: body.operation === 'busqueda' || body.operation === 'ninguna' ? '/logo.png' : 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
+              thumbnailUrl: body.operation === 'busqueda' || body.operation === 'ninguna' ? '/logo.png' : 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
+              altText: body.title || 'Inmobiliaria Montaño',
               isMain: true,
             }
           ],

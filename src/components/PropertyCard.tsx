@@ -44,6 +44,14 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
   // Operation Badge
   const renderOperationBadge = () => {
     switch (property.operation) {
+      case 'ninguna':
+        return null;
+      case 'busqueda':
+        return (
+          <span className="bg-[#5e1754]/95 backdrop-blur-md text-white text-[10px] font-black uppercase px-2.5 py-1 rounded-lg shadow-sm border border-white/20 tracking-wider">
+            BUSCAMOS
+          </span>
+        );
       case 'alquiler':
         return (
           <span className="bg-[#5e1754]/95 backdrop-blur-md text-white text-[10px] font-black uppercase px-2.5 py-1 rounded-lg shadow-sm border border-white/20 tracking-wider">
@@ -56,12 +64,14 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
             PROYECTO
           </span>
         );
-      default:
+      case 'venta':
         return (
           <span className="bg-[#e85d04]/95 backdrop-blur-md text-white text-[10px] font-black uppercase px-2.5 py-1 rounded-lg shadow-sm border border-white/20 tracking-wider">
             EN VENTA
           </span>
         );
+      default:
+        return null;
     }
   };
 
@@ -84,6 +94,8 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
         return 'Proyecto';
       case 'modulo':
         return 'Módulo Habitacional';
+      case 'busqueda':
+        return 'Búsqueda de Inmueble';
       default:
         return 'Inmueble';
     }
@@ -145,9 +157,11 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
           )}
 
           {/* Top Dominant Operation Badge (Upper Left) */}
-          <div className="absolute top-3 left-3 z-20">
-            {renderOperationBadge()}
-          </div>
+          {renderOperationBadge() && (
+            <div className="absolute top-3 left-3 z-20">
+              {renderOperationBadge()}
+            </div>
+          )}
 
           {/* Commercial Status Badge & Share Micro-Button (Upper Right) */}
           <div className="absolute top-3 right-3 z-20 flex items-center gap-1.5">
@@ -182,50 +196,60 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
             </div>
 
             {/* Price Header */}
-            <div className="flex items-baseline space-x-1.5 mb-1.5 min-h-[2rem]">
-              {property.price.priceMode === 'consultar' || property.price.amount === 0 ? (
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    window.open(whatsappUrl, '_blank');
-                  }}
-                  className="inline-flex items-center justify-center text-xs sm:text-sm font-black text-white bg-[#5e1754] hover:bg-[#45103e] active:scale-95 px-3.5 py-1.5 rounded-xl shadow-xs hover:shadow-md transition-all cursor-pointer"
-                  title="Consultar precio"
-                >
-                  Consultar Precio
-                </button>
-              ) : property.price.priceMode === 'reservado' ? (
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    window.open(whatsappUrl, '_blank');
-                  }}
-                  className="inline-flex items-center justify-center text-xs sm:text-sm font-black text-slate-800 bg-slate-100 hover:bg-slate-200 border border-slate-200 px-3.5 py-1.5 rounded-xl shadow-2xs hover:shadow-xs transition-all cursor-pointer"
-                  title="Precio Reservado"
-                >
-                  Precio Reservado
-                </button>
-              ) : (
-                <>
-                  <span className="text-2xl font-black text-[#5e1754]">
-                    {property.price.priceMode === 'desde' && <span className="text-sm font-extrabold text-slate-500 mr-1.5">Desde</span>}
-                    {property.price.currency === 'USD' ? 'USD' : 'UYU $'} {property.price.amount.toLocaleString('es-UY')}
-                    {property.operation === 'alquiler' && property.price.period && property.price.period !== 'total' && (
-                      <span className="text-xs text-slate-500 font-bold"> / {property.price.period}</span>
-                    )}
+            {property.price.priceMode === 'oculto' ? (
+              <div className="flex items-center min-h-[2rem] mb-1.5">
+                {property.operation === 'busqueda' ? (
+                  <span className="inline-flex items-center text-[11px] font-black uppercase tracking-wider text-[#5e1754] bg-[#5e1754]/8 px-2.5 py-1 rounded-lg border border-[#5e1754]/15">
+                    Pedido para cliente concreto
                   </span>
-                  {property.price.priceDrop && property.price.originalAmount && (
-                    <span className="text-xs line-through text-slate-400 ml-2 font-semibold">
-                      {property.price.currency === 'USD' ? 'USD' : 'UYU $'} {property.price.originalAmount.toLocaleString('es-UY')}
+                ) : null}
+              </div>
+            ) : (
+              <div className="flex items-baseline space-x-1.5 mb-1.5 min-h-[2rem]">
+                {property.price.priceMode === 'consultar' || property.price.amount === 0 ? (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      window.open(whatsappUrl, '_blank');
+                    }}
+                    className="inline-flex items-center justify-center text-xs sm:text-sm font-black text-white bg-[#5e1754] hover:bg-[#45103e] active:scale-95 px-3.5 py-1.5 rounded-xl shadow-xs hover:shadow-md transition-all cursor-pointer"
+                    title="Consultar precio"
+                  >
+                    Consultar Precio
+                  </button>
+                ) : property.price.priceMode === 'reservado' ? (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      window.open(whatsappUrl, '_blank');
+                    }}
+                    className="inline-flex items-center justify-center text-xs sm:text-sm font-black text-slate-800 bg-slate-100 hover:bg-slate-200 border border-slate-200 px-3.5 py-1.5 rounded-xl shadow-2xs hover:shadow-xs transition-all cursor-pointer"
+                    title="Precio Reservado"
+                  >
+                    Precio Reservado
+                  </button>
+                ) : (
+                  <>
+                    <span className="text-2xl font-black text-[#5e1754]">
+                      {property.price.priceMode === 'desde' && <span className="text-sm font-extrabold text-slate-500 mr-1.5">Desde</span>}
+                      {property.price.currency === 'USD' ? 'USD' : 'UYU $'} {property.price.amount.toLocaleString('es-UY')}
+                      {property.operation === 'alquiler' && property.price.period && property.price.period !== 'total' && (
+                        <span className="text-xs text-slate-500 font-bold"> / {property.price.period}</span>
+                      )}
                     </span>
-                  )}
-                </>
-              )}
-            </div>
+                    {property.price.priceDrop && property.price.originalAmount && (
+                      <span className="text-xs line-through text-slate-400 ml-2 font-semibold">
+                        {property.price.currency === 'USD' ? 'USD' : 'UYU $'} {property.price.originalAmount.toLocaleString('es-UY')}
+                      </span>
+                    )}
+                  </>
+                )}
+              </div>
+            )}
 
             {/* Title */}
             <p className="font-bold text-slate-900 text-sm sm:text-base leading-snug line-clamp-2 min-h-[2.75rem] flex items-center group-hover/link:text-[#5e1754] transition-colors">
@@ -351,7 +375,11 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
         >
           <WhatsAppIcon className="w-4 h-4 text-white" />
           <span>
-            {isUnavailable || isReserved ? 'Consultar opciones similares' : 'Consultar por WhatsApp'}
+            {isUnavailable || isReserved
+              ? 'Consultar opciones similares'
+              : property.operation === 'busqueda' || property.price.priceMode === 'oculto'
+              ? 'Tengo una propiedad para ofrecer'
+              : 'Consultar por WhatsApp'}
           </span>
         </a>
       </div>

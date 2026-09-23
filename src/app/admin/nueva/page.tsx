@@ -81,7 +81,7 @@ export default function NuevaPropiedadPage() {
   const [status, setStatus] = useState<PropertyStatus>('disponible');
   const [priceAmount, setPriceAmount] = useState<number>(50000);
   const [priceCurrency, setPriceCurrency] = useState<'USD' | 'UYU'>('USD');
-  const [priceMode, setPriceMode] = useState<'visible' | 'consultar' | 'reservado' | 'desde'>('visible');
+  const [priceMode, setPriceMode] = useState<'visible' | 'consultar' | 'reservado' | 'desde' | 'oculto'>('visible');
   const [neighborhood, setNeighborhood] = useState('Centro');
   const [isCustomNeighborhood, setIsCustomNeighborhood] = useState<boolean>(false);
   const [address, setAddress] = useState('');
@@ -451,14 +451,69 @@ export default function NuevaPropiedadPage() {
           {activeTab === 'general' && (
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 animate-in fade-in duration-200">
               
-              <div className="border-b border-slate-100 pb-3">
-                <h2 className="text-lg font-black text-slate-900 flex items-center gap-2">
-                  <FileText className="w-5 h-5 text-[#5E1754]" />
-                  <span>Información Principal, Redacción & Precio</span>
-                </h2>
-                <p className="text-xs text-slate-500 mt-0.5">
-                  Completá los datos base del inmueble y su redacción con el editor visual Word.
-                </p>
+              <div className="border-b border-slate-100 pb-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div>
+                  <h2 className="text-lg font-black text-slate-900 flex items-center gap-2">
+                    <FileText className="w-5 h-5 text-[#5E1754]" />
+                    <span>Información Principal, Redacción & Precio</span>
+                  </h2>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    Completá los datos base del inmueble y su redacción con el editor visual Word.
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setOperation('busqueda');
+                    setPriceMode('oculto');
+                    setPriceAmount(0);
+                    setBedrooms(0);
+                    setBathrooms(0);
+                    setFloors(0);
+                    setBuiltAreaM2(0);
+                    setPlotAreaM2(0);
+                    setFrontMeters(undefined);
+                    setCarAccess(false);
+                    setGarage(false);
+                    setBarbecue(false);
+                    setPool(false);
+                    setGarden(false);
+                    setWoodStoveOrAC(false);
+                    setPetFriendly(false);
+                    setFondo(false);
+                    setPatio(false);
+                    setBarbacoa(false);
+                    setParrillero(false);
+                    setCochera(false);
+                    setCocheraTechada(false);
+                    setOseWater(false);
+                    setUteElectric(false);
+                    setSanitation(false);
+                    setFiberOptic(false);
+                    setWaterWellOrPond(false);
+                    setTitlesUpToDate(false);
+                    setBankCreditEligible(false);
+                    setAcceptsTradeIn(false);
+                    setPhRegime(false);
+                    setPerimeterFence(false);
+                    setSecuritySystem(false);
+                    setPavedStreet(false);
+                    setShedOrCorral(false);
+                    setHasLocation(false);
+                    if (!title) {
+                      setTitle('Buscamos Inmuebles en San José para Clientes Concretos');
+                    }
+                    if (!description) {
+                      setDescription('<p>Contamos con clientes concretos calificados en búsqueda activa de propiedades para compra directa en San José de Mayo y zonas aledañas. Si estás evaluando vender tu inmueble, contáctanos con total reserva y confianza.</p>');
+                    }
+                  }}
+                  className="inline-flex items-center space-x-1.5 px-3.5 py-2 bg-purple-50 hover:bg-purple-100 border border-[#5E1754]/30 text-[#5E1754] text-xs font-black rounded-xl transition-all shadow-2xs cursor-pointer active:scale-95 flex-shrink-0"
+                  title="Configurar formulario automáticamente sin precios ni detalles técnicos"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-[#E85D04]" />
+                  <span>⚡ Modo Búsqueda / Pedido</span>
+                </button>
               </div>
 
               {/* 1.1 Código, Operación y Categoría */}
@@ -484,6 +539,8 @@ export default function NuevaPropiedadPage() {
                     <option value="venta">🏡 En Venta</option>
                     <option value="alquiler">🔑 Alquiler</option>
                     <option value="proyecto">🏗️ Proyecto</option>
+                    <option value="busqueda">🔍 Búsqueda Activa (Buscamos Inmuebles)</option>
+                    <option value="ninguna">🚫 Sin Etiqueta de Operación</option>
                   </select>
                 </div>
 
@@ -508,6 +565,7 @@ export default function NuevaPropiedadPage() {
                     <option value="deposito">📦 Depósito / Galpón</option>
                     <option value="local">🏪 Local Comercial</option>
                     <option value="proyecto">🏗️ Proyecto</option>
+                    <option value="busqueda">🔍 Búsqueda / Pedido General</option>
                   </select>
                 </div>
               </div>
@@ -549,7 +607,7 @@ export default function NuevaPropiedadPage() {
                     <input
                       type="number"
                       min={0}
-                      disabled={priceMode === 'consultar'}
+                      disabled={priceMode === 'consultar' || priceMode === 'oculto'}
                       value={priceAmount}
                       onChange={(e) => setPriceAmount(Number(e.target.value))}
                       className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#5E1754] disabled:opacity-50"
@@ -572,13 +630,14 @@ export default function NuevaPropiedadPage() {
                     <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Modalidad</label>
                     <select
                       value={priceMode}
-                      onChange={(e) => setPriceMode(e.target.value as 'visible' | 'consultar' | 'reservado' | 'desde')}
+                      onChange={(e) => setPriceMode(e.target.value as 'visible' | 'consultar' | 'reservado' | 'desde' | 'oculto')}
                       className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754] cursor-pointer"
                     >
                       <option value="visible">Mostrar Precio Exacto</option>
                       <option value="consultar">Consultar Precio</option>
                       <option value="desde">Precio &quot;Desde&quot;</option>
                       <option value="reservado">Reservado</option>
+                      <option value="oculto">Ocultar Precio (Sin Precio ni Botón)</option>
                     </select>
                   </div>
                 </div>

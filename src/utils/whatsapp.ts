@@ -20,7 +20,9 @@ export function buildPropertyWhatsAppLink(
   const propertyUrl = `${SITE_URL}/propiedad/${property.slug}`;
 
   let text = '';
-  if (property.status === 'reservado') {
+  if (property.operation === 'busqueda' || priceMode === 'oculto') {
+    text = `Hola Inmobiliaria Montaño, vi la publicación/búsqueda Ref. #${property.codeRef} (${property.title}) y tengo una propiedad para ofrecerles.\n\n🔗 Ver publicación: ${propertyUrl}\n\n¿Podríamos coordinar para conversar al respecto?`;
+  } else if (property.status === 'reservado') {
     text = `Hola Inmobiliaria Montaño, vi que la propiedad Ref. #${property.codeRef} (${property.title}) se acaba de reservar.\n\n🔗 Ver propiedad: ${propertyUrl}\n\n¿Podrían mostrarme opciones similares disponibles en San José o avisarme si se libera?`;
   } else if (property.status === 'vendido') {
     text = `Hola Inmobiliaria Montaño, vi que la propiedad Ref. #${property.codeRef} (${property.title}) ya fue vendida.\n\n🔗 Ver propiedad: ${propertyUrl}\n\n¿Podrían brindarme información sobre opciones similares disponibles en San José?`;

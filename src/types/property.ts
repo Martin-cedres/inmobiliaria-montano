@@ -1,4 +1,4 @@
-export type OperationType = 'venta' | 'alquiler' | 'proyecto';
+export type OperationType = 'venta' | 'alquiler' | 'proyecto' | 'busqueda' | 'ninguna';
 
 export type PropertyCategory = 
   | 'todos'
@@ -9,7 +9,8 @@ export type PropertyCategory =
   | 'proyecto' 
   | 'terreno' 
   | 'local'
-  | 'modulo';
+  | 'modulo'
+  | 'busqueda';
 
 export type PropertyStatus = 
   | 'disponible' 
@@ -47,7 +48,7 @@ export interface Property {
     period?: 'mensual' | 'total';
     priceDrop?: boolean;
     originalAmount?: number;
-    priceMode?: 'visible' | 'consultar' | 'reservado' | 'desde';
+    priceMode?: 'visible' | 'consultar' | 'reservado' | 'desde' | 'oculto';
   };
   location: {
     department: string;   // "San José", "Colonia", "Montevideo", etc.

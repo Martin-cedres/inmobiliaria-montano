@@ -11,7 +11,7 @@ interface SeoEditorSectionProps {
   operation: OperationType;
   priceAmount: number;
   priceCurrency: 'USD' | 'UYU';
-  priceMode?: 'visible' | 'consultar' | 'reservado' | 'desde';
+  priceMode?: 'visible' | 'consultar' | 'reservado' | 'desde' | 'oculto';
   neighborhood: string;
   address?: string;
   city?: string;

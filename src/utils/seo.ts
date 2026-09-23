@@ -266,13 +266,17 @@ export function generatePropertySlug(
 
   // 1. Operación
   let op = (p.operation || '').toLowerCase().trim();
-  if (!op || op === 'todos') {
+  if (op === 'ninguna') {
+    op = 'pedido';
+  } else if (!op || op === 'todos') {
     // Detección heurística desde el título
     const lowerTitle = (p.title || '').toLowerCase();
     if (lowerTitle.includes('alquiler') || lowerTitle.includes('alquila')) {
       op = 'alquiler';
     } else if (lowerTitle.includes('pozo') || lowerTitle.includes('proyecto')) {
       op = 'proyecto';
+    } else if (lowerTitle.includes('buscamos') || lowerTitle.includes('busqueda') || lowerTitle.includes('pedido')) {
+      op = 'busqueda';
     } else {
       op = 'venta';
     }
@@ -282,6 +286,9 @@ export function generatePropertySlug(
   const cat = (p.category || '').toLowerCase().trim();
   let tipo = 'inmueble';
   switch (cat) {
+    case 'busqueda':
+      tipo = 'busqueda';
+      break;
     case 'local':
       tipo = 'local-comercial';
       break;

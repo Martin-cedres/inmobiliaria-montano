@@ -58,7 +58,9 @@ export const FlyerGeneratorModal: React.FC<FlyerGeneratorModalProps> = ({
   // Extract initial flyer data from Property
   const buildInitialData = (): FlyerData => {
     let headline = 'EN VENTA';
-    if (property.operation === 'alquiler') headline = 'EN ALQUILER';
+    if (property.operation === 'busqueda') headline = 'BUSCAMOS PARA CLIENTE';
+    else if (property.operation === 'ninguna') headline = property.title.toUpperCase();
+    else if (property.operation === 'alquiler') headline = 'EN ALQUILER';
     else if (property.category === 'chacra') headline = 'CHACRA EN VENTA';
     else if (property.category === 'terreno') headline = 'TERRENO EN VENTA';
     else if (property.category === 'modulo' || property.category === 'proyecto') headline = 'PROYECTO EN POZO';
@@ -66,7 +68,9 @@ export const FlyerGeneratorModal: React.FC<FlyerGeneratorModalProps> = ({
     // Format price
     const pMode = property.price.priceMode || (property.price.amount === 0 ? 'consultar' : 'visible');
     let priceText = 'U$S CONSULTAR';
-    if (pMode === 'visible' && property.price.amount > 0) {
+    if (pMode === 'oculto') {
+      priceText = property.operation === 'busqueda' ? 'COMPRA DIRECTA' : '';
+    } else if (pMode === 'visible' && property.price.amount > 0) {
       const sym = property.price.currency === 'USD' ? 'U$S' : 'UYU $';
       priceText = `${sym} ${property.price.amount.toLocaleString('es-UY')}`;
     } else if (pMode === 'desde' && property.price.amount > 0) {
