@@ -7,12 +7,17 @@ export type ButtonPosition =
   | 'contact'
   | 'header'
   | 'footer'
-  | 'guide';
+  | 'guide'
+  | 'catalog_card'
+  | 'landing_hero'
+  | 'owner_lead'
+  | 'navbar';
 
 export type ConversionEventType = 
   | 'whatsapp_click'
   | 'phone_click'
   | 'property_view'
+  | 'page_view'
   | 'property_contact'
   | 'share_click';
 
@@ -62,14 +67,24 @@ export interface PageConversionMetrics {
 }
 
 export interface ConversionFunnelSummary {
-  totalViews: number;
-  totalWhatsappClicks: number;
+  totalViews: number; // Visitas totales a toda la web (Home, Landings, Propiedades)
+  totalPageViews: number; // Visitas globales a páginas (Home, Landings, etc.)
+  totalPropertyViews: number; // Visitas específicas a fichas de inmuebles
+  totalWhatsappClicks: number; // Total absoluto de clics a WhatsApp
+  propertyWhatsappClicks: number; // Leads WhatsApp directos de publicaciones
+  generalWhatsappClicks: number; // Leads WhatsApp generales (Home, Flotante, Contacto, Tasaciones)
   totalPhoneClicks: number;
   totalContacts: number;
   overallConversionRate: number;
   byButtonPosition: Record<ButtonPosition, number>;
   byCategory: Record<string, { views: number; contacts: number; conversionRate: number }>;
   byLocation: Record<string, { views: number; contacts: number; conversionRate: number }>;
+  byPageType: {
+    home: { views: number; whatsappClicks: number; contacts: number };
+    landings: { views: number; whatsappClicks: number; contacts: number };
+    properties: { views: number; whatsappClicks: number; contacts: number };
+    others: { views: number; whatsappClicks: number; contacts: number };
+  };
   pagePerformanceTable: PageConversionMetrics[];
 }
 

@@ -71,6 +71,16 @@ export async function trackConversionEvent(options: TrackEventOptions): Promise<
 }
 
 /**
+ * Registra la visualización de una página general (Home, Landings, Catálogo, etc.).
+ */
+export function trackPageView(pagePath?: string): void {
+  trackConversionEvent({
+    eventType: 'page_view',
+    pagePath: pagePath || (typeof window !== 'undefined' ? window.location.pathname : '/'),
+  });
+}
+
+/**
  * Registra la visualización de una ficha de propiedad.
  */
 export function trackPropertyView(property: Property): void {

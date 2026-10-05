@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Send, CheckCircle2, Calculator, ArrowRight } from 'lucide-react';
 import { MONTAÑO_WHATSAPP_PHONE } from '@/utils/whatsapp';
+import { trackWhatsappClick } from '@/utils/telemetry';
 
 export function AppraisalPageForm() {
   const [name, setName] = useState('');
@@ -15,6 +16,11 @@ export function AppraisalPageForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    trackWhatsappClick({
+      buttonPosition: 'valuation',
+      pagePath: typeof window !== 'undefined' ? window.location.pathname : '/tasaciones-san-jose-de-mayo',
+    });
 
     const text = `Hola Daniel Montaño, solicito tasación profesional para mi propiedad en San José:\n- Nombre: ${name}\n- Teléfono: ${phone}\n- Tipo de Inmueble: ${propertyType}\n- Intención: ${operationType === 'venta' ? 'Venta' : operationType === 'alquiler' ? 'Alquiler' : 'Tasación informativa'}${neighborhood ? `\n- Barrio / Zona: ${neighborhood}` : ''}${notes ? `\n- Detalles adicionales: ${notes}` : ''}`;
 

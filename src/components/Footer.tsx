@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon';
 import { Phone, Mail, MapPin, Award, Home, Key, Trees, Warehouse, Landmark, Calculator, ShieldCheck, Lock, Building2, TrendingUp } from 'lucide-react';
 import { MONTAÑO_OFFICIAL_EMAIL, buildGeneralWhatsAppLink } from '@/utils/whatsapp';
+import { trackWhatsappClick } from '@/utils/telemetry';
 
 interface FooterProps {
   onSelectCategoryFilter?: (category: any, operation?: any) => void;
@@ -170,6 +171,12 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
                   href={notarialWhatsappUrl}
                   target="_blank"
                   rel="nofollow noopener noreferrer"
+                  onClick={() => {
+                    trackWhatsappClick({
+                      buttonPosition: 'footer',
+                      pagePath: typeof window !== 'undefined' ? window.location.pathname : '/',
+                    });
+                  }}
                   className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
                 >
                   <ShieldCheck className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
@@ -188,6 +195,12 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
                 href={generalWhatsappUrl}
                 target="_blank"
                 rel="nofollow noopener noreferrer"
+                onClick={() => {
+                  trackWhatsappClick({
+                    buttonPosition: 'footer',
+                    pagePath: typeof window !== 'undefined' ? window.location.pathname : '/',
+                  });
+                }}
                 className="flex items-center space-x-2.5 text-slate-200 hover:text-[#E85D04] transition-colors font-bold group"
               >
                 <span className="p-1.5 rounded-lg bg-purple-500/20 text-purple-300 group-hover:bg-[#E85D04] group-hover:text-white transition-colors">

@@ -7,6 +7,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Property, PropertyStatus, PropertyCategory, OperationType } from '@/types/property';
 import { UserSessionPayload } from '@/types/user';
+import { ConversionFunnelSummary } from '@/types/telemetry';
 import { 
   Plus, Trash2, Eye, Edit3, CheckCircle2, Sparkles, Search, 
   RefreshCw, AlertCircle, Building2, Key, Tag, MessageCircle, 
@@ -18,6 +19,7 @@ import { FlyerGeneratorModal } from '@/components/admin/FlyerGeneratorModal';
 export default function AdminDashboardPage() {
   const router = useRouter();
   const [properties, setProperties] = useState<Property[]>([]);
+  const [telemetry, setTelemetry] = useState<ConversionFunnelSummary | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isRevalidating, setIsRevalidating] = useState<boolean>(false);
   const [isMigratingSlugs, setIsMigratingSlugs] = useState<boolean>(false);
@@ -85,14 +87,27 @@ export default function AdminDashboardPage() {
   const fetchProperties = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('/api/properties');
-      const result = await response.json();
-      if (result.success && Array.isArray(result.data)) {
-        setProperties(result.data);
+      const [resProps, resTel] = await Promise.all([
+        fetch('/api/properties'),
+        fetch('/api/admin/telemetry'),
+      ]);
+
+      const resultProps = await resProps.json();
+      if (resultProps.success && Array.isArray(resultProps.data)) {
+        setProperties(resultProps.data);
+      }
+
+      try {
+        const resultTel = await resTel.json();
+        if (resultTel.success && resultTel.conversions) {
+          setTelemetry(resultTel.conversions);
+        }
+      } catch {
+        // Silencioso
       }
     } catch (error) {
-      console.error('Error cargando propiedades:', error);
-      showToast('Error de conexión al cargar propiedades');
+      console.error('Error cargando datos del panel:', error);
+      showToast('Error de conexión al cargar datos');
     } finally {
       setIsLoading(false);
     }
@@ -212,8 +227,16 @@ ${link}`;
 
   // Executive Metrics KPIs
   const totalCount = properties.length;
-  const totalViews = properties.reduce((acc, p) => acc + (p.viewsCount || 0), 0);
-  const totalWhatsAppClicks = properties.reduce((acc, p) => acc + (p.whatsappClicksCount || 0), 0);
+  const legacyViews = properties.reduce((acc, p) => acc + (p.viewsCount || 0), 0);
+  const legacyWhatsApp = properties.reduce((acc, p) => acc + (p.whatsappClicksCount || 0), 0);
+
+  const totalViews = telemetry ? telemetry.totalViews : legacyViews;
+  const totalPropertyViews = telemetry ? telemetry.totalPropertyViews : legacyViews;
+  const totalPageViews = telemetry ? telemetry.totalPageViews : 0;
+
+  const totalWhatsAppClicks = telemetry ? telemetry.totalWhatsappClicks : legacyWhatsApp;
+  const propertyWhatsAppClicks = telemetry ? telemetry.propertyWhatsappClicks : legacyWhatsApp;
+  const generalWhatsAppClicks = telemetry ? telemetry.generalWhatsappClicks : 0;
   
   // Top Property calculation
   const sortedByInterests = [...properties].sort(
@@ -438,6 +461,7 @@ ${link}`;
             <div>
               <p className="text-xs text-slate-400 font-bold uppercase">Total Inmuebles</p>
               <p className="text-2xl font-black text-slate-900">{totalCount}</p>
+              <p className="text-[11px] text-slate-500 font-medium">Catálogo activo</p>
             </div>
             <div className="p-3 bg-purple-50 rounded-xl text-[#5E1754]">
               <Building2 className="w-5 h-5" />
@@ -446,8 +470,11 @@ ${link}`;
 
           <div className="bg-white p-5 rounded-2xl border border-purple-100 shadow-xs flex items-center justify-between">
             <div>
-              <p className="text-xs text-slate-400 font-bold uppercase">Fichas Vistas</p>
+              <p className="text-xs text-slate-400 font-bold uppercase">Visitas a la Web</p>
               <p className="text-2xl font-black text-slate-900">{totalViews.toLocaleString('es-UY')}</p>
+              <p className="text-[10px] text-slate-500 font-semibold truncate" title={`${totalPropertyViews.toLocaleString('es-UY')} en inmuebles · ${totalPageViews.toLocaleString('es-UY')} en Home y Landings`}>
+                {totalPropertyViews.toLocaleString('es-UY')} en inmuebles · {totalPageViews.toLocaleString('es-UY')} en Home/Landings
+              </p>
             </div>
             <div className="p-3 bg-blue-50 rounded-xl text-blue-600">
               <Eye className="w-5 h-5" />
@@ -458,6 +485,9 @@ ${link}`;
             <div>
               <p className="text-xs text-slate-400 font-bold uppercase">Leads WhatsApp</p>
               <p className="text-2xl font-black text-emerald-600">{totalWhatsAppClicks.toLocaleString('es-UY')}</p>
+              <p className="text-[10px] text-slate-500 font-semibold truncate" title={`${propertyWhatsAppClicks} de inmuebles · ${generalWhatsAppClicks} de contacto general`}>
+                {propertyWhatsAppClicks} de inmuebles · {generalWhatsAppClicks} consultas generales
+              </p>
             </div>
             <div className="p-3 bg-emerald-50 rounded-xl text-emerald-600">
               <MessageCircle className="w-5 h-5" />
@@ -485,6 +515,56 @@ ${link}`;
             </div>
           </div>
         </div>
+
+        {/* Desglose de Tráfico Web & Contactos Directos */}
+        {telemetry && (
+          <div className="bg-gradient-to-r from-[#191024] via-slate-900 to-[#2A0E35] rounded-2xl p-4 sm:p-5 text-white border border-purple-900/60 shadow-xs space-y-3">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2.5">
+              <div className="flex items-center space-x-2">
+                <span className="p-1 rounded-md bg-[#e85d04] text-white">
+                  <TrendingUp className="w-3.5 h-3.5" />
+                </span>
+                <span className="text-xs font-black uppercase tracking-wider text-slate-200">
+                  Desglose de Tráfico Web & Contactos Directos (Home, Landings, WhatsApp)
+                </span>
+              </div>
+              <Link
+                href="/admin/seo-conversiones"
+                className="text-[11px] font-bold text-amber-400 hover:text-amber-300 transition-colors inline-flex items-center space-x-1"
+              >
+                <span>Ver embudo completo en SEO & Conversiones →</span>
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+              <div className="bg-white/5 rounded-xl p-3 border border-white/10">
+                <p className="text-[10px] text-slate-400 font-bold uppercase">Visitas Home (Inicio)</p>
+                <p className="text-lg font-black text-white">{telemetry.byPageType.home.views.toLocaleString('es-UY')}</p>
+                <p className="text-[10px] text-slate-400">Página principal</p>
+              </div>
+
+              <div className="bg-white/5 rounded-xl p-3 border border-white/10">
+                <p className="text-[10px] text-slate-400 font-bold uppercase">Visitas Landings SEO</p>
+                <p className="text-lg font-black text-white">{telemetry.byPageType.landings.views.toLocaleString('es-UY')}</p>
+                <p className="text-[10px] text-slate-400">Casas, Alquileres, Tasación</p>
+              </div>
+
+              <div className="bg-white/5 rounded-xl p-3 border border-white/10">
+                <p className="text-[10px] text-emerald-400 font-bold uppercase">WhatsApp Flotante</p>
+                <p className="text-lg font-black text-emerald-400">{telemetry.byButtonPosition.floating || 0} clics</p>
+                <p className="text-[10px] text-slate-400">Botón flotante en toda la web</p>
+              </div>
+
+              <div className="bg-white/5 rounded-xl p-3 border border-white/10">
+                <p className="text-[10px] text-orange-400 font-bold uppercase">WhatsApp Home & Contacto</p>
+                <p className="text-lg font-black text-orange-400">
+                  {(telemetry.byButtonPosition.contact || 0) + (telemetry.byButtonPosition.valuation || 0) + (telemetry.byButtonPosition.footer || 0)} clics
+                </p>
+                <p className="text-[10px] text-slate-400">Formulario directo, tasaciones, pie</p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Quick Filter Cockpit Bar */}
         <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs space-y-3">

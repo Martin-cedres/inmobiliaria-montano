@@ -11,6 +11,7 @@ import { AlquileresJsonLd } from '@/components/seo/AlquileresJsonLd';
 import { DepartmentInterlinking } from '@/components/seo/DepartmentInterlinking';
 import { getCachedProperties } from '@/lib/propertiesStore';
 import { buildGeneralWhatsAppLink } from '@/utils/whatsapp';
+import { WhatsAppTrackButton } from '@/components/analytics/WhatsAppTrackButton';
 import {
   Home as HomeIcon,
   ChevronRight,
@@ -327,15 +328,15 @@ export default async function AlquileresPage() {
               </div>
             </div>
 
-            <a
-              href={contactWhatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <WhatsAppTrackButton
+              whatsappUrl={contactWhatsappUrl}
+              buttonPosition="landing_hero"
+              pagePath="/alquileres-san-jose-de-mayo"
               className="inline-flex items-center justify-center space-x-2 bg-[#E85D04] hover:bg-[#FF8500] active:scale-95 text-white font-extrabold text-xs sm:text-sm px-6 py-3.5 rounded-full shadow-lg transition-all flex-shrink-0 w-full md:w-auto"
             >
               <PhoneCall className="w-4 h-4 text-amber-200" />
               <span>Consultar Alquileres por WhatsApp</span>
-            </a>
+            </WhatsAppTrackButton>
           </div>
         </section>
       </main>

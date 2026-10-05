@@ -10,6 +10,8 @@ import { DepartmentInterlinking } from '@/components/seo/DepartmentInterlinking'
 import { LevelBLandingEvaluation } from '@/data/levelBLandings';
 import { Property } from '@/types/property';
 import { buildGeneralWhatsAppLink } from '@/utils/whatsapp';
+import { WhatsAppTrackButton } from '@/components/analytics/WhatsAppTrackButton';
+import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon';
 import {
   Building,
   MapPin,
@@ -136,14 +138,23 @@ export function LevelBLandingTemplate({
               </p>
             </div>
 
-            <div className="lg:col-span-4 bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20 text-left space-y-2">
+            <div className="lg:col-span-4 bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20 text-left space-y-3">
               <div className="flex items-center space-x-2 text-orange-400 text-xs font-bold">
                 <ShieldCheck className="w-4 h-4 text-[#E85D04]" />
                 <span>Asesoramiento Personalizado</span>
               </div>
               <p className="text-xs text-slate-200 leading-relaxed">
-                Consultá disponibilidad y opciones con Daniel Montaño al <strong>092 776 715</strong>.
+                Consultá disponibilidad y opciones directas en esta zona con Daniel Montaño.
               </p>
+              <WhatsAppTrackButton
+                whatsappUrl={whatsappUrl}
+                buttonPosition="landing_hero"
+                pagePath={landing.path}
+                className="inline-flex items-center space-x-2 bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-black py-2.5 px-4 rounded-xl shadow-md transition-all active:scale-95 w-full justify-center"
+              >
+                <WhatsAppIcon className="w-4 h-4 text-white" />
+                <span>Consultar por WhatsApp</span>
+              </WhatsAppTrackButton>
             </div>
           </div>
 

@@ -1025,11 +1025,13 @@ export default function AdminSeoConversionesPage() {
             {/* KPIs de Conversión */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               <div className="bg-white p-5 sm:p-6 rounded-3xl border border-slate-200/80 shadow-xs space-y-1">
-                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Vistas de Fichas</span>
+                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Visitas a la Web</span>
                 <div className="text-2xl sm:text-3xl font-black text-slate-900">
                   {conversionsData.totalViews.toLocaleString('es-UY')}
                 </div>
-                <p className="text-[11px] text-slate-500">Visualizaciones individuales</p>
+                <p className="text-[11px] text-slate-500 font-medium">
+                  {conversionsData.totalPropertyViews.toLocaleString('es-UY')} en inmuebles · {conversionsData.totalPageViews.toLocaleString('es-UY')} en Home/Landings
+                </p>
               </div>
 
               <div className="bg-white p-5 sm:p-6 rounded-3xl border border-slate-200/80 shadow-xs space-y-1">
@@ -1037,7 +1039,9 @@ export default function AdminSeoConversionesPage() {
                 <div className="text-2xl sm:text-3xl font-black text-[#25D366]">
                   {conversionsData.totalWhatsappClicks}
                 </div>
-                <p className="text-[11px] text-slate-500">Consultas iniciadas por chat</p>
+                <p className="text-[11px] text-slate-500 font-medium">
+                  {conversionsData.propertyWhatsappClicks} de inmuebles · {conversionsData.generalWhatsappClicks} generales
+                </p>
               </div>
 
               <div className="bg-white p-5 sm:p-6 rounded-3xl border border-slate-200/80 shadow-xs space-y-1">
@@ -1062,31 +1066,51 @@ export default function AdminSeoConversionesPage() {
               <h3 className="text-lg font-black text-[#5E1754]">
                 Contactos Comerciales por Canal / Posición del Botón
               </h3>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
-                <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-1">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase">Ficha de Inmueble</span>
-                  <div className="text-xl font-black text-slate-900">{conversionsData.byButtonPosition.property} contactos</div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-xs">
+                <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-1">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase">Ficha / Catálogo</span>
+                  <div className="text-lg font-black text-slate-900">
+                    {(conversionsData.byButtonPosition.property || 0) + (conversionsData.byButtonPosition.catalog_card || 0)} contactos
+                  </div>
+                  <p className="text-[10px] text-slate-500">Inmuebles específicos</p>
                 </div>
-                <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-1">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase">Botón Flotante Global</span>
-                  <div className="text-xl font-black text-slate-900">{conversionsData.byButtonPosition.floating} contactos</div>
+                <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-1">
+                  <span className="text-[10px] font-bold text-emerald-600 uppercase">Botón Flotante</span>
+                  <div className="text-lg font-black text-emerald-600">{conversionsData.byButtonPosition.floating || 0} contactos</div>
+                  <p className="text-[10px] text-slate-500">Global en toda la web</p>
                 </div>
-                <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-1">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase">Tasaciones</span>
-                  <div className="text-xl font-black text-slate-900">{conversionsData.byButtonPosition.valuation} contactos</div>
+                <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-1">
+                  <span className="text-[10px] font-bold text-orange-600 uppercase">Contacto Home</span>
+                  <div className="text-lg font-black text-orange-600">{conversionsData.byButtonPosition.contact || 0} contactos</div>
+                  <p className="text-[10px] text-slate-500">Formulario directo</p>
                 </div>
-                <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-1">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase">Encabezado / Pie</span>
-                  <div className="text-xl font-black text-slate-900">{conversionsData.byButtonPosition.header + conversionsData.byButtonPosition.footer} contactos</div>
+                <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-1">
+                  <span className="text-[10px] font-bold text-purple-600 uppercase">Tasaciones</span>
+                  <div className="text-lg font-black text-purple-600">
+                    {(conversionsData.byButtonPosition.valuation || 0) + (conversionsData.byButtonPosition.owner_lead || 0)} contactos
+                  </div>
+                  <p className="text-[10px] text-slate-500">Captación y peritaje</p>
+                </div>
+                <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-1">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase">Landings Hero</span>
+                  <div className="text-lg font-black text-slate-900">{conversionsData.byButtonPosition.landing_hero || 0} contactos</div>
+                  <p className="text-[10px] text-slate-500">Páginas de aterrizaje</p>
+                </div>
+                <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-1">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase">Pie / Menú</span>
+                  <div className="text-lg font-black text-slate-900">
+                    {(conversionsData.byButtonPosition.header || 0) + (conversionsData.byButtonPosition.footer || 0)} contactos
+                  </div>
+                  <p className="text-[10px] text-slate-500">Footer institucional</p>
                 </div>
               </div>
             </div>
 
-            {/* Tabla de Rendimiento por Propiedad */}
+            {/* Tabla de Rendimiento por Página e Inmueble */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-purple-100 shadow-xs space-y-4">
               <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                 <h3 className="text-lg font-black text-[#5E1754]">
-                  Rendimiento Comercial y Tasa de Contacto por Inmueble
+                  Rendimiento Comercial y Tasa de Contacto por Página e Inmueble
                 </h3>
                 <span className="text-xs text-slate-400 font-bold">{conversionsData.pagePerformanceTable.length} páginas</span>
               </div>
@@ -1095,7 +1119,7 @@ export default function AdminSeoConversionesPage() {
                 <table className="w-full text-left text-xs">
                   <thead>
                     <tr className="border-b border-slate-200 text-slate-400 font-bold uppercase text-[10px]">
-                      <th className="py-2.5 px-3">Propiedad / Título</th>
+                      <th className="py-2.5 px-3">Tipo / Página</th>
                       <th className="py-2.5 px-3">Localidad</th>
                       <th className="py-2.5 px-3 text-right">Vistas</th>
                       <th className="py-2.5 px-3 text-right">WhatsApp</th>
@@ -1104,20 +1128,41 @@ export default function AdminSeoConversionesPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100">
-                    {conversionsData.pagePerformanceTable.map((p, idx) => (
-                      <tr key={idx} className="hover:bg-slate-50 transition-colors font-medium text-slate-700">
-                        <td className="py-3 px-3">
-                          <Link href={p.pagePath} target="_blank" className="font-bold text-[#5E1754] hover:underline">
-                            {p.pageTitle || p.pagePath}
-                          </Link>
-                        </td>
-                        <td className="py-3 px-3 text-slate-500">{p.location || 'San José de Mayo'}</td>
-                        <td className="py-3 px-3 text-right font-bold">{p.views}</td>
-                        <td className="py-3 px-3 text-right text-[#25D366] font-bold">{p.whatsappClicks}</td>
-                        <td className="py-3 px-3 text-right text-indigo-600">{p.phoneClicks}</td>
-                        <td className="py-3 px-3 text-right font-black text-[#E85D04]">{p.conversionRate}%</td>
-                      </tr>
-                    ))}
+                    {conversionsData.pagePerformanceTable.map((p, idx) => {
+                      const isHome = p.pagePath === '/';
+                      const isProperty = p.pagePath.startsWith('/propiedad/');
+                      return (
+                        <tr key={idx} className="hover:bg-slate-50 transition-colors font-medium text-slate-700">
+                          <td className="py-3 px-3">
+                            <div className="flex items-center space-x-2">
+                              {isHome && (
+                                <span className="bg-purple-100 text-[#5E1754] text-[9px] font-black px-1.5 py-0.5 rounded uppercase">
+                                  Home
+                                </span>
+                              )}
+                              {!isHome && isProperty && (
+                                <span className="bg-blue-100 text-blue-800 text-[9px] font-bold px-1.5 py-0.5 rounded uppercase">
+                                  Inmueble
+                                </span>
+                              )}
+                              {!isHome && !isProperty && (
+                                <span className="bg-amber-100 text-amber-800 text-[9px] font-bold px-1.5 py-0.5 rounded uppercase">
+                                  Landing
+                                </span>
+                              )}
+                              <Link href={p.pagePath} target="_blank" className="font-bold text-[#5E1754] hover:underline">
+                                {p.pageTitle || p.pagePath}
+                              </Link>
+                            </div>
+                          </td>
+                          <td className="py-3 px-3 text-slate-500">{p.location || 'San José de Mayo'}</td>
+                          <td className="py-3 px-3 text-right font-bold">{p.views}</td>
+                          <td className="py-3 px-3 text-right text-[#25D366] font-bold">{p.whatsappClicks}</td>
+                          <td className="py-3 px-3 text-right text-indigo-600">{p.phoneClicks}</td>
+                          <td className="py-3 px-3 text-right font-black text-[#E85D04]">{p.conversionRate}%</td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>

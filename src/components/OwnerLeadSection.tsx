@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Search, Calculator, Send, Building, X } from 'lucide-react';
 import { MONTAÑO_WHATSAPP_PHONE } from '@/utils/whatsapp';
+import { trackWhatsappClick } from '@/utils/telemetry';
 
 export const OwnerLeadSection: React.FC = () => {
   const [name, setName] = useState('');
@@ -16,6 +17,11 @@ export const OwnerLeadSection: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent, onDone?: () => void) => {
     e.preventDefault();
+
+    trackWhatsappClick({
+      buttonPosition: 'owner_lead',
+      pagePath: typeof window !== 'undefined' ? window.location.pathname : '/',
+    });
 
     const text = `Hola Inmobiliaria Montaño, solicito tasación / información para publicar mi propiedad:\n- Nombre: ${name}\n- Teléfono: ${phone}\n- Operación: ${operationType}\n- Tipo: ${propertyType}${neighborhood ? `\n- Barrio/Zona: ${neighborhood}` : ''}${notes ? `\n- Detalles: ${notes}` : ''}`;
 

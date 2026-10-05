@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { WebMcpProvider } from "@/components/seo/WebMcpProvider";
+import { GlobalPageViewTracker } from "@/components/analytics/GlobalPageViewTracker";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -134,6 +135,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body suppressHydrationWarning className="min-h-full flex flex-col">
+        <GlobalPageViewTracker />
         <WebMcpProvider />
         {children}
       </body>

@@ -201,6 +201,26 @@ export async function recordConversionEvent(
 }
 
 /**
+ * Catálogo de páginas institucionales y de aterrizaje estándar
+ */
+const STANDARD_PAGES: { path: string; title: string; category?: string; location?: string }[] = [
+  { path: '/', title: 'Inicio / Home Inmobiliaria Montaño', category: 'general', location: 'San José de Mayo' },
+  { path: '/casas-en-venta-san-jose-de-mayo', title: 'Casas en Venta en San José', category: 'casa', location: 'San José de Mayo' },
+  { path: '/alquileres-san-jose-de-mayo', title: 'Alquileres en San José', category: 'apartamento', location: 'San José de Mayo' },
+  { path: '/terrenos-y-chacras-san-jose', title: 'Terrenos y Chacras en San José', category: 'terreno', location: 'San José' },
+  { path: '/tasaciones-san-jose-de-mayo', title: 'Tasaciones Inmobiliarias Oficiales', category: 'general', location: 'San José de Mayo' },
+  { path: '/vender-propiedad-san-jose', title: 'Vender mi Propiedad en San José', category: 'general', location: 'San José de Mayo' },
+  { path: '/inmobiliaria-san-jose', title: 'Inmobiliaria Montaño (Institucional)', category: 'general', location: 'San José de Mayo' },
+  { path: '/propiedades-san-jose', title: 'Catálogo General de Propiedades', category: 'general', location: 'San José de Mayo' },
+  { path: '/inversiones-inmobiliarias-san-jose', title: 'Inversiones Inmobiliarias en San José', category: 'general', location: 'San José de Mayo' },
+  { path: '/proyectos-y-viviendas-modulares-san-jose', title: 'Proyectos & Viviendas Modulares', category: 'modulo', location: 'San José' },
+  { path: '/locales-comerciales-y-galpones-san-jose', title: 'Locales Comerciales & Galpones', category: 'local', location: 'San José' },
+  { path: '/estadisticas-inmobiliarias-san-jose', title: 'Observatorio & Estadísticas de Precios', category: 'general', location: 'San José' },
+  { path: '/guia-tasacion-inmobiliaria-san-jose', title: 'Guía de Tasación Inmobiliaria', category: 'general', location: 'San José' },
+  { path: '/guia-compra-propiedad-credito-bancario-uruguay', title: 'Guía de Crédito Hipotecario', category: 'general', location: 'San José' },
+];
+
+/**
  * Obtiene el resumen del embudo de conversión y rendimiento por página/propiedad.
  */
 export async function getConversionFunnelSummary(
@@ -209,8 +229,10 @@ export async function getConversionFunnelSummary(
   const storage = ensureTelemetryStorage();
   const events = storage.conversionEvents;
 
-  let totalViews = 0;
-  let totalWhatsappClicks = 0;
+  let eventsPropertyViews = 0;
+  let totalPageViews = 0;
+  let eventsPropertyWhatsappClicks = 0;
+  let generalWhatsappClicks = 0;
   let totalPhoneClicks = 0;
 
   const byButtonPosition: Record<ButtonPosition, number> = {
@@ -221,23 +243,41 @@ export async function getConversionFunnelSummary(
     header: 0,
     footer: 0,
     guide: 0,
+    catalog_card: 0,
+    landing_hero: 0,
+    owner_lead: 0,
+    navbar: 0,
   };
 
   const byCategory: Record<string, { views: number; contacts: number; conversionRate: number }> = {};
   const byLocation: Record<string, { views: number; contacts: number; conversionRate: number }> = {};
   const pageMap = new Map<string, PageConversionMetrics>();
 
-  // Inicializar mapa de páginas a partir de las propiedades reales
+  // 1. Inicializar páginas maestras e institucionales (Home, Landings SEO)
+  STANDARD_PAGES.forEach((sp) => {
+    pageMap.set(sp.path, {
+      pagePath: sp.path,
+      pageTitle: sp.title,
+      category: sp.category || 'general',
+      location: sp.location || 'San José de Mayo',
+      views: 0,
+      whatsappClicks: 0,
+      phoneClicks: 0,
+      totalContacts: 0,
+      conversionRate: 0,
+    });
+  });
+
+  // 2. Inicializar mapa de páginas a partir de las propiedades reales
   allProperties.forEach((p) => {
     const pagePath = `/propiedad/${p.slug}`;
     const baseViews = p.viewsCount || 0;
     const baseWhatsapp = p.whatsappClicksCount || 0;
-    const baseShare = p.sharesCount || 0;
 
     pageMap.set(pagePath, {
       pagePath,
       propertySlug: p.slug,
-      pageTitle: p.title,
+      pageTitle: `${p.title} (Ref. #${p.codeRef})`,
       category: p.category,
       location: p.location.city || 'San José de Mayo',
       views: baseViews,
@@ -248,36 +288,74 @@ export async function getConversionFunnelSummary(
     });
   });
 
-  // Procesar eventos de telemetría registrados
+  // 3. Procesar eventos de telemetría registrados
   events.forEach((evt) => {
     const loc = evt.location || 'San José de Mayo';
     const cat = evt.propertyCategory || 'general';
+    const path = evt.pagePath || '/';
 
     if (!byCategory[cat]) byCategory[cat] = { views: 0, contacts: 0, conversionRate: 0 };
     if (!byLocation[loc]) byLocation[loc] = { views: 0, contacts: 0, conversionRate: 0 };
 
-    if (evt.eventType === 'property_view') {
-      totalViews++;
+    // Vistas: page_view o property_view
+    if (evt.eventType === 'page_view') {
+      const isPropertyPage = path.startsWith('/propiedad/');
+      if (isPropertyPage) {
+        eventsPropertyViews++;
+      } else {
+        totalPageViews++;
+      }
+
       byCategory[cat].views++;
       byLocation[loc].views++;
 
-      if (evt.pagePath) {
-        const item = pageMap.get(evt.pagePath) || {
-          pagePath: evt.pagePath,
-          propertySlug: evt.propertySlug,
-          category: cat,
-          location: loc,
-          views: 0,
-          whatsappClicks: 0,
-          phoneClicks: 0,
-          totalContacts: 0,
-          conversionRate: 0,
-        };
-        item.views++;
-        pageMap.set(evt.pagePath, item);
-      }
+      const item = pageMap.get(path) || {
+        pagePath: path,
+        propertySlug: evt.propertySlug,
+        pageTitle: path === '/' ? 'Inicio / Home' : path,
+        category: cat,
+        location: loc,
+        views: 0,
+        whatsappClicks: 0,
+        phoneClicks: 0,
+        totalContacts: 0,
+        conversionRate: 0,
+      };
+      item.views++;
+      pageMap.set(path, item);
+    } else if (evt.eventType === 'property_view') {
+      eventsPropertyViews++;
+      byCategory[cat].views++;
+      byLocation[loc].views++;
+
+      const item = pageMap.get(path) || {
+        pagePath: path,
+        propertySlug: evt.propertySlug,
+        pageTitle: path,
+        category: cat,
+        location: loc,
+        views: 0,
+        whatsappClicks: 0,
+        phoneClicks: 0,
+        totalContacts: 0,
+        conversionRate: 0,
+      };
+      item.views++;
+      pageMap.set(path, item);
     } else if (evt.eventType === 'whatsapp_click' || evt.eventType === 'property_contact') {
-      totalWhatsappClicks++;
+      const isPropertyLead = Boolean(
+        evt.propertySlug ||
+        path.startsWith('/propiedad/') ||
+        evt.buttonPosition === 'property' ||
+        evt.buttonPosition === 'catalog_card'
+      );
+
+      if (isPropertyLead) {
+        eventsPropertyWhatsappClicks++;
+      } else {
+        generalWhatsappClicks++;
+      }
+
       byCategory[cat].contacts++;
       byLocation[loc].contacts++;
 
@@ -285,22 +363,21 @@ export async function getConversionFunnelSummary(
         byButtonPosition[evt.buttonPosition]++;
       }
 
-      if (evt.pagePath) {
-        const item = pageMap.get(evt.pagePath) || {
-          pagePath: evt.pagePath,
-          propertySlug: evt.propertySlug,
-          category: cat,
-          location: loc,
-          views: 0,
-          whatsappClicks: 0,
-          phoneClicks: 0,
-          totalContacts: 0,
-          conversionRate: 0,
-        };
-        item.whatsappClicks++;
-        item.totalContacts++;
-        pageMap.set(evt.pagePath, item);
-      }
+      const item = pageMap.get(path) || {
+        pagePath: path,
+        propertySlug: evt.propertySlug,
+        pageTitle: path === '/' ? 'Inicio / Home' : path,
+        category: cat,
+        location: loc,
+        views: 0,
+        whatsappClicks: 0,
+        phoneClicks: 0,
+        totalContacts: 0,
+        conversionRate: 0,
+      };
+      item.whatsappClicks++;
+      item.totalContacts++;
+      pageMap.set(path, item);
     } else if (evt.eventType === 'phone_click') {
       totalPhoneClicks++;
       byCategory[cat].contacts++;
@@ -310,29 +387,62 @@ export async function getConversionFunnelSummary(
         byButtonPosition[evt.buttonPosition]++;
       }
 
-      if (evt.pagePath) {
-        const item = pageMap.get(evt.pagePath) || {
-          pagePath: evt.pagePath,
-          propertySlug: evt.propertySlug,
-          category: cat,
-          location: loc,
-          views: 0,
-          whatsappClicks: 0,
-          phoneClicks: 0,
-          totalContacts: 0,
-          conversionRate: 0,
-        };
-        item.phoneClicks++;
-        item.totalContacts++;
-        pageMap.set(evt.pagePath, item);
-      }
+      const item = pageMap.get(path) || {
+        pagePath: path,
+        propertySlug: evt.propertySlug,
+        pageTitle: path === '/' ? 'Inicio / Home' : path,
+        category: cat,
+        location: loc,
+        views: 0,
+        whatsappClicks: 0,
+        phoneClicks: 0,
+        totalContacts: 0,
+        conversionRate: 0,
+      };
+      item.phoneClicks++;
+      item.totalContacts++;
+      pageMap.set(path, item);
     }
   });
 
-  // Re-calcular tasas de conversión
+  // 4. Calcular totales consolidados (sin pérdida de histórico de base de datos)
+  const basePropertyViews = allProperties.reduce((acc, p) => acc + (p.viewsCount || 0), 0);
+  const totalPropertyViews = Math.max(basePropertyViews, eventsPropertyViews);
+  const totalViews = totalPropertyViews + totalPageViews;
+
+  const basePropertyWhatsapp = allProperties.reduce((acc, p) => acc + (p.whatsappClicksCount || 0), 0);
+  const propertyWhatsappClicks = Math.max(basePropertyWhatsapp, eventsPropertyWhatsappClicks);
+  const totalWhatsappClicks = propertyWhatsappClicks + generalWhatsappClicks;
   const totalContacts = totalWhatsappClicks + totalPhoneClicks;
   const overallConversionRate = totalViews > 0 ? Math.round((totalContacts / totalViews) * 1000) / 10 : 0;
 
+  // 5. Agrupación por Tipo de Página (Home, Landings, Propiedades, Otros)
+  const byPageType = {
+    home: { views: 0, whatsappClicks: 0, contacts: 0 },
+    landings: { views: 0, whatsappClicks: 0, contacts: 0 },
+    properties: { views: totalPropertyViews, whatsappClicks: propertyWhatsappClicks, contacts: propertyWhatsappClicks },
+    others: { views: 0, whatsappClicks: 0, contacts: 0 },
+  };
+
+  const landingPaths = new Set(STANDARD_PAGES.map((s) => s.path).filter((p) => p !== '/'));
+
+  pageMap.forEach((p) => {
+    if (p.pagePath === '/') {
+      byPageType.home.views += p.views;
+      byPageType.home.whatsappClicks += p.whatsappClicks;
+      byPageType.home.contacts += p.totalContacts;
+    } else if (landingPaths.has(p.pagePath) || p.pagePath.includes('-san-jose')) {
+      byPageType.landings.views += p.views;
+      byPageType.landings.whatsappClicks += p.whatsappClicks;
+      byPageType.landings.contacts += p.totalContacts;
+    } else if (!p.pagePath.startsWith('/propiedad/')) {
+      byPageType.others.views += p.views;
+      byPageType.others.whatsappClicks += p.whatsappClicks;
+      byPageType.others.contacts += p.totalContacts;
+    }
+  });
+
+  // Re-calcular tasas de conversión por categoría y localidad
   Object.keys(byCategory).forEach((cat) => {
     const item = byCategory[cat];
     item.conversionRate = item.views > 0 ? Math.round((item.contacts / item.views) * 1000) / 10 : 0;
@@ -356,13 +466,18 @@ export async function getConversionFunnelSummary(
 
   return {
     totalViews,
+    totalPageViews,
+    totalPropertyViews,
     totalWhatsappClicks,
+    propertyWhatsappClicks,
+    generalWhatsappClicks,
     totalPhoneClicks,
     totalContacts,
     overallConversionRate,
     byButtonPosition,
     byCategory,
     byLocation,
+    byPageType,
     pagePerformanceTable,
   };
 }

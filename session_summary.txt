@@ -930,4 +930,37 @@
   3. Ficha de Detalle (propiedad/[slug]/page.tsx): Ocultamiento de precio y bloque de características si no hay comodidades, y botones de WhatsApp adaptados.
   4. WhatsApp (src/utils/whatsapp.ts): Mensaje pre-redactado para propietarios ofreciendo inmuebles para clientes.
   5. Panel Admin (/admin/nueva y /admin/editar/[id]): Nuevas opciones de operación y modalidad de precio oculto, más botón rápido de 1 clic Modo Búsqueda / Pedido.
-  6. Verificación: Compilación limpia npm run build completada con código 0 y 75 rutas pre-renderizadas.
+  6. **Corrección de Etiqueta en Ficha Interna (PropertyGallery.tsx & PropertyCard.tsx & seo.ts):**
+     - Ocultada la píldora naranja "EN VENTA" en la galería principal dentro de la propiedad (`PropertyGallery.tsx`) cuando la operación es `'ninguna'` o cuando el precio está `'oculto'`. Si la operación es `'busqueda'`, muestra la insignia "Buscamos" en púrpura institucional.
+     - Ajustadas las migas de pan y enlaces canónicos en `seo.ts` para no apuntar a "Casas en Venta" en publicaciones de búsqueda o precio oculto.
+  7. **Verificación y Despliegue:**
+     - Compilación local `npm run build` completada con éxito (código 0, 75 rutas pre-renderizadas).
+     - Cambios subidos y desplegados a producción en GitHub y Vercel (`main`).
+
+=== Sesión 2026-10-05 ===
+- **Implementación de Telemetría Global de Visitas a la Web y Leads de WhatsApp Fuera de Publicación:**
+  1. **Tipos de Telemetría (`src/types/telemetry.ts`):**
+     - Añadido `page_view` como evento estándar de analítica.
+     - Ampliadas las posiciones de botón (`catalog_card`, `landing_hero`, `owner_lead`, `navbar`).
+     - En `ConversionFunnelSummary`: desglosados `totalPageViews`, `totalPropertyViews`, `propertyWhatsappClicks`, `generalWhatsappClicks` y clasificación por `byPageType` (`home`, `landings`, `properties`, `others`).
+  2. **Ruta de Ingesta (`src/app/api/analytics/track/route.ts`):**
+     - Habilitada la recepción y normalización de eventos `page_view` para registrar tráfico a cualquier página del sitio.
+  3. **Tracker Global de Visitas (`src/components/analytics/GlobalPageViewTracker.tsx` & `src/app/layout.tsx`):**
+     - Creado componente cliente con detección de rutas activas (`usePathname`) dentro de `<Suspense>`.
+     - Registra automáticamente visitas a cualquier página pública (Home `/`, Landings SEO, Catálogo, Fichas de propiedad), excluyendo rutas administrativas (`/admin`, `/login`).
+  4. **Instrumentación de Puntos de Conversión de WhatsApp Generales:**
+     - `ContactSection.tsx`: Formulario de consulta del Home y enlace directo de WhatsApp registrados con `buttonPosition: 'contact'`.
+     - `Footer.tsx`: Enlaces de WhatsApp general, tasaciones, publicar inmueble y asesoramiento notarial registrados con `buttonPosition: 'footer'`.
+     - `PropertyCard.tsx`: Botón "Consultar por WhatsApp" en tarjetas de grilla/catálogo registrado con `buttonPosition: 'catalog_card'` e incremento atómico de propiedad.
+     - `OwnerLeadSection.tsx`: Envío de formulario para captación de propietarios registrado con `buttonPosition: 'owner_lead'`.
+     - `AppraisalPageForm.tsx`: Envío de solicitud de tasación pericial registrado con `buttonPosition: 'valuation'`.
+     - Landings (`casas-en-venta...`, `alquileres...`, `LevelBLandingTemplate.tsx`): Botones de contacto y tasación general conectados con `WhatsAppTrackButton` y `landing_hero`.
+  5. **Motor de Agregación (`src/lib/telemetryStore.ts`):**
+     - Catálogo maestro de páginas precargadas (`STANDARD_PAGES`) para reflejar visitas y contactos del Home y landings en la tabla de rendimiento.
+     - Cálculo desacoplado: visitas totales a la web vs vistas específicas a fichas; leads de WhatsApp de propiedades vs leads generales / institucionales.
+  6. **Panel de Administración (`/admin` & `/admin/seo-conversiones`):**
+     - En `/admin`: KPIs actualizados para mostrar **Visitas a la Web** (con desglose de publicaciones vs Home/Landings) y **Leads de WhatsApp** (inmuebles vs generales), más nuevo banner interactivo con desglose de tráfico y orígenes de WhatsApp (Home, Landings, Flotante, Contacto directo).
+     - En `/admin/seo-conversiones`: Pestaña "Embudo & Conversión" actualizada con tarjetas diferenciadas de visitas globales y tabla de rendimiento con insignias visuales claras (`[Home]`, `[Landing]`, `[Inmueble]`).
+  7. **Verificación:**
+     - Compilación limpia de TypeScript con `npx tsc --noEmit` (0 errores).
+

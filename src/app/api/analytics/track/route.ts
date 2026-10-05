@@ -20,8 +20,8 @@ export async function POST(request: NextRequest) {
     } = body;
 
     // 1. Caso A: Evento de Telemetría Avanzada (P3.1 / P3.3)
-    if (eventType && ['whatsapp_click', 'phone_click', 'property_view', 'property_contact', 'share_click', 'view'].includes(eventType)) {
-      const normalizedType = eventType === 'view' ? 'property_view' : eventType;
+    if (eventType && ['whatsapp_click', 'phone_click', 'property_view', 'page_view', 'property_contact', 'share_click', 'view'].includes(eventType)) {
+      const normalizedType = eventType === 'view' ? (propertyId || propertySlug ? 'property_view' : 'page_view') : eventType;
 
       await recordConversionEvent({
         eventType: normalizedType,

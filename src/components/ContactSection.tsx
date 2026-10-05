@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon';
 import { Phone, Mail, MapPin, Send, Clock, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { MONTAÑO_WHATSAPP_PHONE, MONTAÑO_OFFICIAL_EMAIL } from '@/utils/whatsapp';
+import { trackWhatsappClick } from '@/utils/telemetry';
 
 export const ContactSection: React.FC = () => {
   const [name, setName] = useState('');
@@ -13,6 +14,10 @@ export const ContactSection: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    trackWhatsappClick({
+      buttonPosition: 'contact',
+      pagePath: typeof window !== 'undefined' ? window.location.pathname : '/',
+    });
     const text = `Hola Inmobiliaria Montaño, mi nombre es ${name} (Tel: ${phone}).\nConsulta: ${message}`;
     const waUrl = `https://wa.me/${MONTAÑO_WHATSAPP_PHONE}?text=${encodeURIComponent(text)}`;
     window.open(waUrl, '_blank');
@@ -54,6 +59,12 @@ export const ContactSection: React.FC = () => {
                   href={`https://wa.me/${MONTAÑO_WHATSAPP_PHONE}`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => {
+                    trackWhatsappClick({
+                      buttonPosition: 'contact',
+                      pagePath: typeof window !== 'undefined' ? window.location.pathname : '/',
+                    });
+                  }}
                   className="inline-block mt-2 font-black text-sm text-[#e85d04] hover:underline"
                 >
                   +598 92 776 715
