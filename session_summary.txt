@@ -964,3 +964,48 @@
   7. **Verificación:**
      - Compilación limpia de TypeScript con `npx tsc --noEmit` (0 errores).
 
+  8. **Compilación y Despliegue a Producción:**
+     - Compilación de producción `npm run build` ejecutada con éxito (código 0, 75 rutas estáticas y dinámicas generadas limpias).
+     - Cambios subidos a GitHub (`main`) con commit `e7077ec` bajo solicitud explícita del usuario, activando el despliegue automático en Vercel.
+
+
+- **Diagnóstico y Análisis de Posicionamiento en Google vs Competencia (San José de Mayo):**
+  - Analizada la presencia orgánica actual en Google, Google Maps / Business Profile y portales inmobiliarios de Inmobiliaria Montaño frente a los principales competidores del departamento (Gloria Díaz, Gutiérrez Larre, Mario Méndez MGI, Diego Perdomo, Emiliano Gandini, Lema Propiedades, Pérez Solari).
+  - Evaluada la situación competitiva en tres frentes: búsquedas de marca propia, búsquedas transaccionales genéricas y presencia en el Local Pack de mapas.
+  - Elaborado plan estratégico de acción para superar a la competencia combinando la ventaja tecnológica de la nueva plataforma con optimización de Google Business Profile y Search Console.
+- **Revisión de Google Search Console para inmobiliariamontano.uy:**
+  - Verificado el estado del sitemap oficial: enviado correctamente (`Correcto`), leído por Googlebot el 1 de octubre de 2026, con 38 páginas descubiertas bajo la propiedad de dominio DNS `sc-domain:inmobiliariamontano.uy`.
+  - Instrucciones provistas para evaluar la brecha entre páginas descubiertas e indexadas (pestaña Páginas) y métricas de posicionamiento orgánico en vivo (pestaña Rendimiento: clics, impresiones, consultas y posición media).
+- **Verificación de Indexación Directa de la Home (inmobiliariamontano.uy) en Google Search Console:**
+  - Confirmada la presencia oficial en el índice de Google: estado "La URL está en Google", página indexada y servida bajo HTTPS sin bloqueos ni acciones manuales.
+  - Indicadas acciones inmediatas: solicitud de re-indexación si hubo cambios recientes de contenido/SEO, inspección global en la sección Páginas y análisis de métricas en Rendimiento.
+- **Análisis de Métricas Reales de Rendimiento en Google Search Console:**
+  - Evaluados datos de los últimos 3 meses: 230 clics, 2.000 impresiones, CTR medio excepcional de 11,5% y posición media de 7,7 (página 1 de Google).
+  - Comprobado que Inmobiliaria Montaño ya compite con éxito frente a las agencias tradicionales en búsquedas genéricas de la ciudad ("inmobiliarias en san josé de mayo", "inmobiliaria san jose", etc.) con 98 términos activos en el índice.
+  - Definida estrategia para la siguiente etapa: escalar búsquedas transaccionales de inmuebles específicos (casas en venta, terrenos, alquileres) para disputar el tráfico a los grandes portales verticales.
+- **Auditoría de Estado de Indexación de Páginas en Google Search Console:**
+  - Evaluado el estado de cobertura: 16 páginas activamente indexadas y 36 clasificadas como sin indexar.
+  - Comprobado que 14 de las no indexadas corresponden a salud técnica perfecta (10 redirecciones canónicas https/www y 4 resoluciones de etiquetas canónicas estructuradas en seo.ts).
+  - Destacado que "Rastreada: actualmente sin indexar" es 0 (indica 100% de aprobación de calidad editorial para cada URL leída por Googlebot).
+  - Identificada la gran oportunidad de crecimiento en las 22 páginas "Descubiertas: actualmente sin indexar" (inmuebles y landings en cola de rastreo) con estrategia de priorización manual y validación.
+- **Diagnóstico del Lote de 22 URLs "Descubierta: actualmente sin indexar" en Search Console:**
+  - Identificado el contenido retenido en cola de rastreo con Último rastreo: N/D (landings estratégicas de alto valor como /inmobiliaria-san-jose, /casas-aptas-para-banco-san-jose, guías de tasación y créditos bancarios, e inmuebles individuales con slugs SEO enriquecidos).
+  - Constatado que Googlebot aún no ha visitado su HTML (no han sido descartadas ni penalizadas).
+  - Instruido el disparo de "Validar corrección" y la aceleración selectiva mediante inspección directa e indexación prioritaria para capturar de inmediato el tráfico transaccional en San José.
+- **Optimización del Pipeline de Indexación Automática en el Admin y Backend:**
+  - Auditado el flujo de notificación a motores de búsqueda: verificado que la integración con Google Indexing API v3 funciona exitosamente (200 OK con Service Account OAuth2).
+  - Clarificada la distinción técnica: la API notifica y encola la URL en Googlebot de forma instantánea (apareciendo en Search Console como "Descubierta"), pero el rastreo efectivo posterior depende de los ciclos internos de Google y no es en tiempo real.
+  - Normalizada la URL objetivo en `src/lib/googleIndexing.ts` y `src/components/admin/SeoEditorSection.tsx` para forzar siempre el dominio canónico `https://www.inmobiliariamontano.uy`, previniendo errores 403 cuando el administrador opera desde localhost o URLs alternativas.
+  - Mejorada la UX del formulario de alta en `/admin/nueva`: reemplazado el botón de forzar indexación previa por un indicador claro que informa que el aviso se dispara automáticamente al guardar la propiedad (evitando notificar URLs en 404 antes de existir en base de datos).
+  - Verificada la compilación limpia de TypeScript (`npx tsc --noEmit`, 0 errores).
+- **Implementación de Enlazado Interno Estratégico en el Pie de Página (Footer.tsx):**
+  - Añadido bloque de enlaces rastreables para las 6 landings de alto valor que figuraban en cola de Search Console (`/inmobiliaria-san-jose`, `/guia-tasacion-inmobiliaria-san-jose`, `/guia-compra-propiedad-credito-bancario-uruguay`, `/estadisticas-inmobiliarias-san-jose`, `/casas-en-venta-libertad`, `/terrenos-en-venta-libertad`).
+  - Eliminado el estatus de "URLs huérfanas" frente a Googlebot: ahora cada página del sitio transfiere PageRank e indexación continua hacia estas páginas clave.
+  - Verificada la compilación limpia de TypeScript (`npx tsc --noEmit`, 0 errores).
+- **Documentación Conceptual y Explicación del Hub de Enlazado Interno:**
+  - Explicado el funcionamiento del rastreador de Googlebot (navegación por grafos de hipervínculos) y el problema técnico de las páginas huérfanas (URLs presentes en sitemap.xml pero sin enlaces internos).
+  - Detallado el impacto del Hub permanente en el footer: eliminación de páginas huérfanas, flujo de autoridad (PageRank) desde la portada hacia las landings pilares y aceleración del ciclo de indexación orgánica.
+- **Ajuste de Enlazado Interno a Operación e Inventario Real (San José de Mayo):**
+  - Removidos los enlaces a Libertad del Footer dado que no hay inmuebles publicados actualmente en dicha localidad.
+  - Reemplazados por las páginas con inventario y demanda activa en San José de Mayo: Tasaciones Profesionales (`/tasaciones-san-jose-de-mayo`) y Publicar / Vender mi Propiedad (`/vender-propiedad-san-jose`).
+  - Verificada la compilación limpia de TypeScript (`npx tsc --noEmit`, 0 errores).

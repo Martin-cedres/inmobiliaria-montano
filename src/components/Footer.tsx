@@ -239,8 +239,58 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
 
         </div>
 
+        {/* Enlazado Interno Estratégico (Guías de Autoridad y Cobertura Local) */}
+        <div className="mt-10 pt-6 border-t border-[#2D1D42]/80">
+          <p className="text-[11px] font-black uppercase tracking-wider text-purple-300/80 mb-3">
+            Guías Inmobiliarias & Cobertura Departamental San José
+          </p>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-300">
+            <Link
+              href="/inmobiliaria-san-jose"
+              className="hover:text-[#E85D04] transition-colors font-medium"
+            >
+              Inmobiliaria en San José
+            </Link>
+            <span className="text-purple-400/40 hidden sm:inline">•</span>
+            <Link
+              href="/guia-tasacion-inmobiliaria-san-jose"
+              className="hover:text-[#E85D04] transition-colors font-medium"
+            >
+              Guía de Tasación Profesional
+            </Link>
+            <span className="text-purple-400/40 hidden sm:inline">•</span>
+            <Link
+              href="/guia-compra-propiedad-credito-bancario-uruguay"
+              className="hover:text-[#E85D04] transition-colors font-medium"
+            >
+              Guía Compra con Crédito Bancario
+            </Link>
+            <span className="text-purple-400/40 hidden sm:inline">•</span>
+            <Link
+              href="/estadisticas-inmobiliarias-san-jose"
+              className="hover:text-[#E85D04] transition-colors font-medium"
+            >
+              Estadísticas del Mercado San José
+            </Link>
+            <span className="text-purple-400/40 hidden sm:inline">•</span>
+            <Link
+              href="/tasaciones-san-jose-de-mayo"
+              className="hover:text-[#E85D04] transition-colors font-medium"
+            >
+              Tasaciones Profesionales
+            </Link>
+            <span className="text-purple-400/40 hidden sm:inline">•</span>
+            <Link
+              href="/vender-propiedad-san-jose"
+              className="hover:text-[#E85D04] transition-colors font-medium"
+            >
+              Publicar & Vender mi Propiedad
+            </Link>
+          </div>
+        </div>
+
         {/* Bottom Copyright & Credit Bar */}
-        <div className="mt-12 pt-6 border-t border-[#2D1D42] text-center text-xs text-slate-300 flex flex-col md:flex-row justify-between items-center gap-4 pr-0 sm:pr-48 lg:pr-56">
+        <div className="mt-8 pt-6 border-t border-[#2D1D42] text-center text-xs text-slate-300 flex flex-col md:flex-row justify-between items-center gap-4 pr-0 sm:pr-48 lg:pr-56">
           <div className="flex items-center space-x-2">
             <p>© {new Date().getFullYear()} Inmobiliaria Montaño. Todos los derechos reservados. San José de Mayo, Uruguay.</p>
             <Link

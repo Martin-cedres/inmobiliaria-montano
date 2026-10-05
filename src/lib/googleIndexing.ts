@@ -55,16 +55,26 @@ export async function notifySearchEngines(
   const timestamp = new Date().toISOString();
 
   try {
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
+    const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy').replace(/\/+$/, '');
     const sitemapUrl = `${siteUrl}/sitemap.xml`;
     const indexNowKey = process.env.INDEXNOW_KEY || 'inmobiliariamontanoindexkey2026';
     const host = siteUrl.replace(/^https?:\/\//, '');
+
+    // Normalizar siempre al dominio de producción canónico oficial para evitar rechazos de propiedad (403)
+    let canonicalTargetUrl = url;
+    if (canonicalTargetUrl.startsWith('/')) {
+      canonicalTargetUrl = `${siteUrl}${canonicalTargetUrl}`;
+    } else if (canonicalTargetUrl.startsWith('http')) {
+      canonicalTargetUrl = canonicalTargetUrl.replace(/^https?:\/\/[^\/]+/, siteUrl);
+    } else {
+      canonicalTargetUrl = `${siteUrl}/${canonicalTargetUrl}`;
+    }
 
     const indexNowBody = {
       host: host,
       key: indexNowKey,
       keyLocation: `${siteUrl}/${indexNowKey}.txt`,
-      urlList: [url],
+      urlList: [canonicalTargetUrl],
     };
 
     let googleApiSuccess = false;
@@ -84,7 +94,7 @@ export async function notifySearchEngines(
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            url,
+            url: canonicalTargetUrl,
             type,
           }),
         });
@@ -121,10 +131,12 @@ export async function notifySearchEngines(
         : 'Google Search Ping + IndexNow Engine';
 
     return {
-      success: true,
+      success: googleApiSuccess || !clientEmail,
       timestamp,
       method,
-      details: `Notificación ${type} enviada a los motores de búsqueda para: ${url}`,
+      details: googleApiSuccess
+        ? `Notificación ${type} procesada exitosamente por Google e IndexNow para: ${canonicalTargetUrl}`
+        : `Notificación enviada a IndexNow. Detalle Google: ${googleApiError || 'API no configurada'}`,
     };
   } catch (err: any) {
     console.error('Error general al notificar a motores de búsqueda:', err);

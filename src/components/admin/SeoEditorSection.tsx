@@ -178,7 +178,7 @@ export function SeoEditorSection({
   const handleForceGoogleIndexing = async () => {
     setIsNotifyingGoogle(true);
     try {
-      const siteOrigin = typeof window !== 'undefined' ? window.location.origin : 'https://inmobiliariamontano.uy';
+      const siteOrigin = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy').replace(/\/+$/, '');
       const targetUrl = `${siteOrigin}/propiedad/${effectiveSlug}`;
 
       const res = await fetch('/api/admin/google-index', {
@@ -535,15 +535,21 @@ export function SeoEditorSection({
           </div>
 
           <div className="flex items-center space-x-2 w-full sm:w-auto">
-            <button
-              type="button"
-              onClick={handleForceGoogleIndexing}
-              disabled={isNotifyingGoogle}
-              className="flex-1 sm:flex-initial bg-[#5E1754] hover:bg-purple-900 active:scale-95 text-white font-extrabold text-xs px-4 py-2.5 rounded-xl transition-all shadow-md flex items-center justify-center space-x-2 cursor-pointer"
-            >
-              <RefreshCw className={`w-3.5 h-3.5 ${isNotifyingGoogle ? 'animate-spin' : ''}`} />
-              <span>{isNotifyingGoogle ? 'Notificando...' : 'Forzar Indexación en Google'}</span>
-            </button>
+            {!propertyId ? (
+              <span className="text-xs bg-purple-50 text-[#5E1754] font-bold px-3 py-2 rounded-xl border border-purple-200/80">
+                ⚡ Se notificará automáticamente al Publicar
+              </span>
+            ) : (
+              <button
+                type="button"
+                onClick={handleForceGoogleIndexing}
+                disabled={isNotifyingGoogle}
+                className="flex-1 sm:flex-initial bg-[#5E1754] hover:bg-purple-900 active:scale-95 text-white font-extrabold text-xs px-4 py-2.5 rounded-xl transition-all shadow-md flex items-center justify-center space-x-2 cursor-pointer"
+              >
+                <RefreshCw className={`w-3.5 h-3.5 ${isNotifyingGoogle ? 'animate-spin' : ''}`} />
+                <span>{isNotifyingGoogle ? 'Notificando...' : 'Re-notificar a Google'}</span>
+              </button>
+            )}
 
             <a
               href={searchConsoleInspectUrl}
