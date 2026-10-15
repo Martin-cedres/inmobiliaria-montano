@@ -8,7 +8,6 @@ import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
 import { PropertyCard } from '@/components/PropertyCard';
 import { FaqAccordion, FaqItem } from '@/components/ui/FaqAccordion';
 import { CasasEnVentaJsonLd } from '@/components/seo/CasasEnVentaJsonLd';
-import { DepartmentInterlinking } from '@/components/seo/DepartmentInterlinking';
 import { getCachedProperties } from '@/lib/propertiesStore';
 import { buildGeneralWhatsAppLink } from '@/utils/whatsapp';
 import { WhatsAppTrackButton } from '@/components/analytics/WhatsAppTrackButton';
@@ -23,6 +22,9 @@ import {
   Compass,
   Sparkles,
   PhoneCall,
+  Banknote,
+  CheckCircle2,
+  ArrowRight,
 } from 'lucide-react';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
@@ -31,15 +33,16 @@ const PAGE_URL = `${BASE_URL}/casas-en-venta-san-jose-de-mayo`;
 export const revalidate = 86400; // 24 horas ISR
 
 export const metadata: Metadata = {
-  title: 'Casas en Venta en San José y San José de Mayo | Inmobiliaria Montaño',
+  title: 'Casas en Venta en San José de Mayo | Inmobiliaria Montaño',
   description:
     'Catálogo exclusivo de casas en venta en San José y San José de Mayo, Uruguay. Opciones residenciales y céntricas con títulos al día y aptitud para crédito bancario. Asesoramiento con Daniel Montaño al 092 776 715.',
   keywords: [
+    'casas en venta en san jose de mayo',
+    'casas en venta san jose de mayo',
     'casas en venta san jose',
     'casas en venta en san jose',
     'comprar casa en san jose uruguay',
     'casas en venta san jose uruguay',
-    'casas en venta san jose de mayo',
     'casas aptas para banco san jose de mayo',
     'casas centro san jose',
     'casas arroyo mallada',
@@ -50,7 +53,7 @@ export const metadata: Metadata = {
     canonical: PAGE_URL,
   },
   openGraph: {
-    title: 'Casas en Venta en San José y San José de Mayo — Inmobiliaria Montaño',
+    title: 'Casas en Venta en San José de Mayo | Inmobiliaria Montaño',
     description:
       'Encontrá tu casa en San José y San José de Mayo con títulos verificados, opciones aptas para banco y atención directa de Daniel Montaño.',
     url: PAGE_URL,
@@ -62,13 +65,13 @@ export const metadata: Metadata = {
         url: `${BASE_URL}/og-logo.png`,
         width: 1200,
         height: 630,
-        alt: 'Casas en Venta en San José y San José de Mayo — Inmobiliaria Montaño',
+        alt: 'Casas en Venta en San José de Mayo | Inmobiliaria Montaño',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Casas en Venta en San José y San José de Mayo — Inmobiliaria Montaño',
+    title: 'Casas en Venta en San José de Mayo | Inmobiliaria Montaño',
     description:
       'Encontrá tu casa en San José con títulos verificados y atención directa de Daniel Montaño.',
     images: [`${BASE_URL}/og-logo.png`],
@@ -289,7 +292,169 @@ export default async function CasasEnVentaPage() {
           </div>
         </section>
 
-        {/* 5. Acordeón Interactivo de Preguntas Frecuentes (FAQ Schema) */}
+        {/* 5. Guía de Precios y Zonas de Casas en Venta en San José de Mayo (2026) - Featured Snippet & Conversión */}
+        <section className="bg-slate-50 border-b border-slate-200/80 py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto space-y-8">
+            <div className="max-w-3xl space-y-3">
+              <span className="inline-flex items-center space-x-1.5 bg-[#5E1754]/10 text-[#5E1754] px-3.5 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider">
+                <Sparkles className="w-3.5 h-3.5 text-[#E85D04]" />
+                <span>Mercado Inmobiliario de San José</span>
+              </span>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+                Guía de Precios y Zonas de Casas en Venta en San José de Mayo (2026)
+              </h2>
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
+                Conocé los valores promedio del mercado local, las áreas con mayor plusvalía y los requisitos indispensables para adquirir una casa con financiación bancaria garantizada.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Tarjeta A: Rango de precios reales de mercado */}
+              <div className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200 shadow-xs hover:border-[#5E1754]/30 hover:shadow-md transition-all flex flex-col justify-between space-y-4">
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-11 h-11 rounded-xl bg-amber-500/10 text-[#E85D04] flex items-center justify-center flex-shrink-0">
+                      <Banknote className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <span className="text-[11px] font-black uppercase tracking-wider text-[#E85D04]">Valores Actualizados</span>
+                      <h3 className="font-extrabold text-base sm:text-lg text-slate-900 leading-tight">
+                        Rango de Precios Reales de Mercado
+                      </h3>
+                    </div>
+                  </div>
+
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Referencia estimada de valores en San José de Mayo según metraje, comodidades y zona:
+                  </p>
+
+                  <ul className="space-y-3 text-xs">
+                    <li className="p-3 rounded-xl bg-slate-50 border border-slate-100 space-y-1">
+                      <div className="font-bold text-slate-900 flex justify-between items-center">
+                        <span>Oportunidades y 1ª vivienda:</span>
+                        <span className="text-[#5E1754] font-black">USD 45.000 a USD 75.000</span>
+                      </div>
+                      <p className="text-[11px] text-slate-500">Casas compactas, opciones para reciclar o propiedades en barrios consolidados.</p>
+                    </li>
+
+                    <li className="p-3 rounded-xl bg-purple-50/70 border border-purple-100 space-y-1">
+                      <div className="font-bold text-slate-900 flex justify-between items-center">
+                        <span>Casas residenciales familiares:</span>
+                        <span className="text-[#5E1754] font-black">USD 80.000 a USD 160.000</span>
+                      </div>
+                      <p className="text-[11px] text-slate-500">2 a 3 dormitorios con fondo, parrillero y garaje; listas para habitar.</p>
+                    </li>
+
+                    <li className="p-3 rounded-xl bg-slate-50 border border-slate-100 space-y-1">
+                      <div className="font-bold text-slate-900 flex justify-between items-center">
+                        <span>Chalets céntricos y amplios:</span>
+                        <span className="text-[#5E1754] font-black">USD 170.000 a USD 280.000+</span>
+                      </div>
+                      <p className="text-[11px] text-slate-500">Inmuebles destacados de excelente construcción y padrones amplios en puntos neurálgicos.</p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Tarjeta B: Zonas más demandadas */}
+              <div className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200 shadow-xs hover:border-[#5E1754]/30 hover:shadow-md transition-all flex flex-col justify-between space-y-4">
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-11 h-11 rounded-xl bg-purple-500/10 text-[#5E1754] flex items-center justify-center flex-shrink-0">
+                      <MapPin className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <span className="text-[11px] font-black uppercase tracking-wider text-[#5E1754]">Demanda y Liquidez</span>
+                      <h3 className="font-extrabold text-base sm:text-lg text-slate-900 leading-tight">
+                        Zonas Más Demandadas en San José
+                      </h3>
+                    </div>
+                  </div>
+
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Barrios y sectores preferidos por compradores locales y familias que se radican en la ciudad:
+                  </p>
+
+                  <ul className="space-y-2.5 text-xs text-slate-700">
+                    <li className="flex items-start space-x-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-[#E85D04] flex-shrink-0 mt-0.5" />
+                      <div>
+                        <strong className="text-slate-900">Centro de San José:</strong> Máxima cercanía a plazas, bancos, colegios y servicios céntricos.
+                      </div>
+                    </li>
+                    <li className="flex items-start space-x-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-[#E85D04] flex-shrink-0 mt-0.5" />
+                      <div>
+                        <strong className="text-slate-900">Barrio Molino:</strong> Barrio tradicional y apacible con fácil acceso hacia las arterias principales.
+                      </div>
+                    </li>
+                    <li className="flex items-start space-x-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-[#E85D04] flex-shrink-0 mt-0.5" />
+                      <div>
+                        <strong className="text-slate-900">Arroyo Mallada:</strong> Sector residencial en marcada valorización con entorno sereno y lotes amplios.
+                      </div>
+                    </li>
+                    <li className="flex items-start space-x-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-[#E85D04] flex-shrink-0 mt-0.5" />
+                      <div>
+                        <strong className="text-slate-900">Parque Rodó:</strong> Zona verde recreativa de primer nivel, ideal para familias con niños.
+                      </div>
+                    </li>
+                    <li className="flex items-start space-x-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-[#E85D04] flex-shrink-0 mt-0.5" />
+                      <div>
+                        <strong className="text-slate-900">Barrio Prado:</strong> Entorno consolidado, residencial y con alta tranquilidad barrial.
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Tarjeta C: Opciones Aptas para Préstamo Bancario */}
+              <div className="bg-gradient-to-br from-[#2D0B28] via-[#43123C] to-[#5E1754] text-white rounded-2xl p-6 sm:p-7 border border-purple-400/30 shadow-md flex flex-col justify-between space-y-5">
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-11 h-11 rounded-xl bg-white/15 text-amber-300 flex items-center justify-center flex-shrink-0">
+                      <Landmark className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <span className="text-[11px] font-black uppercase tracking-wider text-amber-300">Crédito Hipotecario</span>
+                      <h3 className="font-extrabold text-base sm:text-lg text-white leading-tight">
+                        Casas Aptas para Préstamo Bancario
+                      </h3>
+                    </div>
+                  </div>
+
+                  <p className="text-xs text-purple-100 leading-relaxed">
+                    Para financiar la compra con bancos (<strong>BHU, Santander, Itaú, BBVA, Scotiabank</strong>), el inmueble debe contar con títulos de propiedad perfectos, regularización ante BPS y planos de mensura aprobados.
+                  </p>
+
+                  <div className="p-3.5 rounded-xl bg-white/10 border border-white/15 space-y-2 text-xs text-purple-100">
+                    <div className="flex items-center space-x-2 text-amber-300 font-bold">
+                      <ShieldCheck className="w-4 h-4 flex-shrink-0" />
+                      <span>Títulos Verificados y Agilidad Notarial</span>
+                    </div>
+                    <p className="text-[11px] text-purple-200 leading-relaxed">
+                      Auditamos previamente la documentación catastral y notarial de cada propiedad para que tu crédito hipotecario sea aprobado sin trabas ni demoras.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="pt-2">
+                  <Link
+                    href="/casas-aptas-para-banco-san-jose"
+                    className="inline-flex items-center justify-center space-x-2 w-full bg-[#E85D04] hover:bg-[#FF8500] active:scale-95 text-white font-extrabold text-xs sm:text-sm py-3 px-4 rounded-xl shadow-lg transition-all group"
+                  >
+                    <span>Ver Casas Aptas para Banco</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 6. Acordeón Interactivo de Preguntas Frecuentes (FAQ Schema) */}
         <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
           <FaqAccordion
             items={FAQS}

@@ -538,6 +538,48 @@
       "eventType": "page_view",
       "pagePath": "/",
       "anonymousSessionId": "anon_1792026760983_63s7khg"
+    },
+    {
+      "id": "evt_1792031875550_cgdmzb",
+      "timestamp": "2026-10-15T02:37:55.550Z",
+      "eventType": "page_view",
+      "pagePath": "/casas-aptas-para-banco-san-jose",
+      "anonymousSessionId": "anon_1792026760983_63s7khg"
+    },
+    {
+      "id": "evt_1792031934190_8cxvl2",
+      "timestamp": "2026-10-15T02:38:54.190Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792026760983_63s7khg"
+    },
+    {
+      "id": "evt_1792031935641_ah8y7z",
+      "timestamp": "2026-10-15T02:38:55.641Z",
+      "eventType": "page_view",
+      "pagePath": "/casas-en-venta-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792026760983_63s7khg"
+    },
+    {
+      "id": "evt_1792031943962_228ufc",
+      "timestamp": "2026-10-15T02:39:03.962Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792026760983_63s7khg"
+    },
+    {
+      "id": "evt_1792031962475_ugzu15",
+      "timestamp": "2026-10-15T02:39:22.475Z",
+      "eventType": "page_view",
+      "pagePath": "/casas-en-venta-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792026760983_63s7khg"
+    },
+    {
+      "id": "evt_1792031975819_pgp01a",
+      "timestamp": "2026-10-15T02:39:35.819Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792026760983_63s7khg"
     }
   ],
   "seoRecords": [

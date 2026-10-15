@@ -3,11 +3,9 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Calculator, Menu, X, Building2, Phone, Home, Compass } from 'lucide-react';
-import { buildGeneralWhatsAppLink } from '@/utils/whatsapp';
 
 export const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const whatsappLink = buildGeneralWhatsAppLink('general');
 
   const handleMapClick = (e: React.MouseEvent) => {
     if (typeof window !== 'undefined' && window.location.pathname === '/') {
@@ -18,7 +16,7 @@ export const Header: React.FC = () => {
     setMobileMenuOpen(false);
   };
 
-  const handleCatalogClick = (e: React.MouseEvent) => {
+  const handleCatalogClick = () => {
     if (typeof window !== 'undefined' && window.location.pathname === '/') {
       window.dispatchEvent(new CustomEvent('set-catalog-view', { detail: { view: 'grid', scroll: true } }));
     }
@@ -57,6 +55,12 @@ export const Header: React.FC = () => {
               Propiedades
             </Link>
             <Link
+              href="/casas-en-venta-san-jose-de-mayo"
+              className="hover:text-[#5e1754] transition-colors relative py-1.5 font-bold after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#5e1754] hover:after:w-full after:transition-all duration-300"
+            >
+              Casas en Venta
+            </Link>
+            <Link
               href="/?view=map#catalogo"
               onClick={handleMapClick}
               rel="nofollow"
@@ -81,12 +85,12 @@ export const Header: React.FC = () => {
 
           {/* Botón CTA Naranja Institucional (Imán de Captación: Publicar mi Inmueble) */}
           <div className="hidden sm:flex items-center">
-            <a
+            <Link
               href="/#tasaciones"
               className="bg-[#e85d04] hover:bg-[#ff7518] active:scale-95 text-white px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-xs hover:shadow-orange-500/20 transition-all border border-orange-400/20"
             >
               Publicar mi Inmueble
-            </a>
+            </Link>
           </div>
 
           {/* Mobile Menu Toggle Button */}
@@ -112,6 +116,15 @@ export const Header: React.FC = () => {
           >
             <Home className="w-5 h-5 text-[#5E1754] group-hover:text-[#E85D04] transition-colors" />
             <span>Ver Catálogo de Propiedades</span>
+          </Link>
+
+          <Link
+            href="/casas-en-venta-san-jose-de-mayo"
+            onClick={() => setMobileMenuOpen(false)}
+            className="flex items-center space-x-3 p-3 rounded-xl hover:bg-purple-50 text-slate-800 font-bold text-sm group transition-colors"
+          >
+            <Building2 className="w-5 h-5 text-[#5E1754] group-hover:text-[#E85D04] transition-colors" />
+            <span>Casas en Venta en San José</span>
           </Link>
 
           <Link
@@ -143,13 +156,13 @@ export const Header: React.FC = () => {
           </Link>
 
           <div className="pt-2">
-            <a
-              href="#tasaciones"
+            <Link
+              href="/#tasaciones"
               onClick={() => setMobileMenuOpen(false)}
               className="w-full bg-[#e85d04] hover:bg-[#ff7518] text-white py-3 rounded-xl font-black text-center shadow-md text-sm block"
             >
               Publicar mi Inmueble
-            </a>
+            </Link>
           </div>
         </div>
       )}

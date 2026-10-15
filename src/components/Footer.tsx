@@ -3,25 +3,17 @@
 import React from 'react';
 import Link from 'next/link';
 import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon';
-import { Phone, Mail, MapPin, Award, Home, Key, Trees, Warehouse, Landmark, Calculator, ShieldCheck, Lock, Building2, TrendingUp } from 'lucide-react';
+import { Mail, MapPin, Home, Key, Trees, Warehouse, Landmark, Calculator, ShieldCheck, Lock, Building2, TrendingUp } from 'lucide-react';
 import { MONTAÑO_OFFICIAL_EMAIL, buildGeneralWhatsAppLink } from '@/utils/whatsapp';
 import { trackWhatsappClick } from '@/utils/telemetry';
 
 interface FooterProps {
-  onSelectCategoryFilter?: (category: any, operation?: any) => void;
+  onSelectCategoryFilter?: (category: string, operation?: string) => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
+export const Footer: React.FC<FooterProps> = () => {
   const generalWhatsappUrl = buildGeneralWhatsAppLink('general');
-  const tasacionWhatsappUrl = buildGeneralWhatsAppLink('tasacion');
-  const publicarWhatsappUrl = buildGeneralWhatsAppLink('publicar');
   const notarialWhatsappUrl = buildGeneralWhatsAppLink('notarial');
-
-  const handleFilterClick = (category: string, operation?: string) => {
-    if (onSelectCategoryFilter) {
-      onSelectCategoryFilter(category, operation || 'todas');
-    }
-  };
 
   return (
     <footer id="contacto" className="bg-[#191024] text-slate-200 border-t border-[#2D1D42] scroll-mt-28 sm:scroll-mt-32">
@@ -75,7 +67,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
                   className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
                 >
                   <Home className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
-                  <span>Casas en Venta en San José</span>
+                  <span>Casas en Venta en San José de Mayo</span>
                 </Link>
               </li>
               <li>
@@ -93,7 +85,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategoryFilter }) => {
                   className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
                 >
                   <MapPin className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
-                  <span>Terrenos & Solares</span>
+                  <span>Terrenos en Venta en San José</span>
                 </Link>
               </li>
               <li>
