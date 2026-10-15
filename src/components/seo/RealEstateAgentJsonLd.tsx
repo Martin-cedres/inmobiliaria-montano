@@ -37,6 +37,8 @@ export function RealEstateAgentJsonLd() {
     sameAs: [
       'https://share.google/6I1gbffV5ZTS5heXV',
       'https://wa.me/59892776715',
+      'https://www.facebook.com/InmobiliariaDanielMontano',
+      'https://circulopolicialsj.org.uy/convenios/',
     ],
     areaServed: [
       {
@@ -112,9 +114,22 @@ export function RealEstateAgentJsonLd() {
           '@type': 'OfferCatalog',
           name: 'Tasaciones Inmobiliarias Profesionales',
         },
+        {
+          '@type': 'OfferCatalog',
+          name: 'Convenio Círculo Policial de San José — 10% OFF en Alquileres para Socios',
+        },
+        {
+          '@type': 'OfferCatalog',
+          name: 'Tasaciones Inmobiliarias Express en 24-48 horas',
+        },
       ],
     },
     knowsAbout: [
+      'Tasaciones Inmobiliarias Rápidas en 24-48 horas en San José de Mayo',
+      'Convenio Institucional de Alquiler con Círculo Policial de San José',
+      'Alquileres con Garantías ANDA, Porto Seguro, SURA, CGN, Mapfre, Santander y FIDECIU',
+      'Créditos Hipotecarios y Préstamos Bancarios BHU',
+      'Venta de Casas y Terrenos con Títulos Verificados en San José',
       'Venta de inmuebles en San José',
       'Alquileres residenciales y comerciales',
       'Tasaciones oficiales y peritajes',

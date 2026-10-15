@@ -578,6 +578,15 @@ export function generatePropertyGraphSchema(property: Property) {
       sameAs: [
         'https://share.google/6I1gbffV5ZTS5heXV',
         'https://wa.me/59892776715',
+        'https://www.facebook.com/InmobiliariaDanielMontano',
+        'https://circulopolicialsj.org.uy/convenios/',
+      ],
+      knowsAbout: [
+        'Tasaciones Inmobiliarias Rápidas en 24-48 horas en San José de Mayo',
+        'Convenio Institucional de Alquiler con Círculo Policial de San José',
+        'Alquileres con Garantías ANDA, Porto Seguro, SURA, CGN, Mapfre, Santander y FIDECIU',
+        'Créditos Hipotecarios y Préstamos Bancarios BHU',
+        'Venta de Casas y Terrenos con Títulos Verificados en San José',
       ],
       slogan: 'Líder en venta de casas verificadas, créditos hipotecarios y tasaciones en San José de Mayo',
       address: {
@@ -669,6 +678,15 @@ export function generateSiteGraphSchema() {
         sameAs: [
           'https://share.google/6I1gbffV5ZTS5heXV',
           'https://wa.me/59892776715',
+          'https://www.facebook.com/InmobiliariaDanielMontano',
+          'https://circulopolicialsj.org.uy/convenios/',
+        ],
+        knowsAbout: [
+          'Tasaciones Inmobiliarias Rápidas en 24-48 horas en San José de Mayo',
+          'Convenio Institucional de Alquiler con Círculo Policial de San José',
+          'Alquileres con Garantías ANDA, Porto Seguro, SURA, CGN, Mapfre, Santander y FIDECIU',
+          'Créditos Hipotecarios y Préstamos Bancarios BHU',
+          'Venta de Casas y Terrenos con Títulos Verificados en San José',
         ],
         slogan: 'Líder en venta de casas verificadas, créditos hipotecarios y tasaciones en San José de Mayo',
         description: 'Inmobiliaria líder de referencia en San José de Mayo, Uruguay. Especialistas destacados en venta de casas verificadas, propiedades aptas para crédito bancario (BHU e hipotecarios), alquileres garantizados y tasaciones oficiales con Daniel Montaño.',

@@ -24,6 +24,9 @@ import {
   PhoneCall,
   UserCheck,
   FileText,
+  Award,
+  CheckCircle2,
+  ExternalLink,
 } from 'lucide-react';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
@@ -34,7 +37,7 @@ export const revalidate = 86400; // 24 horas ISR
 export const metadata: Metadata = {
   title: 'Alquileres en San José y San José de Mayo | Casas y Apartamentos | Inmobiliaria Montaño',
   description:
-    'Alquiler de casas, apartamentos y locales comerciales en San José y San José de Mayo, Uruguay. Garantías ANDA, Porto Seguro, Sura, CGN y Mapfre. Contratos seguros y atención directa con Daniel Montaño al 092 776 715.',
+    'Alquiler de casas, apartamentos y locales en San José de Mayo. Convenio Oficial Círculo Policial (10% OFF) y garantías ANDA, Porto Seguro, SURA, CGN, Mapfre, Santander y FIDECIU. Trato directo con Daniel Montaño al 092 776 715.',
   keywords: [
     'alquileres san jose',
     'alquileres en san jose',
@@ -87,7 +90,7 @@ const FAQS: FaqItem[] = [
   {
     question: '¿Qué garantías de alquiler se aceptan en Inmobiliaria Montaño?',
     answer:
-      'Trabajamos con las principales aseguradoras y aseguradoras públicas de plaza: ANDA, Contaduría General de la Nación (CGN), Porto Seguro, Sura y Mapfre. También gestionamos garantías de depósito o fianza según el acuerdo con el propietario.',
+      'Aceptamos todas las garantías líderes de plaza: ANDA, Contaduría General de la Nación (CGN), Porto Seguro, SURA, Mapfre, Santander y FIDECIU. Además, disponemos de un convenio oficial con el Círculo Policial de San José con 10% de bonificación en honorarios para socios.',
   },
   {
     question: '¿Cuál es el plazo habitual de los contratos de arrendamiento?',
@@ -167,8 +170,8 @@ export default async function AlquileresPage() {
                   <ShieldCheck className="w-4 h-4" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-black text-white">Garantías Ágiles</h4>
-                  <p className="text-[11px] text-purple-200">ANDA, Porto, Sura y CGN</p>
+                  <h4 className="text-xs font-black text-white">Todas las Garantías</h4>
+                  <p className="text-[11px] text-purple-200">ANDA, Porto, SURA, CGN y más</p>
                 </div>
               </div>
 
@@ -236,6 +239,90 @@ export default async function AlquileresPage() {
               ))}
             </div>
           )}
+        </section>
+
+        {/* 3.5. Confianza Institucional: Convenio Círculo Policial & Garantías Homologadas */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 w-full">
+          <div className="bg-gradient-to-br from-[#1c081e] via-[#350A2F] to-[#5E1754] rounded-3xl p-6 sm:p-8 md:p-10 text-white shadow-xl border border-purple-400/25 relative overflow-hidden">
+            {/* Resplandor decorativo de fondo */}
+            <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-[#E85D04]/15 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              {/* Tarjeta Convenio Oficial Círculo Policial */}
+              <div className="lg:col-span-7 space-y-4 text-left">
+                <div className="inline-flex items-center space-x-2 bg-amber-400/10 border border-amber-400/30 text-amber-300 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
+                  <Award className="w-4 h-4 text-amber-300" />
+                  <span>Convenio Institucional Oficial</span>
+                </div>
+
+                <h2 className="text-2xl sm:text-3xl font-black text-white leading-tight">
+                  Convenio con el <span className="text-amber-300">Círculo Policial de San José</span>
+                </h2>
+
+                <p className="text-sm sm:text-base text-slate-200 leading-relaxed font-normal">
+                  Beneficio exclusivo para socios: <strong>10% de bonificación</strong> en la comisión inmobiliaria en todos los nuevos contratos de arrendamiento gestionados por <strong>Inmobiliaria Montaño</strong>.
+                </p>
+
+                <div className="pt-2 flex flex-wrap items-center gap-4">
+                  <a
+                    href="https://circulopolicialsj.org.uy/convenios/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-2 bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs sm:text-sm px-5 py-3 rounded-xl transition-all shadow-md active:scale-95 group"
+                  >
+                    <span>Verificar Convenio en circulopolicialsj.org.uy</span>
+                    <ExternalLink className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                  </a>
+
+                  <span className="text-xs text-purple-200/90 flex items-center gap-1.5 font-medium">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                    <span>Acuerdo institucional verificado</span>
+                  </span>
+                </div>
+              </div>
+
+              {/* Sello de Garantías de Alquiler Homologadas */}
+              <div className="lg:col-span-5 bg-white/10 backdrop-blur-md rounded-2xl p-5 sm:p-6 border border-white/15 space-y-4 text-left">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-xl bg-amber-400/20 text-amber-300 flex items-center justify-center flex-shrink-0 border border-amber-400/30">
+                    <ShieldCheck className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm sm:text-base font-black text-white">
+                      Aceptamos Todas las Garantías de Alquiler
+                    </h3>
+                    <p className="text-[11px] text-purple-200">
+                      Cobertura total para inquilinos y propietarios en San José
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1">
+                  {[
+                    { name: 'ANDA', type: 'Institucional' },
+                    { name: 'Porto Seguro', type: 'Aseguradora' },
+                    { name: 'SURA', type: 'Aseguradora' },
+                    { name: 'CGN', type: 'Contaduría' },
+                    { name: 'Mapfre', type: 'Aseguradora' },
+                    { name: 'Santander', type: 'Bancaria' },
+                    { name: 'FIDECIU', type: 'Fianza' },
+                  ].map((g) => (
+                    <div
+                      key={g.name}
+                      className="bg-white/10 hover:bg-white/15 border border-white/10 rounded-xl px-2.5 py-2 text-center transition-colors"
+                    >
+                      <div className="text-xs font-black text-white">{g.name}</div>
+                      <div className="text-[10px] text-amber-300/90">{g.type}</div>
+                    </div>
+                  ))}
+                </div>
+
+                <p className="text-[11px] text-slate-300 leading-normal">
+                  ¿Aún no tenés garantía tramitada? Te asesoramos sin costo para gestionarla en minutos.
+                </p>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* 4. Claves para Alquilar en San José */}

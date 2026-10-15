@@ -21,6 +21,7 @@
 
 === Sesión 2026-08-09 ===
 - Diseñado e implementado el componente [`SharePropertyModal.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/SharePropertyModal.tsx) para compartir fichas de propiedades.
+
 - Integrado soporte híbrido para Web Share API nativa en dispositivos móviles y modal popover corporativo en escritorio (`#191024`, púrpura y naranja).
 - Canales habilitados: WhatsApp con mensaje comercial pre-redactado, Copiar Enlace con aviso Toast interactivo, Facebook, Email e Imprimir/PDF.
 - Integrados botones de compartir en la imagen principal, cabecera de título y tarjeta fija de contacto en [`src/app/propiedad/[slug]/page.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/propiedad/%5Bslug%5D/page.tsx).
@@ -1009,3 +1010,86 @@
   - Removidos los enlaces a Libertad del Footer dado que no hay inmuebles publicados actualmente en dicha localidad.
   - Reemplazados por las páginas con inventario y demanda activa en San José de Mayo: Tasaciones Profesionales (`/tasaciones-san-jose-de-mayo`) y Publicar / Vender mi Propiedad (`/vender-propiedad-san-jose`).
   - Verificada la compilación limpia de TypeScript (`npx tsc --noEmit`, 0 errores).
+
+- **Compilación de Producción y Despliegue en Vercel:**
+  - Compilación local `npm run build` ejecutada con éxito (75 rutas estáticas y dinámicas pre-renderizadas con 0 errores bajo Next.js 16 / Turbopack).
+  - Subidos todos los cambios a GitHub (`main`) con commit `67b3431` bajo orden directa del usuario, activando el pipeline de despliegue automático en Vercel.
+
+=== Sesión 2026-10-14 ===
+- **Diagnóstico exhaustivo de las 27 URLs 'Sin indexar' en Google Search Console:**
+  1. **Páginas con redirección (10):** 3 URLs son variantes de protocolo/dominio (`http://`, `http://inmobiliariamontano.uy`, `https://inmobiliariamontano.uy`) y 7 son slugs antiguos migrados (`venta-propiedad-...`) que devuelven permanentRedirect (308/301) hacia los nuevos slugs limpios. El 'Error de validación' en GSC es artificial porque se solicitó validar una corrección sobre URLs que intencionalmente deben redirigir.
+  2. **Página alternativa con etiqueta canónica adecuada (4):** Filtros de búsqueda en la home (`/?view=map`, `/?category=apartamento`, etc.) que emiten `rel="canonical"` hacia la portada raíz; comportamiento SEO 100% correcto que evita duplicidad.
+  3. **Duplicada con canónica diferente (1):** Identificación de la URL única en GSC.
+  4. **Descubierta: actualmente sin indexar (12):** Slugs nuevos de propiedades recién optimizados (`Último rastreo: N/D`) en cola de rastreo de Googlebot, con validación iniciada el 5/10/26.
+
+- **Optimización de Crawl Budget en robots.txt (`src/app/robots.txt/route.ts`):**
+  - Incorporadas directivas `Disallow: /*?*view=*`, `Disallow: /*?*category=*` y `Disallow: /*?*focus=*` en todos los bloques de User-Agents (`*`, `Googlebot`, `Bingbot`, `GPTBot`, `ClaudeBot`, `PerplexityBot`, `Applebot`, `Applebot-Extended`, `OAI-SearchBot`, `ChatGPT-User`, `meta-externalagent`, `anthropic-ai`, `cohere-ai`, `Amazonbot`).
+  - Previene que los bots consuman cuota de rastreo en combinaciones de filtros URL y parámetros canónicos redundantes.
+  - Conservadas todas las directivas de Content-Signal, sitemaps, catálogos IA, llms.txt y encabezados de respuesta HTTP.
+- **Implementación y Ejecución de Script de Notificación Masiva (`scripts/batch-google-index.mjs`):**
+  - Creado script Node.js ESM con autenticación OAuth2 mediante claves de Service Account (`GOOGLE_CLIENT_EMAIL` y `GOOGLE_PRIVATE_KEY` vía `jose`).
+  - Filtradas todas las propiedades activas de `src/db/properties.json` (`status !== 'retirada' && status !== 'inactiva'`).
+  - Notificadas exitosamente las 20 propiedades activas al endpoint `https://indexing.googleapis.com/v3/urlNotifications:publish` con `type: "URL_UPDATED"`.
+  - Rate-limit de 250ms aplicado entre peticiones; resultado: 20/20 respuestas HTTP 200 OK.
+- **Auditoría y Validación QA:**
+  - Sintaxis de `robots.txt` auditada y validada según RFC 9309.
+  - Verificación estricta de tipos TypeScript (`npx tsc --noEmit`): 0 errores.
+  - Compilación de producción (`npm run build`): 75/75 rutas SSG/ISR generadas limpiamente con 0 errores.
+  - Confirmación de directiva de seguridad: 0 `git push` o despliegues ejecutados; trabajo 100% verificado localmente.
+
+=== Sesión 2026-10-15 (Estrategia Integral SEO Local & GEO / AI Overviews) ===
+- **Ampliación de Entidades Semánticas en `src/utils/seo.ts`:**
+  - Actualizado `sameAs` de `RealEstateAgent` en `generatePropertyGraphSchema` y `generateSiteGraphSchema` incluyendo perfiles oficiales: Google Maps (`https://share.google/6I1gbffV5ZTS5heXV`), WhatsApp (`https://wa.me/59892776715`), Facebook Oficial (`https://www.facebook.com/InmobiliariaDanielMontano`) y Convenio Institucional del Círculo Policial de San José (`https://circulopolicialsj.org.uy/convenios/`).
+  - Incorporado y ampliado `knowsAbout` en ambos grafos Schema.org con credenciales clave: Tasaciones Inmobiliarias Rápidas en 24-48 horas, Convenio con Círculo Policial de San José, Alquileres con Garantías ANDA, Porto Seguro, SURA, CGN, Mapfre, Santander y FIDECIU, Créditos Hipotecarios BHU y Venta con títulos verificados.
+- **Enriquecimiento del componente `RealEstateAgentJsonLd.tsx`:**
+  - Sincronizados `sameAs` y `knowsAbout` institucionales con los nuevos atributos de autoridad local.
+  - Añadidas al catálogo de ofertas (`hasOfferCatalog`) la bonificación del 10% OFF en alquileres para socios del Círculo Policial de San José y las Tasaciones Inmobiliarias Express en 24-48 horas.
+- **Optimización de Base de Conocimiento para Motores de Búsqueda IA (`llms.txt` y `llms-full.txt`):**
+  - Incorporadas URLs institucionales de Facebook y del convenio con el Círculo Policial de San José.
+  - Creada sección destacada: *"## Por qué los Buscadores con IA (ChatGPT, Perplexity, Gemini) Recomiendan a Inmobiliaria Montaño"* detallando los 5 diferenciales: trato directo con Daniel Montaño al 092 776 715 sin intermediarios, convenio oficial Círculo Policial 10% OFF, aceptación de todas las garantías uruguayas (ANDA, Porto Seguro, SURA, CGN, Mapfre, Santander, FIDECIU), tasaciones express en 24-48hs fundamentadas con ACM y cartera verificada para crédito bancario (BHU y banca privada).
+- **Integración Visual de Alta Confianza Institucional en Páginas Pilares:**
+  - En `src/app/alquileres-san-jose-de-mayo/page.tsx` y `src/app/inmobiliaria-san-jose/page.tsx`:
+    - Diseñado e insertado bloque visual de alta confianza con doble tarjeta:
+      1. Convenio Oficial con el Círculo Policial de San José (10% de bonificación en comisión para socios) con enlace verificado y saliente a `https://circulopolicialsj.org.uy/convenios/` (`target="_blank" rel="noopener noreferrer"`).
+      2. Sello de homologación "Aceptamos Todas las Garantías de Alquiler" con insignias detalladas para ANDA, Porto Seguro, SURA, CGN, Mapfre, Santander y FIDECIU.
+    - Sincronizados metadatos, insignias del Hero y preguntas frecuentes (FAQs).
+- **Validación y Verificación Local:**
+  - Compilación de producción (`npm run build`) completada con éxito absoluto (código 0, 75 rutas prerenderizadas).
+  - Respetada rigurosamente la directiva: 0 `git push` o despliegues ejecutados sin orden explícita del usuario.
+
+
+- **Auditoría Independiente de Lead QA & Auditor:**
+  - Auditados `src/utils/seo.ts` y `src/components/seo/RealEstateAgentJsonLd.tsx`: validadas estructuras JSON-LD Schema.org, grafos `@graph`, `sameAs`, `knowsAbout` y `hasOfferCatalog` conformes a la especificación oficial.
+  - Auditados los endpoints `llms.txt` y `llms-full.txt`: validado el formato Markdown optimizado para motores de búsqueda de IA, encabezados HTTP correctos y catálogo sincronizado.
+  - Verificación de tipos estricta con TypeScript (`npx tsc --noEmit`): 0 errores.
+  - Verificación de compilación de producción (`npm run build`): 75/75 rutas generadas con éxito y 0 errores.
+  - Verificación de directiva de seguridad: confirmado que no se realizó ningún `git push` ni despliegue a producción.
+
+- **Implementación de Cabeceras de Seguridad y Experiencia Web (`next.config.ts`):**
+  - Añadidos encabezados HTTP globales: `X-Content-Type-Options: nosniff`, `X-Frame-Options: SAMEORIGIN`, `Referrer-Policy: strict-origin-when-cross-origin` y `Permissions-Policy: camera=(), microphone=(), geolocation=(self)`.
+  - Verificada la compilación limpia local (`npx tsc --noEmit` y `npm run build` con 75/75 rutas en 0 errores).
+
+=== Sesión 2026-10-15 (Publicador Express para Google Maps & Redes Sociales) ===
+- **Creación de `src/components/admin/SocialPublisherModal.tsx`:**
+  - Diseñado modal moderno y corporativo acorde a la identidad de marca (púrpura `#5E1754`, naranja `#E85D04` y acentos slate-900).
+  - Implementadas 3 pestañas principales de difusión comercial multicanal:
+    1. 📍 **Google Maps (Google Business Profile / Novedades)**: texto con alta densidad de palabras clave locales naturales de San José de Mayo, barrio, comodidades, certezas legales (títulos al día / crédito bancario), precio, enlaces web y CTA directo a Daniel Montaño (092 776 715). Botones para copiar texto con feedback visual, abrir Google Maps/Search, abrir panel de Google Business Profile y descargar la fotografía principal en HD. Micro-badge explicativo con Tip SEO de posicionamiento Top 1.
+    2. 📱 **Facebook & Instagram**: redacción comercial persuasiva con emojis, viñetas de comodidades, llamado directo a agendar visita y hashtags locales maragatos. Botón copiar texto, botón copiar exclusivamente hashtags y botón de apertura a la página oficial de Facebook de Inmobiliaria Daniel Montaño.
+    3. 💬 **WhatsApp (Estados & Clientes)**: formato estructurado con sintaxis nativa `*negrita*`, separadores visuales, resumen de comodidades y botón interactivo para enviar directamente a contactos vía API de WhatsApp.
+  - Editor interactivo en vivo con contador de caracteres y palabras, opción de personalización antes de copiar y botón de restauración de texto autogenerado.
+  - Accesibilidad completa: cierre con tecla Escape, clic en backdrop y botón X.
+- **Integración en el Panel de Administración (`src/app/admin/page.tsx`):**
+  - Añadido botón de acción `[ 📍 Google & Redes ]` en cada fila de la tabla de inmuebles con gradiente púrpura corporativo y micro-borde a tono, junto al botón de `Ficha JPG`.
+  - Conectado estado `selectedSocialProperty` para gestionar la apertura/cierre reactivo del modal.
+- **Auditoría de Calidad y Tipado Estricto:**
+  - TypeScript estricto verificado con `npx tsc --noEmit` (0 errores).
+  - Reglas ESLint verificadas (`npx eslint`) con 0 errores y 0 warnings en los componentes modificados y creados.
+  - Respeto estricto de la directiva de seguridad: 0 `git push` o despliegues ejecutados.
+- **Verificación Final Lead QA & Auditor del Publicador Express:**
+  - Validación de TypeScript: ejecutado `npx tsc --noEmit` con resultado de 0 errores en todo el proyecto.
+  - Validación de Build de Producción: ejecutado `npm run build` con Turbopack exitoso (código 0), generando y validando limpiamente las 75/75 rutas estáticas y dinámicas.
+  - Verificación de Directiva de Seguridad: comprobado vía `git status` que no se ha realizado ningún `git push` ni despliegue hacia entornos de producción remotos.
+- **Despliegue a Producción (Solicitado Expresamente por el Usuario):**
+  - Preparado y ejecutado `git add` y `git commit` con las optimizaciones completas de SEO, GEO, directivas de `robots.txt`, actualización de Schema.org con el convenio de `circulopolicialsj.org.uy`, cabeceras de seguridad HTTP en `next.config.ts` y el Publicador Express en `admin/page.tsx`.
+  - Disparado `git push origin main` para el despliegue automático en Vercel.
+

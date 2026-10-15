@@ -509,6 +509,35 @@
       "eventType": "property_view",
       "pagePath": "/",
       "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1792026762259_akiep0",
+      "timestamp": "2026-10-15T01:12:42.259Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792026760983_63s7khg"
+    },
+    {
+      "id": "evt_1792027828121_k5fc56",
+      "timestamp": "2026-10-15T01:30:28.122Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792026760983_63s7khg",
+      "referrer": "http://localhost:3000/"
+    },
+    {
+      "id": "evt_1792027949608_b7knok",
+      "timestamp": "2026-10-15T01:32:29.608Z",
+      "eventType": "page_view",
+      "pagePath": "/alquileres-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792026760983_63s7khg"
+    },
+    {
+      "id": "evt_1792028851685_0lhogc",
+      "timestamp": "2026-10-15T01:47:31.685Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792026760983_63s7khg"
     }
   ],
   "seoRecords": [

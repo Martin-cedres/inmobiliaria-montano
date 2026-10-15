@@ -13,6 +13,9 @@ Disallow: /admin/*
 Disallow: /login
 Disallow: /api/admin/*
 Disallow: /api/auth/*
+Disallow: /*?*view=*
+Disallow: /*?*category=*
+Disallow: /*?*focus=*
 
 User-Agent: Googlebot
 Allow: /
@@ -21,6 +24,9 @@ Disallow: /admin/*
 Disallow: /login
 Disallow: /api/admin/*
 Disallow: /api/auth/*
+Disallow: /*?*view=*
+Disallow: /*?*category=*
+Disallow: /*?*focus=*
 
 User-Agent: Bingbot
 Allow: /
@@ -29,6 +35,9 @@ Disallow: /admin/*
 Disallow: /login
 Disallow: /api/admin/*
 Disallow: /api/auth/*
+Disallow: /*?*view=*
+Disallow: /*?*category=*
+Disallow: /*?*focus=*
 
 User-Agent: GPTBot
 Allow: /
@@ -37,6 +46,9 @@ Disallow: /admin/*
 Disallow: /login
 Disallow: /api/admin/*
 Disallow: /api/auth/*
+Disallow: /*?*view=*
+Disallow: /*?*category=*
+Disallow: /*?*focus=*
 
 User-Agent: ClaudeBot
 Allow: /
@@ -45,6 +57,9 @@ Disallow: /admin/*
 Disallow: /login
 Disallow: /api/admin/*
 Disallow: /api/auth/*
+Disallow: /*?*view=*
+Disallow: /*?*category=*
+Disallow: /*?*focus=*
 
 User-Agent: PerplexityBot
 Allow: /
@@ -53,6 +68,9 @@ Disallow: /admin/*
 Disallow: /login
 Disallow: /api/admin/*
 Disallow: /api/auth/*
+Disallow: /*?*view=*
+Disallow: /*?*category=*
+Disallow: /*?*focus=*
 
 User-Agent: Applebot-Extended
 Allow: /
@@ -61,6 +79,9 @@ Disallow: /admin/*
 Disallow: /login
 Disallow: /api/admin/*
 Disallow: /api/auth/*
+Disallow: /*?*view=*
+Disallow: /*?*category=*
+Disallow: /*?*focus=*
 
 User-Agent: Applebot
 Allow: /
@@ -69,6 +90,9 @@ Disallow: /admin/*
 Disallow: /login
 Disallow: /api/admin/*
 Disallow: /api/auth/*
+Disallow: /*?*view=*
+Disallow: /*?*category=*
+Disallow: /*?*focus=*
 
 User-Agent: OAI-SearchBot
 Allow: /
@@ -77,6 +101,9 @@ Disallow: /admin/*
 Disallow: /login
 Disallow: /api/admin/*
 Disallow: /api/auth/*
+Disallow: /*?*view=*
+Disallow: /*?*category=*
+Disallow: /*?*focus=*
 
 User-Agent: ChatGPT-User
 Allow: /
@@ -85,6 +112,9 @@ Disallow: /admin/*
 Disallow: /login
 Disallow: /api/admin/*
 Disallow: /api/auth/*
+Disallow: /*?*view=*
+Disallow: /*?*category=*
+Disallow: /*?*focus=*
 
 User-Agent: meta-externalagent
 Allow: /
@@ -93,6 +123,9 @@ Disallow: /admin/*
 Disallow: /login
 Disallow: /api/admin/*
 Disallow: /api/auth/*
+Disallow: /*?*view=*
+Disallow: /*?*category=*
+Disallow: /*?*focus=*
 
 User-Agent: anthropic-ai
 Allow: /
@@ -101,6 +134,9 @@ Disallow: /admin/*
 Disallow: /login
 Disallow: /api/admin/*
 Disallow: /api/auth/*
+Disallow: /*?*view=*
+Disallow: /*?*category=*
+Disallow: /*?*focus=*
 
 User-Agent: cohere-ai
 Allow: /
@@ -109,6 +145,9 @@ Disallow: /admin/*
 Disallow: /login
 Disallow: /api/admin/*
 Disallow: /api/auth/*
+Disallow: /*?*view=*
+Disallow: /*?*category=*
+Disallow: /*?*focus=*
 
 User-Agent: Amazonbot
 Allow: /
@@ -117,6 +156,9 @@ Disallow: /admin/*
 Disallow: /login
 Disallow: /api/admin/*
 Disallow: /api/auth/*
+Disallow: /*?*view=*
+Disallow: /*?*category=*
+Disallow: /*?*focus=*
 
 # Content Signals for AI Agents (contentsignals.org / IETF RFC draft)
 Content-Signal: ai-train=no, search=yes, ai-input=yes

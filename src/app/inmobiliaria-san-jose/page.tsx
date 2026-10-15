@@ -25,6 +25,7 @@ import {
   UserCheck,
   Landmark,
   FileCheck,
+  ExternalLink,
 } from 'lucide-react';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
@@ -35,7 +36,7 @@ export const revalidate = 86400; // 24 horas ISR
 export const metadata: Metadata = {
   title: 'Inmobiliaria en San José, Uruguay | Inmobiliaria Montaño — Daniel Montaño',
   description:
-    'Inmobiliaria de referencia en el Departamento de San José, Uruguay. Venta de casas, campos, chacras, terrenos, alquileres garantizados y tasaciones oficiales con Daniel Montaño en San José de Mayo, Libertad, Ciudad del Plata y todo el departamento.',
+    'Inmobiliaria de referencia en San José de Mayo y todo el departamento de San José, Uruguay. Convenio Oficial Círculo Policial (10% OFF) y todas las garantías (ANDA, Porto Seguro, SURA, CGN, Mapfre, Santander, FIDECIU). Casas verificadas y tasaciones con Daniel Montaño al 092 776 715.',
   keywords: [
     'inmobiliaria san jose',
     'inmobiliarias san jose',
@@ -97,7 +98,7 @@ const FAQS: FaqItem[] = [
   {
     question: '¿Qué garantías de alquiler se aceptan para propiedades en San José?',
     answer:
-      'Trabajamos con las principales aseguradoras y aseguradoras públicas de Uruguay: ANDA, Contaduría General de la Nación (CGN), Porto Seguro, SURA y Mapfre, brindando máxima seguridad de cobro para propietarios y agilidad de gestión para inquilinos.',
+      'Aceptamos todas las garantías del mercado uruguayo: ANDA, Contaduría General de la Nación (CGN), Porto Seguro, SURA, Mapfre, Santander y FIDECIU. Además, disponemos del convenio oficial con el Círculo Policial de San José que otorga un 10% de bonificación en comisión para socios.',
   },
   {
     question: '¿Las propiedades cuentan con títulos e información verificada para banco?',
@@ -257,6 +258,89 @@ export default async function InmobiliariaSanJosePage() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Alianza Institucional y Garantías Homologadas */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 w-full">
+        <div className="bg-gradient-to-br from-[#191024] via-[#2A0E35] to-[#43123C] rounded-3xl p-6 sm:p-8 md:p-10 text-white shadow-2xl border border-purple-400/20 relative overflow-hidden">
+          <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-[#E85D04]/15 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            {/* Convenio Círculo Policial */}
+            <div className="lg:col-span-7 space-y-4 text-left">
+              <div className="inline-flex items-center space-x-2 bg-amber-400/10 border border-amber-400/30 text-amber-300 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
+                <Award className="w-4 h-4 text-amber-300" />
+                <span>Convenio Institucional Oficial</span>
+              </div>
+
+              <h2 className="text-2xl sm:text-3xl font-black text-white leading-tight">
+                Convenio Oficial con el <span className="text-amber-300">Círculo Policial de San José</span>
+              </h2>
+
+              <p className="text-sm sm:text-base text-slate-200 leading-relaxed font-normal">
+                Beneficio exclusivo para socios: <strong>10% de bonificación</strong> en la comisión inmobiliaria en nuevos contratos de alquiler en todo el departamento de San José.
+              </p>
+
+              <div className="pt-2 flex flex-wrap items-center gap-4">
+                <a
+                  href="https://circulopolicialsj.org.uy/convenios/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center space-x-2 bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs sm:text-sm px-5 py-3 rounded-xl transition-all shadow-md active:scale-95 group"
+                >
+                  <span>Verificar Convenio en circulopolicialsj.org.uy</span>
+                  <ExternalLink className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                </a>
+
+                <span className="text-xs text-purple-200/90 flex items-center gap-1.5 font-medium">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                  <span>Respaldo y transparencia institucional</span>
+                </span>
+              </div>
+            </div>
+
+            {/* Sello de Garantías */}
+            <div className="lg:col-span-5 bg-white/10 backdrop-blur-md rounded-2xl p-5 sm:p-6 border border-white/15 space-y-4 text-left">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-xl bg-amber-400/20 text-amber-300 flex items-center justify-center flex-shrink-0 border border-amber-400/30">
+                  <ShieldCheck className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-sm sm:text-base font-black text-white">
+                    Aceptamos Todas las Garantías de Alquiler
+                  </h3>
+                  <p className="text-[11px] text-purple-200">
+                    Seguridad jurídica y cobranza puntual para propietarios
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1">
+                {[
+                  { name: 'ANDA', type: 'Institucional' },
+                  { name: 'Porto Seguro', type: 'Aseguradora' },
+                  { name: 'SURA', type: 'Aseguradora' },
+                  { name: 'CGN', type: 'Contaduría' },
+                  { name: 'Mapfre', type: 'Aseguradora' },
+                  { name: 'Santander', type: 'Bancaria' },
+                  { name: 'FIDECIU', type: 'Fianza' },
+                ].map((g) => (
+                  <div
+                    key={g.name}
+                    className="bg-white/10 hover:bg-white/15 border border-white/10 rounded-xl px-2.5 py-2 text-center transition-colors"
+                  >
+                    <div className="text-xs font-black text-white">{g.name}</div>
+                    <div className="text-[10px] text-amber-300/90">{g.type}</div>
+                  </div>
+                ))}
+              </div>
+
+              <p className="text-[11px] text-slate-300 leading-normal">
+                Asesoramiento sin costo para inquilinos y propietarios en la elección de su garantía.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 

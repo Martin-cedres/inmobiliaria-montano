@@ -12,9 +12,10 @@ import {
   Plus, Trash2, Eye, Edit3, CheckCircle2, Sparkles, Search, 
   RefreshCw, AlertCircle, Building2, Key, Tag, MessageCircle, 
   Flame, TrendingUp, ArrowUpDown, Users, LogOut, ShieldCheck, Shield, Zap,
-  Copy, Share2, Filter, Check, ImageIcon
+  Copy, Share2, Filter, Check, ImageIcon, MapPin
 } from 'lucide-react';
 import { FlyerGeneratorModal } from '@/components/admin/FlyerGeneratorModal';
+import { SocialPublisherModal } from '@/components/admin/SocialPublisherModal';
 
 export default function AdminDashboardPage() {
   const router = useRouter();
@@ -33,6 +34,7 @@ export default function AdminDashboardPage() {
   const [currentUser, setCurrentUser] = useState<UserSessionPayload | null>(null);
   const [isAuthChecking, setIsAuthChecking] = useState<boolean>(true);
   const [selectedFlyerProperty, setSelectedFlyerProperty] = useState<Property | null>(null);
+  const [selectedSocialProperty, setSelectedSocialProperty] = useState<Property | null>(null);
 
   const showToast = (message: string) => {
     setToastMessage(message);
@@ -194,7 +196,7 @@ export default function AdminDashboardPage() {
     if (prop.price.priceMode === 'reservado') priceText = 'Reservado';
     if (prop.price.priceMode === 'desde') priceText = `Desde ${prop.price.currency} ${prop.price.amount.toLocaleString('es-UY')}`;
 
-    let featuresList = [];
+    const featuresList = [];
     if (prop.features?.bedrooms) featuresList.push(`${prop.features.bedrooms} dorm.`);
     if (prop.features?.bathrooms) featuresList.push(`${prop.features.bathrooms} baños`);
     if (prop.features?.builtAreaM2) featuresList.push(`${prop.features.builtAreaM2} m² edif.`);
@@ -245,7 +247,7 @@ ${link}`;
   const topProperty = sortedByInterests.length > 0 && (sortedByInterests[0].whatsappClicksCount || 0) > 0 ? sortedByInterests[0] : null;
 
   // Filtered & Sorted properties
-  let filteredProperties = properties.filter((p) => {
+  const filteredProperties = properties.filter((p) => {
     const query = searchQuery.toLowerCase();
     const matchesSearch = (
       p.codeRef.toLowerCase().includes(query) ||
@@ -577,17 +579,19 @@ ${link}`;
                 <span>Estado:</span>
               </span>
 
-              {[
-                { key: 'todos', label: 'Todos' },
-                { key: 'venta', label: '🏡 En Venta' },
-                { key: 'alquiler', label: '🔑 Alquiler' },
-                { key: 'disponible', label: '🟢 Disponibles' },
-                { key: 'reservado', label: '🟡 Reservados' },
-                { key: 'vendido', label: '🔴 Vendidos / Alquilados' },
-              ].map((pill) => (
+              {(
+                [
+                  { key: 'todos', label: 'Todos' },
+                  { key: 'venta', label: '🏡 En Venta' },
+                  { key: 'alquiler', label: '🔑 Alquiler' },
+                  { key: 'disponible', label: '🟢 Disponibles' },
+                  { key: 'reservado', label: '🟡 Reservados' },
+                  { key: 'vendido', label: '🔴 Vendidos / Alquilados' },
+                ] as const
+              ).map((pill) => (
                 <button
                   key={pill.key}
-                  onClick={() => setStatusFilter(pill.key as any)}
+                  onClick={() => setStatusFilter(pill.key)}
                   className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer ${
                     statusFilter === pill.key
                       ? 'bg-[#5E1754] text-white shadow-xs'
@@ -843,6 +847,16 @@ ${link}`;
                             {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-700" /> : <Share2 className="w-3.5 h-3.5" />}
                           </button>
 
+                          {/* Publicador Express Google Maps & Redes */}
+                          <button
+                            onClick={() => setSelectedSocialProperty(prop)}
+                            className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-black bg-gradient-to-r from-purple-500/15 to-fuchsia-500/15 text-[#5E1754] hover:bg-[#5E1754] hover:text-white border border-purple-500/30 rounded-lg transition-all cursor-pointer shadow-xs"
+                            title="Publicador Express para Google Maps & Redes Sociales"
+                          >
+                            <MapPin className="w-3.5 h-3.5 text-[#5E1754] group-hover:text-white" />
+                            <span>Google & Redes</span>
+                          </button>
+
                           {/* Generador de Ficha JPG HD */}
                           <button
                             onClick={() => setSelectedFlyerProperty(prop)}
@@ -897,6 +911,15 @@ ${link}`;
           property={selectedFlyerProperty}
           isOpen={Boolean(selectedFlyerProperty)}
           onClose={() => setSelectedFlyerProperty(null)}
+        />
+      )}
+
+      {/* MODAL PUBLICADOR EXPRESS GOOGLE MAPS & REDES */}
+      {selectedSocialProperty && (
+        <SocialPublisherModal
+          property={selectedSocialProperty}
+          isOpen={Boolean(selectedSocialProperty)}
+          onClose={() => setSelectedSocialProperty(null)}
         />
       )}
 
