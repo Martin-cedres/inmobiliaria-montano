@@ -30,7 +30,7 @@ const PAGE_URL = `${BASE_URL}/inversiones-inmobiliarias-san-jose`;
 export const revalidate = 86400; // 24 horas ISR
 
 export const metadata: Metadata = {
-  title: 'Inversiones Inmobiliarias en San José | Propiedades con Renta | Inmobiliaria Montaño',
+  title: 'Inversiones Inmobiliarias en San José | Propiedades con Renta',
   description:
     'Oportunidades de inversión inmobiliaria en San José de Mayo y alrededores. Propiedades con renta activa, solares para valorización y asesoramiento patrimonial con Daniel Montaño.',
   keywords: [

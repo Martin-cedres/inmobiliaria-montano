@@ -56,6 +56,29 @@ export function CatalogSection({ initialProperties }: CatalogSectionProps) {
   const [properties] = useState<Property[]>(initialProperties);
   const [viewMode, setViewMode] = useState<'grid' | 'map'>('grid');
   const [activePropertyId, setActivePropertyId] = useState<string | null>(null);
+  const [isFooterVisible, setIsFooterVisible] = useState(false);
+
+  // Ocultar botón flotante al llegar al Footer para no tapar créditos ni enlaces legales
+  useEffect(() => {
+    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) return;
+
+    const footer = document.getElementById('contacto');
+    if (!footer) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsFooterVisible(entry.isIntersecting);
+      },
+      {
+        root: null,
+        rootMargin: '0px 0px 50px 0px',
+        threshold: 0,
+      }
+    );
+
+    observer.observe(footer);
+    return () => observer.disconnect();
+  }, []);
 
   // Escuchar eventos globales de cambio de vista (Navbar y Hero)
   useEffect(() => {
@@ -288,7 +311,7 @@ export function CatalogSection({ initialProperties }: CatalogSectionProps) {
                                 {priceText}
                               </span>
                             </div>
-                            <h4 className="text-xs font-extrabold text-slate-900 line-clamp-1 mt-0.5">
+                            <h4 className="text-xs font-extrabold text-slate-900 line-clamp-2 mt-0.5">
                               {property.title}
                             </h4>
                             <p className="text-[11px] font-medium text-slate-500 truncate mt-0.5">
@@ -344,8 +367,15 @@ export function CatalogSection({ initialProperties }: CatalogSectionProps) {
 
       </main>
 
-      {/* Botón Flotante Omnipresente Estilo Airbnb / Idealista */}
-      <aside aria-label="Cambiar vista de catálogo" className="fixed bottom-5 sm:bottom-6 left-1/2 -translate-x-1/2 z-40 pointer-events-auto select-none max-w-[92vw]">
+      {/* Botón Flotante Estilo Airbnb / Idealista (Se oculta al llegar al Footer) */}
+      <aside
+        aria-label="Cambiar vista de catálogo"
+        className={`fixed bottom-5 sm:bottom-6 left-1/2 -translate-x-1/2 z-40 select-none max-w-[92vw] transition-all duration-300 ease-in-out transform ${
+          isFooterVisible
+            ? 'opacity-0 translate-y-12 pointer-events-none scale-95'
+            : 'opacity-100 translate-y-0 pointer-events-auto scale-100'
+        }`}
+      >
         <button
           type="button"
           onClick={() => {

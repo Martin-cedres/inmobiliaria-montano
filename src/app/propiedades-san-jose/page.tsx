@@ -18,7 +18,7 @@ const PAGE_URL = `${BASE_URL}/propiedades-san-jose`;
 export const revalidate = 86400; // 24 horas ISR
 
 export const metadata: Metadata = {
-  title: 'Propiedades en San José, Uruguay | Casas, Terrenos y Alquileres — Inmobiliaria Montaño',
+  title: 'Propiedades en San José, Uruguay | Casas, Terrenos y Alquileres',
   description:
     'Catálogo completo de propiedades en venta y alquiler en el Departamento de San José, Uruguay. Casas, apartamentos, terrenos, chacras y locales en San José de Mayo, Libertad, Ciudad del Plata y más. Títulos verificados y asesoramiento de Daniel Montaño.',
   keywords: [

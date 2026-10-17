@@ -32,7 +32,7 @@ const PAGE_URL = `${BASE_URL}/guia-tasacion-inmobiliaria-san-jose`;
 export const revalidate = 86400; // 24 horas
 
 export const metadata: Metadata = {
-  title: 'Guía de Tasaciones Inmobiliarias en San José | Inmobiliaria Montaño',
+  title: 'Guía de Tasaciones Inmobiliarias en San José',
   description:
     'Guía completa sobre cómo se tasa una propiedad en San José, Uruguay. Factores que determinan el valor de mercado, documentación necesaria y diferencias con el precio de publicación. Por Daniel Montaño.',
   keywords: [
@@ -146,6 +146,18 @@ export default function GuiaTasacionPage() {
             item: PAGE_URL,
           },
         ],
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': `${PAGE_URL}#faq`,
+        mainEntity: FAQS.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.answer,
+          },
+        })),
       },
     ],
   };

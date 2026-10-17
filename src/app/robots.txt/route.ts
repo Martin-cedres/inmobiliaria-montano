@@ -28,6 +28,17 @@ Disallow: /*?*view=*
 Disallow: /*?*category=*
 Disallow: /*?*focus=*
 
+User-Agent: Google-Extended
+Allow: /
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /login
+Disallow: /api/admin/*
+Disallow: /api/auth/*
+Disallow: /*?*view=*
+Disallow: /*?*category=*
+Disallow: /*?*focus=*
+
 User-Agent: Bingbot
 Allow: /
 Disallow: /admin

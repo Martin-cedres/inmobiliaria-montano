@@ -29,7 +29,7 @@ const PAGE_URL = `${BASE_URL}/proyectos-y-viviendas-modulares-san-jose`;
 export const revalidate = 86400; // 24 horas ISR
 
 export const metadata: Metadata = {
-  title: 'Proyectos y Viviendas Modulares en San José | Inmobiliaria Montaño',
+  title: 'Proyectos y Viviendas Modulares en San José',
   description:
     'Venta de módulos habitacionales, casas modulares y proyectos inmobiliarios en San José de Mayo y todo el departamento. Construcción rápida, eficiente y llave en mano con Daniel Montaño.',
   keywords: [

@@ -31,7 +31,7 @@ const PAGE_URL = `${BASE_URL}/guia-compra-propiedad-credito-bancario-uruguay`;
 export const revalidate = 86400; // 24 horas
 
 export const metadata: Metadata = {
-  title: 'Guía de Compra de Propiedades con Crédito Bancario en Uruguay | Inmobiliaria Montaño',
+  title: 'Guía de Compra de Propiedades con Crédito Bancario en Uruguay',
   description:
     'Guía completa sobre cómo comprar un inmueble con préstamo hipotecario en Uruguay (BHU, Santander, Itaú, BBVA). Qué significa que una propiedad sea apta para banco, requisitos y costos. Por Daniel Montaño.',
   keywords: [

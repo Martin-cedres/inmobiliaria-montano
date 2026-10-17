@@ -385,7 +385,33 @@ export function generatePropertySlug(
 }
 
 /**
- * Genera una recomendación de Título SEO basada en fórmulas comerciales por categoría (máx 60 caracteres).
+ * Trunca un texto por palabras completas sin dejar palabras partidas ni guiones sueltos.
+ */
+export function truncateByWord(text: string, maxLength: number): string {
+  if (!text || text.length <= maxLength) return text;
+  const sub = text.substring(0, maxLength);
+  const lastSpace = sub.lastIndexOf(' ');
+  const cut = (lastSpace > 0 ? sub.substring(0, lastSpace) : sub)
+    .replace(/[\s\-\–—\|,\.]+$/, '')
+    .trim();
+  return cut;
+}
+
+/**
+ * Limpia sufijos de marca duplicados y terminaciones rotas para su uso en metadatos.
+ */
+export function cleanTitleForMetadata(title: string): string {
+  if (!title) return '';
+  let cleaned = title
+    .replace(/\s*[\|\-—]\s*Inmobiliaria Montaño.*$/i, '')
+    .replace(/\s*[\|\-—]\s*San$/i, '')
+    .trim();
+  cleaned = cleaned.replace(/[\s\-\–—\|,\.]+$/, '').trim();
+  return cleaned;
+}
+
+/**
+ * Genera una recomendación de Título SEO conciso y sin sufijos repetidos (máx 55 caracteres).
  */
 export function generateSmartSeoTitle(p: Partial<Property>): string {
   const categoryRaw = p.category || 'casa';
@@ -394,23 +420,23 @@ export function generateSmartSeoTitle(p: Partial<Property>): string {
   const hood = p.location?.neighborhood || 'San José de Mayo';
 
   if (p.category === 'terreno') {
-    const area = p.features?.plotAreaM2 ? `${p.features.plotAreaM2}m²` : '';
-    const title = `Terreno ${area ? `de ${area} ` : ''}en ${hood}, San José | Inmobiliaria Montaño`;
-    return title.length <= 60 ? title : title.substring(0, 57) + '...';
+    const area = p.features?.plotAreaM2 ? `${p.features.plotAreaM2}m² ` : '';
+    const title = `Terreno ${area ? `de ${area}` : ''}en ${hood}, San José`;
+    return truncateByWord(title, 55);
   }
 
   if (p.category === 'chacra') {
-    const ha = p.features?.plotAreaM2 ? `${p.features.plotAreaM2} Ha` : '';
-    const title = `Chacra ${ha ? `de ${ha} ` : ''}en ${hood}, San José | Inmobiliaria Montaño`;
-    return title.length <= 60 ? title : title.substring(0, 57) + '...';
+    const ha = p.features?.plotAreaM2 ? `${p.features.plotAreaM2} Ha ` : '';
+    const title = `Chacra ${ha ? `de ${ha}` : ''}en ${hood}, San José`;
+    return truncateByWord(title, 55);
   }
 
   const dorms = p.features?.bedrooms ? `${p.features.bedrooms} Dorms ` : '';
-  const candidate = `${categoryFormatted} ${dorms}en ${operation} en ${hood} | Inmobiliaria Montaño`;
-  if (candidate.length <= 60) return candidate;
+  const candidate = `${categoryFormatted} ${dorms}en ${operation} en ${hood}`;
+  if (candidate.length <= 55) return candidate;
 
-  const fallback = `${categoryFormatted} en ${operation} en ${hood} | Inmobiliaria Montaño`;
-  return fallback.length <= 60 ? fallback : fallback.substring(0, 57) + '...';
+  const fallback = `${categoryFormatted} en ${operation} en ${hood}`;
+  return truncateByWord(fallback, 55);
 }
 
 /**
@@ -513,6 +539,7 @@ export function generatePropertyGraphSchema(property: Property) {
 
   // Atributos cuantitativos reales (solo si existen y son mayores a cero)
   if (property.features?.bedrooms && property.features.bedrooms > 0) {
+    itemEntity.numberOfRooms = property.features.bedrooms;
     itemEntity.numberOfBedrooms = property.features.bedrooms;
   }
   if (property.features?.bathrooms && property.features.bathrooms > 0) {
@@ -532,6 +559,12 @@ export function generatePropertyGraphSchema(property: Property) {
       unitCode: 'MTK',
     };
   }
+  if (property.location?.neighborhood) {
+    itemEntity.containedInPlace = {
+      '@type': 'Place',
+      name: property.location.neighborhood,
+    };
+  }
 
   // Entidad de Publicación (RealEstateListing)
   const listingEntity: any = {
@@ -546,15 +579,23 @@ export function generatePropertyGraphSchema(property: Property) {
     mainEntity: { '@id': `${canonicalUrl}#item` },
   };
 
-  // Oferta comercial (Offer) - SOLO se emite si la propiedad está activa
-  const offerEntity: any = isOfferActive && property.price?.amount
+  // Disponibilidad según estado real del inmueble
+  let availability = 'https://schema.org/InStock';
+  if (property.status === 'reservado') {
+    availability = 'https://schema.org/Reserved';
+  } else if (property.status === 'vendido' || property.status === 'alquilado') {
+    availability = 'https://schema.org/SoldOut';
+  }
+
+  // Oferta comercial (Offer) - se emite con estado real si el precio está disponible
+  const offerEntity: any = property.price?.amount
     ? {
         '@type': 'Offer',
         '@id': `${canonicalUrl}#offer`,
         price: property.price.amount,
         priceCurrency: property.price.currency || 'USD',
-        availability: 'https://schema.org/InStock',
-        seller: { '@id': `${BASE_URL}/#agent` },
+        availability,
+        seller: { '@id': `${BASE_URL}/#organization` },
       }
     : null;
 
@@ -566,20 +607,19 @@ export function generatePropertyGraphSchema(property: Property) {
   const graph: any[] = [
     // 1. Agencia Inmobiliaria
     {
-      '@type': 'RealEstateAgent',
-      '@id': `${BASE_URL}/#agent`,
+      '@type': ['RealEstateAgent', 'LocalBusiness'],
+      '@id': `${BASE_URL}/#organization`,
       name: 'Inmobiliaria Montaño',
-      url: BASE_URL,
+      alternateName: 'Inmobiliaria Daniel Montaño',
+      url: `${BASE_URL}/`,
       logo: `${BASE_URL}/logo.png`,
       image: `${BASE_URL}/og-logo.png`,
       telephone: '+59892776715',
       email: 'contacto@inmobiliariamontano.uy',
       hasMap: 'https://share.google/6I1gbffV5ZTS5heXV',
       sameAs: [
-        'https://share.google/6I1gbffV5ZTS5heXV',
-        'https://wa.me/59892776715',
-        'https://www.facebook.com/InmobiliariaDanielMontano',
-        'https://circulopolicialsj.org.uy/convenios/',
+        'https://www.facebook.com/montanioinmobiliaria/',
+        'https://www.google.com/maps/place/?q=place_id:ChIJgU0vgPl3oZURSNT4x7Lw3fE',
       ],
       knowsAbout: [
         'Tasaciones Inmobiliarias Rápidas en 24-48 horas en San José de Mayo',
@@ -591,18 +631,38 @@ export function generatePropertyGraphSchema(property: Property) {
       slogan: 'Líder en venta de casas verificadas, créditos hipotecarios y tasaciones en San José de Mayo',
       address: {
         '@type': 'PostalAddress',
-        streetAddress: '25 de Mayo 338',
+        streetAddress: 'Calle 25 de Mayo 338',
         addressLocality: 'San José de Mayo',
         addressRegion: 'San José',
         postalCode: '80000',
         addressCountry: 'UY',
       },
-      founder: { '@id': `${BASE_URL}/#daniel-montano` },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: -34.3397,
+        longitude: -56.7136,
+      },
+      openingHoursSpecification: [
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+          opens: '09:00',
+          closes: '18:00',
+        },
+      ],
+      founder: {
+        '@type': 'Person',
+        name: 'Daniel Montaño',
+        jobTitle: 'Director & Asesor Inmobiliario',
+      },
       areaServed: [
-        { '@type': 'AdministrativeArea', name: 'San José' },
         { '@type': 'City', name: 'San José de Mayo' },
         { '@type': 'City', name: 'Libertad' },
         { '@type': 'City', name: 'Ciudad del Plata' },
+        { '@type': 'City', name: 'Ecilda Paullier' },
+        { '@type': 'City', name: 'Rodríguez' },
+        { '@type': 'AdministrativeArea', name: 'Kiyú' },
+        { '@type': 'AdministrativeArea', name: 'Boca del Cufré' },
       ],
     },
     // 2. Persona / Asesor
@@ -613,7 +673,7 @@ export function generatePropertyGraphSchema(property: Property) {
       jobTitle: 'Director & Asesor Inmobiliario',
       telephone: '+59892776715',
       image: `${BASE_URL}/daniel-montano.webp`,
-      worksFor: { '@id': `${BASE_URL}/#agent` },
+      worksFor: { '@id': `${BASE_URL}/#organization` },
     },
     // 3. Ficha Listing
     listingEntity,
@@ -666,20 +726,19 @@ export function generateSiteGraphSchema() {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'RealEstateAgent',
-        '@id': `${BASE_URL}/#agent`,
+        '@type': ['RealEstateAgent', 'LocalBusiness'],
+        '@id': `${BASE_URL}/#organization`,
         name: 'Inmobiliaria Montaño',
-        url: BASE_URL,
+        alternateName: 'Inmobiliaria Daniel Montaño',
+        url: `${BASE_URL}/`,
         logo: `${BASE_URL}/logo.png`,
         image: `${BASE_URL}/og-logo.png`,
         telephone: '+59892776715',
         email: 'contacto@inmobiliariamontano.uy',
         hasMap: 'https://share.google/6I1gbffV5ZTS5heXV',
         sameAs: [
-          'https://share.google/6I1gbffV5ZTS5heXV',
-          'https://wa.me/59892776715',
-          'https://www.facebook.com/InmobiliariaDanielMontano',
-          'https://circulopolicialsj.org.uy/convenios/',
+          'https://www.facebook.com/montanioinmobiliaria/',
+          'https://www.google.com/maps/place/?q=place_id:ChIJgU0vgPl3oZURSNT4x7Lw3fE',
         ],
         knowsAbout: [
           'Tasaciones Inmobiliarias Rápidas en 24-48 horas en San José de Mayo',
@@ -692,18 +751,38 @@ export function generateSiteGraphSchema() {
         description: 'Inmobiliaria líder de referencia en San José de Mayo, Uruguay. Especialistas destacados en venta de casas verificadas, propiedades aptas para crédito bancario (BHU e hipotecarios), alquileres garantizados y tasaciones oficiales con Daniel Montaño.',
         address: {
           '@type': 'PostalAddress',
-          streetAddress: '25 de Mayo 338',
+          streetAddress: 'Calle 25 de Mayo 338',
           addressLocality: 'San José de Mayo',
           addressRegion: 'San José',
           postalCode: '80000',
           addressCountry: 'UY',
         },
-        founder: { '@id': `${BASE_URL}/#daniel-montano` },
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude: -34.3397,
+          longitude: -56.7136,
+        },
+        openingHoursSpecification: [
+          {
+            '@type': 'OpeningHoursSpecification',
+            dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+            opens: '09:00',
+            closes: '18:00',
+          },
+        ],
+        founder: {
+          '@type': 'Person',
+          name: 'Daniel Montaño',
+          jobTitle: 'Director & Asesor Inmobiliario',
+        },
         areaServed: [
-          { '@type': 'AdministrativeArea', name: 'Departamento de San José' },
           { '@type': 'City', name: 'San José de Mayo' },
           { '@type': 'City', name: 'Libertad' },
           { '@type': 'City', name: 'Ciudad del Plata' },
+          { '@type': 'City', name: 'Ecilda Paullier' },
+          { '@type': 'City', name: 'Rodríguez' },
+          { '@type': 'AdministrativeArea', name: 'Kiyú' },
+          { '@type': 'AdministrativeArea', name: 'Boca del Cufré' },
         ],
       },
       {
@@ -713,14 +792,14 @@ export function generateSiteGraphSchema() {
         jobTitle: 'Director & Asesor Inmobiliario',
         telephone: '+59892776715',
         image: `${BASE_URL}/daniel-montano.webp`,
-        worksFor: { '@id': `${BASE_URL}/#agent` },
+        worksFor: { '@id': `${BASE_URL}/#organization` },
       },
       {
         '@type': 'WebSite',
         '@id': `${BASE_URL}/#website`,
         url: BASE_URL,
         name: 'Inmobiliaria Montaño',
-        publisher: { '@id': `${BASE_URL}/#agent` },
+        publisher: { '@id': `${BASE_URL}/#organization` },
       },
     ],
   };
@@ -744,8 +823,10 @@ export function generatePropertyMetadata(property: Property): Metadata {
       ? '[ALQUILADA] '
       : '';
 
-  const baseTitle = property.seoTitle || generateSmartSeoTitle(property);
-  const titleStr = `${statusPrefix}${baseTitle}`;
+  const rawBaseTitle = property.seoTitle || generateSmartSeoTitle(property);
+  const cleanBaseTitle = cleanTitleForMetadata(rawBaseTitle);
+  const titleStr = statusPrefix ? `${statusPrefix}${cleanBaseTitle}` : cleanBaseTitle;
+  const fullTitleWithBrand = `${titleStr} | Inmobiliaria Montaño`;
 
   const descPrefix =
     property.status === 'reservado'
@@ -796,7 +877,7 @@ export function generatePropertyMetadata(property: Property): Metadata {
       },
     },
     openGraph: {
-      title: titleStr,
+      title: fullTitleWithBrand,
       description: descriptionStr,
       url: canonicalUrl,
       siteName: 'Inmobiliaria Montaño',
@@ -815,15 +896,15 @@ export function generatePropertyMetadata(property: Property): Metadata {
     },
     twitter: {
       card: 'summary_large_image',
-      title: titleStr,
+      title: fullTitleWithBrand,
       description: descriptionStr,
       images: [imageUrl],
     },
     other: {
       'geo.region': 'UY-SJ',
       'geo.placename': `${property.location?.neighborhood || 'San José de Mayo'}, San José, Uruguay`,
-      'geo.position': `${property.location?.coordinates?.lat || -34.3375};${property.location?.coordinates?.lng || -56.7136}`,
-      'ICBM': `${property.location?.coordinates?.lat || -34.3375}, ${property.location?.coordinates?.lng || -56.7136}`,
+      'geo.position': `${property.location?.coordinates?.lat || -34.3397};${property.location?.coordinates?.lng || -56.7136}`,
+      'ICBM': `${property.location?.coordinates?.lat || -34.3397}, ${property.location?.coordinates?.lng || -56.7136}`,
     },
   };
 }

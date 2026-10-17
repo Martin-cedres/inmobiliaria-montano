@@ -33,7 +33,7 @@ const PAGE_URL = `${BASE_URL}/casas-en-venta-san-jose-de-mayo`;
 export const revalidate = 86400; // 24 horas ISR
 
 export const metadata: Metadata = {
-  title: 'Casas en Venta en San José de Mayo | Inmobiliaria Montaño',
+  title: 'Casas en Venta en San José de Mayo',
   description:
     'Catálogo exclusivo de casas en venta en San José y San José de Mayo, Uruguay. Opciones residenciales y céntricas con títulos al día y aptitud para crédito bancario. Asesoramiento con Daniel Montaño al 092 776 715.',
   keywords: [

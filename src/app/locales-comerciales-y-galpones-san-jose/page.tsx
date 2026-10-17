@@ -30,7 +30,7 @@ const PAGE_URL = `${BASE_URL}/locales-comerciales-y-galpones-san-jose`;
 export const revalidate = 86400; // 24 horas ISR
 
 export const metadata: Metadata = {
-  title: 'Locales Comerciales y Galpones en San José | Alquiler y Venta | Inmobiliaria Montaño',
+  title: 'Locales Comerciales y Galpones en San José | Alquiler y Venta',
   description:
     'Alquiler y venta de locales comerciales, depósitos y galpones industriales en San José de Mayo, Ruta 3 y Ruta 11. Ubicaciones estratégicas y asesoramiento con Daniel Montaño.',
   keywords: [

@@ -580,6 +580,20 @@
       "eventType": "page_view",
       "pagePath": "/",
       "anonymousSessionId": "anon_1792026760983_63s7khg"
+    },
+    {
+      "id": "evt_1792228477416_l32yg3",
+      "timestamp": "2026-10-17T09:14:37.416Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792228477071_xyo5z2f"
+    },
+    {
+      "id": "evt_1792229074741_6aswir",
+      "timestamp": "2026-10-17T09:24:34.741Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792228477071_xyo5z2f"
     }
   ],
   "seoRecords": [

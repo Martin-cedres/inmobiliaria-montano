@@ -27,7 +27,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamo
 const PAGE_URL = `${BASE_URL}/vender-propiedad-san-jose`;
 
 export const metadata: Metadata = {
-  title: 'Vender mi Propiedad en San José de Mayo | Inmobiliaria Montaño',
+  title: 'Vender mi Propiedad en San José de Mayo',
   description:
     'Vendé tu casa, apartamento, terreno o campo en San José con rapidez y total seguridad. Tasación profesional, difusión líder, filtro de compradores y atención directa con Daniel Montaño.',
   keywords: [

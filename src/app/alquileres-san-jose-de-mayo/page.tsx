@@ -35,7 +35,7 @@ const PAGE_URL = `${BASE_URL}/alquileres-san-jose-de-mayo`;
 export const revalidate = 86400; // 24 horas ISR
 
 export const metadata: Metadata = {
-  title: 'Alquileres en San José y San José de Mayo | Casas y Apartamentos | Inmobiliaria Montaño',
+  title: 'Alquileres en San José y San José de Mayo | Casas y Apartamentos',
   description:
     'Alquiler de casas, apartamentos y locales en San José de Mayo. Convenio Oficial Círculo Policial (10% OFF) y garantías ANDA, Porto Seguro, SURA, CGN, Mapfre, Santander y FIDECIU. Trato directo con Daniel Montaño al 092 776 715.',
   keywords: [

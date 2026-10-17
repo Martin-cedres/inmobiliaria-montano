@@ -34,7 +34,7 @@ const PAGE_URL = `${BASE_URL}/inmobiliaria-san-jose`;
 export const revalidate = 86400; // 24 horas ISR
 
 export const metadata: Metadata = {
-  title: 'Inmobiliaria en San José, Uruguay | Inmobiliaria Montaño — Daniel Montaño',
+  title: 'Inmobiliaria en San José, Uruguay — Daniel Montaño',
   description:
     'Inmobiliaria de referencia en San José de Mayo y todo el departamento de San José, Uruguay. Convenio Oficial Círculo Policial (10% OFF) y todas las garantías (ANDA, Porto Seguro, SURA, CGN, Mapfre, Santander, FIDECIU). Casas verificadas y tasaciones con Daniel Montaño al 092 776 715.',
   keywords: [
@@ -242,7 +242,8 @@ export default async function InmobiliariaSanJosePage() {
           {SAN_JOSE_LOCATIONS.map((loc) => (
             <div
               key={loc.slug}
-              className="bg-white p-5 rounded-2xl border border-purple-100/80 hover:border-purple-300 hover:shadow-md transition-all space-y-2 text-left"
+              id={loc.slug}
+              className="bg-white p-5 rounded-2xl border border-purple-100/80 hover:border-purple-300 hover:shadow-md transition-all space-y-2 text-left scroll-mt-28"
             >
               <div className="flex items-center justify-between">
                 <span className="text-xs font-black text-[#5E1754] uppercase bg-purple-50 px-2.5 py-0.5 rounded-lg border border-purple-100">

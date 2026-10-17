@@ -30,7 +30,7 @@ const PAGE_URL = `${BASE_URL}/estadisticas-inmobiliarias-san-jose`;
 export const revalidate = 86400; // 24 horas
 
 export const metadata: Metadata = {
-  title: 'Precios y Valores Inmobiliarios en San José | Inmobiliaria Montaño',
+  title: 'Precios y Valores Inmobiliarios en San José',
   description:
     'Conocé los valores reales de casas, terrenos y alquileres en San José de Mayo y localidades del departamento. Guía de precios y tasaciones con Daniel Montaño.',
   keywords: [
@@ -321,6 +321,108 @@ export default async function EstadisticasInmobiliariasPage() {
               </Link>
             </div>
 
+          </div>
+        </section>
+
+        {/* Sección: Tabla Comparativa Semántica por Barrios y Zonas */}
+        <section className="space-y-4">
+          <div className="border-b border-slate-200 pb-3">
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900">
+              Valores de Referencia y Demanda por Zona en San José
+            </h2>
+            <p className="text-xs text-slate-500">
+              Desglose detallado del mercado inmobiliario por barrios de San José de Mayo y localidades clave del departamento.
+            </p>
+          </div>
+
+          <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-xs">
+            <table className="w-full text-left border-collapse text-xs sm:text-sm">
+              <thead className="bg-slate-50 border-b border-slate-200 text-slate-700 font-bold uppercase text-[11px] tracking-wider">
+                <tr>
+                  <th scope="col" className="p-3.5 sm:p-4">Zona / Barrio</th>
+                  <th scope="col" className="p-3.5 sm:p-4">Tipología Predominante</th>
+                  <th scope="col" className="p-3.5 sm:p-4">Perfil de Demanda</th>
+                  <th scope="col" className="p-3.5 sm:p-4">Valores de Referencia</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100 text-slate-600">
+                <tr className="hover:bg-slate-50/60 transition-colors">
+                  <th scope="row" className="p-3.5 sm:p-4 font-bold text-slate-900 whitespace-nowrap">
+                    Centro / Plaza 33 / Plaza Artigas
+                    <span className="block text-[11px] font-normal text-slate-500">San José de Mayo</span>
+                  </th>
+                  <td className="p-3.5 sm:p-4">
+                    Casas de 3 dormitorios, locales comerciales y apartamentos céntricos
+                  </td>
+                  <td className="p-3.5 sm:p-4">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-purple-50 text-[#5E1754] border border-purple-200">
+                      Alta demanda residencial y comercial
+                    </span>
+                  </td>
+                  <td className="p-3.5 sm:p-4 font-medium text-slate-900">
+                    <div>Casas: <strong>USD 95.000 – USD 250.000</strong></div>
+                    <div className="text-[11px] text-slate-500">Alquileres: <strong>$ 16.500 – $ 25.000 / mes</strong></div>
+                  </td>
+                </tr>
+
+                <tr className="hover:bg-slate-50/60 transition-colors">
+                  <th scope="row" className="p-3.5 sm:p-4 font-bold text-slate-900 whitespace-nowrap">
+                    Barrio Molino / Barrio Arriaga / Zona Hospital
+                    <span className="block text-[11px] font-normal text-slate-500">San José de Mayo</span>
+                  </th>
+                  <td className="p-3.5 sm:p-4">
+                    Casas familiares de 2 a 3 dormitorios con fondo y garaje, propiedades horizontales (PH)
+                  </td>
+                  <td className="p-3.5 sm:p-4">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                      Alta rotación y aptitud bancaria
+                    </span>
+                  </td>
+                  <td className="p-3.5 sm:p-4 font-medium text-slate-900">
+                    <div>Casas: <strong>USD 45.000 – USD 98.000</strong></div>
+                    <div className="text-[11px] text-slate-500">Alta preferencia crédito BHU y bancos</div>
+                  </td>
+                </tr>
+
+                <tr className="hover:bg-slate-50/60 transition-colors">
+                  <th scope="row" className="p-3.5 sm:p-4 font-bold text-slate-900 whitespace-nowrap">
+                    Parquización de Arroyo Mallada
+                    <span className="block text-[11px] font-normal text-slate-500">San José de Mayo</span>
+                  </th>
+                  <td className="p-3.5 sm:p-4">
+                    Proyectos residenciales de 2 dormitorios a estrenar y terrenos amplios
+                  </td>
+                  <td className="p-3.5 sm:p-4">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-blue-50 text-blue-800 border border-blue-200">
+                      Zona en expansión residencial
+                    </span>
+                  </td>
+                  <td className="p-3.5 sm:p-4 font-medium text-slate-900">
+                    <div>Casas a estrenar: <strong>USD 99.500</strong> ref.</div>
+                    <div className="text-[11px] text-slate-500">Entorno verde y parquizado</div>
+                  </td>
+                </tr>
+
+                <tr className="hover:bg-slate-50/60 transition-colors">
+                  <th scope="row" className="p-3.5 sm:p-4 font-bold text-slate-900 whitespace-nowrap">
+                    Eje Rutas 1, 3 y 11 / Libertad / Cañada Grande / Juan Soler / Chamizo
+                    <span className="block text-[11px] font-normal text-slate-500">Interior de San José</span>
+                  </th>
+                  <td className="p-3.5 sm:p-4">
+                    Solares, chacras productivas y predios industriales/logísticos
+                  </td>
+                  <td className="p-3.5 sm:p-4">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+                      Inversión, logística y vivienda suburbana
+                    </span>
+                  </td>
+                  <td className="p-3.5 sm:p-4 font-medium text-slate-900">
+                    <div>Terrenos: desde <strong>USD 24.500</strong></div>
+                    <div className="text-[11px] text-slate-500">Predios industriales: desde <strong>USD 180.000</strong></div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </section>
 

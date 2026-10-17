@@ -27,7 +27,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamo
 const PAGE_URL = `${BASE_URL}/tasaciones-san-jose-de-mayo`;
 
 export const metadata: Metadata = {
-  title: 'Tasaciones Inmobiliarias en San José y San José de Mayo | Daniel Montaño',
+  title: 'Tasaciones Inmobiliarias en San José y San José de Mayo — Daniel Montaño',
   description:
     'Tasación profesional, objetiva y real de propiedades en San José y San José de Mayo, Uruguay. Casas, apartamentos, solares y chacras. Conocé el verdadero valor de mercado con Daniel Montaño al 092 776 715.',
   keywords: [

@@ -44,8 +44,8 @@ export const ContactSection: React.FC = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* Left Column: Direct Contact Info Cards */}
-          <div className="lg:col-span-5 space-y-4 text-left">
+          {/* Left Column: Direct Contact Info Cards wrapped in semantic address */}
+          <address className="not-italic lg:col-span-5 space-y-4 text-left">
             
             {/* Card 1: WhatsApp / Phone */}
             <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-start space-x-4">
@@ -54,7 +54,7 @@ export const ContactSection: React.FC = () => {
               </div>
               <div>
                 <h4 className="font-extrabold text-sm text-slate-900">WhatsApp & Teléfono Directo</h4>
-                <p className="text-xs text-slate-500 font-medium mt-0.5">Respuesta rápida en horario comercial</p>
+                <p className="text-xs text-slate-500 font-medium mt-0.5">Daniel Montaño — Atención directa</p>
                 <a
                   href={`https://wa.me/${MONTAÑO_WHATSAPP_PHONE}`}
                   target="_blank"
@@ -67,7 +67,7 @@ export const ContactSection: React.FC = () => {
                   }}
                   className="inline-block mt-2 font-black text-sm text-[#e85d04] hover:underline"
                 >
-                  +598 92 776 715
+                  092 776 715 (+598 92 776 715)
                 </a>
               </div>
             </div>
@@ -79,7 +79,7 @@ export const ContactSection: React.FC = () => {
               </div>
               <div>
                 <h4 className="font-extrabold text-sm text-slate-900">Correo Electrónico</h4>
-                <p className="text-xs text-slate-500 font-medium mt-0.5">Envianos tu consulta formal</p>
+                <p className="text-xs text-slate-500 font-medium mt-0.5">Consultas y tasaciones formales</p>
                 <a
                   href={`mailto:${MONTAÑO_OFFICIAL_EMAIL}`}
                   className="inline-block mt-2 font-black text-xs sm:text-sm text-[#5e1754] hover:underline truncate max-w-[240px]"
@@ -95,16 +95,18 @@ export const ContactSection: React.FC = () => {
                 <MapPin className="w-6 h-6" />
               </div>
               <div>
-                <h4 className="font-extrabold text-sm text-slate-900">Oficina y Cobertura</h4>
-                <p className="text-xs text-slate-600 font-semibold mt-1">San José de Mayo, Uruguay</p>
-                <div className="flex items-center space-x-1.5 text-xs text-slate-500 mt-1 font-medium">
+                <h4 className="font-extrabold text-sm text-slate-900">Dirección Física & Horario</h4>
+                <p className="text-xs text-slate-700 font-semibold mt-1 leading-snug">
+                  Calle 25 de Mayo 338, CP 80000, San José de Mayo, Departamento de San José, Uruguay
+                </p>
+                <div className="flex items-center space-x-1.5 text-xs text-slate-500 mt-1.5 font-medium">
                   <Clock className="w-3.5 h-3.5 text-slate-400" />
-                  <span>Lun a Vie: 09:00 - 18:00 hs</span>
+                  <span>Lunes a Viernes de 09:00 a 18:00 hs</span>
                 </div>
               </div>
             </div>
 
-          </div>
+          </address>
 
           {/* Right Column: Clean Direct Message Form */}
           <div className="lg:col-span-7">

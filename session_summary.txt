@@ -1122,3 +1122,29 @@
 - **Despliegue a Producción (solicitado explícitamente por el usuario):**
   - Modificaciones incluidas: Optimizaciones SEO para Casas en Venta en San José de Mayo (Navbar, Footer y Landing con Guía de Precios y zonas 2026), Publicador Express para Redes Sociales y Google Maps en el panel de administración.
   - Cambios confirmados y enviados a la rama `main` en GitHub (https://github.com/Martin-cedres/inmobiliaria-montano), activando el despliegue automático en Vercel (https://www.inmobiliariamontano.uy).
+
+=== Sesión 2026-10-17 (Optimización Integral SEO Técnico, SEO Local y GEO) ===
+- **Corrección de `<title>` duplicados y truncamiento inteligente de títulos:**
+  - Auditadas y corregidas todas las páginas pilares y dinámicas (`/inmobiliaria-san-jose`, `/casas-en-venta-san-jose-de-mayo`, `/alquileres-san-jose-de-mayo`, `/tasaciones-san-jose-de-mayo`, `/terrenos-y-chacras-san-jose`, `/locales-comerciales-y-galpones-san-jose`, `/inversiones-inmobiliarias-san-jose`, `/estadisticas-inmobiliarias-san-jose`, `/guia-tasacion-inmobiliaria-san-jose`, `/propiedades-san-jose`, `/proyectos-y-viviendas-modulares-san-jose`, `/vender-propiedad-san-jose`, `/guia-compra-propiedad-credito-bancario-uruguay` y landings en `levelBLandings.ts`) para eliminar la duplicación `| Inmobiliaria Montaño | Inmobiliaria Montaño` provocada por el template del layout raíz.
+  - Implementado truncamiento respetuoso por palabras completas (`truncateByWord`, `cleanTitleForMetadata`) en `src/utils/seo.ts` y en `api/admin/seo-ai-suggest`. Corregida la descripción y título truncados en `src/db/properties.json`.
+  - Reemplazado `line-clamp-1` por `line-clamp-2` en las tarjetas del catálogo lateral (`src/components/CatalogSection.tsx`).
+- **Unificación de NAP y Aislamiento de Snippet en Footer y Contacto:**
+  - Añadido bloque semántico `<address>` en `src/components/Footer.tsx` y `src/components/ContactSection.tsx` con los datos exactos del Google Business Profile: Calle 25 de Mayo 338, CP 80000, San José de Mayo, Lunes a Viernes 09:00 a 18:00 hs, teléfono/WhatsApp +598 92 776 715 y contacto@inmobiliariamontano.uy.
+  - Envuelto el bloque de créditos del desarrollador en `<div data-nosnippet>` en el Footer para evitar que Google lo extraiga como snippet de la inmobiliaria en las SERPs.
+- **Creación de `public/llms.txt` y directivas GEO en `robots`:**
+  - Creado `public/llms.txt` bajo el estándar de IA con resumen institucional, NAP, cobertura territorial en San José, referencias de mercado reales a Octubre 2026 (casas, alquileres, terrenos, módulos habitacionales), mapa de URLs y subíndices modulares. Sincronizada la ruta dinámica `src/app/llms.txt/route.ts`.
+  - Habilitados explícitamente en `src/app/robots.txt/route.ts` los crawlers de IA: `Google-Extended`, `GPTBot`, `OAI-SearchBot`, `ChatGPT-User`, `PerplexityBot`, `ClaudeBot` y `Applebot-Extended`, con referencia directa a `sitemap.xml`.
+- **Enriquecimiento de Schema.org JSON-LD:**
+  - Actualizado `RealEstateAgentJsonLd.tsx` con `@type: ["RealEstateAgent", "LocalBusiness"]`, `@id: "https://www.inmobiliariamontano.uy/#organization"`, nombre alternativo, dirección física exacta en San José de Mayo, coordenadas geográficas (`-34.3397, -56.7136`), horarios de apertura, fundador Daniel Montaño, `areaServed` para todas las localidades del departamento y perfiles en `sameAs`.
+  - Perfeccionado el grafo de propiedades en `src/utils/seo.ts` con estado real de inventario (`InStock`, `Reserved`, `SoldOut`), barrio en `containedInPlace`, `numberOfRooms`, `numberOfBedrooms` y `floorSize`.
+  - Inyectado schema `FAQPage` en `src/app/guia-tasacion-inmobiliaria-san-jose/page.tsx`.
+- **Tabla Semántica por Zonas y Anclas de Localidad:**
+  - Implementada tabla HTML semántica (`<table>`, `<thead>`, `<tbody>`) en `src/app/estadisticas-inmobiliarias-san-jose/page.tsx` titulada "Valores de Referencia y Demanda por Zona en San José", desglosando Centro/Plaza 33/Plaza Artigas, Barrio Molino/Arriaga/Hospital, Arroyo Mallada y Eje Rutas 1, 3, 11 / Libertad / Cañada Grande / Juan Soler / Chamizo.
+  - Añadidas anclas semánticas `#id` (`id={loc.slug}`) con `scroll-mt-28` en `src/app/inmobiliaria-san-jose/page.tsx` para paso a paso / passage indexing sin crear doorway pages vacías.
+- **Verificación Local y Cumplimiento Estricto de Seguridad:**
+  - `npm run build` ejecutado localmente con Turbopack: 75/75 rutas generadas con código 0 y 0 errores.
+  - Cero `git push` o despliegues ejecutados, preservando todas las directivas de seguridad.
+- **Corrección de colisión de UI: Botón flotante de mapa y créditos de desarrollador:**
+  - En `src/components/CatalogSection.tsx`: configurado `IntersectionObserver` que detecta la entrada en viewport del Footer (`#contacto`). El botón flotante de cambio de vista ("Ver en Mapa" / "Ver Lista") se oculta suavemente (`opacity-0 translate-y-12 pointer-events-none scale-95`) al descender al pie de página y reaparece al subir al catálogo, evitando tapar los créditos del desarrollador o enlaces legales.
+  - En `src/components/Footer.tsx`: ajustado el padding inferior a `pb-24 sm:pb-20` y corregido el padding derecho de la barra de copyright a `sm:pr-24 lg:pr-28` (en lugar del excesivo `pr-56` de 224px), manteniendo los créditos del desarrollador alineados a la derecha con margen de seguridad respecto al botón flotante de WhatsApp sin empujarlos al centro.
+  - Verificada la compilación local (`npm run build` con 75/75 rutas exitosas y 0 errores). Cero `git push` ejecutados.

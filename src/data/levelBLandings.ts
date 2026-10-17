@@ -40,7 +40,7 @@ export const LEVEL_B_LANDINGS: LevelBLandingDefinition[] = [
     path: '/casas-en-venta-libertad',
     title: 'Casas en Venta en Libertad, San José',
     shortTitle: 'Casas en Libertad',
-    seoTitle: 'Casas en Venta en Libertad, San José | Inmobiliaria Montaño',
+    seoTitle: 'Casas en Venta en Libertad, San José',
     seoDescription: 'Venta de casas en Libertad, San José, Uruguay. Opciones residenciales sobre eje Ruta 1, con patio, garage y títulos al día. Asesoramiento con Daniel Montaño.',
     searchIntentKeywords: [
       'casas en venta libertad',
@@ -76,7 +76,7 @@ export const LEVEL_B_LANDINGS: LevelBLandingDefinition[] = [
     path: '/terrenos-en-venta-libertad',
     title: 'Terrenos y Solares en Venta en Libertad, San José',
     shortTitle: 'Terrenos en Libertad',
-    seoTitle: 'Terrenos en Venta en Libertad, San José | Inmobiliaria Montaño',
+    seoTitle: 'Terrenos en Venta en Libertad, San José',
     seoDescription: 'Solares y terrenos nivelados en venta en Libertad, San José. Terrenos listos para edificar con servicios de agua y luz. Asesoramiento con Daniel Montaño.',
     searchIntentKeywords: [
       'terrenos en venta libertad',
@@ -107,7 +107,7 @@ export const LEVEL_B_LANDINGS: LevelBLandingDefinition[] = [
     path: '/casas-aptas-para-banco-san-jose',
     title: 'Casas Aptas para Préstamo Bancario e Hipotecario en San José',
     shortTitle: 'Casas Aptas Banco',
-    seoTitle: 'Casas Aptas para Préstamo Bancario e Hipotecario en San José | Montaño',
+    seoTitle: 'Casas Aptas para Préstamo Bancario e Hipotecario en San José',
     seoDescription: 'Casas en venta aptas para crédito hipotecario y préstamos bancarios (BHU, Santander, Itaú, BBVA) en San José de Mayo. Títulos y planos al día. Daniel Montaño.',
     searchIntentKeywords: [
       'casas aptas para banco san jose',

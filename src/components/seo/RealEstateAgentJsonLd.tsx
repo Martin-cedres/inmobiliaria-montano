@@ -5,11 +5,11 @@ const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamo
 export function RealEstateAgentJsonLd() {
   const schema = {
     '@context': 'https://schema.org',
-    '@type': 'RealEstateAgent',
+    '@type': ['RealEstateAgent', 'LocalBusiness'],
     '@id': `${BASE_URL}/#organization`,
     name: 'Inmobiliaria Montaño',
-    alternateName: ['Inmobiliaria Daniel Montaño', 'Montaño Propiedades San José'],
-    url: BASE_URL,
+    alternateName: 'Inmobiliaria Daniel Montaño',
+    url: `${BASE_URL}/`,
     logo: `${BASE_URL}/logo.png`,
     image: `${BASE_URL}/og-logo.png`,
     description:
@@ -22,7 +22,7 @@ export function RealEstateAgentJsonLd() {
     paymentAccepted: 'Cash, Credit Card, Bank Transfer',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: '25 de Mayo 338',
+      streetAddress: 'Calle 25 de Mayo 338',
       addressLocality: 'San José de Mayo',
       addressRegion: 'San José',
       postalCode: '80000',
@@ -30,40 +30,34 @@ export function RealEstateAgentJsonLd() {
     },
     geo: {
       '@type': 'GeoCoordinates',
-      latitude: -34.3375,
+      latitude: -34.3397,
       longitude: -56.7136,
     },
     hasMap: 'https://share.google/6I1gbffV5ZTS5heXV',
     sameAs: [
-      'https://share.google/6I1gbffV5ZTS5heXV',
-      'https://wa.me/59892776715',
-      'https://www.facebook.com/InmobiliariaDanielMontano',
-      'https://circulopolicialsj.org.uy/convenios/',
+      'https://www.facebook.com/montanioinmobiliaria/',
+      'https://www.google.com/maps/place/?q=place_id:ChIJgU0vgPl3oZURSNT4x7Lw3fE',
     ],
     areaServed: [
       {
-        '@type': 'AdministrativeArea',
+        '@type': 'City',
         name: 'San José de Mayo',
       },
       {
-        '@type': 'AdministrativeArea',
-        name: 'Departamento de San José',
-      },
-      {
-        '@type': 'AdministrativeArea',
+        '@type': 'City',
         name: 'Libertad',
       },
       {
-        '@type': 'AdministrativeArea',
+        '@type': 'City',
         name: 'Ciudad del Plata',
       },
       {
-        '@type': 'AdministrativeArea',
-        name: 'Rodríguez',
+        '@type': 'City',
+        name: 'Ecilda Paullier',
       },
       {
-        '@type': 'AdministrativeArea',
-        name: 'Ecilda Paullier',
+        '@type': 'City',
+        name: 'Rodríguez',
       },
       {
         '@type': 'AdministrativeArea',
@@ -71,23 +65,20 @@ export function RealEstateAgentJsonLd() {
       },
       {
         '@type': 'AdministrativeArea',
-        name: 'Rafael Perazza',
+        name: 'Boca del Cufré',
       },
     ],
     founder: {
       '@type': 'Person',
       name: 'Daniel Montaño',
       jobTitle: 'Director & Asesor Inmobiliario',
-      image: `${BASE_URL}/daniel-montano.webp`,
-      telephone: '+59892776715',
-      sameAs: 'https://wa.me/59892776715',
     },
     openingHoursSpecification: [
       {
         '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
         opens: '09:00',
-        closes: '19:00',
+        closes: '18:00',
       },
     ],
     hasOfferCatalog: {

@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon';
-import { Mail, MapPin, Home, Key, Trees, Warehouse, Landmark, Calculator, ShieldCheck, Lock, Building2, TrendingUp } from 'lucide-react';
+import { Mail, MapPin, Home, Key, Trees, Warehouse, Landmark, Calculator, ShieldCheck, Lock, Building2, TrendingUp, Clock } from 'lucide-react';
 import { MONTAÑO_OFFICIAL_EMAIL, buildGeneralWhatsAppLink } from '@/utils/whatsapp';
 import { trackWhatsappClick } from '@/utils/telemetry';
 
@@ -19,7 +19,7 @@ export const Footer: React.FC<FooterProps> = () => {
     <footer id="contacto" className="bg-[#191024] text-slate-200 border-t border-[#2D1D42] scroll-mt-28 sm:scroll-mt-32">
       
       {/* Main Footer Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-20 sm:pb-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-24 sm:pb-20">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           
           {/* Column 1: Brand & Bio */}
@@ -53,7 +53,7 @@ export const Footer: React.FC<FooterProps> = () => {
               title="Ver ficha oficial y opiniones en Google Maps"
             >
               <MapPin className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
-              <span>San José de Mayo, Uruguay — Ver en Google Maps</span>
+              <span>Calle 25 de Mayo 338, San José de Mayo — Google Maps</span>
             </a>
           </div>
 
@@ -178,10 +178,26 @@ export const Footer: React.FC<FooterProps> = () => {
             </ul>
           </div>
 
-          {/* Column 4: Contacto Directo Simplificado e Interactivo */}
+          {/* Column 4: Contacto Directo y Datos Oficiales (NAP) */}
           <div className="space-y-3">
             <h4 className="text-white font-bold text-sm uppercase tracking-wider">Contacto Directo</h4>
-            <div className="space-y-3 text-xs">
+            <address className="not-italic space-y-2.5 text-xs text-slate-200">
+              <div className="font-bold text-white">
+                Inmobiliaria Montaño <span className="text-purple-300 font-normal text-[11px] block sm:inline">(Director: Daniel Montaño)</span>
+              </div>
+
+              {/* Dirección Física Oficial */}
+              <div className="flex items-start space-x-2 text-slate-300">
+                <MapPin className="w-3.5 h-3.5 text-purple-300 flex-shrink-0 mt-0.5" />
+                <span>Calle 25 de Mayo 338, CP 80000, San José de Mayo, Departamento de San José, Uruguay</span>
+              </div>
+
+              {/* Horario de Atención */}
+              <div className="flex items-center space-x-2 text-slate-300">
+                <Clock className="w-3.5 h-3.5 text-purple-300 flex-shrink-0" />
+                <span>Lunes a Viernes de 09:00 a 18:00 hs</span>
+              </div>
+
               {/* WhatsApp Directo */}
               <a
                 href={generalWhatsappUrl}
@@ -193,12 +209,12 @@ export const Footer: React.FC<FooterProps> = () => {
                     pagePath: typeof window !== 'undefined' ? window.location.pathname : '/',
                   });
                 }}
-                className="flex items-center space-x-2.5 text-slate-200 hover:text-[#E85D04] transition-colors font-bold group"
+                className="flex items-center space-x-2.5 text-slate-200 hover:text-[#E85D04] transition-colors font-bold group pt-0.5"
               >
                 <span className="p-1.5 rounded-lg bg-purple-500/20 text-purple-300 group-hover:bg-[#E85D04] group-hover:text-white transition-colors">
                   <WhatsAppIcon className="w-4 h-4" />
                 </span>
-                <span>WhatsApp: 092 776 715</span>
+                <span>092 776 715 (+598 92 776 715)</span>
               </a>
 
               {/* Email Interactivo mailto */}
@@ -218,15 +234,12 @@ export const Footer: React.FC<FooterProps> = () => {
                 href="https://share.google/6I1gbffV5ZTS5heXV"
                 target="_blank"
                 rel="nofollow noopener noreferrer"
-                className="flex items-center space-x-2.5 text-slate-200 hover:text-[#E85D04] transition-colors font-semibold group"
+                className="inline-flex items-center space-x-1.5 text-[11px] text-purple-300 hover:text-[#E85D04] transition-colors font-medium pt-1"
                 title="Ver ubicación, teléfono y opiniones en Google Maps"
               >
-                <span className="p-1.5 rounded-lg bg-purple-500/20 text-purple-300 group-hover:bg-[#E85D04] group-hover:text-white transition-colors">
-                  <MapPin className="w-4 h-4" />
-                </span>
-                <span>Google Maps: Inmobiliaria Montaño</span>
+                <span>Ficha oficial en Google Business Profile →</span>
               </a>
-            </div>
+            </address>
           </div>
 
         </div>
@@ -282,7 +295,7 @@ export const Footer: React.FC<FooterProps> = () => {
         </div>
 
         {/* Bottom Copyright & Credit Bar */}
-        <div className="mt-8 pt-6 border-t border-[#2D1D42] text-center text-xs text-slate-300 flex flex-col md:flex-row justify-between items-center gap-4 pr-0 sm:pr-48 lg:pr-56">
+        <div className="mt-8 pt-6 border-t border-[#2D1D42] text-center text-xs text-slate-300 flex flex-col md:flex-row justify-between items-center gap-4 pr-0 sm:pr-24 lg:pr-28">
           <div className="flex items-center space-x-2">
             <p>© {new Date().getFullYear()} Inmobiliaria Montaño. Todos los derechos reservados. San José de Mayo, Uruguay.</p>
             <Link
@@ -294,17 +307,19 @@ export const Footer: React.FC<FooterProps> = () => {
             </Link>
           </div>
 
-          <p className="flex items-center space-x-1 flex-wrap justify-center sm:justify-end text-slate-300">
-            <span>¿Te interesa un sitio o proyecto web como este?</span>
-            <a
-              href="https://wa.me/59891090705?text=Hola,%20vi%20la%20web%20de%20Inmobiliaria%20Monta%C3%B1o,%20me%20interesa%20desarrollar%20un%20proyecto%20web%20a%20medida"
-              target="_blank"
-              rel="nofollow noopener noreferrer"
-              className="text-[#E85D04] font-bold hover:underline hover:text-amber-400 transition-colors ml-1"
-            >
-              Consultá por WhatsApp
-            </a>
-          </p>
+          <div data-nosnippet>
+            <p className="flex items-center space-x-1 flex-wrap justify-center sm:justify-end text-slate-300">
+              <span>¿Te interesa un sitio o proyecto web como este?</span>
+              <a
+                href="https://wa.me/59891090705?text=Hola,%20vi%20la%20web%20de%20Inmobiliaria%20Monta%C3%B1o,%20me%20interesa%20desarrollar%20un%20proyecto%20web%20a%20medida"
+                target="_blank"
+                rel="nofollow noopener noreferrer"
+                className="text-[#E85D04] font-bold hover:underline hover:text-amber-400 transition-colors ml-1"
+              >
+                Consultá por WhatsApp
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </footer>

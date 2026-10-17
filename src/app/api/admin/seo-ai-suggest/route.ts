@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { truncateByWord } from '@/utils/seo';
 
 export async function POST(request: Request) {
   try {
@@ -40,23 +41,33 @@ export async function POST(request: Request) {
     const badgeStr = keyBadges.slice(0, 2).join(' • ');
 
     // 📈 Variante A: Inversión / Oportunidad
-    const titleA = `${opText} ${category.toUpperCase()} en ${neighborhood} | Excelente Oportunidad | Inmobiliaria Montaño`.substring(0, 60);
-    const descA = (hasValidPrice 
-      ? `Oportunidad en ${zoneStr}: ${category} ${dormStr} por ${priceFormatted}. ${badgeStr ? badgeStr + '. ' : ''}Coordiná tu visita con Daniel Montaño.`
-      : `Oportunidad en ${zoneStr}: ${category} ${dormStr}. ${badgeStr ? badgeStr + '. ' : ''}Coordiná tu visita con Daniel Montaño.`
-    ).substring(0, 155);
+    const rawTitleA = `${opText} ${category.toUpperCase()} en ${neighborhood} | Excelente Oportunidad`;
+    const titleA = truncateByWord(rawTitleA, 60);
+    const descA = truncateByWord(
+      hasValidPrice 
+        ? `Oportunidad en ${zoneStr}: ${category} ${dormStr} por ${priceFormatted}. ${badgeStr ? badgeStr + '. ' : ''}Coordiná tu visita con Daniel Montaño.`
+        : `Oportunidad en ${zoneStr}: ${category} ${dormStr}. ${badgeStr ? badgeStr + '. ' : ''}Coordiná tu visita con Daniel Montaño.`,
+      155
+    );
 
     // 🏡 Variante B: Familiar / Calidez
-    const titleB = `${category.toUpperCase()} de ${bedrooms || 2} Dormitorios en ${neighborhood} | Fondo & Confort - San José`.substring(0, 60);
-    const descB = `Excelente ${category.toLowerCase()} en ${neighborhood}, San José. Ideal para disfrutar en familia con excelente iluminación. Consultá directo por WhatsApp.`.substring(0, 155);
+    const rawTitleB = `${category.toUpperCase()} de ${bedrooms || 2} Dormitorios en ${neighborhood} | Fondo & Confort - San José`;
+    const titleB = truncateByWord(rawTitleB, 60);
+    const descB = truncateByWord(
+      `Excelente ${category.toLowerCase()} en ${neighborhood}, San José. Ideal para disfrutar en familia con excelente iluminación. Consultá directo por WhatsApp.`,
+      155
+    );
 
     // 📐 Variante C: Técnico / Financiero
     const areaStr = builtAreaM2 ? `${builtAreaM2}m² edif.` : plotAreaM2 ? `${plotAreaM2}m² terr.` : '';
-    const titleC = `${category.toUpperCase()} ${opText} ${areaStr} en ${neighborhood} | ${features.bankCreditEligible ? 'Apta Banco' : 'Títulos al Día'}`.substring(0, 60);
-    const descC = (hasValidPrice
-      ? `${category} en ${zoneStr}. ${areaStr} ${badgeStr ? '— ' + badgeStr : ''}. Precio: ${priceFormatted}. Atención personalizada por Daniel Montaño.`
-      : `${category} en ${zoneStr}. ${areaStr} ${badgeStr ? '— ' + badgeStr : ''}. Consultá con Daniel Montaño.`
-    ).substring(0, 155);
+    const rawTitleC = `${category.toUpperCase()} ${opText} ${areaStr} en ${neighborhood} | ${features.bankCreditEligible ? 'Apta Banco' : 'Títulos al Día'}`;
+    const titleC = truncateByWord(rawTitleC, 60);
+    const descC = truncateByWord(
+      hasValidPrice
+        ? `${category} en ${zoneStr}. ${areaStr} ${badgeStr ? '— ' + badgeStr : ''}. Precio: ${priceFormatted}. Atención personalizada por Daniel Montaño.`
+        : `${category} en ${zoneStr}. ${areaStr} ${badgeStr ? '— ' + badgeStr : ''}. Consultá con Daniel Montaño.`,
+      155
+    );
 
     return NextResponse.json({
       success: true,

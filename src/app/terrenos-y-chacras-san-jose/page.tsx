@@ -31,7 +31,7 @@ const PAGE_URL = `${BASE_URL}/terrenos-y-chacras-san-jose`;
 export const revalidate = 86400; // 24 horas ISR
 
 export const metadata: Metadata = {
-  title: 'Terrenos y Chacras en Venta en San José | Solares y Campos | Inmobiliaria Montaño',
+  title: 'Terrenos y Chacras en Venta en San José | Solares y Campos',
   description:
     'Venta de terrenos, solares urbanos, fraccionamientos y chacras productivas en San José de Mayo y alrededores. Servicios de OSE y UTE, índice CONEAT y asesoramiento con Daniel Montaño.',
   keywords: [
