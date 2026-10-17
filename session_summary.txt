@@ -1147,4 +1147,7 @@
 - **Corrección de colisión de UI: Botón flotante de mapa y créditos de desarrollador:**
   - En `src/components/CatalogSection.tsx`: configurado `IntersectionObserver` que detecta la entrada en viewport del Footer (`#contacto`). El botón flotante de cambio de vista ("Ver en Mapa" / "Ver Lista") se oculta suavemente (`opacity-0 translate-y-12 pointer-events-none scale-95`) al descender al pie de página y reaparece al subir al catálogo, evitando tapar los créditos del desarrollador o enlaces legales.
   - En `src/components/Footer.tsx`: ajustado el padding inferior a `pb-24 sm:pb-20` y corregido el padding derecho de la barra de copyright a `sm:pr-24 lg:pr-28` (en lugar del excesivo `pr-56` de 224px), manteniendo los créditos del desarrollador alineados a la derecha con margen de seguridad respecto al botón flotante de WhatsApp sin empujarlos al centro.
-  - Verificada la compilación local (`npm run build` con 75/75 rutas exitosas y 0 errores). Cero `git push` ejecutados.
+  - Verificada la compilación local (`npm run build` con 75/75 rutas exitosas y 0 errores).
+- **Despliegue a Producción (solicitado explícitamente por el usuario):**
+  - Cambios confirmados y enviados a la rama `main` en GitHub (`https://github.com/Martin-cedres/inmobiliaria-montano`), disparando el despliegue automático en Vercel (`https://www.inmobiliariamontano.uy`).
+
