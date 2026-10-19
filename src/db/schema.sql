@@ -95,3 +95,63 @@ CREATE INDEX IF NOT EXISTS idx_properties_neighborhood ON properties(neighborhoo
 CREATE INDEX IF NOT EXISTS idx_property_images_property_id ON property_images(property_id);
 CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 
+-- 6. Tabla de Avisos de Inteligencia de Mercado (Radar de Captación & Competencia)
+CREATE TABLE IF NOT EXISTS market_listings (
+  id VARCHAR(64) PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  operation VARCHAR(32) NOT NULL, -- 'venta', 'alquiler'
+  category VARCHAR(32) NOT NULL,  -- 'casa', 'apartamento', 'terreno', 'chacra', 'local', 'deposito'
+  neighborhood VARCHAR(64) NOT NULL,
+  city VARCHAR(64) NOT NULL DEFAULT 'San José de Mayo',
+  department VARCHAR(64) NOT NULL DEFAULT 'San José',
+  price_amount NUMERIC(12, 2) NOT NULL,
+  price_currency VARCHAR(8) NOT NULL DEFAULT 'USD',
+  origin VARCHAR(32) NOT NULL, -- 'dueno_directo', 'inmobiliaria_competencia', 'desconocido'
+  competitor_name VARCHAR(128),
+  source_name VARCHAR(64) NOT NULL,
+  source_url TEXT,
+  detected_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  days_on_market INT DEFAULT 1,
+  status VARCHAR(32) NOT NULL DEFAULT 'detectado', -- 'detectado', 'en_analisis', 'contactado', 'reunion_agendada', 'descartado', 'captado'
+  internal_notes TEXT,
+  contact_name VARCHAR(128),
+  contact_phone VARCHAR(64),
+  built_area_m2 NUMERIC(10, 2),
+  plot_area_m2 NUMERIC(10, 2),
+  bedrooms INT,
+  bathrooms INT,
+  estimated_price_per_m2 NUMERIC(10, 2),
+  price_history JSONB DEFAULT '[]'::jsonb,
+  is_opportunity BOOLEAN DEFAULT FALSE,
+  opportunity_reason TEXT,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 7. Tabla de Snapshots Históricos Semanales del Mercado
+CREATE TABLE IF NOT EXISTS market_snapshots (
+  id VARCHAR(64) PRIMARY KEY,
+  snapshot_date DATE NOT NULL,
+  week_number INT NOT NULL,
+  year INT NOT NULL,
+  total_stock INT NOT NULL,
+  montano_stock INT NOT NULL,
+  montano_share_percentage NUMERIC(5, 2) NOT NULL,
+  direct_owner_stock INT NOT NULL,
+  competitor_stock INT NOT NULL,
+  new_entries_7d INT NOT NULL,
+  price_drops_7d INT NOT NULL,
+  avg_price_m2_usd_sale NUMERIC(10, 2),
+  avg_price_rent_uyu NUMERIC(10, 2),
+  zone_distribution JSONB DEFAULT '{}'::jsonb,
+  category_distribution JSONB DEFAULT '{}'::jsonb,
+  notes TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_market_listings_origin ON market_listings(origin);
+CREATE INDEX IF NOT EXISTS idx_market_listings_status ON market_listings(status);
+CREATE INDEX IF NOT EXISTS idx_market_listings_neighborhood ON market_listings(neighborhood);
+CREATE INDEX IF NOT EXISTS idx_market_listings_operation ON market_listings(operation);
+CREATE INDEX IF NOT EXISTS idx_market_snapshots_date ON market_snapshots(snapshot_date);
+
+

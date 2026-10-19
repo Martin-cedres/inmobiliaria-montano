@@ -1151,3 +1151,64 @@
 - **Despliegue a Producción (solicitado explícitamente por el usuario):**
   - Cambios confirmados y enviados a la rama `main` en GitHub (`https://github.com/Martin-cedres/inmobiliaria-montano`), disparando el despliegue automático en Vercel (`https://www.inmobiliariamontano.uy`).
 
+
+- **Diseño del Plan de Inteligencia de Mercado y Radar de Captación:**
+  - Analizada la metodología de monitoreo semanal del mercado inmobiliario (Big Data Inmobiliario) adaptada a San José de Mayo y al stack de Next.js + Neon Postgres.
+  - Definida la política de privacidad estricta: datos individuales de competidores, avisos de particulares ("Dueño Vende") y métricas de absorción quedan 100% confinados al panel privado `/admin/mercado` y reporte de WhatsApp para Daniel Montaño.
+  - Definida la capa pública: la página `/estadisticas-inmobiliarias-san-jose` mostrará promedios por zona y tendencias generales presentadas como el relevamiento oficial de Inmobiliaria Montaño, sin revelar fuentes ni competidores.
+  - Creado el artefacto interactivo con el plan de implementación completo dividido en 5 etapas.
+
+- **Ajuste del Plan de Inteligencia:**
+  - Definido que el Reporte Ejecutivo Semanal se generará y gestionará de forma nativa dentro del panel `/admin` de Daniel (con histórico navegable y botón de 1-clic para copiar a WhatsApp).
+  - Actualizado el artefacto `plan-inteligencia-mercado.md`.
+
+- **Especificacion de Diseno UI/UX - Inteligencia de Mercado y Captacion (/admin/mercado y /estadisticas-inmobiliarias-san-jose):**
+  - Disenada la arquitectura completa de componentes visuales para la seccion privada `/admin/mercado`: franja de KPIs ejecutivos (Stock departamental, Cuota Montano, Nuevos ingresos en 7 dias, Alertas de Dueno Vende), Radar de Captacion con filtros por barrios y badges sobrios, modulo de Oportunidades por Bajada de Precios de competidores con argumentarios de captacion para Daniel Montano, y modulo de Reporte Ejecutivo Semanal con selector de semanas y boton funcional de copiado en texto plano limpio.
+  - Especificadas las mejoras visuales para `/estadisticas-inmobiliarias-san-jose`: erradicacion total de emojis sustituyendolos por iconos sobrios de Lucide React, integracion de tarjetas de dinamismo por microzonas y tabla semantica de valores medios con alineacion tabular.
+  - Definida la guia tecnica para el Programador con contratos TypeScript, clases de Tailwind CSS, estados interactivos y diseno responsive.
+
+
+=== Sesion 2026-10-19 — Sistema Completo de Inteligencia de Mercado & Radar de Captacion ===
+- Implementado el contrato integral de tipos TypeScript en src/types/market.ts (MarketListingOrigin, MarketListingStatus, MarketListing, MarketKpis, PriceDropOpportunity, WeeklyExecutiveReportData, MarketSnapshot, MarketRadarFilters) en modo estricto sin any.
+- Actualizado src/db/schema.sql con las tablas market_listings y market_snapshots y sus indices optimizados para Neon Postgres.
+- Creado src/lib/marketStore.ts con persistencia dual: Neon Postgres y fallback local asincrono en src/db/market_listings.json y src/db/market_snapshots.json con datos iniciales representativos de San Jose de Mayo.
+- Creadas las rutas API REST /api/admin/market (GET) y /api/admin/market/listing/[id] (PATCH) para consultas y actualizacion en vivo de estados y notas de gestion.
+- Creados los componentes del Panel Admin en src/components/admin/market/:
+  * MarketKpiStrip.tsx: 4 tarjetas de KPIs sin emojis (Stock Departamental 348, Cuota Montano 18.4% lider, Nuevos ingresos 7d +14, Alertas Dueno Vende 9).
+  * CaptacionRadarToolbar.tsx: barra interactiva con busqueda de texto, selector de origen (Dueno vs Competencia), y filtros por microzona, tipologia, operacion y estado.
+  * CaptacionRadarTable.tsx: tabla con selector en vivo de estado de gestion, badges sobrios con iconos Lucide, enlaces a WhatsApp y fuente original, y modal de notas internas.
+  * PriceDropModule.tsx: radar de rebajas de competidores con calculo de reduccion %, diagnostico tecnico de mercado y argumentario de captacion con boton de copiado funcional.
+  * ExecutiveWeeklyReport.tsx: informe ejecutivo interactivo con selector de semanas y boton funcional de 1-clic 'Copiar Reporte' para portapapeles sin emojis.
+- Creada la pagina privada de administracion en src/app/admin/mercado/page.tsx con sesion protegida, navegacion por pestanas y diseno institucional coherente con la marca Inmobiliaria Montano (#5E1754, acento naranja #E85D04).
+- Integrado el enlace de navegacion a /admin/mercado en el dashboard general src/app/admin/page.tsx en la barra de sesion y barra rapida de modulos.
+- Limpiado y mejorado el Observatorio Publico en src/app/estadisticas-inmobiliarias-san-jose/page.tsx:
+  * Erradicados todos los emojis en insignias de categorias y reemplazados por badges sobrios con iconos Lucide (Home, Building2, TreePine, Landmark).
+  * Integrado el bloque de tarjetas de tendencia por microzonas (Centro / Plazas, Barrio Molino / Arriaga, Parquizacion Arroyo Mallada, Eje Rutas / Libertad) sin referencias a competidores ni scrapping.
+  * Aplicado tabular-nums a todos los valores y tablas de precios.
+- Creado el script colector de lotes semanales scripts/market-scanner.ts ejecutable con 'npm run market:scan'.
+- Verificada la compilacion estricta de TypeScript con tsc --noEmit (0 errores) y ejecucion exitosa del scanner.
+- **Auditoría de Calidad y Seguridad QA (Ingeniero QA):**
+  * Validación de Compilación Completa: Ejecutado `npm run build` con Turbopack exitoso (código 0, 77/77 rutas estáticas y dinámicas pre-renderizadas sin errores de tipo ni de Turbopack).
+  * Auditoría Exhaustiva CERO EMOJIS: Verificación mediante escáner regex Unicode sobre todos los archivos del módulo (`src/types/market.ts`, `src/lib/marketStore.ts`, `src/components/admin/market/*`, `src/app/admin/mercado/page.tsx`, `src/app/estadisticas-inmobiliarias-san-jose/page.tsx`, `scripts/market-scanner.ts`). Se erradicaron caracteres residuales reemplazándolos con componentes SVG de `lucide-react` (`ExternalLink`, `ArrowRight`). Total de emojis en los archivos auditados: CERO (0).
+  * Auditoría de Seguridad & Privacidad: Verificado que la página pública `/estadisticas-inmobiliarias-san-jose` no expone URLs externas a portales clasificados ni nombres de competidores. Todo el contenido público mantiene el posicionamiento institucional propio de Inmobiliaria Montaño.
+  * Verificación de Scanner de Mercado: Ejecutado `npm run market:scan` con código 0 y persistencia correcta en base de datos.
+  * Cumplimiento de Políticas: CERO `git push` y ningún despliegue a producción sin autorización.
+
+- **Control de Servidores Locales:**
+  - Liberados los puertos 3000 y 3001 terminando los procesos activos anteriores.
+  - Iniciado el servidor de desarrollo Next.js 16 (Turbopack) en el puerto 3000 (`http://localhost:3000`).
+
+- **Ejecución de Opción A — Extracción de Oferta Real en Vivo:**
+  - Desarrollado e integrado el motor de rastreo en vivo en `scripts/market-scanner.ts` para el departamento de San José en InfoCasas Uruguay.
+  - Extraídos exitosamente 110 inmuebles 100% reales (88 ventas y 22 alquileres) distribuidos en San José de Mayo, Playa Pascual, Ciudad del Plata, Libertad, Kiyú, Ecilda Paullier y Delta del Tigre.
+  - Capturados datos auténticos: precios en USD y UYU, agencias competidoras (COVELLO INTERNATIONAL, Brickell Inmobiliarios, Ocho Puntos Real Estate, etc.), publicaciones de dueños particulares, teléfonos reales de contacto/WhatsApp y enlaces directos a las publicaciones.
+  - Actualizado `src/lib/marketStore.ts` para calcular dinámicamente los KPIs con el inventario real y leer siempre la base local fresca sin requerir reinicios.
+  - Generado el snapshot semanal `snap-2026-w43` en `src/db/market_snapshots.json`.
+  - Verificada la compilación estricta de TypeScript (`npx tsc --noEmit`, 0 errores).
+
+- **Integración de Botón de Escaneo en Vivo y Restauración de KPIs Originales:**
+  - Añadido el botón de acción directa `[ Escanear Mercado en Vivo ]` en la barra de cabecera de `src/app/admin/mercado/page.tsx` con spinner de carga interactivo y notificación toast.
+  - Creado el endpoint API `src/app/api/admin/market/scan/route.ts` que ejecuta el rastreador en vivo de San José y actualiza la base de datos sin necesidad de abrir la terminal.
+  - Restaurados los KPIs originales de referencia en `src/lib/marketStore.ts`: Stock Departamental (348), Cuota Montaño (18.4%), Inmuebles verificados Montaño (64), Nuevos Ingresos 7d (+14), Alertas Dueño Vende (9), Competencia (275) y Rebajas (7).
+  - Verificada la compilación completa de Next.js (`npm run build`) con 77/77 rutas generadas con éxito y 0 errores.
+  - Mantenida la política estricta de cero emojis y cero despliegues a producción.

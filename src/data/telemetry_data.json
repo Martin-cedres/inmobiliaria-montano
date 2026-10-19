@@ -594,6 +594,27 @@
       "eventType": "page_view",
       "pagePath": "/",
       "anonymousSessionId": "anon_1792228477071_xyo5z2f"
+    },
+    {
+      "id": "evt_1792400874743_if63zw",
+      "timestamp": "2026-10-19T09:07:54.743Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792400874238_1yj06fj"
+    },
+    {
+      "id": "evt_1792401009449_c3ghyl",
+      "timestamp": "2026-10-19T09:10:09.449Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792401009121_hwr6le7"
+    },
+    {
+      "id": "evt_1792401018102_lhqula",
+      "timestamp": "2026-10-19T09:10:18.102Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792401009121_hwr6le7"
     }
   ],
   "seoRecords": [

@@ -12,6 +12,7 @@ import {
   TrendingUp,
   ShieldCheck,
   Building,
+  Building2,
   MapPin,
   Calendar,
   PhoneCall,
@@ -22,6 +23,10 @@ import {
   LandPlot,
   FileCheck,
   Sparkles,
+  TreePine,
+  Landmark,
+  Activity,
+  ArrowRight,
 } from 'lucide-react';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
@@ -169,19 +174,20 @@ export default async function EstadisticasInmobiliariasPage() {
             <div className="bg-white p-6 rounded-3xl border border-purple-100 shadow-sm space-y-4 flex flex-col justify-between">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#5E1754] bg-purple-50 px-3 py-1 rounded-full border border-purple-200">
-                    🏡 Venta de Casas
+                  <span className="text-xs font-bold text-[#5E1754] bg-purple-50 px-3 py-1 rounded-full border border-purple-200 inline-flex items-center gap-1.5">
+                    <Home className="w-3.5 h-3.5 text-[#5E1754]" />
+                    <span>Venta de Casas</span>
                   </span>
                   <span className="text-xs text-slate-400 font-medium">San José de Mayo</span>
                 </div>
 
                 <div>
                   <div className="text-xs text-slate-500">Valor típico de referencia:</div>
-                  <div className="text-2xl sm:text-3xl font-black text-[#5E1754]">
+                  <div className="text-2xl sm:text-3xl font-black text-[#5E1754] tabular-nums">
                     USD 88.000
                   </div>
                   <div className="text-xs text-slate-500 mt-1">
-                    Rango frecuente: <strong>USD 88.000 a USD 98.000</strong> (Casas residenciales de 2 a 3 dormitorios).
+                    Rango frecuente: <strong className="tabular-nums">USD 88.000 a USD 98.000</strong> (Casas residenciales de 2 a 3 dormitorios).
                   </div>
                 </div>
 
@@ -200,7 +206,8 @@ export default async function EstadisticasInmobiliariasPage() {
                 href="/casas-en-venta-san-jose-de-mayo"
                 className="text-xs font-bold text-[#5E1754] hover:text-[#7A1E6E] flex items-center justify-between pt-3 border-t border-slate-100"
               >
-                <span>Ver casas disponibles en venta →</span>
+                <span>Ver casas disponibles en venta</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
 
@@ -208,15 +215,16 @@ export default async function EstadisticasInmobiliariasPage() {
             <div className="bg-white p-6 rounded-3xl border border-purple-100 shadow-sm space-y-4 flex flex-col justify-between">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-indigo-900 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200">
-                    🏢 Alquileres Residenciales
+                  <span className="text-xs font-bold text-indigo-900 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200 inline-flex items-center gap-1.5">
+                    <Building2 className="w-3.5 h-3.5 text-indigo-900" />
+                    <span>Alquileres Residenciales</span>
                   </span>
                   <span className="text-xs text-slate-400 font-medium">Zona Centro</span>
                 </div>
 
                 <div>
                   <div className="text-xs text-slate-500">Alquiler mensual de referencia:</div>
-                  <div className="text-2xl sm:text-3xl font-black text-indigo-950">
+                  <div className="text-2xl sm:text-3xl font-black text-indigo-950 tabular-nums">
                     $ 16.500 <span className="text-xs font-normal text-slate-500">/ mes</span>
                   </div>
                   <div className="text-xs text-slate-500 mt-1">
@@ -239,7 +247,8 @@ export default async function EstadisticasInmobiliariasPage() {
                 href="/alquileres-san-jose-de-mayo"
                 className="text-xs font-bold text-indigo-900 hover:text-indigo-700 flex items-center justify-between pt-3 border-t border-slate-100"
               >
-                <span>Ver opciones en alquiler →</span>
+                <span>Ver opciones en alquiler</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
 
@@ -247,15 +256,16 @@ export default async function EstadisticasInmobiliariasPage() {
             <div className="bg-white p-6 rounded-3xl border border-purple-100 shadow-sm space-y-4 flex flex-col justify-between">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-emerald-900 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
-                    🌳 Terrenos y Chacras
+                  <span className="text-xs font-bold text-emerald-900 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 inline-flex items-center gap-1.5">
+                    <TreePine className="w-3.5 h-3.5 text-emerald-900" />
+                    <span>Terrenos y Chacras</span>
                   </span>
                   <span className="text-xs text-slate-400 font-medium">Libertad & Eje Rutas 1 y 3</span>
                 </div>
 
                 <div>
                   <div className="text-xs text-slate-500">Solares y terrenos desde:</div>
-                  <div className="text-2xl sm:text-3xl font-black text-emerald-900">
+                  <div className="text-2xl sm:text-3xl font-black text-emerald-900 tabular-nums">
                     USD 24.500
                   </div>
                   <div className="text-xs text-slate-500 mt-1">
@@ -278,7 +288,8 @@ export default async function EstadisticasInmobiliariasPage() {
                 href="/terrenos-y-chacras-san-jose"
                 className="text-xs font-bold text-emerald-900 hover:text-emerald-700 flex items-center justify-between pt-3 border-t border-slate-100"
               >
-                <span>Ver terrenos y chacras →</span>
+                <span>Ver terrenos y chacras</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
 
@@ -286,15 +297,16 @@ export default async function EstadisticasInmobiliariasPage() {
             <div className="bg-white p-6 rounded-3xl border border-purple-100 shadow-sm space-y-4 flex flex-col justify-between">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-orange-800 bg-orange-50 px-3 py-1 rounded-full border border-orange-200">
-                    🏦 Aptas Crédito Bancario
+                  <span className="text-xs font-bold text-orange-800 bg-orange-50 px-3 py-1 rounded-full border border-orange-200 inline-flex items-center gap-1.5">
+                    <Landmark className="w-3.5 h-3.5 text-orange-800" />
+                    <span>Aptas Crédito Bancario</span>
                   </span>
                   <span className="text-xs text-slate-400 font-medium">BHU y Bancos Privados</span>
                 </div>
 
                 <div>
                   <div className="text-xs text-slate-500">Rango de casas financiables:</div>
-                  <div className="text-2xl sm:text-3xl font-black text-[#E85D04]">
+                  <div className="text-2xl sm:text-3xl font-black text-[#E85D04] tabular-nums">
                     USD 88.000 – 98.000
                   </div>
                   <div className="text-xs text-slate-500 mt-1">
@@ -317,10 +329,131 @@ export default async function EstadisticasInmobiliariasPage() {
                 href="/casas-aptas-para-banco-san-jose"
                 className="text-xs font-bold text-[#E85D04] hover:text-orange-700 flex items-center justify-between pt-3 border-t border-slate-100"
               >
-                <span>Ver casas aptas para banco →</span>
+                <span>Ver casas aptas para banco</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
 
+          </div>
+        </section>
+
+        {/* Sección: Pulso de Mercado y Tendencia por Microzonas */}
+        <section className="space-y-4">
+          <div className="border-b border-slate-200 pb-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+            <div>
+              <div className="inline-flex items-center space-x-1.5 text-xs font-bold text-[#5E1754] uppercase tracking-wider mb-1">
+                <Activity className="w-3.5 h-3.5 text-[#E85D04]" />
+                <span>Dinámica Territorial</span>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900">
+                Tendencias del Mercado por Microzonas
+              </h2>
+            </div>
+            <span className="text-xs text-slate-500 font-medium">
+              Valores periciales y demanda residencial
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Zona 1: Centro / Plazas */}
+            <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between space-y-3">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-black text-purple-950 flex items-center gap-1">
+                    <MapPin className="w-3.5 h-3.5 text-[#5E1754]" />
+                    Centro / Plazas
+                  </span>
+                  <span className="text-[10px] font-black uppercase text-purple-800 bg-purple-50 border border-purple-200 px-2 py-0.5 rounded-full">
+                    Consolidado
+                  </span>
+                </div>
+                <div>
+                  <div className="text-xs text-slate-500">Valor ref. m² edificado:</div>
+                  <div className="text-xl font-black text-[#5E1754] tabular-nums">USD 890 / m²</div>
+                </div>
+                <p className="text-[11px] text-slate-500 leading-relaxed">
+                  Alta demanda continua para vivienda familiar, apartamentos próximos a servicios y locales comerciales.
+                </p>
+              </div>
+              <div className="pt-2 border-t border-slate-100 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                San José de Mayo
+              </div>
+            </div>
+
+            {/* Zona 2: Barrio Molino / Arriaga */}
+            <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between space-y-3">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-black text-emerald-950 flex items-center gap-1">
+                    <MapPin className="w-3.5 h-3.5 text-emerald-700" />
+                    Molino / Arriaga
+                  </span>
+                  <span className="text-[10px] font-black uppercase text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
+                    Alta Rotación
+                  </span>
+                </div>
+                <div>
+                  <div className="text-xs text-slate-500">Valor ref. m² edificado:</div>
+                  <div className="text-xl font-black text-emerald-900 tabular-nums">USD 760 / m²</div>
+                </div>
+                <p className="text-[11px] text-slate-500 leading-relaxed">
+                  Preferencia máxima para crédito hipotecario (BHU/Bancos). Casas familiares con fondo verde y garaje.
+                </p>
+              </div>
+              <div className="pt-2 border-t border-slate-100 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                San José de Mayo
+              </div>
+            </div>
+
+            {/* Zona 3: Parquización Arroyo Mallada */}
+            <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between space-y-3">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-black text-blue-950 flex items-center gap-1">
+                    <MapPin className="w-3.5 h-3.5 text-blue-600" />
+                    Arroyo Mallada
+                  </span>
+                  <span className="text-[10px] font-black uppercase text-blue-800 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-full">
+                    Expansión
+                  </span>
+                </div>
+                <div>
+                  <div className="text-xs text-slate-500">Valor ref. m² edificado:</div>
+                  <div className="text-xl font-black text-blue-950 tabular-nums">USD 820 / m²</div>
+                </div>
+                <p className="text-[11px] text-slate-500 leading-relaxed">
+                  Desarrollo de proyectos a estrenar y solares residenciales con entorno parquizado y servicios al día.
+                </p>
+              </div>
+              <div className="pt-2 border-t border-slate-100 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                San José de Mayo
+              </div>
+            </div>
+
+            {/* Zona 4: Eje Rutas / Libertad */}
+            <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between space-y-3">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-black text-amber-950 flex items-center gap-1">
+                    <MapPin className="w-3.5 h-3.5 text-amber-600" />
+                    Eje Rutas / Libertad
+                  </span>
+                  <span className="text-[10px] font-black uppercase text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full">
+                    Inversión
+                  </span>
+                </div>
+                <div>
+                  <div className="text-xs text-slate-500">Valor ref. solar suburbano:</div>
+                  <div className="text-xl font-black text-amber-950 tabular-nums">USD 45 / m²</div>
+                </div>
+                <p className="text-[11px] text-slate-500 leading-relaxed">
+                  Solares suburbanos, chacras productivas y predios industriales/logísticos con conexión a Rutas 1, 3 y 11.
+                </p>
+              </div>
+              <div className="pt-2 border-t border-slate-100 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                Interior Departamental
+              </div>
+            </div>
           </div>
         </section>
 
@@ -359,9 +492,9 @@ export default async function EstadisticasInmobiliariasPage() {
                       Alta demanda residencial y comercial
                     </span>
                   </td>
-                  <td className="p-3.5 sm:p-4 font-medium text-slate-900">
-                    <div>Casas: <strong>USD 95.000 – USD 250.000</strong></div>
-                    <div className="text-[11px] text-slate-500">Alquileres: <strong>$ 16.500 – $ 25.000 / mes</strong></div>
+                  <td className="p-3.5 sm:p-4 font-medium text-slate-900 tabular-nums">
+                    <div>Casas: <strong className="tabular-nums">USD 95.000 – USD 250.000</strong></div>
+                    <div className="text-[11px] text-slate-500 tabular-nums">Alquileres: <strong className="tabular-nums">$ 16.500 – $ 25.000 / mes</strong></div>
                   </td>
                 </tr>
 
@@ -378,8 +511,8 @@ export default async function EstadisticasInmobiliariasPage() {
                       Alta rotación y aptitud bancaria
                     </span>
                   </td>
-                  <td className="p-3.5 sm:p-4 font-medium text-slate-900">
-                    <div>Casas: <strong>USD 45.000 – USD 98.000</strong></div>
+                  <td className="p-3.5 sm:p-4 font-medium text-slate-900 tabular-nums">
+                    <div>Casas: <strong className="tabular-nums">USD 45.000 – USD 98.000</strong></div>
                     <div className="text-[11px] text-slate-500">Alta preferencia crédito BHU y bancos</div>
                   </td>
                 </tr>
@@ -397,8 +530,8 @@ export default async function EstadisticasInmobiliariasPage() {
                       Zona en expansión residencial
                     </span>
                   </td>
-                  <td className="p-3.5 sm:p-4 font-medium text-slate-900">
-                    <div>Casas a estrenar: <strong>USD 99.500</strong> ref.</div>
+                  <td className="p-3.5 sm:p-4 font-medium text-slate-900 tabular-nums">
+                    <div>Casas a estrenar: <strong className="tabular-nums">USD 99.500</strong> ref.</div>
                     <div className="text-[11px] text-slate-500">Entorno verde y parquizado</div>
                   </td>
                 </tr>
@@ -416,9 +549,9 @@ export default async function EstadisticasInmobiliariasPage() {
                       Inversión, logística y vivienda suburbana
                     </span>
                   </td>
-                  <td className="p-3.5 sm:p-4 font-medium text-slate-900">
-                    <div>Terrenos: desde <strong>USD 24.500</strong></div>
-                    <div className="text-[11px] text-slate-500">Predios industriales: desde <strong>USD 180.000</strong></div>
+                  <td className="p-3.5 sm:p-4 font-medium text-slate-900 tabular-nums">
+                    <div>Terrenos: desde <strong className="tabular-nums">USD 24.500</strong></div>
+                    <div className="text-[11px] text-slate-500 tabular-nums">Predios industriales: desde <strong className="tabular-nums">USD 180.000</strong></div>
                   </td>
                 </tr>
               </tbody>

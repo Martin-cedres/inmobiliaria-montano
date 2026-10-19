@@ -1,0 +1,37 @@
+[
+  {
+    "id": "snap-2026-w43",
+    "snapshotDate": "2026-10-19",
+    "weekNumber": 43,
+    "year": 2026,
+    "totalStock": 110,
+    "montanoStock": 64,
+    "montanoSharePercentage": 36.8,
+    "directOwnerStock": 3,
+    "competitorStock": 107,
+    "newEntries7d": 110,
+    "priceDrops7d": 0,
+    "avgPriceM2UsdSale": 921,
+    "avgPriceRentUyu": 18566,
+    "zoneDistribution": {
+      "San José de Mayo": 30,
+      "Playa Pascual": 35,
+      "Ciudad del Plata": 25,
+      "Eje Rutas / Libertad": 10,
+      "Kiyú": 2,
+      "Ecilda Paullier": 2,
+      "Libertad": 4,
+      "Centro": 2
+    },
+    "categoryDistribution": {
+      "chacra": 18,
+      "casa": 32,
+      "local": 22,
+      "terreno": 29,
+      "deposito": 5,
+      "apartamento": 4
+    },
+    "notes": "Monitoreo semanal 43 de 2026. Relevamiento en vivo con 110 inmuebles reales auditados en el departamento de San José.",
+    "createdAt": "2026-10-19T09:26:04.417Z"
+  }
+]

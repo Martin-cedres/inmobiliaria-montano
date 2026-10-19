@@ -12,7 +12,7 @@ import {
   Plus, Trash2, Eye, Edit3, CheckCircle2, Sparkles, Search, 
   RefreshCw, AlertCircle, Building2, Key, Tag, MessageCircle, 
   Flame, TrendingUp, ArrowUpDown, Users, LogOut, ShieldCheck, Shield, Zap,
-  Copy, Share2, Filter, Check, ImageIcon, MapPin
+  Copy, Share2, Filter, Check, ImageIcon, MapPin, Radar
 } from 'lucide-react';
 import { FlyerGeneratorModal } from '@/components/admin/FlyerGeneratorModal';
 import { SocialPublisherModal } from '@/components/admin/SocialPublisherModal';
@@ -333,8 +333,15 @@ ${link}`;
 
             <div className="flex items-center gap-3">
               <Link
-                href="/admin/seo-conversiones"
+                href="/admin/mercado"
                 className="flex items-center gap-2 bg-[#5E1754] hover:bg-[#7A1E6E] text-white px-3.5 py-2 rounded-xl text-xs font-semibold shadow-xs transition-all"
+              >
+                <Radar className="w-4 h-4 text-orange-400" />
+                <span>Inteligencia Mercado</span>
+              </Link>
+              <Link
+                href="/admin/seo-conversiones"
+                className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all"
               >
                 <TrendingUp className="w-4 h-4 text-orange-400" />
                 <span>SEO & Conversiones</span>
@@ -376,11 +383,18 @@ ${link}`;
             <span>2. Nueva Propiedad</span>
           </Link>
           <Link
+            href="/admin/mercado"
+            className="flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl transition-all shrink-0"
+          >
+            <Radar className="w-4 h-4 text-purple-700" />
+            <span>3. Inteligencia de Mercado</span>
+          </Link>
+          <Link
             href="/admin/seo-conversiones"
             className="flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl transition-all shrink-0"
           >
             <TrendingUp className="w-4 h-4 text-purple-700" />
-            <span>3. SEO & Decisiones (P5)</span>
+            <span>4. SEO & Decisiones</span>
           </Link>
           <Link
             href="/estadisticas-inmobiliarias-san-jose"
@@ -388,7 +402,7 @@ ${link}`;
             className="flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl transition-all shrink-0"
           >
             <Flame className="w-4 h-4 text-amber-600" />
-            <span>4. Observatorio San José</span>
+            <span>5. Observatorio San José</span>
           </Link>
           <Link
             href="/guia-tasacion-inmobiliaria-san-jose"
@@ -396,7 +410,7 @@ ${link}`;
             className="flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl transition-all shrink-0"
           >
             <Sparkles className="w-4 h-4 text-blue-600" />
-            <span>5. Guías Temáticas</span>
+            <span>6. Guías Temáticas</span>
           </Link>
           <Link
             href="/"
