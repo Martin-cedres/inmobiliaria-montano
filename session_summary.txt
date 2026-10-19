@@ -1212,3 +1212,8 @@
   - Restaurados los KPIs originales de referencia en `src/lib/marketStore.ts`: Stock Departamental (348), Cuota Montaño (18.4%), Inmuebles verificados Montaño (64), Nuevos Ingresos 7d (+14), Alertas Dueño Vende (9), Competencia (275) y Rebajas (7).
   - Verificada la compilación completa de Next.js (`npm run build`) con 77/77 rutas generadas con éxito y 0 errores.
   - Mantenida la política estricta de cero emojis y cero despliegues a producción.
+
+- **Despliegue a Producción (solicitado explícitamente por el usuario):**
+  - Compilación de producción (`npm run build`) verificada localmente con 77/77 rutas generadas con éxito y 0 errores.
+  - Confirmados los cambios en git (`commit 69216e2`: "feat: implementar sistema de inteligencia de mercado, radar de captacion y observatorio de precios en San Jose").
+  - Enviados a la rama `main` en GitHub (`https://github.com/Martin-cedres/inmobiliaria-montano`), activando el despliegue automático en Vercel.
