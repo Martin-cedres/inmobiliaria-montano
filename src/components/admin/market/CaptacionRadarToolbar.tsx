@@ -2,13 +2,14 @@
 
 import React from 'react';
 import { MarketRadarFilters } from '@/types/market';
-import { Search, Filter, RotateCcw } from 'lucide-react';
+import { Search, Filter, RotateCcw, Plus } from 'lucide-react';
 
 interface CaptacionRadarToolbarProps {
   filters: MarketRadarFilters;
   onChange: (filters: MarketRadarFilters) => void;
   onReset: () => void;
   totalFiltered: number;
+  onOpenAddOwnerModal?: () => void;
 }
 
 export function CaptacionRadarToolbar({
@@ -16,6 +17,7 @@ export function CaptacionRadarToolbar({
   onChange,
   onReset,
   totalFiltered,
+  onOpenAddOwnerModal,
 }: CaptacionRadarToolbarProps) {
   const handleFieldChange = (field: keyof MarketRadarFilters, value: string) => {
     onChange({
@@ -69,6 +71,18 @@ export function CaptacionRadarToolbar({
             </button>
           ))}
         </div>
+
+        {/* Botón de Carga Express de Dueño Vende */}
+        {onOpenAddOwnerModal && (
+          <button
+            type="button"
+            onClick={onOpenAddOwnerModal}
+            className="inline-flex items-center space-x-1.5 bg-[#E85D04] hover:bg-[#FF8500] text-white px-3.5 py-2 rounded-xl text-xs font-black shadow-xs transition-all cursor-pointer shrink-0"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Cargar Dueño Vende</span>
+          </button>
+        )}
       </div>
 
       {/* Fila 2: Selectores Secundarios (Zona, Categoría, Operación, Estado) */}

@@ -19,6 +19,7 @@ import { CaptacionRadarToolbar } from '@/components/admin/market/CaptacionRadarT
 import { CaptacionRadarTable } from '@/components/admin/market/CaptacionRadarTable';
 import { PriceDropModule } from '@/components/admin/market/PriceDropModule';
 import { ExecutiveWeeklyReport } from '@/components/admin/market/ExecutiveWeeklyReport';
+import { AddOwnerModal } from '@/components/admin/market/AddOwnerModal';
 import {
   Building2,
   Plus,
@@ -54,6 +55,7 @@ export default function AdminMercadoPage() {
 
   const [activeTab, setActiveTab] = useState<'radar' | 'pricedrops' | 'report'>('radar');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [isAddOwnerModalOpen, setIsAddOwnerModalOpen] = useState<boolean>(false);
 
   // Datos
   const [listings, setListings] = useState<MarketListing[]>([]);
@@ -90,6 +92,12 @@ export default function AdminMercadoPage() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleOwnerCreated = (newListing: MarketListing) => {
+    setListings((prev) => [newListing, ...prev]);
+    showToast('Aviso de dueño particular guardado con éxito en el Radar');
+    fetchMarketData();
   };
 
   const [isScanning, setIsScanning] = useState<boolean>(false);
@@ -381,6 +389,16 @@ export default function AdminMercadoPage() {
           <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
             <button
               type="button"
+              onClick={() => setIsAddOwnerModalOpen(true)}
+              className="bg-[#5E1754] hover:bg-[#7A1E6E] active:scale-95 text-white font-bold px-4 py-3 rounded-xl shadow-xs transition-all flex items-center justify-center space-x-2 text-xs sm:text-sm cursor-pointer shrink-0"
+              title="Registrar manualmente aviso de dueño particular de Facebook, calle o Mercado Libre"
+            >
+              <Plus className="w-4 h-4 text-amber-300" />
+              <span>Cargar Dueño Vende</span>
+            </button>
+
+            <button
+              type="button"
               onClick={handleRunScan}
               disabled={isScanning || isLoading}
               className="bg-[#E85D04] hover:bg-[#d05303] active:scale-95 disabled:opacity-60 text-white font-bold px-4 py-3 rounded-xl shadow-xs transition-all flex items-center justify-center space-x-2 text-xs sm:text-sm cursor-pointer shrink-0"
@@ -470,6 +488,7 @@ export default function AdminMercadoPage() {
                   onChange={setFilters}
                   onReset={() => setFilters(INITIAL_FILTERS)}
                   totalFiltered={filteredListings.length}
+                  onOpenAddOwnerModal={() => setIsAddOwnerModalOpen(true)}
                 />
                 <CaptacionRadarTable
                   listings={filteredListings}
@@ -488,6 +507,13 @@ export default function AdminMercadoPage() {
             )}
           </>
         )}
+
+        {/* Modal de Carga Express de Dueño Vende */}
+        <AddOwnerModal
+          isOpen={isAddOwnerModalOpen}
+          onClose={() => setIsAddOwnerModalOpen(false)}
+          onSuccess={handleOwnerCreated}
+        />
       </main>
 
       <Footer />

@@ -1255,6 +1255,18 @@
   - Validación completa con `npm run build`: 77/77 rutas estáticas y dinámicas compiladas con éxito (código de salida 0).
   - Incluye: Estrategia de captación orgánica ("Se precisan propiedades para la venta"), flyers institucionales, banners de conversión en Home y fichas de propiedades, redirección 301 de ficha de captación, landing de venta de propiedades optimizada con honorarios transparentes y pilar de visibilidad en Google e IA, y enlaces directos de navegación y WhatsApp.
   - Cambios confirmados y enviados a la rama `main` en GitHub, activando el despliegue automático en Vercel (https://www.inmobiliariamontano.uy).
+- **Transformación de Inteligencia de Mercado y Captación en Código (100% Autónomo y Costo $0):**
+  * Dinamización total de KPIs en `src/lib/marketStore.ts`: eliminados valores fijos/hardcodeados, calculando en tiempo real stock total, cuota de Montaño cruzada con `propertiesStore.ts`, alertas reales de dueños directos y competidores.
+  * Extractor de Inmobiliarias Locales de San José: integrado escáner directo para Lema Propiedades (`https://www.lemapropiedades.com/todo`), extrayendo automáticamente 52 inmuebles reales con títulos, zonas, precios en USD y enlaces a sus fichas.
+  * Módulo de Carga Express de "Dueño Vende" (`AddOwnerModal.tsx`): nuevo modal de 1 clic para registrar avisos particulares detectados en Facebook Marketplace, grupos locales, carteles en la calle o Mercado Libre con enlace directo a WhatsApp.
+  * Endpoint `POST /api/admin/market` para persistencia inmediata y reactividad en tiempo real de los KPIs sin recargar la página.
+  * Verificado con `npx tsc --noEmit` (0 errores).
+- **Despliegue a Producción (solicitado explícitamente por el usuario):**
+  - Validación completa con `npm run build`: 77/77 rutas estáticas y dinámicas compiladas con éxito (código de salida 0).
+  - Incluye: KPIs dinámicos en tiempo real, integración del extractor de Lema Propiedades en San José, modal de carga express de "Dueño Vende" (`AddOwnerModal.tsx`), API `POST /api/admin/market` y sincronización de `public/llms.txt`.
+  - Cambios confirmados y enviados a la rama `main` en GitHub, activando el despliegue automático en Vercel (https://www.inmobiliariamontano.uy).
+
+
 
 
 

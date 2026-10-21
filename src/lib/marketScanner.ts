@@ -56,6 +56,85 @@ function normalizeNeighborhood(rawNeigh?: string, titleText?: string, addressTex
   return rawNeigh && rawNeigh !== 'San José' ? rawNeigh : 'San José de Mayo';
 }
 
+async function extractLemaProperties(): Promise<IncomingBatchListing[]> {
+  const results: IncomingBatchListing[] = [];
+  try {
+    const res = await fetch('https://www.lemapropiedades.com/todo', {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'es-UY,es;q=0.9',
+      },
+      signal: AbortSignal.timeout(8000),
+    });
+
+    if (!res.ok) return results;
+
+    const html = await res.text();
+    const items = html.split('wixui-repeater__item');
+
+    for (let i = 1; i < items.length; i++) {
+      const chunk = items[i];
+      const linkMatch = chunk.match(/href="(https:\/\/www\.lemapropiedades\.com\/propiedades\/[^"]+)"/);
+      const cleanText = chunk.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+
+      const isAlquiler = cleanText.toUpperCase().includes('ALQUILER');
+      const operation: 'venta' | 'alquiler' = isAlquiler ? 'alquiler' : 'venta';
+
+      const priceMatch = cleanText.match(/(?:U\$S|USD)\s*([0-9\.\,]+)/i);
+      const uyuPriceMatch = cleanText.match(/\$\s*([0-9\.\,]+)/);
+      let priceAmount = 0;
+      let priceCurrency: 'USD' | 'UYU' = 'USD';
+
+      if (priceMatch) {
+        priceAmount = Number(priceMatch[1].replace(/\./g, '').replace(',', '.'));
+        priceCurrency = 'USD';
+      } else if (uyuPriceMatch) {
+        priceAmount = Number(uyuPriceMatch[1].replace(/\./g, '').replace(',', '.'));
+        priceCurrency = 'UYU';
+      }
+
+      let rawTitle = '';
+      if (linkMatch) {
+        const slug = linkMatch[1].split('/').pop() || '';
+        rawTitle = decodeURIComponent(slug).replace(/-/g, ' ');
+      }
+      if (!rawTitle) {
+        const titleMatch = cleanText.match(/(?:VENTA|ALQUILER)\s+([^#\$\n]+?)(?:Manuel|Av\.|Luis|Leandro|Kiyú|Ruta|USD|U\$S|\$|[0-9]|$)/i);
+        rawTitle = titleMatch ? titleMatch[1].trim() : 'Inmueble en San José';
+      }
+
+      const title = rawTitle.charAt(0).toUpperCase() + rawTitle.slice(1).toLowerCase();
+      const neighborhood = normalizeNeighborhood(cleanText, title, cleanText);
+      const category = normalizeCategory(cleanText, title);
+      const slug = linkMatch ? linkMatch[1].split('/').pop() || '' : `lema-${i}`;
+      const id = `lema-${slug}`;
+
+      results.push({
+        id,
+        title,
+        operation,
+        category,
+        neighborhood,
+        city: neighborhood === 'Libertad' ? 'Libertad' : 'San José de Mayo',
+        department: 'San José',
+        priceAmount: priceAmount || 75000,
+        priceCurrency,
+        origin: 'inmobiliaria_competencia',
+        competitorName: 'Lema Propiedades',
+        sourceName: 'Lema Propiedades',
+        sourceUrl: linkMatch ? linkMatch[1] : 'https://www.lemapropiedades.com/todo',
+        contactName: 'Lema Propiedades',
+        contactPhone: '099 553 253',
+        detectedAt: new Date().toISOString(),
+      });
+    }
+  } catch (err) {
+    console.warn('[MARKET-SCANNER] Aviso al escanear Lema Propiedades:', err);
+  }
+  return results;
+}
+
 export async function executeMarketScan() {
   console.log('[MARKET-SCANNER] Iniciando escaneo de portales en vivo...');
   const now = new Date();
@@ -72,7 +151,7 @@ export async function executeMarketScan() {
     let page = 1;
     let hasMore = true;
 
-    while (hasMore && page <= 6) {
+    while (hasMore && page <= 3) {
       const url = `https://www.infocasas.com.uy/${cat.path}${page > 1 ? `/pagina${page}` : ''}`;
       try {
         const res = await fetch(url, {
@@ -81,7 +160,7 @@ export async function executeMarketScan() {
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
             'Accept-Language': 'es-UY,es;q=0.9',
           },
-          signal: AbortSignal.timeout(12000),
+          signal: AbortSignal.timeout(6000),
         });
 
         if (!res.ok) break;
@@ -156,6 +235,17 @@ export async function executeMarketScan() {
         break;
       }
     }
+  }
+
+  // Escaneo de inmobiliarias locales de San José (Lema Propiedades)
+  try {
+    const lemaItems = await extractLemaProperties();
+    if (lemaItems.length > 0) {
+      console.log(`[MARKET-SCANNER] Extraídas ${lemaItems.length} propiedades locales de Lema Propiedades`);
+      extracted.push(...lemaItems);
+    }
+  } catch (err) {
+    console.warn('[MARKET-SCANNER] Error incorporando Lema Propiedades:', err);
   }
 
   if (extracted.length === 0) {

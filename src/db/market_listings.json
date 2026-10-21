@@ -1,39 +1,5 @@
 [
   {
-    "id": "infocasas-192634986",
-    "title": "Se vende Chacra de 3 ha  7761m2 a  4,5 km del Parque Rodó, San José de Mayo",
-    "operation": "venta",
-    "category": "chacra",
-    "neighborhood": "San José de Mayo",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 140000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "COVELLO INTERNATIONAL",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/se-vende-chacra-de-3-ha-7761m2-a-45-km-del-parque-rodo-san-jose-de-mayo/192634986",
-    "detectedAt": "2025-07-14",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "COVELLO INTERNATIONAL",
-    "contactPhone": "+59892806062",
-    "builtAreaM2": 160,
-    "plotAreaM2": 37761,
-    "bedrooms": 5,
-    "bathrooms": 2,
-    "estimatedPricePerM2": 875,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 140000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
     "id": "infocasas-194319724",
     "title": "CASA VENTA CIUDAD DEL PLATA  2 DORMITORIOS GRAN FONDO",
     "operation": "venta",
@@ -48,7 +14,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/casa-venta-ciudad-del-plata-2-dormitorios-gran-fondo/194319724",
     "detectedAt": "2026-09-25",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Brickell Inmobiliarios",
     "contactPhone": "098703438",
@@ -65,41 +31,41 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
-    "id": "infocasas-193120364",
-    "title": "Casa En Venta En Marina Santa Lucia",
+    "id": "infocasas-192634986",
+    "title": "Se vende Chacra de 3 ha  7761m2 a  4,5 km del Parque Rodó, San José de Mayo",
     "operation": "venta",
-    "category": "casa",
-    "neighborhood": "Ciudad del Plata",
+    "category": "chacra",
+    "neighborhood": "San José de Mayo",
     "city": "San José de Mayo",
     "department": "San José",
-    "priceAmount": 790000,
+    "priceAmount": 140000,
     "priceCurrency": "USD",
     "origin": "inmobiliaria_competencia",
-    "competitorName": "Ocho Puntos Real Estate",
+    "competitorName": "COVELLO INTERNATIONAL",
     "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/casa-en-venta-en-marina-santa-lucia/193120364",
-    "detectedAt": "2025-11-20",
-    "daysOnMarket": 1,
+    "sourceUrl": "https://www.infocasas.com.uy/se-vende-chacra-de-3-ha-7761m2-a-45-km-del-parque-rodo-san-jose-de-mayo/192634986",
+    "detectedAt": "2025-07-14",
+    "daysOnMarket": 3,
     "status": "detectado",
-    "contactName": "Ocho Puntos Real Estate",
-    "contactPhone": "+59892936012",
-    "builtAreaM2": 376,
-    "plotAreaM2": 1425,
+    "contactName": "COVELLO INTERNATIONAL",
+    "contactPhone": "+59892806062",
+    "builtAreaM2": 160,
+    "plotAreaM2": 37761,
     "bedrooms": 5,
-    "bathrooms": 3,
-    "estimatedPricePerM2": 2101,
+    "bathrooms": 2,
+    "estimatedPricePerM2": 875,
     "priceHistory": [
       {
         "date": "2026-10-19",
-        "priceAmount": 790000,
+        "priceAmount": 140000,
         "priceCurrency": "USD"
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-194387386",
@@ -115,7 +81,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/hotel-boutique-20-habitaciones-salon-de-eventos-250-pax-playa-pascual/194387386",
     "detectedAt": "2026-10-11",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Venta Hotel Isis",
     "contactPhone": "+59895308162",
@@ -130,7 +96,7 @@
     ],
     "isOpportunity": true,
     "opportunityReason": "Nuevo aviso directo de propietario para captación temprana.",
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-193095962",
@@ -146,7 +112,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/chacra-en-costas-de-pereira-san-jose-–-a-solo-6-km-de-ruta-1-ubicacion-excelen/193095962",
     "detectedAt": "2025-11-13",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Jorge",
     "contactPhone": "+59891432601",
@@ -159,7 +125,7 @@
     ],
     "isOpportunity": true,
     "opportunityReason": "Nuevo aviso directo de propietario para captación temprana.",
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-190142705",
@@ -175,7 +141,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/apart-hotel-y-restaurante-frente-a-la-playa/190142705",
     "detectedAt": "2023-01-30",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Marcelo",
     "contactPhone": "096628287",
@@ -193,40 +159,7 @@
     ],
     "isOpportunity": true,
     "opportunityReason": "Nuevo aviso directo de propietario para captación temprana.",
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-192818905",
-    "title": "Venta Terreno San José, San José De Mayo, 4139 M2, Excelente Estado",
-    "operation": "venta",
-    "category": "terreno",
-    "neighborhood": "Eje Rutas / Libertad",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 135000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "Ocho Puntos Real Estate",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/venta-terreno-san-jose-san-jose-de-mayo-4139-m2-excelente-estado/192818905",
-    "detectedAt": "2025-09-01",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "Ocho Puntos Real Estate",
-    "contactPhone": "+59892936012",
-    "builtAreaM2": 4139,
-    "plotAreaM2": 4139,
-    "bedrooms": 1,
-    "estimatedPricePerM2": 33,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 135000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-194366971",
@@ -243,7 +176,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/venta-terreno-frente-al-mar-kiyu-san-jose/194366971",
     "detectedAt": "2026-10-07",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "RE/MAX",
     "contactPhone": "59896604504",
@@ -260,7 +193,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-194121248",
@@ -277,7 +210,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/chacra-3-hectareas/194121248",
     "detectedAt": "2026-08-15",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "KW One",
     "contactPhone": "+59827106994",
@@ -291,7 +224,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-193166311",
@@ -308,7 +241,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/establecimiento-agricola-ganadero-285-ha-en-san-jose/193166311",
     "detectedAt": "2025-12-03",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Zambrano Propiedades",
     "contactPhone": "+59891996722",
@@ -325,7 +258,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-192959404",
@@ -342,7 +275,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/ventaplaya-pascualcasa-con-2-terrenos-total-1060-m²oportunidad/192959404",
     "detectedAt": "2025-10-07",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Century 21 369",
     "contactPhone": "093949999",
@@ -359,7 +292,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-193995941",
@@ -376,7 +309,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/venta-chacra-4-has-con-casona-y-tajamar-en-ciudad-del-plata-san-jose/193995941",
     "detectedAt": "2026-07-15",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Tu Dupla Inmobiliaria",
     "contactPhone": "+59897343050",
@@ -393,7 +326,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-194239424",
@@ -410,7 +343,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/galpon-en-venta-en-ciudad-del-plata/194239424",
     "detectedAt": "2026-09-10",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Soles Propiedades",
     "contactPhone": "099697355",
@@ -427,7 +360,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-193460788",
@@ -444,7 +377,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/terreno-en-playa-pascual/193460788",
     "detectedAt": "2026-03-04",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "KW One",
     "contactPhone": "+59827106994",
@@ -458,7 +391,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-193184761",
@@ -475,7 +408,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/venta-terreno-en-san-jose-suburbano-—-50129-m²-—-apto-logistica-y-desarrollo-multiproposito/193184761",
     "detectedAt": "2025-12-09",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Imperium",
     "contactPhone": "59892288098",
@@ -491,7 +424,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-192996528",
@@ -508,7 +441,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/venta-alquiler-local-galpon-deposito-ruta-1-km-26-a-pasos-del-peaje-de-santa-lucia-10000m2-en-100/192996528",
     "detectedAt": "2025-10-18",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Monymar",
     "contactPhone": "+59899926115",
@@ -525,7 +458,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-193864261",
@@ -542,7 +475,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/campo-295-has-a17-km-de-san-jose-de-mayo/193864261",
     "detectedAt": "2026-06-11",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "KW One",
     "contactPhone": "+59827106994",
@@ -556,7 +489,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-190982605",
@@ -573,7 +506,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/san-jose-ruta-23-entre-mal-abrigo-e-ismael-cortinas/190982605",
     "detectedAt": "2024-05-02",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Toribio Achával Uruguay",
     "contactPhone": "092707020",
@@ -586,7 +519,41 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "infocasas-193120364",
+    "title": "Casa En Venta En Marina Santa Lucia",
+    "operation": "venta",
+    "category": "casa",
+    "neighborhood": "Ciudad del Plata",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 790000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Ocho Puntos Real Estate",
+    "sourceName": "InfoCasas",
+    "sourceUrl": "https://www.infocasas.com.uy/casa-en-venta-en-marina-santa-lucia/193120364",
+    "detectedAt": "2025-11-20",
+    "daysOnMarket": 3,
+    "status": "detectado",
+    "contactName": "Ocho Puntos Real Estate",
+    "contactPhone": "+59892936012",
+    "builtAreaM2": 376,
+    "plotAreaM2": 1425,
+    "bedrooms": 5,
+    "bathrooms": 3,
+    "estimatedPricePerM2": 2101,
+    "priceHistory": [
+      {
+        "date": "2026-10-19",
+        "priceAmount": 790000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-194391995",
@@ -603,7 +570,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/campo-en-venta-de-58ha-ubicado-en-18-de-julio/194391995",
     "detectedAt": "2026-10-12",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Platinum",
     "contactPhone": "+59897687948",
@@ -616,7 +583,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-193593038",
@@ -633,7 +600,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/ventaterreno-600-m2ciudad-del-plata-playa-pascualfinanciacion/193593038",
     "detectedAt": "2026-04-05",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Century 21 369",
     "contactPhone": "093949999",
@@ -648,7 +615,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-194005876",
@@ -665,7 +632,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/lote-en-venta-en-san-jose/194005876",
     "detectedAt": "2026-07-17",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": " Vladimir Inversiones Inmobiliarias ",
     "contactPhone": "095912421",
@@ -681,7 +648,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-193482932",
@@ -698,7 +665,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/venta2-dormitoriosterreno-512m2-edificacion-150-m2financiacion-directa/193482932",
     "detectedAt": "2026-03-10",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Century 21 369",
     "contactPhone": "093949999",
@@ -715,7 +682,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-191989330",
@@ -732,7 +699,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/campo-ganadero-en-san-jose-de-126-ha-sierra-de-mahoma-ganadero/191989330",
     "detectedAt": "2025-02-08",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Grupo Punta Propiedades",
     "contactPhone": "099787333",
@@ -748,7 +715,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-194094053",
@@ -765,7 +732,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/lave-de-negocio-en-ventaabitab\\permuta\\¡excelente-oportunidad-de-inversion/194094053",
     "detectedAt": "2026-08-09",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Century 21 369",
     "contactPhone": "093949999",
@@ -782,7 +749,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-193512355",
@@ -799,7 +766,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/ventaterreno-490m2¡ciudad-del-plataapta-bancosolo-100m-de-ruta-1/193512355",
     "detectedAt": "2026-03-15",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Century 21 369",
     "contactPhone": "093949999",
@@ -814,7 +781,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-193196743",
@@ -831,7 +798,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/venta-terreno-en-ciudad-del-plata-a-dos-cuadras-de-la-playa/193196743",
     "detectedAt": "2025-12-12",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Imperium",
     "contactPhone": "59892288098",
@@ -847,7 +814,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-193813823",
@@ -864,7 +831,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/venta-local-comercial-casa-y-galpones-en-ciudad-del-plata-san-jose/193813823",
     "detectedAt": "2026-05-29",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "RED Hub Inmobiliario",
     "contactPhone": "+59899185355",
@@ -881,7 +848,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-194366878",
@@ -898,7 +865,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/venta-casa-3-dormitorios-con-garaje-playa-pascual/194366878",
     "detectedAt": "2026-10-07",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "RE/MAX",
     "contactPhone": "59896604504",
@@ -915,7 +882,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-191688888",
@@ -932,7 +899,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/ventaterrenoplaya-pascualterreno-523-m²-cerca-de-ruta-1-nueva-k-32/191688888",
     "detectedAt": "2024-11-15",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Century 21 369",
     "contactPhone": "093949999",
@@ -949,7 +916,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-194409648",
@@ -966,7 +933,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/venta-terrenos-en-ecilda-paullier/194409648",
     "detectedAt": "2026-10-16",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "RE/MAX",
     "contactPhone": "59896604504",
@@ -983,7 +950,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-194389120",
@@ -1000,7 +967,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/venta-bodega-boutique-colonia-wilson-san-jose/194389120",
     "detectedAt": "2026-10-12",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "RE/MAX",
     "contactPhone": "59896604504",
@@ -1017,7 +984,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-191530243",
@@ -1034,7 +1001,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/local-industrial-o-galpon-en-ciudad-del-plata/191530243",
     "detectedAt": "2024-10-05",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "PALLARES BRUZZONE",
     "contactPhone": "098421007",
@@ -1051,7 +1018,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-191688776",
@@ -1068,7 +1035,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/ventaplaya-pascualterreno-450-m2sobre-av-rio-de-la-platadep-san-jose/191688776",
     "detectedAt": "2024-11-15",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Century 21 369",
     "contactPhone": "093949999",
@@ -1085,7 +1052,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-191688899",
@@ -1102,7 +1069,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/ventadelta-del-tigre-3-dormitorioschalet-125-m²garajeterreno-913-m²/191688899",
     "detectedAt": "2024-11-15",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Century 21 369",
     "contactPhone": "093949999",
@@ -1119,7 +1086,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-194340237",
@@ -1136,7 +1103,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/casa-en-venta-rincon-de-nazaret-san-jose/194340237",
     "detectedAt": "2026-10-01",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "RE/MAX",
     "contactPhone": "59896604504",
@@ -1153,7 +1120,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-191971816",
@@ -1170,7 +1137,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/chacra-paraje-arazati/191971816",
     "detectedAt": "2025-02-05",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Toribio Achával Uruguay",
     "contactPhone": "092707020",
@@ -1183,7 +1150,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-194290613",
@@ -1200,7 +1167,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/venta-complejo-turstico-3100-m²-san-jose-rentabilidad-18/194290613",
     "detectedAt": "2026-09-21",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Imperium",
     "contactPhone": "59892288098",
@@ -1216,7 +1183,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-190977912",
@@ -1233,7 +1200,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/espectacular-posada-turistica-totalmente-equipada-a-la-venta¡¡buena-rentabilidad/190977912",
     "detectedAt": "2024-04-25",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "YR & Global Pro",
     "contactPhone": "+59893977200",
@@ -1250,7 +1217,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-192959403",
@@ -1267,7 +1234,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/ventaciudad-del-platacasa-2-dormitoriosapta-bancoamplio-terrenoparrilla/192959403",
     "detectedAt": "2025-10-07",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Century 21 369",
     "contactPhone": "093949999",
@@ -1284,7 +1251,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-187922438",
@@ -1301,7 +1268,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/campo-en-venta-para-desarrollo-turistico-delta-del-tigre/187922438",
     "detectedAt": "2021-05-27",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "COVELLO INTERNATIONAL",
     "contactPhone": "+59892806062",
@@ -1314,7 +1281,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-194087671",
@@ -1331,7 +1298,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/casa-1-dormitorio-en-san-jose-de-mayo/194087671",
     "detectedAt": "2026-08-07",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "KW One",
     "contactPhone": "+59827106994",
@@ -1348,7 +1315,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-191689195",
@@ -1365,7 +1332,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/ventasan-jose-de-mayo2-casasterreno-570m2-refaccionada3-dormitoriosbanco/191689195",
     "detectedAt": "2024-11-15",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Century 21 369",
     "contactPhone": "093949999",
@@ -1382,7 +1349,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-193961788",
@@ -1399,7 +1366,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/venta-de-local-comercial-en-san-jose-de-mayo/193961788",
     "detectedAt": "2026-07-07",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "KW One",
     "contactPhone": "+59827106994",
@@ -1416,7 +1383,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-191796401",
@@ -1433,7 +1400,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/terreno-en-san-jose-ruta-1-km-43-/191796401",
     "detectedAt": "2024-12-14",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Vista Inmobiliaria",
     "contactPhone": "+59899000233",
@@ -1447,7 +1414,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-193211532",
@@ -1464,7 +1431,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/local-comercial-en-venta/193211532",
     "detectedAt": "2025-12-17",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Raymond",
     "contactPhone": "093357340",
@@ -1481,7 +1448,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-193608470",
@@ -1498,7 +1465,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/venta-casa-en-ciudad-del-plata-172-m2-area-edificada/193608470",
     "detectedAt": "2026-04-09",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Keymex De Luxe",
     "contactPhone": "+59895816111",
@@ -1515,11 +1482,11 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-193328187",
-    "title": "Ventạ \\2 Propiedades\\Dep.San Jose\\Autodromo\\deal Rentas\\Buena Ubicacion",
+    "title": "Ventạ \\2 Propiedades\\Dep.San Jose\\Autodromo\\Ideal Rentas\\Buena Ubicacion",
     "operation": "venta",
     "category": "casa",
     "neighborhood": "Playa Pascual",
@@ -1530,9 +1497,9 @@
     "origin": "inmobiliaria_competencia",
     "competitorName": "Century 21 369",
     "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/venta-\\2-propiedades\\depsan-jose\\autodromo\\deal-rentas\\buena-ubicacion/193328187",
+    "sourceUrl": "https://www.infocasas.com.uy/venta-\\2-propiedades\\depsan-jose\\autodromo\\ideal-rentas\\buena-ubicacion/193328187",
     "detectedAt": "2026-01-27",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Century 21 369",
     "contactPhone": "093949999",
@@ -1549,7 +1516,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-194244965",
@@ -1566,7 +1533,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/casa-en-venta-de-2-ambientes-en-ciudad-del-plata/194244965",
     "detectedAt": "2026-09-11",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Soles Propiedades",
     "contactPhone": "099697355",
@@ -1583,952 +1550,7 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-194111297",
-    "title": "Terreno en venta de 531m2 ubicado en Santa Mónica, San José.",
-    "operation": "venta",
-    "category": "terreno",
-    "neighborhood": "San José de Mayo",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 18000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "ALPHA REALTORS",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/terreno-en-venta-de-531m2-ubicado-en-santa-monica-san-jose/194111297",
-    "detectedAt": "2026-08-13",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "ALPHA REALTORS",
-    "contactPhone": "+59893330777",
-    "builtAreaM2": 531,
-    "bedrooms": 1,
-    "bathrooms": 1,
-    "estimatedPricePerM2": 34,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 18000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-191689203",
-    "title": "Venta/PLAYA PASCUAL/ 2 Casas/ Ideal 2 Familias/6 Dormí/ 2 Baños/ Terreno 535 m²/",
-    "operation": "venta",
-    "category": "terreno",
-    "neighborhood": "Playa Pascual",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 124990,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "Century 21 369",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/ventaplaya-pascual-2-casas-ideal-2-familias6-dormi-2-baños-terreno-535-m²/191689203",
-    "detectedAt": "2024-11-15",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "Century 21 369",
-    "contactPhone": "093949999",
-    "builtAreaM2": 180,
-    "plotAreaM2": 535,
-    "bedrooms": 6,
-    "bathrooms": 2,
-    "estimatedPricePerM2": 694,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 124990,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-194222499",
-    "title": "Venta Fabrica industrial o local de gran tamaño en San Jose",
-    "operation": "venta",
-    "category": "local",
-    "neighborhood": "San José de Mayo",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 590000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "Imperium",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/venta-fabrica-industrial-o-local-de-gran-tamaño-en-san-jose/194222499",
-    "detectedAt": "2026-09-07",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "Imperium",
-    "contactPhone": "59892288098",
-    "builtAreaM2": 1760,
-    "bedrooms": 6,
-    "bathrooms": 6,
-    "estimatedPricePerM2": 335,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 590000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-192510100",
-    "title": "Galpón Industrial en Ciudad del Plata ",
-    "operation": "venta",
-    "category": "local",
-    "neighborhood": "Playa Pascual",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 2800000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "Spot Real Estate",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/galpon-industrial-en-ciudad-del-plata-/192510100",
-    "detectedAt": "2025-06-10",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "Spot Real Estate",
-    "contactPhone": "094405055",
-    "builtAreaM2": 10951,
-    "plotAreaM2": 100151,
-    "bedrooms": 1,
-    "estimatedPricePerM2": 256,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 2800000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-194239428",
-    "title": "Local en venta en Ciudad del Plata",
-    "operation": "venta",
-    "category": "local",
-    "neighborhood": "Ciudad del Plata",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 50000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "Soles Propiedades",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/local-en-venta-en-ciudad-del-plata/194239428",
-    "detectedAt": "2026-09-10",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "Soles Propiedades",
-    "contactPhone": "099697355",
-    "builtAreaM2": 210,
-    "plotAreaM2": 310,
-    "bedrooms": 4,
-    "bathrooms": 3,
-    "estimatedPricePerM2": 238,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 50000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-193026657",
-    "title": "Venta/Casa de Alto/P. Pascual/4 Dormitorios/Barbacoa/Apta Banco/1000m2 Terreno.",
-    "operation": "venta",
-    "category": "terreno",
-    "neighborhood": "Playa Pascual",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 135000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "Century 21 369",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/ventacasa-de-altop-pascual4-dormitoriosbarbacoaapta-banco1000m2-terreno/193026657",
-    "detectedAt": "2025-10-25",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "Century 21 369",
-    "contactPhone": "093949999",
-    "builtAreaM2": 160,
-    "plotAreaM2": 1000,
-    "bedrooms": 6,
-    "bathrooms": 2,
-    "estimatedPricePerM2": 844,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 135000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-191688828",
-    "title": "Venta/Delta del Tigre/Casa/2 Dormí/2 Garajes/ Alquilada/Terreno 550m2/Banco",
-    "operation": "venta",
-    "category": "terreno",
-    "neighborhood": "Ciudad del Plata",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 66000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "Century 21 369",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/ventadelta-del-tigrecasa2-dormi2-garajes-alquiladaterreno-550m2banco/191688828",
-    "detectedAt": "2024-11-15",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "Century 21 369",
-    "contactPhone": "093949999",
-    "builtAreaM2": 90,
-    "plotAreaM2": 550,
-    "bedrooms": 3,
-    "bathrooms": 1,
-    "estimatedPricePerM2": 733,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 66000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-194389102",
-    "title": "VENTA CHACRA DE 5.84 HA, Bodega Boutique, SAN JOSÉ",
-    "operation": "venta",
-    "category": "chacra",
-    "neighborhood": "Eje Rutas / Libertad",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 445000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "RE/MAX",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/venta-chacra-de-584-ha-bodega-boutique-san-jose/194389102",
-    "detectedAt": "2026-10-12",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "RE/MAX",
-    "contactPhone": "59896604504",
-    "builtAreaM2": 5,
-    "plotAreaM2": 5.84,
-    "bedrooms": 1,
-    "bathrooms": 1,
-    "estimatedPricePerM2": 89000,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 445000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-194398464",
-    "title": "Oportunidad unica en el centro de la ciudad",
-    "operation": "venta",
-    "category": "local",
-    "neighborhood": "Centro",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 40000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "RE/MAX",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/oportunidad-unica-en-el-centro-de-la-ciudad/194398464",
-    "detectedAt": "2026-10-14",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "RE/MAX",
-    "contactPhone": "59896604504",
-    "builtAreaM2": 250,
-    "bedrooms": 1,
-    "bathrooms": 1,
-    "estimatedPricePerM2": 160,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 40000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-192795704",
-    "title": "Venta casa 3 dorm, Marina de Santa Lucia",
-    "operation": "venta",
-    "category": "casa",
-    "neighborhood": "Ciudad del Plata",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 440000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "Ifer&Olivera",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/venta-casa-3-dorm-marina-de-santa-lucia/192795704",
-    "detectedAt": "2025-08-27",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "Ifer&Olivera",
-    "contactPhone": "094240090",
-    "builtAreaM2": 125,
-    "plotAreaM2": 900,
-    "bedrooms": 4,
-    "bathrooms": 2,
-    "estimatedPricePerM2": 3520,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 440000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-194355487",
-    "title": "VENTA CASA 4 DORMITORIOS DELTA DEL TIGRE",
-    "operation": "venta",
-    "category": "casa",
-    "neighborhood": "Ciudad del Plata",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 75000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "RE/MAX",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/venta-casa-4-dormitorios-delta-del-tigre/194355487",
-    "detectedAt": "2026-10-05",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "RE/MAX",
-    "contactPhone": "59896604504",
-    "builtAreaM2": 100,
-    "plotAreaM2": 120,
-    "bedrooms": 5,
-    "bathrooms": 1,
-    "estimatedPricePerM2": 750,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 75000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-194394166",
-    "title": "Casa en Venta",
-    "operation": "venta",
-    "category": "casa",
-    "neighborhood": "Kiyú",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 66000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "Portones",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/casa-en-venta/194394166",
-    "detectedAt": "2026-10-13",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "Portones",
-    "contactPhone": "092646362",
-    "builtAreaM2": 60,
-    "plotAreaM2": 60,
-    "bedrooms": 2,
-    "bathrooms": 1,
-    "estimatedPricePerM2": 1100,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 66000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-194383593",
-    "title": "Se Vende Casa de un Dormitorio con terreno de 600m2 a una cuadra de la Playa en Playa Pascual",
-    "operation": "venta",
-    "category": "terreno",
-    "neighborhood": "Playa Pascual",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 55000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "FDS INMUEBLES",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/se-vende-casa-de-un-dormitorio-con-terreno-de-600m2-a-una-cuadra-de-la-playa-en-playa-pascual/194383593",
-    "detectedAt": "2026-10-09",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "FDS INMUEBLES",
-    "contactPhone": "+59897170306",
-    "builtAreaM2": 30,
-    "plotAreaM2": 600,
-    "bedrooms": 2,
-    "bathrooms": 2,
-    "estimatedPricePerM2": 1833,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 55000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-193570741",
-    "title": "Campo en venta en San José de Mayo con 5 Has",
-    "operation": "venta",
-    "category": "chacra",
-    "neighborhood": "San José de Mayo",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 85000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "⁠Smehaus Propiedades",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/campo-en-venta-en-san-jose-de-mayo-con-5-has/193570741",
-    "detectedAt": "2026-03-27",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "⁠Smehaus Propiedades",
-    "contactPhone": "092625185",
-    "builtAreaM2": 5,
-    "plotAreaM2": 5,
-    "bedrooms": 1,
-    "bathrooms": 1,
-    "estimatedPricePerM2": 17000,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 85000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-193328175",
-    "title": "Ventạ̣",
-    "operation": "venta",
-    "category": "casa",
-    "neighborhood": "Ciudad del Plata",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 59999,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "Century 21 369",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/venta/193328175",
-    "detectedAt": "2026-01-27",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "Century 21 369",
-    "contactPhone": "093949999",
-    "builtAreaM2": 140,
-    "plotAreaM2": 535,
-    "bedrooms": 5,
-    "bathrooms": 3,
-    "estimatedPricePerM2": 429,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 59999,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-193759589",
-    "title": "Chacra en venta en San José de Mayo con 4 Has",
-    "operation": "venta",
-    "category": "chacra",
-    "neighborhood": "San José de Mayo",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 89000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "⁠Smehaus Propiedades",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/chacra-en-venta-en-san-jose-de-mayo-con-4-has/193759589",
-    "detectedAt": "2026-05-16",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "⁠Smehaus Propiedades",
-    "contactPhone": "092625185",
-    "builtAreaM2": 80,
-    "plotAreaM2": 4,
-    "bedrooms": 3,
-    "bathrooms": 1,
-    "estimatedPricePerM2": 1113,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 89000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-194345666",
-    "title": "VENTA CASA 3 DORM. + APTO. ECILDA PAULLIER",
-    "operation": "venta",
-    "category": "apartamento",
-    "neighborhood": "Ecilda Paullier",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 249000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "RE/MAX",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/venta-casa-3-dorm-apto-ecilda-paullier/194345666",
-    "detectedAt": "2026-10-02",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "RE/MAX",
-    "contactPhone": "59896604504",
-    "builtAreaM2": 182,
-    "plotAreaM2": 212,
-    "bedrooms": 4,
-    "bathrooms": 2,
-    "estimatedPricePerM2": 1368,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 249000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-194409266",
-    "title": "Frigorífico en venta/Alquiler sobre Ruta 11 – Villa Rodríguez",
-    "operation": "venta",
-    "category": "local",
-    "neighborhood": "Eje Rutas / Libertad",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 2900000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "GABAL Inmobiliaria",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/frigorifico-en-ventaalquiler-sobre-ruta-11-–-villa-rodriguez/194409266",
-    "detectedAt": "2026-10-15",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "GABAL Inmobiliaria",
-    "contactPhone": "+59892639754",
-    "builtAreaM2": 1491,
-    "bedrooms": 1,
-    "bathrooms": 1,
-    "estimatedPricePerM2": 1945,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 2900000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-194359108",
-    "title": "Casa de 3 dormitorios a la venta en San Jose de Mayo",
-    "operation": "venta",
-    "category": "casa",
-    "neighborhood": "San José de Mayo",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 160000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "Golden Proyectos Inmobiliarios",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/casa-de-3-dormitorios-a-la-venta-en-san-jose-de-mayo/194359108",
-    "detectedAt": "2026-10-05",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "Golden Proyectos Inmobiliarios",
-    "contactPhone": "+59896840644",
-    "builtAreaM2": 158,
-    "plotAreaM2": 158,
-    "bedrooms": 3,
-    "bathrooms": 1,
-    "estimatedPricePerM2": 1013,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 160000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-194170243",
-    "title": "Venta/Oportunidad única sobre Ruta 1/Terreno,Local Comercial y Vivienda/",
-    "operation": "venta",
-    "category": "terreno",
-    "neighborhood": "Playa Pascual",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 127000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "Century 21 369",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/ventaoportunidad-unica-sobre-ruta-1terrenolocal-comercial-y-vivienda/194170243",
-    "detectedAt": "2026-08-27",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "Century 21 369",
-    "contactPhone": "093949999",
-    "builtAreaM2": 247,
-    "plotAreaM2": 655,
-    "bedrooms": 3,
-    "bathrooms": 3,
-    "estimatedPricePerM2": 514,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 127000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-194085167",
-    "title": "Casa en Barrio Privado de la Marina de San Jose",
-    "operation": "venta",
-    "category": "casa",
-    "neighborhood": "Ciudad del Plata",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 3000000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "Cristina OTTONELLO negocios inmobiliarios ",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/casa-en-barrio-privado-de-la-marina-de-san-jose/194085167",
-    "detectedAt": "2026-08-06",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "Cristina OTTONELLO negocios inmobiliarios ",
-    "contactPhone": "+59896370486",
-    "builtAreaM2": 1628,
-    "plotAreaM2": 2000,
-    "bedrooms": 5,
-    "bathrooms": 3,
-    "estimatedPricePerM2": 1843,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 3000000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-194379043",
-    "title": "¡3 dormitorios + posibilidad de renta independiente!",
-    "operation": "venta",
-    "category": "casa",
-    "neighborhood": "San José de Mayo",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 90000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "KW One",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/¡3-dormitorios-posibilidad-de-renta-independiente/194379043",
-    "detectedAt": "2026-10-09",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "KW One",
-    "contactPhone": "+59827106994",
-    "builtAreaM2": 57,
-    "plotAreaM2": 313,
-    "bedrooms": 4,
-    "bathrooms": 2,
-    "estimatedPricePerM2": 1579,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 90000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-193585908",
-    "title": "Venta/Ciudad Del Plata/Casa 2 dormitorios/Amplio Terreno/Entrada de Auto",
-    "operation": "venta",
-    "category": "terreno",
-    "neighborhood": "Playa Pascual",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 58000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "Century 21 369",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/ventaciudad-del-platacasa-2-dormitoriosamplio-terrenoentrada-de-auto/193585908",
-    "detectedAt": "2026-04-01",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "Century 21 369",
-    "contactPhone": "093949999",
-    "builtAreaM2": 82,
-    "plotAreaM2": 500,
-    "bedrooms": 3,
-    "bathrooms": 1,
-    "estimatedPricePerM2": 707,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 58000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-193512353",
-    "title": "Venta/Casa 2 dormitorios/Garaje/Galpon/A metros Ruta 1/Permuta/Ciudad Del Plata.",
-    "operation": "venta",
-    "category": "deposito",
-    "neighborhood": "Playa Pascual",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 79990,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "Century 21 369",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/ventacasa-2-dormitoriosgarajegalpona-metros-ruta-1permutaciudad-del-plata/193512353",
-    "detectedAt": "2026-03-15",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "Century 21 369",
-    "contactPhone": "093949999",
-    "builtAreaM2": 100,
-    "plotAreaM2": 512,
-    "bedrooms": 3,
-    "bathrooms": 1,
-    "estimatedPricePerM2": 800,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 79990,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-193995958",
-    "title": "Venta terreno en costanera Playa Pascual",
-    "operation": "venta",
-    "category": "terreno",
-    "neighborhood": "Playa Pascual",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 70000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "Sou Negocios Inmobiliarios",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/venta-terreno-en-costanera-playa-pascual/193995958",
-    "detectedAt": "2026-07-15",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "Sou Negocios Inmobiliarios",
-    "contactPhone": " +598 98 483 682",
-    "builtAreaM2": 514,
-    "bedrooms": 1,
-    "bathrooms": 1,
-    "estimatedPricePerM2": 136,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 70000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-194409688",
-    "title": "VENTA DE TERRENO EN GONZALEZ SAN JOSE",
-    "operation": "venta",
-    "category": "terreno",
-    "neighborhood": "San José de Mayo",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 29500,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "RE/MAX",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/venta-de-terreno-en-gonzalez-san-jose/194409688",
-    "detectedAt": "2026-10-16",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "RE/MAX",
-    "contactPhone": "59896604504",
-    "builtAreaM2": 1832,
-    "plotAreaM2": 1832,
-    "bedrooms": 1,
-    "bathrooms": 1,
-    "estimatedPricePerM2": 16,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 29500,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-194245245",
-    "title": "Campo de 85 hectáreas, correspondiente al la 8.ª Sección Catastral de San José, ubicado en un punto de especial interés por su proximidad a Montevideo",
-    "operation": "venta",
-    "category": "chacra",
-    "neighborhood": "San José de Mayo",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 2000000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "Buysan Real Estate B",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/campo-de-85-hectareas-correspondiente-al-la-8ª-seccion-catastral-de-san-jose-ubicado-en-un-punto-de-especial-interes-por-su-proximidad-a-montevideo/194245245",
-    "detectedAt": "2026-09-12",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "Buysan Real Estate B",
-    "contactPhone": "096239851",
-    "builtAreaM2": 85,
-    "plotAreaM2": 85,
-    "bedrooms": 1,
-    "bathrooms": 1,
-    "estimatedPricePerM2": 23529,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 2000000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-193305394",
-    "title": "Venta Casa 5 Dormitorios En Marina De Santa Lucía",
-    "operation": "venta",
-    "category": "casa",
-    "neighborhood": "Eje Rutas / Libertad",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 3000000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "Inmobiliaria Filgueira & Filgueira",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/venta-casa-5-dormitorios-en-marina-de-santa-lucia/193305394",
-    "detectedAt": "2026-01-22",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "Inmobiliaria Filgueira & Filgueira",
-    "contactPhone": "+59897090772",
-    "builtAreaM2": 1600,
-    "bedrooms": 6,
-    "bathrooms": 3,
-    "estimatedPricePerM2": 1875,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 3000000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-194300299",
@@ -2545,7 +1567,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/venta-casa-3-dormitorios-2-baños-y-gge-en-ciudad-del-plata/194300299",
     "detectedAt": "2026-09-23",
-    "daysOnMarket": 1,
+    "daysOnMarket": 3,
     "status": "detectado",
     "contactName": "Imperium",
     "contactPhone": "59892288098",
@@ -2561,314 +1583,99 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z",
+    "plotAreaM2": 1109
   },
   {
-    "id": "infocasas-193135168",
-    "title": "Chacra en Venta 3,5 has",
-    "operation": "venta",
-    "category": "chacra",
-    "neighborhood": "San José de Mayo",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 160000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "KW One",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/chacra-en-venta-35-has/193135168",
-    "detectedAt": "2025-11-25",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "KW One",
-    "contactPhone": "+59827106994",
-    "bedrooms": 6,
-    "bathrooms": 1,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 160000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-193979943",
-    "title": "Casa en San José de Mayo",
-    "operation": "venta",
-    "category": "casa",
-    "neighborhood": "San José de Mayo",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 122000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "KW One",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/casa-en-san-jose-de-mayo/193979943",
-    "detectedAt": "2026-07-11",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "KW One",
-    "contactPhone": "+59827106994",
-    "builtAreaM2": 114,
-    "plotAreaM2": 240,
-    "bedrooms": 3,
-    "bathrooms": 1,
-    "estimatedPricePerM2": 1070,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 122000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-193906276",
-    "title": "Casa en venta  3 dormitorios San Jose",
-    "operation": "venta",
-    "category": "casa",
-    "neighborhood": "San José de Mayo",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 248000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "KW One",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/casa-en-venta-3-dormitorios-san-jose/193906276",
-    "detectedAt": "2026-06-23",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "KW One",
-    "contactPhone": "+59827106994",
-    "bedrooms": 5,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 248000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-193135399",
-    "title": "Galpones en Venta",
+    "id": "infocasas-194111297",
+    "title": "Terreno en venta de 531m2 ubicado en Santa Mónica, San José.",
     "operation": "venta",
     "category": "terreno",
     "neighborhood": "San José de Mayo",
     "city": "San José de Mayo",
     "department": "San José",
-    "priceAmount": 90000,
+    "priceAmount": 18000,
     "priceCurrency": "USD",
     "origin": "inmobiliaria_competencia",
-    "competitorName": "KW One",
+    "competitorName": "ALPHA REALTORS",
     "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/galpones-en-venta/193135399",
-    "detectedAt": "2025-11-25",
-    "daysOnMarket": 1,
+    "sourceUrl": "https://www.infocasas.com.uy/terreno-en-venta-de-531m2-ubicado-en-santa-monica-san-jose/194111297",
+    "detectedAt": "2026-08-13",
+    "daysOnMarket": 3,
     "status": "detectado",
-    "contactName": "KW One",
-    "contactPhone": "+59827106994",
+    "contactName": "ALPHA REALTORS",
+    "contactPhone": "+59893330777",
+    "builtAreaM2": 531,
     "bedrooms": 1,
+    "bathrooms": 1,
+    "estimatedPricePerM2": 34,
     "priceHistory": [
       {
         "date": "2026-10-19",
-        "priceAmount": 90000,
+        "priceAmount": 18000,
         "priceCurrency": "USD"
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
-    "id": "infocasas-193541358",
-    "title": "Amplio Terreno en Ruta 3 Km 94 - San José de Mayo - terreno de 42739 m2",
+    "id": "infocasas-191689203",
+    "title": "Venta/PLAYA PASCUAL/ 2 Casas/ Ideal 2 Familias/6 Dormí/ 2 Baños/ Terreno 535 m²/",
     "operation": "venta",
     "category": "terreno",
-    "neighborhood": "Eje Rutas / Libertad",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 390000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "Gonzalez Veliz",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/amplio-terreno-en-ruta-3-km-94-san-jose-de-mayo-terreno-de-42739-m2/193541358",
-    "detectedAt": "2026-03-19",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "Gonzalez Veliz",
-    "contactPhone": "099425417",
-    "plotAreaM2": 42739,
-    "bedrooms": 1,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 390000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-193135010",
-    "title": "Venta de Dos casas en un mismo padrón en San José",
-    "operation": "venta",
-    "category": "casa",
-    "neighborhood": "San José de Mayo",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 144000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "KW One",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/venta-de-dos-casas-en-un-mismo-padron-en-san-jose/193135010",
-    "detectedAt": "2025-11-25",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "KW One",
-    "contactPhone": "+59827106994",
-    "bedrooms": 3,
-    "bathrooms": 1,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 144000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-194087673",
-    "title": "Casa en San José de Mayo",
-    "operation": "venta",
-    "category": "casa",
-    "neighborhood": "San José de Mayo",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 248000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "KW One",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/casa-en-san-jose-de-mayo/194087673",
-    "detectedAt": "2026-08-07",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "KW One",
-    "contactPhone": "+59827106994",
-    "builtAreaM2": 222,
-    "plotAreaM2": 855,
-    "bedrooms": 4,
-    "bathrooms": 1,
-    "estimatedPricePerM2": 1117,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 248000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-194378624",
-    "title": "Excepcional para Desarrollo Comercial y Logístico",
-    "operation": "venta",
-    "category": "terreno",
-    "neighborhood": "Libertad",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 201471,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "RE/MAX",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/excepcional-para-desarrollo-comercial-y-logistico/194378624",
-    "detectedAt": "2026-10-09",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "RE/MAX",
-    "contactPhone": "59896604504",
-    "builtAreaM2": 6140,
-    "plotAreaM2": 6140,
-    "bedrooms": 1,
-    "bathrooms": 1,
-    "estimatedPricePerM2": 33,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 201471,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-193135451",
-    "title": "Casa Mal Abrigo",
-    "operation": "venta",
-    "category": "apartamento",
-    "neighborhood": "San José de Mayo",
-    "city": "San José de Mayo",
-    "department": "San José",
-    "priceAmount": 62000,
-    "priceCurrency": "USD",
-    "origin": "inmobiliaria_competencia",
-    "competitorName": "KW One",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/casa-mal-abrigo/193135451",
-    "detectedAt": "2025-11-25",
-    "daysOnMarket": 1,
-    "status": "detectado",
-    "contactName": "KW One",
-    "contactPhone": "+59827106994",
-    "bedrooms": 4,
-    "priceHistory": [
-      {
-        "date": "2026-10-19",
-        "priceAmount": 62000,
-        "priceCurrency": "USD"
-      }
-    ],
-    "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
-  },
-  {
-    "id": "infocasas-193312367",
-    "title": "Venta Casa de 2 dormitorios, y Barbacoa  Marina Santa Lucia",
-    "operation": "venta",
-    "category": "casa",
     "neighborhood": "Playa Pascual",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 124990,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Century 21 369",
+    "sourceName": "InfoCasas",
+    "sourceUrl": "https://www.infocasas.com.uy/ventaplaya-pascual-2-casas-ideal-2-familias6-dormi-2-baños-terreno-535-m²/191689203",
+    "detectedAt": "2024-11-15",
+    "daysOnMarket": 3,
+    "status": "detectado",
+    "contactName": "Century 21 369",
+    "contactPhone": "093949999",
+    "builtAreaM2": 180,
+    "plotAreaM2": 535,
+    "bedrooms": 6,
+    "bathrooms": 2,
+    "estimatedPricePerM2": 694,
+    "priceHistory": [
+      {
+        "date": "2026-10-19",
+        "priceAmount": 124990,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "infocasas-194222499",
+    "title": "Venta Fabrica industrial o local de gran tamaño en San Jose",
+    "operation": "venta",
+    "category": "local",
+    "neighborhood": "San José de Mayo",
     "city": "San José de Mayo",
     "department": "San José",
     "priceAmount": 590000,
     "priceCurrency": "USD",
     "origin": "inmobiliaria_competencia",
-    "competitorName": "KW One",
+    "competitorName": "Imperium",
     "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/venta-casa-de-2-dormitorios-y-barbacoa-marina-santa-lucia/193312367",
-    "detectedAt": "2026-01-23",
-    "daysOnMarket": 1,
+    "sourceUrl": "https://www.infocasas.com.uy/venta-fabrica-industrial-o-local-de-gran-tamaño-en-san-jose/194222499",
+    "detectedAt": "2026-09-07",
+    "daysOnMarket": 3,
     "status": "detectado",
-    "contactName": "KW One",
-    "contactPhone": "+59827106994",
-    "bedrooms": 3,
-    "bathrooms": 3,
+    "contactName": "Imperium",
+    "contactPhone": "59892288098",
+    "builtAreaM2": 1760,
+    "bedrooms": 6,
+    "bathrooms": 6,
+    "estimatedPricePerM2": 335,
     "priceHistory": [
       {
         "date": "2026-10-19",
@@ -2877,40 +1684,413 @@
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
-    "id": "infocasas-193913194",
-    "title": "Exclusiva Propiedad de 197 Hectáreas con 2500 Metros de Frente de Playa Privada sobre el Río de la Plata.",
+    "id": "infocasas-192510100",
+    "title": "Galpón Industrial en Ciudad del Plata ",
     "operation": "venta",
-    "category": "chacra",
-    "neighborhood": "Ciudad del Plata",
+    "category": "local",
+    "neighborhood": "Playa Pascual",
     "city": "San José de Mayo",
     "department": "San José",
-    "priceAmount": 1500000,
+    "priceAmount": 2800000,
     "priceCurrency": "USD",
     "origin": "inmobiliaria_competencia",
-    "competitorName": "UNICA REAL ESTATE",
+    "competitorName": "Spot Real Estate",
     "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/exclusiva-propiedad-de-197-hectareas-con-2500-metros-de-frente-de-playa-privada-sobre-el-rio-de-la-plata/193913194",
-    "detectedAt": "2026-06-24",
-    "daysOnMarket": 1,
+    "sourceUrl": "https://www.infocasas.com.uy/galpon-industrial-en-ciudad-del-plata-/192510100",
+    "detectedAt": "2025-06-10",
+    "daysOnMarket": 3,
     "status": "detectado",
-    "contactName": "UNICA REAL ESTATE",
-    "contactPhone": "+598 99 613 176",
-    "builtAreaM2": 197,
-    "plotAreaM2": 197,
+    "contactName": "Spot Real Estate",
+    "contactPhone": "094405055",
+    "builtAreaM2": 10951,
+    "plotAreaM2": 100151,
     "bedrooms": 1,
-    "estimatedPricePerM2": 7614,
+    "estimatedPricePerM2": 256,
     "priceHistory": [
       {
         "date": "2026-10-19",
-        "priceAmount": 1500000,
+        "priceAmount": 2800000,
         "priceCurrency": "USD"
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "infocasas-194239428",
+    "title": "Local en venta en Ciudad del Plata",
+    "operation": "venta",
+    "category": "local",
+    "neighborhood": "Ciudad del Plata",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 50000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Soles Propiedades",
+    "sourceName": "InfoCasas",
+    "sourceUrl": "https://www.infocasas.com.uy/local-en-venta-en-ciudad-del-plata/194239428",
+    "detectedAt": "2026-09-10",
+    "daysOnMarket": 3,
+    "status": "detectado",
+    "contactName": "Soles Propiedades",
+    "contactPhone": "099697355",
+    "builtAreaM2": 210,
+    "plotAreaM2": 310,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "estimatedPricePerM2": 238,
+    "priceHistory": [
+      {
+        "date": "2026-10-19",
+        "priceAmount": 50000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "infocasas-193026657",
+    "title": "Venta/Casa de Alto/P. Pascual/4 Dormitorios/Barbacoa/Apta Banco/1000m2 Terreno.",
+    "operation": "venta",
+    "category": "terreno",
+    "neighborhood": "Playa Pascual",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 135000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Century 21 369",
+    "sourceName": "InfoCasas",
+    "sourceUrl": "https://www.infocasas.com.uy/ventacasa-de-altop-pascual4-dormitoriosbarbacoaapta-banco1000m2-terreno/193026657",
+    "detectedAt": "2025-10-25",
+    "daysOnMarket": 3,
+    "status": "detectado",
+    "contactName": "Century 21 369",
+    "contactPhone": "093949999",
+    "builtAreaM2": 160,
+    "plotAreaM2": 1000,
+    "bedrooms": 6,
+    "bathrooms": 2,
+    "estimatedPricePerM2": 844,
+    "priceHistory": [
+      {
+        "date": "2026-10-19",
+        "priceAmount": 135000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "infocasas-191688828",
+    "title": "Venta/Delta del Tigre/Casa/2 Dormí/2 Garajes/ Alquilada/Terreno 550m2/Banco",
+    "operation": "venta",
+    "category": "terreno",
+    "neighborhood": "Ciudad del Plata",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 66000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Century 21 369",
+    "sourceName": "InfoCasas",
+    "sourceUrl": "https://www.infocasas.com.uy/ventadelta-del-tigrecasa2-dormi2-garajes-alquiladaterreno-550m2banco/191688828",
+    "detectedAt": "2024-11-15",
+    "daysOnMarket": 3,
+    "status": "detectado",
+    "contactName": "Century 21 369",
+    "contactPhone": "093949999",
+    "builtAreaM2": 90,
+    "plotAreaM2": 550,
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "estimatedPricePerM2": 733,
+    "priceHistory": [
+      {
+        "date": "2026-10-19",
+        "priceAmount": 66000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "infocasas-194389102",
+    "title": "VENTA CHACRA DE 5.84 HA, Bodega Boutique, SAN JOSÉ",
+    "operation": "venta",
+    "category": "chacra",
+    "neighborhood": "Eje Rutas / Libertad",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 445000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "RE/MAX",
+    "sourceName": "InfoCasas",
+    "sourceUrl": "https://www.infocasas.com.uy/venta-chacra-de-584-ha-bodega-boutique-san-jose/194389102",
+    "detectedAt": "2026-10-12",
+    "daysOnMarket": 3,
+    "status": "detectado",
+    "contactName": "RE/MAX",
+    "contactPhone": "59896604504",
+    "builtAreaM2": 5,
+    "plotAreaM2": 5.84,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "estimatedPricePerM2": 89000,
+    "priceHistory": [
+      {
+        "date": "2026-10-19",
+        "priceAmount": 445000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "infocasas-194398464",
+    "title": "Oportunidad unica en el centro de la ciudad",
+    "operation": "venta",
+    "category": "local",
+    "neighborhood": "Centro",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 40000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "RE/MAX",
+    "sourceName": "InfoCasas",
+    "sourceUrl": "https://www.infocasas.com.uy/oportunidad-unica-en-el-centro-de-la-ciudad/194398464",
+    "detectedAt": "2026-10-14",
+    "daysOnMarket": 3,
+    "status": "detectado",
+    "contactName": "RE/MAX",
+    "contactPhone": "59896604504",
+    "builtAreaM2": 250,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "estimatedPricePerM2": 160,
+    "priceHistory": [
+      {
+        "date": "2026-10-19",
+        "priceAmount": 40000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "infocasas-192795704",
+    "title": "Venta casa 3 dorm, Marina de Santa Lucia",
+    "operation": "venta",
+    "category": "casa",
+    "neighborhood": "Ciudad del Plata",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 440000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Ifer&Olivera",
+    "sourceName": "InfoCasas",
+    "sourceUrl": "https://www.infocasas.com.uy/venta-casa-3-dorm-marina-de-santa-lucia/192795704",
+    "detectedAt": "2025-08-27",
+    "daysOnMarket": 3,
+    "status": "detectado",
+    "contactName": "Ifer&Olivera",
+    "contactPhone": "094240090",
+    "builtAreaM2": 125,
+    "plotAreaM2": 900,
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "estimatedPricePerM2": 3520,
+    "priceHistory": [
+      {
+        "date": "2026-10-19",
+        "priceAmount": 440000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "infocasas-194355487",
+    "title": "VENTA CASA 4 DORMITORIOS DELTA DEL TIGRE",
+    "operation": "venta",
+    "category": "casa",
+    "neighborhood": "Ciudad del Plata",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 75000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "RE/MAX",
+    "sourceName": "InfoCasas",
+    "sourceUrl": "https://www.infocasas.com.uy/venta-casa-4-dormitorios-delta-del-tigre/194355487",
+    "detectedAt": "2026-10-05",
+    "daysOnMarket": 3,
+    "status": "detectado",
+    "contactName": "RE/MAX",
+    "contactPhone": "59896604504",
+    "builtAreaM2": 100,
+    "plotAreaM2": 120,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "estimatedPricePerM2": 750,
+    "priceHistory": [
+      {
+        "date": "2026-10-19",
+        "priceAmount": 75000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "infocasas-194394166",
+    "title": "Casa en Venta",
+    "operation": "venta",
+    "category": "casa",
+    "neighborhood": "Kiyú",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 66000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Portones",
+    "sourceName": "InfoCasas",
+    "sourceUrl": "https://www.infocasas.com.uy/casa-en-venta/194394166",
+    "detectedAt": "2026-10-13",
+    "daysOnMarket": 3,
+    "status": "detectado",
+    "contactName": "Portones",
+    "contactPhone": "092646362",
+    "builtAreaM2": 60,
+    "plotAreaM2": 60,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "estimatedPricePerM2": 1100,
+    "priceHistory": [
+      {
+        "date": "2026-10-19",
+        "priceAmount": 66000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "infocasas-194383593",
+    "title": "Se Vende Casa de un Dormitorio con terreno de 600m2 a una cuadra de la Playa en Playa Pascual",
+    "operation": "venta",
+    "category": "terreno",
+    "neighborhood": "Playa Pascual",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 55000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "FDS INMUEBLES",
+    "sourceName": "InfoCasas",
+    "sourceUrl": "https://www.infocasas.com.uy/se-vende-casa-de-un-dormitorio-con-terreno-de-600m2-a-una-cuadra-de-la-playa-en-playa-pascual/194383593",
+    "detectedAt": "2026-10-09",
+    "daysOnMarket": 3,
+    "status": "detectado",
+    "contactName": "FDS INMUEBLES",
+    "contactPhone": "+59897170306",
+    "builtAreaM2": 30,
+    "plotAreaM2": 600,
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "estimatedPricePerM2": 1833,
+    "priceHistory": [
+      {
+        "date": "2026-10-19",
+        "priceAmount": 55000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "infocasas-193570741",
+    "title": "Campo en venta en San José de Mayo con 5 Has",
+    "operation": "venta",
+    "category": "chacra",
+    "neighborhood": "San José de Mayo",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 85000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "⁠Smehaus Propiedades",
+    "sourceName": "InfoCasas",
+    "sourceUrl": "https://www.infocasas.com.uy/campo-en-venta-en-san-jose-de-mayo-con-5-has/193570741",
+    "detectedAt": "2026-03-27",
+    "daysOnMarket": 3,
+    "status": "detectado",
+    "contactName": "⁠Smehaus Propiedades",
+    "contactPhone": "092625185",
+    "builtAreaM2": 5,
+    "plotAreaM2": 5,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "estimatedPricePerM2": 17000,
+    "priceHistory": [
+      {
+        "date": "2026-10-19",
+        "priceAmount": 85000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "infocasas-193328175",
+    "title": "Ventạ̣",
+    "operation": "venta",
+    "category": "casa",
+    "neighborhood": "Ciudad del Plata",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 59999,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Century 21 369",
+    "sourceName": "InfoCasas",
+    "sourceUrl": "https://www.infocasas.com.uy/venta/193328175",
+    "detectedAt": "2026-01-27",
+    "daysOnMarket": 3,
+    "status": "detectado",
+    "contactName": "Century 21 369",
+    "contactPhone": "093949999",
+    "builtAreaM2": 140,
+    "plotAreaM2": 535,
+    "bedrooms": 5,
+    "bathrooms": 3,
+    "estimatedPricePerM2": 429,
+    "priceHistory": [
+      {
+        "date": "2026-10-19",
+        "priceAmount": 59999,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-194308447",
@@ -2937,13 +2117,13 @@
     "estimatedPricePerM2": 157,
     "priceHistory": [
       {
-        "date": "2026-10-19",
+        "date": "2026-10-21",
         "priceAmount": 11000,
         "priceCurrency": "UYU"
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-194377969",
@@ -2971,13 +2151,13 @@
     "estimatedPricePerM2": 250,
     "priceHistory": [
       {
-        "date": "2026-10-19",
+        "date": "2026-10-21",
         "priceAmount": 10000,
         "priceCurrency": "UYU"
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-194387194",
@@ -3005,13 +2185,13 @@
     "estimatedPricePerM2": 382,
     "priceHistory": [
       {
-        "date": "2026-10-19",
+        "date": "2026-10-21",
         "priceAmount": 21000,
         "priceCurrency": "UYU"
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-193317442",
@@ -3038,13 +2218,13 @@
     "estimatedPricePerM2": 295,
     "priceHistory": [
       {
-        "date": "2026-10-19",
+        "date": "2026-10-21",
         "priceAmount": 28000,
         "priceCurrency": "UYU"
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-194102873",
@@ -3072,13 +2252,13 @@
     "estimatedPricePerM2": 400,
     "priceHistory": [
       {
-        "date": "2026-10-19",
+        "date": "2026-10-21",
         "priceAmount": 120000,
         "priceCurrency": "UYU"
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-193211550",
@@ -3106,13 +2286,13 @@
     "estimatedPricePerM2": 2,
     "priceHistory": [
       {
-        "date": "2026-10-19",
+        "date": "2026-10-21",
         "priceAmount": 12000,
         "priceCurrency": "USD"
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-194244969",
@@ -3140,13 +2320,13 @@
     "estimatedPricePerM2": 229,
     "priceHistory": [
       {
-        "date": "2026-10-19",
+        "date": "2026-10-21",
         "priceAmount": 16000,
         "priceCurrency": "UYU"
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-194409268",
@@ -3173,13 +2353,13 @@
     "estimatedPricePerM2": 8,
     "priceHistory": [
       {
-        "date": "2026-10-19",
+        "date": "2026-10-21",
         "priceAmount": 12000,
         "priceCurrency": "USD"
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-192510101",
@@ -3206,13 +2386,13 @@
     "estimatedPricePerM2": 2,
     "priceHistory": [
       {
-        "date": "2026-10-19",
+        "date": "2026-10-21",
         "priceAmount": 22000,
         "priceCurrency": "USD"
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-193211440",
@@ -3240,13 +2420,13 @@
     "estimatedPricePerM2": 2,
     "priceHistory": [
       {
-        "date": "2026-10-19",
+        "date": "2026-10-21",
         "priceAmount": 12000,
         "priceCurrency": "USD"
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-193961802",
@@ -3274,13 +2454,47 @@
     "estimatedPricePerM2": 6,
     "priceHistory": [
       {
-        "date": "2026-10-19",
+        "date": "2026-10-21",
         "priceAmount": 2500,
         "priceCurrency": "USD"
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "infocasas-194427376",
+    "title": "Alquiler/3 dormitorio/A Metros de la Playa /Ubicación inmejorable",
+    "operation": "alquiler",
+    "category": "casa",
+    "neighborhood": "Playa Pascual",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 18000,
+    "priceCurrency": "UYU",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Century 21 369",
+    "sourceName": "InfoCasas",
+    "sourceUrl": "https://www.infocasas.com.uy/alquiler3-dormitorioa-metros-de-la-playa-ubicacion-inmejorable/194427376",
+    "detectedAt": "2026-10-19",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Century 21 369",
+    "contactPhone": "093949999",
+    "builtAreaM2": 60,
+    "plotAreaM2": 160,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "estimatedPricePerM2": 300,
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 18000,
+        "priceCurrency": "UYU"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-191530245",
@@ -3308,13 +2522,13 @@
     "estimatedPricePerM2": 2,
     "priceHistory": [
       {
-        "date": "2026-10-19",
+        "date": "2026-10-21",
         "priceAmount": 20000,
         "priceCurrency": "USD"
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-193339909",
@@ -3342,13 +2556,13 @@
     "estimatedPricePerM2": 231,
     "priceHistory": [
       {
-        "date": "2026-10-19",
+        "date": "2026-10-21",
         "priceAmount": 15000,
         "priceCurrency": "UYU"
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-194110634",
@@ -3376,13 +2590,13 @@
     "estimatedPricePerM2": 333,
     "priceHistory": [
       {
-        "date": "2026-10-19",
+        "date": "2026-10-21",
         "priceAmount": 20000,
         "priceCurrency": "UYU"
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-193577900",
@@ -3410,13 +2624,13 @@
     "estimatedPricePerM2": 261,
     "priceHistory": [
       {
-        "date": "2026-10-19",
+        "date": "2026-10-21",
         "priceAmount": 16990,
         "priceCurrency": "UYU"
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-194047101",
@@ -3444,13 +2658,13 @@
     "estimatedPricePerM2": 440,
     "priceHistory": [
       {
-        "date": "2026-10-19",
+        "date": "2026-10-21",
         "priceAmount": 19800,
         "priceCurrency": "UYU"
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-193211551",
@@ -3478,13 +2692,13 @@
     "estimatedPricePerM2": 1,
     "priceHistory": [
       {
-        "date": "2026-10-19",
+        "date": "2026-10-21",
         "priceAmount": 20000,
         "priceCurrency": "USD"
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-194372556",
@@ -3512,13 +2726,13 @@
     "estimatedPricePerM2": 467,
     "priceHistory": [
       {
-        "date": "2026-10-19",
+        "date": "2026-10-21",
         "priceAmount": 28000,
         "priceCurrency": "UYU"
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-192996529",
@@ -3546,13 +2760,13 @@
     "estimatedPricePerM2": 2,
     "priceHistory": [
       {
-        "date": "2026-10-19",
+        "date": "2026-10-21",
         "priceAmount": 20000,
         "priceCurrency": "USD"
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
     "id": "infocasas-194416749",
@@ -3580,74 +2794,1520 @@
     "estimatedPricePerM2": 400,
     "priceHistory": [
       {
-        "date": "2026-10-19",
+        "date": "2026-10-21",
         "priceAmount": 80000,
         "priceCurrency": "UYU"
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
-    "id": "infocasas-194379160",
-    "title": "Alquiler Casa 2 Dormitorios Ciudad del Plata San José",
+    "id": "lema-duplex-moderno",
+    "title": "Duplex moderno",
+    "operation": "venta",
+    "category": "casa",
+    "neighborhood": "Libertad",
+    "city": "Libertad",
+    "department": "San José",
+    "priceAmount": 165000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/duplex-moderno",
+    "detectedAt": "2026-10-21T04:40:38.404Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 165000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-terreno-en-san-jose",
+    "title": "Terreno en san jose",
+    "operation": "venta",
+    "category": "terreno",
+    "neighborhood": "\"> VENTA TERRENO EN SAN JOSE Av. Dardo Barceló, San José de Mayo USD 70.000 #comp-mj96k7vb__69c6f763-3385-4614-adf8-17532de63998 svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. &#8203; #comp-jqgi2s9o__69c6f763-3385-4614-adf8-17532de63998 svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os &#8203; #comp-miyw3bv4__69c6f763-3385-4614-adf8-17532de63998 svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles &#8203; #comp-miyw5inz__69c6f763-3385-4614-adf8-17532de63998 svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 311 #comp-miyvujh9__69c6f763-3385-4614-adf8-17532de63998 svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__69c6f763-3385-4614-adf8-17532de63998 svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__0fefc020-3613-40b7-abcc-39a7e2cf6937\" class=\"comp-jqgi2rsl comp-jqgi2rsl__0fefc020-3613-40b7-abcc-39a7e2cf6937 FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 70000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/terreno-en-san-jose",
+    "detectedAt": "2026-10-21T04:40:38.404Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 70000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-hogar-con-encanto",
+    "title": "Hogar con encanto",
+    "operation": "venta",
+    "category": "casa",
+    "neighborhood": "\"> VENTA HOGAR CON ENCANTO Luis Batlle Berres 635, San José USD 87.000 #comp-mj96k7vb__0fefc020-3613-40b7-abcc-39a7e2cf6937 svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. 2 #comp-jqgi2s9o__0fefc020-3613-40b7-abcc-39a7e2cf6937 svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os 1 #comp-miyw3bv4__0fefc020-3613-40b7-abcc-39a7e2cf6937 svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles 1 #comp-miyw5inz__0fefc020-3613-40b7-abcc-39a7e2cf6937 svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 &#8203; #comp-miyvujh9__0fefc020-3613-40b7-abcc-39a7e2cf6937 svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__0fefc020-3613-40b7-abcc-39a7e2cf6937 svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__0da1ac54-1975-416e-9e02-40da5e45f27a\" class=\"comp-jqgi2rsl comp-jqgi2rsl__0da1ac54-1975-416e-9e02-40da5e45f27a FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 87000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/hogar-con-encanto",
+    "detectedAt": "2026-10-21T04:40:38.404Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 87000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-excelente-ubicaci%C3%B3n",
+    "title": "Excelente ubicación",
+    "operation": "venta",
+    "category": "casa",
+    "neighborhood": "Libertad",
+    "city": "Libertad",
+    "department": "San José",
+    "priceAmount": 115000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/excelente-ubicaci%C3%B3n",
+    "detectedAt": "2026-10-21T04:40:38.405Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 115000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-local-mas-apartamento",
+    "title": "Local mas apartamento",
+    "operation": "venta",
+    "category": "apartamento",
+    "neighborhood": "Kiyú",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 75000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/local-mas-apartamento",
+    "detectedAt": "2026-10-21T04:40:38.405Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 75000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-casa-unica",
+    "title": "Casa unica",
+    "operation": "venta",
+    "category": "casa",
+    "neighborhood": "\"> VENTA CASA UNICA Barrio El Arrayán USD 175.000 #comp-mj96k7vb__dde421ac-9da1-401a-91a7-d2bd28b1bd95 svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. 2 #comp-jqgi2s9o__dde421ac-9da1-401a-91a7-d2bd28b1bd95 svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os 2 #comp-miyw3bv4__dde421ac-9da1-401a-91a7-d2bd28b1bd95 svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles 2 #comp-miyw5inz__dde421ac-9da1-401a-91a7-d2bd28b1bd95 svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 480 #comp-miyvujh9__dde421ac-9da1-401a-91a7-d2bd28b1bd95 svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__dde421ac-9da1-401a-91a7-d2bd28b1bd95 svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__9ee547bf-ab1c-4e92-a850-3e8327299787\" class=\"comp-jqgi2rsl comp-jqgi2rsl__9ee547bf-ab1c-4e92-a850-3e8327299787 FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 175000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/casa-unica",
+    "detectedAt": "2026-10-21T04:40:38.405Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 175000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-casa-playa-fomento",
+    "title": "Casa playa fomento",
+    "operation": "venta",
+    "category": "casa",
+    "neighborhood": "\"> VENTA CASA PLAYA FOMENTO Playa Fomento USD 88.000 #comp-mj96k7vb__9ee547bf-ab1c-4e92-a850-3e8327299787 svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. 3 #comp-jqgi2s9o__9ee547bf-ab1c-4e92-a850-3e8327299787 svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os 1 #comp-miyw3bv4__9ee547bf-ab1c-4e92-a850-3e8327299787 svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles 1 #comp-miyw5inz__9ee547bf-ab1c-4e92-a850-3e8327299787 svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 406 #comp-miyvujh9__9ee547bf-ab1c-4e92-a850-3e8327299787 svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__9ee547bf-ab1c-4e92-a850-3e8327299787 svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__dedc0c41-e175-4b12-b28e-43fd995257f8\" class=\"comp-jqgi2rsl comp-jqgi2rsl__dedc0c41-e175-4b12-b28e-43fd995257f8 FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 88000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/casa-playa-fomento",
+    "detectedAt": "2026-10-21T04:40:38.406Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 88000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-el-arrayan",
+    "title": "El arrayan",
+    "operation": "venta",
+    "category": "casa",
+    "neighborhood": "\"> VENTA EL ARRAYAN El Arrayan USD 35.000 #comp-mj96k7vb__dedc0c41-e175-4b12-b28e-43fd995257f8 svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. &#8203; #comp-jqgi2s9o__dedc0c41-e175-4b12-b28e-43fd995257f8 svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os &#8203; #comp-miyw3bv4__dedc0c41-e175-4b12-b28e-43fd995257f8 svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles &#8203; #comp-miyw5inz__dedc0c41-e175-4b12-b28e-43fd995257f8 svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 &#8203; #comp-miyvujh9__dedc0c41-e175-4b12-b28e-43fd995257f8 svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__dedc0c41-e175-4b12-b28e-43fd995257f8 svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__d93f8733-30db-4b7b-a409-4392ca3bb0d7\" class=\"comp-jqgi2rsl comp-jqgi2rsl__d93f8733-30db-4b7b-a409-4392ca3bb0d7 FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 35000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/el-arrayan",
+    "detectedAt": "2026-10-21T04:40:38.406Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 35000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-terreno-en-cololo",
+    "title": "Terreno en cololo",
+    "operation": "venta",
+    "category": "terreno",
+    "neighborhood": "\"> VENTA TERRENO EN COLOLO Barrio Cololó Km 56 USD 56.000 #comp-mj96k7vb__d93f8733-30db-4b7b-a409-4392ca3bb0d7 svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. &#8203; #comp-jqgi2s9o__d93f8733-30db-4b7b-a409-4392ca3bb0d7 svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os &#8203; #comp-miyw3bv4__d93f8733-30db-4b7b-a409-4392ca3bb0d7 svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles &#8203; #comp-miyw5inz__d93f8733-30db-4b7b-a409-4392ca3bb0d7 svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 1376 #comp-miyvujh9__d93f8733-30db-4b7b-a409-4392ca3bb0d7 svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__d93f8733-30db-4b7b-a409-4392ca3bb0d7 svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__9d2c0f7b-f229-40d3-8572-f473fb46259c\" class=\"comp-jqgi2rsl comp-jqgi2rsl__9d2c0f7b-f229-40d3-8572-f473fb46259c FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 56000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/terreno-en-cololo",
+    "detectedAt": "2026-10-21T04:40:38.406Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 56000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-comoda-casa",
+    "title": "Comoda casa",
     "operation": "alquiler",
     "category": "casa",
-    "neighborhood": "Playa Pascual",
+    "neighborhood": "\"> ALQUILER COMODA CASA 18 de Julio esquina Carlos de Vera N.º 615 $ 15.000 #comp-mj96k7vb__9d2c0f7b-f229-40d3-8572-f473fb46259c svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. 2 #comp-jqgi2s9o__9d2c0f7b-f229-40d3-8572-f473fb46259c svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os 1 #comp-miyw3bv4__9d2c0f7b-f229-40d3-8572-f473fb46259c svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles 1 #comp-miyw5inz__9d2c0f7b-f229-40d3-8572-f473fb46259c svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 &#8203; #comp-miyvujh9__9d2c0f7b-f229-40d3-8572-f473fb46259c svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__9d2c0f7b-f229-40d3-8572-f473fb46259c svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__e718c550-2855-4af6-9d86-bbc25aaee6d8\" class=\"comp-jqgi2rsl comp-jqgi2rsl__e718c550-2855-4af6-9d86-bbc25aaee6d8 FDI5TK",
     "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 15000,
+    "priceCurrency": "UYU",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/comoda-casa",
+    "detectedAt": "2026-10-21T04:40:38.406Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 15000,
+        "priceCurrency": "UYU"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-atencion-inversores",
+    "title": "Atencion inversores",
+    "operation": "venta",
+    "category": "casa",
+    "neighborhood": "Libertad",
+    "city": "Libertad",
+    "department": "San José",
+    "priceAmount": 135000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/atencion-inversores",
+    "detectedAt": "2026-10-21T04:40:38.407Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 135000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-hogar-en-kiyu",
+    "title": "Hogar en kiyu",
+    "operation": "alquiler",
+    "category": "casa",
+    "neighborhood": "Kiyú",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 27000,
+    "priceCurrency": "UYU",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/hogar-en-kiyu",
+    "detectedAt": "2026-10-21T04:40:38.407Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 27000,
+        "priceCurrency": "UYU"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-calido-rancho",
+    "title": "Calido rancho",
+    "operation": "venta",
+    "category": "casa",
+    "neighborhood": "\"> VENTA CALIDO RANCHO Termas de Almirón USD 98.500 #comp-mj96k7vb__fe08f5a6-6304-4598-8dcc-b4930d9fea9d svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. 3 #comp-jqgi2s9o__fe08f5a6-6304-4598-8dcc-b4930d9fea9d svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os 1 #comp-miyw3bv4__fe08f5a6-6304-4598-8dcc-b4930d9fea9d svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles 2 #comp-miyw5inz__fe08f5a6-6304-4598-8dcc-b4930d9fea9d svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 600 #comp-miyvujh9__fe08f5a6-6304-4598-8dcc-b4930d9fea9d svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__fe08f5a6-6304-4598-8dcc-b4930d9fea9d svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__e3163e38-12f6-4991-92a0-75c74c170860\" class=\"comp-jqgi2rsl comp-jqgi2rsl__e3163e38-12f6-4991-92a0-75c74c170860 FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 98500,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/calido-rancho",
+    "detectedAt": "2026-10-21T04:40:38.407Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 98500,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-2-dorm-a-estrenar",
+    "title": "2 dorm a estrenar",
+    "operation": "alquiler",
+    "category": "casa",
+    "neighborhood": "Libertad",
+    "city": "Libertad",
+    "department": "San José",
+    "priceAmount": 14500,
+    "priceCurrency": "UYU",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/2-dorm-a-estrenar",
+    "detectedAt": "2026-10-21T04:40:38.407Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 14500,
+        "priceCurrency": "UYU"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-chacra-unica",
+    "title": "Chacra unica",
+    "operation": "venta",
+    "category": "chacra",
+    "neighborhood": "\"> VENTA CHACRA UNICA Camino Buschental USD 170.000 #comp-mj96k7vb__8a6dd983-1e65-4915-b724-1347a1399523 svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. 2 #comp-jqgi2s9o__8a6dd983-1e65-4915-b724-1347a1399523 svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os 2 #comp-miyw3bv4__8a6dd983-1e65-4915-b724-1347a1399523 svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles 1 #comp-miyw5inz__8a6dd983-1e65-4915-b724-1347a1399523 svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 &#8203; #comp-miyvujh9__8a6dd983-1e65-4915-b724-1347a1399523 svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__8a6dd983-1e65-4915-b724-1347a1399523 svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__b1d859ed-c410-4066-bf6a-940101b375a5\" class=\"comp-jqgi2rsl comp-jqgi2rsl__b1d859ed-c410-4066-bf6a-940101b375a5 FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 170000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/chacra-unica",
+    "detectedAt": "2026-10-21T04:40:38.408Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 170000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-1-dorm-a-estrenar",
+    "title": "1 dorm a estrenar",
+    "operation": "alquiler",
+    "category": "casa",
+    "neighborhood": "Libertad",
+    "city": "Libertad",
+    "department": "San José",
+    "priceAmount": 12800,
+    "priceCurrency": "UYU",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/1-dorm-a-estrenar",
+    "detectedAt": "2026-10-21T04:40:38.408Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 12800,
+        "priceCurrency": "UYU"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-solidez-y-ubicaci%C3%B3n",
+    "title": "Solidez y ubicación",
+    "operation": "venta",
+    "category": "casa",
+    "neighborhood": "\"> VENTA SOLIDEZ Y UBICACION Lavalleja, esquina Morquio USD 79.900 #comp-mj96k7vb__54311ec6-3583-4587-91d4-01664b4c88df svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. 2 #comp-jqgi2s9o__54311ec6-3583-4587-91d4-01664b4c88df svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os 1 #comp-miyw3bv4__54311ec6-3583-4587-91d4-01664b4c88df svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles 2 #comp-miyw5inz__54311ec6-3583-4587-91d4-01664b4c88df svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 &#8203; #comp-miyvujh9__54311ec6-3583-4587-91d4-01664b4c88df svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__54311ec6-3583-4587-91d4-01664b4c88df svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__29ed4b1d-56f0-490c-9049-171ce0253a80\" class=\"comp-jqgi2rsl comp-jqgi2rsl__29ed4b1d-56f0-490c-9049-171ce0253a80 FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 79900,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/solidez-y-ubicaci%C3%B3n",
+    "detectedAt": "2026-10-21T04:40:38.408Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 79900,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-a-estrenar",
+    "title": "A estrenar",
+    "operation": "alquiler",
+    "category": "casa",
+    "neighborhood": "Libertad",
+    "city": "Libertad",
+    "department": "San José",
+    "priceAmount": 12800,
+    "priceCurrency": "UYU",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/a-estrenar",
+    "detectedAt": "2026-10-21T04:40:38.408Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 12800,
+        "priceCurrency": "UYU"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-naturaleza-y-confort",
+    "title": "Naturaleza y confort",
+    "operation": "venta",
+    "category": "casa",
+    "neighborhood": "\"> VENTA NATURALEZA Y CONFORT Camino La Paz Mendoza, La Paz, Canelones USD 155.000 #comp-mj96k7vb__95adec41-f438-44ec-b7cb-b3d1189cf1a7 svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. 2 #comp-jqgi2s9o__95adec41-f438-44ec-b7cb-b3d1189cf1a7 svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os 1 #comp-miyw3bv4__95adec41-f438-44ec-b7cb-b3d1189cf1a7 svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles 1 #comp-miyw5inz__95adec41-f438-44ec-b7cb-b3d1189cf1a7 svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 130 #comp-miyvujh9__95adec41-f438-44ec-b7cb-b3d1189cf1a7 svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__95adec41-f438-44ec-b7cb-b3d1189cf1a7 svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__944a0b3c-608b-4eda-815f-9f5ab42819ec\" class=\"comp-jqgi2rsl comp-jqgi2rsl__944a0b3c-608b-4eda-815f-9f5ab42819ec FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 155000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/naturaleza-y-confort",
+    "detectedAt": "2026-10-21T04:40:38.408Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 155000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-local-estrategico",
+    "title": "Local estrategico",
+    "operation": "alquiler",
+    "category": "local",
+    "neighborhood": "Libertad",
+    "city": "Libertad",
+    "department": "San José",
+    "priceAmount": 17000,
+    "priceCurrency": "UYU",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/local-estrategico",
+    "detectedAt": "2026-10-21T04:40:38.409Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 17000,
+        "priceCurrency": "UYU"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-chacra-en-capurro",
+    "title": "Chacra en capurro",
+    "operation": "venta",
+    "category": "chacra",
+    "neighborhood": "\"> VENTA CHACRA EN CAPURRO Ruta 78 km 73.5, Capurro, San José USD 150.000 #comp-mj96k7vb__f594e252-f1ef-4edc-be78-831b3e13ce88 svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. 3 #comp-jqgi2s9o__f594e252-f1ef-4edc-be78-831b3e13ce88 svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os 1 #comp-miyw3bv4__f594e252-f1ef-4edc-be78-831b3e13ce88 svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles 1 #comp-miyw5inz__f594e252-f1ef-4edc-be78-831b3e13ce88 svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 &#8203; #comp-miyvujh9__f594e252-f1ef-4edc-be78-831b3e13ce88 svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__f594e252-f1ef-4edc-be78-831b3e13ce88 svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__dc3ffcfe-0c2d-4329-890d-b7f3668b4c5f\" class=\"comp-jqgi2rsl comp-jqgi2rsl__dc3ffcfe-0c2d-4329-890d-b7f3668b4c5f FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 150000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/chacra-en-capurro",
+    "detectedAt": "2026-10-21T04:40:38.409Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 150000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-gran-ubicacion",
+    "title": "Gran ubicacion",
+    "operation": "alquiler",
+    "category": "casa",
+    "neighborhood": "Libertad",
+    "city": "Libertad",
+    "department": "San José",
+    "priceAmount": 10000,
+    "priceCurrency": "UYU",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/gran-ubicacion",
+    "detectedAt": "2026-10-21T04:40:38.409Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 10000,
+        "priceCurrency": "UYU"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-inmejorable-ubicacion",
+    "title": "Inmejorable ubicacion",
+    "operation": "venta",
+    "category": "casa",
+    "neighborhood": "Libertad",
+    "city": "Libertad",
+    "department": "San José",
+    "priceAmount": 75000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/inmejorable-ubicacion",
+    "detectedAt": "2026-10-21T04:40:38.409Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 75000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-apartamento-en-kiy%C3%BA",
+    "title": "Apartamento en kiyú",
+    "operation": "alquiler",
+    "category": "apartamento",
+    "neighborhood": "Kiyú",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 16000,
+    "priceCurrency": "UYU",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/apartamento-en-kiy%C3%BA",
+    "detectedAt": "2026-10-21T04:40:38.409Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 16000,
+        "priceCurrency": "UYU"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-2-apartamentos-a-reciclar",
+    "title": "2 apartamentos a reciclar",
+    "operation": "venta",
+    "category": "apartamento",
+    "neighborhood": "Libertad",
+    "city": "Libertad",
+    "department": "San José",
+    "priceAmount": 59950,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/2-apartamentos-a-reciclar",
+    "detectedAt": "2026-10-21T04:40:38.409Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 59950,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-excelente-punto",
+    "title": "Excelente punto",
+    "operation": "alquiler",
+    "category": "casa",
+    "neighborhood": "\"> ALQUILER EXCELENTE PUNTO Lavalleja, esquina Morquio $ 20.000 #comp-mj96k7vb__c2f4ce6a-faee-4eca-adea-7da07a71fb80 svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. 2 #comp-jqgi2s9o__c2f4ce6a-faee-4eca-adea-7da07a71fb80 svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os 1 #comp-miyw3bv4__c2f4ce6a-faee-4eca-adea-7da07a71fb80 svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles 2 #comp-miyw5inz__c2f4ce6a-faee-4eca-adea-7da07a71fb80 svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 &#8203; #comp-miyvujh9__c2f4ce6a-faee-4eca-adea-7da07a71fb80 svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__c2f4ce6a-faee-4eca-adea-7da07a71fb80 svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__fbe720de-696a-4230-a13e-0f1a30a6617b\" class=\"comp-jqgi2rsl comp-jqgi2rsl__fbe720de-696a-4230-a13e-0f1a30a6617b FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 20000,
+    "priceCurrency": "UYU",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/excelente-punto",
+    "detectedAt": "2026-10-21T04:40:38.410Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 20000,
+        "priceCurrency": "UYU"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-terreno-h%2C10-arrayan",
+    "title": "Terreno h,10 arrayan",
+    "operation": "venta",
+    "category": "terreno",
+    "neighborhood": "\"> VENTA TERRENO H,10 ARRAYAN Barrio El Arrayán H,10 USD 45.000 #comp-mj96k7vb__fbe720de-696a-4230-a13e-0f1a30a6617b svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. &#8203; #comp-jqgi2s9o__fbe720de-696a-4230-a13e-0f1a30a6617b svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os &#8203; #comp-miyw3bv4__fbe720de-696a-4230-a13e-0f1a30a6617b svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles &#8203; #comp-miyw5inz__fbe720de-696a-4230-a13e-0f1a30a6617b svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 480 #comp-miyvujh9__fbe720de-696a-4230-a13e-0f1a30a6617b svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__fbe720de-696a-4230-a13e-0f1a30a6617b svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__7fc77723-3b31-4c97-9637-a234389ec1e3\" class=\"comp-jqgi2rsl comp-jqgi2rsl__7fc77723-3b31-4c97-9637-a234389ec1e3 FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 45000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/terreno-h%2C10-arrayan",
+    "detectedAt": "2026-10-21T04:40:38.410Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 45000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-terreno-h%2C15-arrayan",
+    "title": "Terreno h,15 arrayan",
+    "operation": "venta",
+    "category": "terreno",
+    "neighborhood": "\"> VENTA TERRENO H,15 ARRAYAN Barrio El Arrayán H,15 USD 40.000 #comp-mj96k7vb__7fc77723-3b31-4c97-9637-a234389ec1e3 svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. &#8203; #comp-jqgi2s9o__7fc77723-3b31-4c97-9637-a234389ec1e3 svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os &#8203; #comp-miyw3bv4__7fc77723-3b31-4c97-9637-a234389ec1e3 svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles &#8203; #comp-miyw5inz__7fc77723-3b31-4c97-9637-a234389ec1e3 svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 480 #comp-miyvujh9__7fc77723-3b31-4c97-9637-a234389ec1e3 svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__7fc77723-3b31-4c97-9637-a234389ec1e3 svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__bd8dc0f4-592f-4952-9cf9-aab1dad18d6c\" class=\"comp-jqgi2rsl comp-jqgi2rsl__bd8dc0f4-592f-4952-9cf9-aab1dad18d6c FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 40000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/terreno-h%2C15-arrayan",
+    "detectedAt": "2026-10-21T04:40:38.410Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 40000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-terreno-j%2C21-arrayan",
+    "title": "Terreno j,21 arrayan",
+    "operation": "venta",
+    "category": "terreno",
+    "neighborhood": "\"> VENTA TERRENO J,21 ARRAYAN Barrio El Arrayán J,21 USD 35.000 #comp-mj96k7vb__bd8dc0f4-592f-4952-9cf9-aab1dad18d6c svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. &#8203; #comp-jqgi2s9o__bd8dc0f4-592f-4952-9cf9-aab1dad18d6c svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os &#8203; #comp-miyw3bv4__bd8dc0f4-592f-4952-9cf9-aab1dad18d6c svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles &#8203; #comp-miyw5inz__bd8dc0f4-592f-4952-9cf9-aab1dad18d6c svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 402 #comp-miyvujh9__bd8dc0f4-592f-4952-9cf9-aab1dad18d6c svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__bd8dc0f4-592f-4952-9cf9-aab1dad18d6c svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__b4c098f0-7212-4b7f-b66d-6ce2701cfde5\" class=\"comp-jqgi2rsl comp-jqgi2rsl__b4c098f0-7212-4b7f-b66d-6ce2701cfde5 FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 35000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/terreno-j%2C21-arrayan",
+    "detectedAt": "2026-10-21T04:40:38.410Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 35000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-deposito-a-estrenar",
+    "title": "Deposito a estrenar",
+    "operation": "alquiler",
+    "category": "deposito",
+    "neighborhood": "Libertad",
+    "city": "Libertad",
+    "department": "San José",
+    "priceAmount": 25000,
+    "priceCurrency": "UYU",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/deposito-a-estrenar",
+    "detectedAt": "2026-10-21T04:40:38.410Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 25000,
+        "priceCurrency": "UYU"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-apartamento",
+    "title": "Apartamento",
+    "operation": "alquiler",
+    "category": "apartamento",
+    "neighborhood": "Libertad",
+    "city": "Libertad",
     "department": "San José",
     "priceAmount": 13000,
     "priceCurrency": "UYU",
     "origin": "inmobiliaria_competencia",
-    "competitorName": "RED Hub Inmobiliario",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/alquiler-casa-2-dormitorios-ciudad-del-plata-san-jose/194379160",
-    "detectedAt": "2026-10-09",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/apartamento",
+    "detectedAt": "2026-10-21T04:40:38.410Z",
     "daysOnMarket": 1,
     "status": "detectado",
-    "contactName": "RED Hub Inmobiliario",
-    "contactPhone": "+59899185355",
-    "bedrooms": 3,
-    "bathrooms": 1,
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
     "priceHistory": [
       {
-        "date": "2026-10-19",
+        "date": "2026-10-21",
         "priceAmount": 13000,
         "priceCurrency": "UYU"
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   },
   {
-    "id": "infocasas-193206717",
-    "title": "Casa en Alquiler 2 dorm. Rincón del Pino",
+    "id": "lema-terreno-j%2C13-arrayan",
+    "title": "Terreno j,13 arrayan",
+    "operation": "venta",
+    "category": "terreno",
+    "neighborhood": "\"> VENTA TERRENO J,13 ARRAYAN Barrio El Arrayán J,13 USD 35.000 #comp-mj96k7vb__6ca05704-61d4-475c-8f6b-54d23b7301e9 svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. &#8203; #comp-jqgi2s9o__6ca05704-61d4-475c-8f6b-54d23b7301e9 svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os &#8203; #comp-miyw3bv4__6ca05704-61d4-475c-8f6b-54d23b7301e9 svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles &#8203; #comp-miyw5inz__6ca05704-61d4-475c-8f6b-54d23b7301e9 svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 402 #comp-miyvujh9__6ca05704-61d4-475c-8f6b-54d23b7301e9 svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__6ca05704-61d4-475c-8f6b-54d23b7301e9 svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__91fca572-d487-4dc3-a4a3-556de831ed7a\" class=\"comp-jqgi2rsl comp-jqgi2rsl__91fca572-d487-4dc3-a4a3-556de831ed7a FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 35000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/terreno-j%2C13-arrayan",
+    "detectedAt": "2026-10-21T04:40:38.411Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 35000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-apto-2-dormitorios",
+    "title": "Apto 2 dormitorios",
+    "operation": "alquiler",
+    "category": "apartamento",
+    "neighborhood": "Libertad",
+    "city": "Libertad",
+    "department": "San José",
+    "priceAmount": 12500,
+    "priceCurrency": "UYU",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/apto-2-dormitorios",
+    "detectedAt": "2026-10-21T04:40:38.411Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 12500,
+        "priceCurrency": "UYU"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-terreno-f11-arrayan",
+    "title": "Terreno f11 arrayan",
+    "operation": "venta",
+    "category": "terreno",
+    "neighborhood": "\"> VENTA TERRENO F,11 ARRAYAN Barrio El Arrayán F,11 USD 45.000 #comp-mj96k7vb__e95d93eb-b64c-4577-b00f-270318572742 svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. &#8203; #comp-jqgi2s9o__e95d93eb-b64c-4577-b00f-270318572742 svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os &#8203; #comp-miyw3bv4__e95d93eb-b64c-4577-b00f-270318572742 svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles &#8203; #comp-miyw5inz__e95d93eb-b64c-4577-b00f-270318572742 svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 480 #comp-miyvujh9__e95d93eb-b64c-4577-b00f-270318572742 svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__e95d93eb-b64c-4577-b00f-270318572742 svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__ceade499-1bab-4a45-ac33-fc40900e8bb0\" class=\"comp-jqgi2rsl comp-jqgi2rsl__ceade499-1bab-4a45-ac33-fc40900e8bb0 FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 45000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/terreno-f11-arrayan",
+    "detectedAt": "2026-10-21T04:40:38.411Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 45000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-apartamento-san-jose",
+    "title": "Apartamento san jose",
+    "operation": "alquiler",
+    "category": "apartamento",
+    "neighborhood": "Centro",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 19300,
+    "priceCurrency": "UYU",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/apartamento-san-jose",
+    "detectedAt": "2026-10-21T04:40:38.412Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 19300,
+        "priceCurrency": "UYU"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-terreno-f14-arrayan",
+    "title": "Terreno f14 arrayan",
+    "operation": "venta",
+    "category": "terreno",
+    "neighborhood": "\"> VENTA TERRENO F,14 ARRAYAN Barrio El Arrayán F,14 USD 37.000 #comp-mj96k7vb__15355783-b385-4480-852c-57d17aec24f3 svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. &#8203; #comp-jqgi2s9o__15355783-b385-4480-852c-57d17aec24f3 svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os &#8203; #comp-miyw3bv4__15355783-b385-4480-852c-57d17aec24f3 svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles &#8203; #comp-miyw5inz__15355783-b385-4480-852c-57d17aec24f3 svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 480 #comp-miyvujh9__15355783-b385-4480-852c-57d17aec24f3 svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__15355783-b385-4480-852c-57d17aec24f3 svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__ae16558e-928a-43d0-8fb0-f7bc803819fe\" class=\"comp-jqgi2rsl comp-jqgi2rsl__ae16558e-928a-43d0-8fb0-f7bc803819fe FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 37000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/terreno-f14-arrayan",
+    "detectedAt": "2026-10-21T04:40:38.412Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 37000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-casa-equipada-puntas-de-valdez",
+    "title": "Casa equipada puntas de valdez",
     "operation": "alquiler",
     "category": "casa",
-    "neighborhood": "San José de Mayo",
+    "neighborhood": "\"> ALQUILER CASA EQUIPADA Juan Benzano 519, Puntas de Valdez $ 17.500 #comp-mj96k7vb__ae16558e-928a-43d0-8fb0-f7bc803819fe svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. 2 #comp-jqgi2s9o__ae16558e-928a-43d0-8fb0-f7bc803819fe svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os 1 #comp-miyw3bv4__ae16558e-928a-43d0-8fb0-f7bc803819fe svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles 1 #comp-miyw5inz__ae16558e-928a-43d0-8fb0-f7bc803819fe svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 &#8203; #comp-miyvujh9__ae16558e-928a-43d0-8fb0-f7bc803819fe svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__ae16558e-928a-43d0-8fb0-f7bc803819fe svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__01f899ab-bd49-4f3f-b8a7-b93ce64a1728\" class=\"comp-jqgi2rsl comp-jqgi2rsl__01f899ab-bd49-4f3f-b8a7-b93ce64a1728 FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 17500,
+    "priceCurrency": "UYU",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/casa-equipada-puntas-de-valdez",
+    "detectedAt": "2026-10-21T04:40:38.412Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 17500,
+        "priceCurrency": "UYU"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-terreno-g20-arrayan",
+    "title": "Terreno g20 arrayan",
+    "operation": "venta",
+    "category": "terreno",
+    "neighborhood": "\"> VENTA TERRENO G,20 ARRAYAN Barrio El Arrayán G,20 USD 40.000 #comp-mj96k7vb__01f899ab-bd49-4f3f-b8a7-b93ce64a1728 svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. &#8203; #comp-jqgi2s9o__01f899ab-bd49-4f3f-b8a7-b93ce64a1728 svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os &#8203; #comp-miyw3bv4__01f899ab-bd49-4f3f-b8a7-b93ce64a1728 svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles &#8203; #comp-miyw5inz__01f899ab-bd49-4f3f-b8a7-b93ce64a1728 svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 480 #comp-miyvujh9__01f899ab-bd49-4f3f-b8a7-b93ce64a1728 svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__01f899ab-bd49-4f3f-b8a7-b93ce64a1728 svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__3a4c7cc0-1d1f-4f25-a5cc-47705fd03d68\" class=\"comp-jqgi2rsl comp-jqgi2rsl__3a4c7cc0-1d1f-4f25-a5cc-47705fd03d68 FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 40000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/terreno-g20-arrayan",
+    "detectedAt": "2026-10-21T04:40:38.412Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 40000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-casa-en-inve",
+    "title": "Casa en inve",
+    "operation": "alquiler",
+    "category": "casa",
+    "neighborhood": "Libertad",
+    "city": "Libertad",
+    "department": "San José",
+    "priceAmount": 26000,
+    "priceCurrency": "UYU",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/casa-en-inve",
+    "detectedAt": "2026-10-21T04:40:38.413Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 26000,
+        "priceCurrency": "UYU"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-terreno-j19-arrayan",
+    "title": "Terreno j19 arrayan",
+    "operation": "venta",
+    "category": "terreno",
+    "neighborhood": "\"> VENTA TERRENO J,19 ARRAYAN Barrio El Arrayán J,19 USD 35.000 #comp-mj96k7vb__29ff03ea-aad4-4aa5-a6ba-e6b66776640e svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. &#8203; #comp-jqgi2s9o__29ff03ea-aad4-4aa5-a6ba-e6b66776640e svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os &#8203; #comp-miyw3bv4__29ff03ea-aad4-4aa5-a6ba-e6b66776640e svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles &#8203; #comp-miyw5inz__29ff03ea-aad4-4aa5-a6ba-e6b66776640e svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 402 #comp-miyvujh9__29ff03ea-aad4-4aa5-a6ba-e6b66776640e svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__29ff03ea-aad4-4aa5-a6ba-e6b66776640e svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__18a22952-38d6-404f-b681-a85a66a21578\" class=\"comp-jqgi2rsl comp-jqgi2rsl__18a22952-38d6-404f-b681-a85a66a21578 FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 35000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/terreno-j19-arrayan",
+    "detectedAt": "2026-10-21T04:40:38.413Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 35000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-casa-tranquila",
+    "title": "Casa tranquila",
+    "operation": "alquiler",
+    "category": "casa",
+    "neighborhood": "\"> ALQUILER CASA TRANQUILA Haydee Marín 721, Puntas de Valdez $ 17.500 #comp-mj96k7vb__18a22952-38d6-404f-b681-a85a66a21578 svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. 2 #comp-jqgi2s9o__18a22952-38d6-404f-b681-a85a66a21578 svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os 1 #comp-miyw3bv4__18a22952-38d6-404f-b681-a85a66a21578 svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles 1 #comp-miyw5inz__18a22952-38d6-404f-b681-a85a66a21578 svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 408 #comp-miyvujh9__18a22952-38d6-404f-b681-a85a66a21578 svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__18a22952-38d6-404f-b681-a85a66a21578 svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__ae13b584-d4f5-4f4b-9264-dc8337dbb408\" class=\"comp-jqgi2rsl comp-jqgi2rsl__ae13b584-d4f5-4f4b-9264-dc8337dbb408 FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 17500,
+    "priceCurrency": "UYU",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/casa-tranquila",
+    "detectedAt": "2026-10-21T04:40:38.413Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 17500,
+        "priceCurrency": "UYU"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-terreno-j22-arrayan",
+    "title": "Terreno j22 arrayan",
+    "operation": "venta",
+    "category": "terreno",
+    "neighborhood": "\"> VENTA TERRENO J,22 ARRAYAN Barrio El Arrayán J,22 USD 35.000 #comp-mj96k7vb__ae13b584-d4f5-4f4b-9264-dc8337dbb408 svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. &#8203; #comp-jqgi2s9o__ae13b584-d4f5-4f4b-9264-dc8337dbb408 svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os &#8203; #comp-miyw3bv4__ae13b584-d4f5-4f4b-9264-dc8337dbb408 svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles &#8203; #comp-miyw5inz__ae13b584-d4f5-4f4b-9264-dc8337dbb408 svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 402 #comp-miyvujh9__ae13b584-d4f5-4f4b-9264-dc8337dbb408 svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__ae13b584-d4f5-4f4b-9264-dc8337dbb408 svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__6bae162a-7163-4a30-a9b1-5012c8003659\" class=\"comp-jqgi2rsl comp-jqgi2rsl__6bae162a-7163-4a30-a9b1-5012c8003659 FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 35000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/terreno-j22-arrayan",
+    "detectedAt": "2026-10-21T04:40:38.413Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 35000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-gran-oportunidad",
+    "title": "Gran oportunidad",
+    "operation": "alquiler",
+    "category": "casa",
+    "neighborhood": "\"> ALQUILER GRAN OPORTUNIDAD 25 De Agosto , 659 $ 22.500 #comp-mj96k7vb__6bae162a-7163-4a30-a9b1-5012c8003659 svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. &#8203; #comp-jqgi2s9o__6bae162a-7163-4a30-a9b1-5012c8003659 svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os 1 #comp-miyw3bv4__6bae162a-7163-4a30-a9b1-5012c8003659 svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles &#8203; #comp-miyw5inz__6bae162a-7163-4a30-a9b1-5012c8003659 svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 66 #comp-miyvujh9__6bae162a-7163-4a30-a9b1-5012c8003659 svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__6bae162a-7163-4a30-a9b1-5012c8003659 svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__99c673ac-c4d4-40b6-9985-863f1bf14f06\" class=\"comp-jqgi2rsl comp-jqgi2rsl__99c673ac-c4d4-40b6-9985-863f1bf14f06 FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 22500,
+    "priceCurrency": "UYU",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/gran-oportunidad",
+    "detectedAt": "2026-10-21T04:40:38.413Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 22500,
+        "priceCurrency": "UYU"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-terreno-i9-arrayan",
+    "title": "Terreno i9 arrayan",
+    "operation": "venta",
+    "category": "terreno",
+    "neighborhood": "\"> VENTA TERRENO I,9 ARRAYAN Barrio El Arrayán I,9 USD 37.000 #comp-mj96k7vb__99c673ac-c4d4-40b6-9985-863f1bf14f06 svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. &#8203; #comp-jqgi2s9o__99c673ac-c4d4-40b6-9985-863f1bf14f06 svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os &#8203; #comp-miyw3bv4__99c673ac-c4d4-40b6-9985-863f1bf14f06 svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles &#8203; #comp-miyw5inz__99c673ac-c4d4-40b6-9985-863f1bf14f06 svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 402 #comp-miyvujh9__99c673ac-c4d4-40b6-9985-863f1bf14f06 svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__99c673ac-c4d4-40b6-9985-863f1bf14f06 svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__86f00c34-3890-4769-8a90-57554c10a0db\" class=\"comp-jqgi2rsl comp-jqgi2rsl__86f00c34-3890-4769-8a90-57554c10a0db FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 37000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/terreno-i9-arrayan",
+    "detectedAt": "2026-10-21T04:40:38.413Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 37000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-casa-ideal",
+    "title": "Casa ideal",
+    "operation": "alquiler",
+    "category": "casa",
+    "neighborhood": "Libertad",
+    "city": "Libertad",
+    "department": "San José",
+    "priceAmount": 32700,
+    "priceCurrency": "UYU",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/casa-ideal",
+    "detectedAt": "2026-10-21T04:40:38.414Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 32700,
+        "priceCurrency": "UYU"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-vivienda-40-coviliber-2",
+    "title": "Vivienda 40 coviliber 2",
+    "operation": "venta",
+    "category": "casa",
+    "neighborhood": "\"> VENTA VIVIENDA 40 COVILIBER 2 Vivienda 40, Complejo Coviliber 2 Modalidad de TRASPASO #comp-mj96k7vb__c8e5d796-9481-4b9b-b4ed-c2c7d96d06e0 svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. 3 #comp-jqgi2s9o__c8e5d796-9481-4b9b-b4ed-c2c7d96d06e0 svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os 1 #comp-miyw3bv4__c8e5d796-9481-4b9b-b4ed-c2c7d96d06e0 svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles 1 #comp-miyw5inz__c8e5d796-9481-4b9b-b4ed-c2c7d96d06e0 svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 &#8203; #comp-miyvujh9__c8e5d796-9481-4b9b-b4ed-c2c7d96d06e0 svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__c8e5d796-9481-4b9b-b4ed-c2c7d96d06e0 svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__914d6b5c-0a00-4e2a-947f-faaab6eb11a7\" class=\"comp-jqgi2rsl comp-jqgi2rsl__914d6b5c-0a00-4e2a-947f-faaab6eb11a7 FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 75000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/vivienda-40-coviliber-2",
+    "detectedAt": "2026-10-21T04:40:38.414Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 75000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-casa-con-extras",
+    "title": "Casa con extras",
+    "operation": "alquiler",
+    "category": "casa",
+    "neighborhood": "\"> ALQUILER CASA CON EXTRAS Punto alto del bosque, entre camino La Reductora y Colón $ 24.000 #comp-mj96k7vb__914d6b5c-0a00-4e2a-947f-faaab6eb11a7 svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. 2 #comp-jqgi2s9o__914d6b5c-0a00-4e2a-947f-faaab6eb11a7 svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os 1 #comp-miyw3bv4__914d6b5c-0a00-4e2a-947f-faaab6eb11a7 svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles 1 #comp-miyw5inz__914d6b5c-0a00-4e2a-947f-faaab6eb11a7 svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 &#8203; #comp-miyvujh9__914d6b5c-0a00-4e2a-947f-faaab6eb11a7 svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__914d6b5c-0a00-4e2a-947f-faaab6eb11a7 svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__8cabccae-8802-49d1-82dd-59e5beea1fc2\" class=\"comp-jqgi2rsl comp-jqgi2rsl__8cabccae-8802-49d1-82dd-59e5beea1fc2 FDI5TK",
     "city": "San José de Mayo",
     "department": "San José",
     "priceAmount": 24000,
     "priceCurrency": "UYU",
     "origin": "inmobiliaria_competencia",
-    "competitorName": "KW One",
-    "sourceName": "InfoCasas",
-    "sourceUrl": "https://www.infocasas.com.uy/casa-en-alquiler-2-dorm-rincon-del-pino/193206717",
-    "detectedAt": "2025-12-16",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/casa-con-extras",
+    "detectedAt": "2026-10-21T04:40:38.414Z",
     "daysOnMarket": 1,
     "status": "detectado",
-    "contactName": "KW One",
-    "contactPhone": "+59827106994",
-    "bedrooms": 4,
-    "bathrooms": 1,
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
     "priceHistory": [
       {
-        "date": "2026-10-19",
+        "date": "2026-10-21",
         "priceAmount": 24000,
         "priceCurrency": "UYU"
       }
     ],
     "isOpportunity": false,
-    "updatedAt": "2026-10-19T09:26:04.417Z"
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-balneario-vista-mar",
+    "title": "Balneario vista mar",
+    "operation": "venta",
+    "category": "terreno",
+    "neighborhood": "\"> VENTA TERRENO EN VISTA MAR Vista Mar USD 37.000 #comp-mj96k7vb__8cabccae-8802-49d1-82dd-59e5beea1fc2 svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. &#8203; #comp-jqgi2s9o__8cabccae-8802-49d1-82dd-59e5beea1fc2 svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os &#8203; #comp-miyw3bv4__8cabccae-8802-49d1-82dd-59e5beea1fc2 svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles &#8203; #comp-miyw5inz__8cabccae-8802-49d1-82dd-59e5beea1fc2 svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 528 #comp-miyvujh9__8cabccae-8802-49d1-82dd-59e5beea1fc2 svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__8cabccae-8802-49d1-82dd-59e5beea1fc2 svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__b71f2754-8e3e-4a77-b9a0-839b6c4da556\" class=\"comp-jqgi2rsl comp-jqgi2rsl__b71f2754-8e3e-4a77-b9a0-839b6c4da556 FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 37000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/balneario-vista-mar",
+    "detectedAt": "2026-10-21T04:40:38.414Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 37000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-comodo-apartamento",
+    "title": "Comodo apartamento",
+    "operation": "alquiler",
+    "category": "apartamento",
+    "neighborhood": "\"> ALQUILER COMODO APARTAMENTO José Enrique Rodó 1243 $ 15.000 #comp-mj96k7vb__b71f2754-8e3e-4a77-b9a0-839b6c4da556 svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. 1 #comp-jqgi2s9o__b71f2754-8e3e-4a77-b9a0-839b6c4da556 svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os 1 #comp-miyw3bv4__b71f2754-8e3e-4a77-b9a0-839b6c4da556 svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles 1 #comp-miyw5inz__b71f2754-8e3e-4a77-b9a0-839b6c4da556 svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 &#8203; #comp-miyvujh9__b71f2754-8e3e-4a77-b9a0-839b6c4da556 svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__b71f2754-8e3e-4a77-b9a0-839b6c4da556 svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__5e0de69b-4fd3-4fb5-9f92-d27e6338294e\" class=\"comp-jqgi2rsl comp-jqgi2rsl__5e0de69b-4fd3-4fb5-9f92-d27e6338294e FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 15000,
+    "priceCurrency": "UYU",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/comodo-apartamento",
+    "detectedAt": "2026-10-21T04:40:38.414Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 15000,
+        "priceCurrency": "UYU"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-vivienda-26-coviliber-2",
+    "title": "Vivienda 26 coviliber 2",
+    "operation": "venta",
+    "category": "casa",
+    "neighborhood": "\"> VENTA VIVIENDA 26 COVILIBER 2 Vivienda 26, Complejo Coviliber 2 Modalidad de TRASPASO #comp-mj96k7vb__5e0de69b-4fd3-4fb5-9f92-d27e6338294e svg [data-color=&quot;1&quot;] {fill: #312782;} Habs. 2 #comp-jqgi2s9o__5e0de69b-4fd3-4fb5-9f92-d27e6338294e svg [data-color=&quot;1&quot;] {fill: #312782;} Ba&ntilde;os 1 #comp-miyw3bv4__5e0de69b-4fd3-4fb5-9f92-d27e6338294e svg [data-color=&quot;1&quot;] {fill: #312782;} Niveles 1 #comp-miyw5inz__5e0de69b-4fd3-4fb5-9f92-d27e6338294e svg [data-color=&quot;1&quot;] {fill: #312782;} Mt2 &#8203; #comp-miyvujh9__5e0de69b-4fd3-4fb5-9f92-d27e6338294e svg [data-color=&quot;1&quot;] {fill: #312782;} #comp-miyvujp4__5e0de69b-4fd3-4fb5-9f92-d27e6338294e svg [data-color=&quot;1&quot;] {fill: #312782;} <div id=\"comp-jqgi2rsl__ef5add92-1ba4-4031-921c-c6b8fd07b16c\" class=\"comp-jqgi2rsl comp-jqgi2rsl__ef5add92-1ba4-4031-921c-c6b8fd07b16c FDI5TK",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 75000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/vivienda-26-coviliber-2",
+    "detectedAt": "2026-10-21T04:40:38.414Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 75000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-casa-linda-y-moderna",
+    "title": "Casa linda y moderna",
+    "operation": "alquiler",
+    "category": "casa",
+    "neighborhood": "Libertad",
+    "city": "Libertad",
+    "department": "San José",
+    "priceAmount": 35000,
+    "priceCurrency": "UYU",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/casa-linda-y-moderna",
+    "detectedAt": "2026-10-21T04:40:38.415Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 35000,
+        "priceCurrency": "UYU"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
+  },
+  {
+    "id": "lema-vivienda-42-coviliber-2",
+    "title": "Vivienda 42 coviliber 2",
+    "operation": "alquiler",
+    "category": "apartamento",
+    "neighborhood": "Centro",
+    "city": "San José de Mayo",
+    "department": "San José",
+    "priceAmount": 165000,
+    "priceCurrency": "USD",
+    "origin": "inmobiliaria_competencia",
+    "competitorName": "Lema Propiedades",
+    "sourceName": "Lema Propiedades",
+    "sourceUrl": "https://www.lemapropiedades.com/propiedades/vivienda-42-coviliber-2",
+    "detectedAt": "2026-10-21T04:40:38.439Z",
+    "daysOnMarket": 1,
+    "status": "detectado",
+    "contactName": "Lema Propiedades",
+    "contactPhone": "099 553 253",
+    "priceHistory": [
+      {
+        "date": "2026-10-21",
+        "priceAmount": 165000,
+        "priceCurrency": "USD"
+      }
+    ],
+    "isOpportunity": false,
+    "updatedAt": "2026-10-21T04:40:07.693Z"
   }
 ]

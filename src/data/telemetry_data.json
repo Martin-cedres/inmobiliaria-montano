@@ -666,6 +666,14 @@
       "eventType": "page_view",
       "pagePath": "/vender-propiedad-san-jose",
       "anonymousSessionId": "anon_1792554795238_kgxcgag"
+    },
+    {
+      "id": "evt_1792556696715_f2hflm",
+      "timestamp": "2026-10-21T04:24:56.715Z",
+      "eventType": "page_view",
+      "pagePath": "/estadisticas-inmobiliarias-san-jose",
+      "anonymousSessionId": "anon_1792554795238_kgxcgag",
+      "referrer": "http://localhost:3000/admin/mercado"
     }
   ],
   "seoRecords": [

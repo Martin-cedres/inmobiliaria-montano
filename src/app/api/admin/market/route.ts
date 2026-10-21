@@ -5,6 +5,7 @@ import {
   getPriceDropOpportunities,
   getWeeklyExecutiveReports,
   getAllMarketSnapshots,
+  createManualMarketListing,
 } from '@/lib/marketStore';
 
 export async function GET() {
@@ -30,6 +31,37 @@ export async function GET() {
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : 'Error al cargar inteligencia de mercado';
     console.error('Error en /api/admin/market:', error);
+    return NextResponse.json(
+      { success: false, error: message },
+      { status: 500 }
+    );
+  }
+}
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+    if (!body || !body.title) {
+      return NextResponse.json(
+        { success: false, error: 'El título del inmueble es requerido' },
+        { status: 400 }
+      );
+    }
+
+    const newListing = await createManualMarketListing(body);
+    const kpis = await getMarketKpis();
+
+    return NextResponse.json({
+      success: true,
+      message: 'Aviso de particular registrado exitosamente en el Radar',
+      data: {
+        listing: newListing,
+        kpis,
+      },
+    });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Error al registrar aviso en el mercado';
+    console.error('Error en POST /api/admin/market:', error);
     return NextResponse.json(
       { success: false, error: message },
       { status: 500 }
