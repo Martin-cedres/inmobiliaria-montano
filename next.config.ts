@@ -29,6 +29,11 @@ const nextConfig: NextConfig = {
         destination: '/propiedades-san-jose',
         permanent: true,
       },
+      {
+        source: '/propiedad/venta-casa-2-dormitorios-centro-san-jose-mon751',
+        destination: '/propiedad/se-precisan-propiedades-para-la-venta-san-jose-de-mayo-mon751',
+        permanent: true,
+      },
     ];
   },
   async rewrites() {

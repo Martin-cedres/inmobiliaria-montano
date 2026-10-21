@@ -2,6 +2,7 @@ import React from 'react';
 import { Header } from '@/components/Header';
 import { HeroSearch } from '@/components/HeroSearch';
 import { CatalogSection } from '@/components/CatalogSection';
+import { OwnerCaptureBanner } from '@/components/OwnerCaptureBanner';
 import { OwnerLeadSection } from '@/components/OwnerLeadSection';
 import { Footer } from '@/components/Footer';
 import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
@@ -30,7 +31,10 @@ export default async function Home() {
       {/* 3. Sección de Catálogo Renderizada desde el Servidor */}
       <CatalogSection initialProperties={initialProperties} />
 
-      {/* 4. Owner Lead & Appraisals Section */}
+      {/* 4. Banner de Alto Impacto para Propietarios (Flyer Oficial Montaño) */}
+      <OwnerCaptureBanner variant="home" />
+
+      {/* 5. Owner Lead & Appraisals Section */}
       <OwnerLeadSection />
 
       {/* 5. Footer */}

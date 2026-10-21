@@ -54,6 +54,39 @@ export function VenderPropiedadJsonLd({ faqs }: VenderPropiedadJsonLdProps) {
         },
       },
       {
+        '@type': 'HowTo',
+        name: 'Cómo Vender tu Propiedad en San José de Mayo con Inmobiliaria Montaño',
+        description:
+          'Proceso profesional de 4 pasos para vender una casa, terreno o chacra en San José al valor real de mercado y con garantía notarial.',
+        totalTime: 'P30D',
+        step: [
+          {
+            '@type': 'HowToStep',
+            position: 1,
+            name: 'Tasación Profesional y Análisis Comparativo de Mercado',
+            text: 'Relevamiento in situ del inmueble y cálculo de valor real por m² en base a operaciones cerradas en tu barrio de San José.',
+          },
+          {
+            '@type': 'HowToStep',
+            position: 2,
+            name: 'Relevamiento y Ficha Técnica',
+            text: 'Relevamiento detallado del inmueble y redacción técnica de virtudes urbanísticas y constructivas para su difusión multicanal.',
+          },
+          {
+            '@type': 'HowToStep',
+            position: 3,
+            name: 'Difusión Multicanal y Filtro de Compradores',
+            text: 'Publicación en web oficial, portales líderes y cruce con compradores calificados en lista de espera.',
+          },
+          {
+            '@type': 'HowToStep',
+            position: 4,
+            name: 'Respaldo Notarial y Cierre ante Escribano',
+            text: 'Supervisión de boleto de reserva, seña, títulos de propiedad y liquidación impositiva ante escribanía.',
+          },
+        ],
+      },
+      {
         '@type': 'FAQPage',
         mainEntity: faqs.map((faq) => ({
           '@type': 'Question',

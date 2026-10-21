@@ -1217,3 +1217,45 @@
   - Compilación de producción (`npm run build`) verificada localmente con 77/77 rutas generadas con éxito y 0 errores.
   - Confirmados los cambios en git (`commit 69216e2`: "feat: implementar sistema de inteligencia de mercado, radar de captacion y observatorio de precios en San Jose").
   - Enviados a la rama `main` en GitHub (`https://github.com/Martin-cedres/inmobiliaria-montano`), activando el despliegue automático en Vercel.
+
+
+=== Sesión 2026-10-20 — Redirección 301 de Ficha de Captación ===
+- Agregada redirección permanente (301) en next.config.ts desde '/propiedad/venta-casa-2-dormitorios-centro-san-jose-mon751' hacia '/propiedad/se-precisan-propiedades-para-la-venta-san-jose-de-mayo-mon751' con 'permanent: true'.
+- Verificada la compilación estricta de TypeScript con `npx tsc --noEmit` (0 errores).
+- Mantenida la política estricta de CERO git push y sin despliegue a producción sin orden expresa.
+
+
+=== Sesión 2026-10-21 — Implementación del Plan de Captación Orgánica de Propietarios ===
+- Integradas las imágenes oficiales de captación enviadas por el usuario en public/images/se-precisan-propiedades-4x3.jpg y public/images/se-precisan-propiedades-1x1.jpg.
+- Creado el componente reutilizable de alta conversión src/components/OwnerCaptureBanner.tsx con variantes 'home' (4:3) y 'property-detail' (1:1).
+- Integrado el banner de captación en la portada del Home (src/app/page.tsx) con llamada a la acción hacia /vender-propiedad-san-jose y WhatsApp.
+- Integrado el bloque de captación cruzada en todas las fichas individuales de propiedades (src/app/propiedad/[slug]/page.tsx) para captar a propietarios investigando precios en su barrio y distribuir PageRank interno.
+- Actualizada la navegación principal en src/components/Header.tsx: el botón CTA "Publicar mi Inmueble" y el drawer móvil ahora enlazan directamente a /vender-propiedad-san-jose.
+- Rediseñada y enriquecida la landing page src/app/vender-propiedad-san-jose/page.tsx:
+  * Incorporado el flyer oficial 4:3 en alta calidad.
+  * Sección de demanda activa (Casas, Terrenos, Chacras, Locales) por barrios de San José.
+  * Guía paso a paso del proceso de venta (4 pasos) con datos estructurados Schema HowTo en VenderPropiedadJsonLd.tsx.
+  * Bloque de honorarios transparentes reglamentados por la CIU (3% + IVA solo al escriturar, 0 costo inicial).
+  * FAQs ampliadas con información notarial, impositiva y de tiempos de venta.
+- Actualizado src/utils/whatsapp.ts con el sujeto 'vender' para mensajes pre-configurados de captación de vendedores hacia Daniel Montaño.
+- Verificación exhaustiva: `npx tsc --noEmit` y `npm run build` completados con éxito (77/77 rutas pre-renderizadas y 0 errores).
+- Mantenida la política estricta de CERO git push y ningún despliegue a producción sin orden expresa del usuario.
+- Liberado el puerto 3000 de un proceso residual externo e iniciado el servidor de desarrollo Next.js 16 (Turbopack) en segundo plano (`http://localhost:3000`), respondiendo `HTTP 200 OK`.
+- Depuración de textos en la landing [`src/app/vender-propiedad-san-jose/page.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/vender-propiedad-san-jose/page.tsx) y en [`src/components/seo/VenderPropiedadJsonLd.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/components/seo/VenderPropiedadJsonLd.tsx):
+  * Eliminadas todas las menciones a la Cámara Inmobiliaria Uruguaya (CIU), reemplazándolas por "Honorarios Claros y Transparentes" y arancel habitual de plaza.
+  * Eliminadas todas las menciones a "fotografía profesional de alto impacto" y "producción fotográfica", sustituyéndolas por relevamiento técnico y difusión multicanal.
+  * Verificación limpia de tipos con `npx tsc --noEmit` (0 errores) y respuesta `HTTP 200 OK` en el servidor de desarrollo.
+- Integrado el 4° pilar de diferenciación tecnológica en [`src/app/vender-propiedad-san-jose/page.tsx`](file:///c:/Users/LENOVO/Desktop/Inmobiliaria%20Monta%C3%B1o/src/app/vender-propiedad-san-jose/page.tsx):
+  * Cuadrícula equilibrada de 4 tarjetas responsivas (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-4`) en la sección de confianza.
+  * Añadida la tarjeta "Visibilidad en Google e IA" destacando la plataforma web propia optimizada para que buscadores y asistentes de IA encuentren y recomienden las propiedades a compradores activos, sin atacar competidores ni realizar promesas falsas de puestos fijos.
+  * Sincronizada la FAQ principal con la mención de la plataforma web optimizada para Google e Inteligencia Artificial.
+  * Verificado con `npx tsc --noEmit` (0 errores) y `HTTP 200 OK` en local.
+  * Homogeneizado el color del ícono Sparkles a la paleta corporativa Púrpura Montaño (`text-[#5E1754]` sobre `bg-[#5E1754]/10`).
+- **Despliegue a Producción (solicitado explícitamente por el usuario):**
+  - Validación completa con `npm run build`: 77/77 rutas estáticas y dinámicas compiladas con éxito (código de salida 0).
+  - Incluye: Estrategia de captación orgánica ("Se precisan propiedades para la venta"), flyers institucionales, banners de conversión en Home y fichas de propiedades, redirección 301 de ficha de captación, landing de venta de propiedades optimizada con honorarios transparentes y pilar de visibilidad en Google e IA, y enlaces directos de navegación y WhatsApp.
+  - Cambios confirmados y enviados a la rama `main` en GitHub, activando el despliegue automático en Vercel (https://www.inmobiliariamontano.uy).
+
+
+
+

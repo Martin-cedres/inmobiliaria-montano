@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Calculator, Menu, X, Building2, Phone, Home, Compass } from 'lucide-react';
+import { Calculator, Menu, X, Building2, Phone, Home, Compass, Sparkles } from 'lucide-react';
 
 export const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -70,7 +70,7 @@ export const Header: React.FC = () => {
               <span>Mapa</span>
             </Link>
             <Link
-              href="/#tasaciones"
+              href="/tasaciones-san-jose-de-mayo"
               className="hover:text-[#5e1754] transition-colors relative py-1.5 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#5e1754] hover:after:w-full after:transition-all duration-300"
             >
               Tasaciones
@@ -86,7 +86,7 @@ export const Header: React.FC = () => {
           {/* Botón CTA Naranja Institucional (Imán de Captación: Publicar mi Inmueble) */}
           <div className="hidden sm:flex items-center">
             <Link
-              href="/#tasaciones"
+              href="/vender-propiedad-san-jose"
               className="bg-[#e85d04] hover:bg-[#ff7518] active:scale-95 text-white px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-xs hover:shadow-orange-500/20 transition-all border border-orange-400/20"
             >
               Publicar mi Inmueble
@@ -138,7 +138,16 @@ export const Header: React.FC = () => {
           </Link>
 
           <Link
-            href="/#tasaciones"
+            href="/vender-propiedad-san-jose"
+            onClick={() => setMobileMenuOpen(false)}
+            className="flex items-center space-x-3 p-3 rounded-xl hover:bg-orange-50 text-slate-800 font-bold text-sm group transition-colors"
+          >
+            <Sparkles className="w-5 h-5 text-[#E85D04] group-hover:scale-110 transition-transform" />
+            <span className="text-[#E85D04] font-extrabold">Vender mi Propiedad</span>
+          </Link>
+
+          <Link
+            href="/tasaciones-san-jose-de-mayo"
             onClick={() => setMobileMenuOpen(false)}
             className="flex items-center space-x-3 p-3 rounded-xl hover:bg-purple-50 text-slate-800 font-bold text-sm group transition-colors"
           >
@@ -157,7 +166,7 @@ export const Header: React.FC = () => {
 
           <div className="pt-2">
             <Link
-              href="/#tasaciones"
+              href="/vender-propiedad-san-jose"
               onClick={() => setMobileMenuOpen(false)}
               className="w-full bg-[#e85d04] hover:bg-[#ff7518] text-white py-3 rounded-xl font-black text-center shadow-md text-sm block"
             >

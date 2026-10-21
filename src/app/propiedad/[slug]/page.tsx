@@ -14,6 +14,7 @@ import { PropertyDescriptionRenderer } from '@/components/PropertyDescriptionRen
 import PropertyBreadcrumbs from '@/components/seo/PropertyBreadcrumbs';
 import { PropertyTracker } from '@/components/analytics/PropertyTracker';
 import { WhatsAppTrackButton } from '@/components/analytics/WhatsAppTrackButton';
+import { OwnerCaptureBanner } from '@/components/OwnerCaptureBanner';
 
 interface PropertyDetailPageProps {
   params: Promise<{
@@ -622,6 +623,14 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
 
           </div>
 
+        </div>
+
+        {/* Banner de Captación Cruzada para Propietarios (Flyer Cuadrado Oficial) */}
+        <div className="mt-10">
+          <OwnerCaptureBanner
+            variant="property-detail"
+            currentCity={property.location.city || 'San José de Mayo'}
+          />
         </div>
 
         {/* Enlace sutil para volver al catálogo general */}

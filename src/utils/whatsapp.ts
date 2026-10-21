@@ -58,7 +58,7 @@ export function buildPropertyShareMessage(property: Property): string {
   return propertyUrl;
 }
 
-export type WhatsAppServiceSubject = 'tasacion' | 'publicar' | 'notarial' | 'general';
+export type WhatsAppServiceSubject = 'tasacion' | 'publicar' | 'notarial' | 'general' | 'vender';
 
 /**
  * Genera un enlace a WhatsApp para consultas generales de tasación, captación o asesoramiento notarial.
@@ -71,6 +71,8 @@ export function buildGeneralWhatsAppLink(
   
   if (subject === 'tasacion') {
     text = 'Hola Inmobiliaria Montaño, me gustaría solicitar una tasación profesional para mi propiedad en San José.';
+  } else if (subject === 'vender') {
+    text = 'Hola Daniel, me comunico desde la web oficial de Inmobiliaria Montaño. Tengo una propiedad en San José y me gustaría ponerla a la venta con ustedes.';
   } else if (subject === 'publicar') {
     text = 'Hola Inmobiliaria Montaño, quisiera consultar requisitos para publicar mi inmueble con ustedes en venta o alquiler.';
   } else if (subject === 'notarial') {

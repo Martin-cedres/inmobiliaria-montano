@@ -615,6 +615,57 @@
       "eventType": "page_view",
       "pagePath": "/",
       "anonymousSessionId": "anon_1792401009121_hwr6le7"
+    },
+    {
+      "id": "evt_1792554795628_2rxv3u",
+      "timestamp": "2026-10-21T03:53:15.628Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792554795238_kgxcgag"
+    },
+    {
+      "id": "evt_1792554826085_xm4m5b",
+      "timestamp": "2026-10-21T03:53:46.085Z",
+      "eventType": "page_view",
+      "pagePath": "/vender-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792554795238_kgxcgag"
+    },
+    {
+      "id": "evt_1792554901699_j00p7b",
+      "timestamp": "2026-10-21T03:55:01.699Z",
+      "eventType": "page_view",
+      "pagePath": "/vender-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792554795238_kgxcgag"
+    },
+    {
+      "id": "evt_1792555552253_jnpbuj",
+      "timestamp": "2026-10-21T04:05:52.253Z",
+      "eventType": "page_view",
+      "pagePath": "/vender-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792554795238_kgxcgag"
+    },
+    {
+      "id": "evt_1792555577753_hbmiv5",
+      "timestamp": "2026-10-21T04:06:17.753Z",
+      "eventType": "whatsapp_click",
+      "pagePath": "/vender-propiedad-san-jose",
+      "buttonPosition": "valuation",
+      "location": "San José de Mayo",
+      "anonymousSessionId": "anon_1792554795238_kgxcgag"
+    },
+    {
+      "id": "evt_1792555814418_toaody",
+      "timestamp": "2026-10-21T04:10:14.418Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792554795238_kgxcgag"
+    },
+    {
+      "id": "evt_1792555831633_fk3tof",
+      "timestamp": "2026-10-21T04:10:31.633Z",
+      "eventType": "page_view",
+      "pagePath": "/vender-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792554795238_kgxcgag"
     }
   ],
   "seoRecords": [
