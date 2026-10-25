@@ -253,62 +253,10 @@ export const Header: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Drawer Navigation (Móviles y Tablets < md) */}
+      {/* Mobile Drawer Navigation (Móviles y Tablets < md) - 100% Exploración y Catálogo */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white/98 backdrop-blur-md border-b border-slate-200 px-4 pt-3 pb-6 space-y-4 shadow-2xl animate-in slide-in-from-top-2 duration-200 max-h-[85vh] overflow-y-auto">
+        <div className="md:hidden bg-white/98 backdrop-blur-md border-b border-slate-200 px-4 pt-3 pb-6 space-y-3 shadow-2xl animate-in slide-in-from-top-2 duration-200 max-h-[85vh] overflow-y-auto">
           
-          {/* Tarjeta Destacada para Propietarios en Móvil */}
-          <div className="bg-gradient-to-br from-[#2D0B28] via-[#43123C] to-[#5E1754] text-white rounded-2xl p-4 shadow-lg border border-purple-400/25 space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-[10px] font-black uppercase text-amber-300 tracking-wider">
-                Servicios para Propietarios
-              </span>
-              <span className="bg-amber-400/20 text-amber-300 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-amber-400/30">
-                Directo con Daniel
-              </span>
-            </div>
-
-            <div className="grid grid-cols-1 gap-2 pt-0.5">
-              <Link
-                href="/vender-propiedad-san-jose"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between p-2.5 rounded-xl bg-white/10 hover:bg-white/20 active:scale-98 transition-all text-left group"
-              >
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 rounded-xl bg-white/15 border border-white/20 text-amber-300 flex items-center justify-center flex-shrink-0 shadow-xs group-hover:scale-105 transition-transform">
-                    <Home className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <span className="text-xs font-black text-white block">Vender mi Propiedad</span>
-                    <span className="text-[10px] text-purple-200 font-medium">Demanda activa de compra</span>
-                  </div>
-                </div>
-                <span className="text-[10px] font-black text-amber-300 bg-amber-400/10 px-2 py-0.5 rounded-full border border-amber-400/25">
-                  Venta →
-                </span>
-              </Link>
-
-              <Link
-                href="/alquilar-mi-propiedad-san-jose"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between p-2.5 rounded-xl bg-white/10 hover:bg-white/20 active:scale-98 transition-all text-left group"
-              >
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 rounded-xl bg-white/15 border border-white/20 text-amber-300 flex items-center justify-center flex-shrink-0 shadow-xs group-hover:scale-105 transition-transform">
-                    <Key className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <span className="text-xs font-black text-white block">Alquilar mi Propiedad</span>
-                    <span className="text-[10px] text-purple-200 font-medium">Garantías homologadas</span>
-                  </div>
-                </div>
-                <span className="text-[10px] font-black text-amber-300 bg-amber-400/10 px-2 py-0.5 rounded-full border border-amber-400/25">
-                  Renta →
-                </span>
-              </Link>
-            </div>
-          </div>
-
           {/* Navegación de Inmuebles */}
           <div className="space-y-1">
             <span className="text-[10px] font-black uppercase text-slate-400 px-3 tracking-wider">

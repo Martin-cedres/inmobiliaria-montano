@@ -1362,3 +1362,8 @@
   * Ejecutado `npm run build` local con éxito total: 81 rutas estáticas y dinámicas pre-renderizadas, 0 errores en TypeScript y Next.js 16.
   * Agregada sincronización híbrida defensiva en `propertiesStore.ts` para que cualquier ficha declarada en `properties.json` esté siempre disponible con HTTP 200 en Vercel.
   * Realizado `git commit` y `git push origin main` hacia GitHub (`https://github.com/Martin-cedres/inmobiliaria-montano`), activando el despliegue automático en Vercel (`https://www.inmobiliariamontano.uy`).
+- Desacople y Limpieza de Navegación Móvil - Opción 2 (Header.tsx):
+  * Eliminada la tarjeta redundante de 'Servicios para Propietarios' dentro del menú hamburguesa (`mobileMenuOpen`), dejando el menú lateral 100% dedicado a la exploración y navegación de catálogo (*Catálogo Completo*, *Casas en Venta*, *Mapa Interactivo*, *Contacto y Ubicación*).
+  * Centralizado el flujo de captación de propietarios exclusivamente en el botón superior `Soy Propietario ▾` (Vender / Alquilar), logrando una jerarquía visual limpia sin opciones duplicadas.
+  * Verificado con `tsc` (0 errores) y `npm run build` (81/81 rutas estáticas generadas).
+  * Realizado `git commit` y `git push origin main` hacia GitHub para el despliegue automático en Vercel.
