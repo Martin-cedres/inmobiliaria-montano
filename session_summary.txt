@@ -1358,3 +1358,7 @@
   * Actualizado `sitemap.ts` con fecha de modificación fresca `2026-10-25` (`RECENT_EDITORIAL_DATE`) para `/alquilar-mi-propiedad-san-jose`, `/vender-propiedad-san-jose` y `/tasaciones-san-jose-de-mayo`, acelerando el rastreo prioritario de Googlebot.
   * Comprobada la inyección de la ficha MON-752 en `sitemap.xml`, `google-catalog.xml` y `llms.txt`.
   * Verificado en localhost:3000 con `tsc` (0 errores) y HTTP 200. Cero git push.
+- Compilación de Producción y Despliegue Oficial en GitHub y Vercel (Orden Explícita del Usuario):
+  * Ejecutado `npm run build` local con éxito total: 81 rutas estáticas y dinámicas pre-renderizadas, 0 errores en TypeScript y Next.js 16.
+  * Agregada sincronización híbrida defensiva en `propertiesStore.ts` para que cualquier ficha declarada en `properties.json` esté siempre disponible con HTTP 200 en Vercel.
+  * Realizado `git commit` y `git push origin main` hacia GitHub (`https://github.com/Martin-cedres/inmobiliaria-montano`), activando el despliegue automático en Vercel (`https://www.inmobiliariamontano.uy`).

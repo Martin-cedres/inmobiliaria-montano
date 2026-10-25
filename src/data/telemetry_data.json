@@ -1364,6 +1364,14 @@
       "pagePath": "/alquilar-mi-propiedad-san-jose",
       "anonymousSessionId": "anon_1792896642584_kwpz0zs",
       "referrer": "http://localhost:3000/vender-propiedad-san-jose"
+    },
+    {
+      "id": "evt_1792903061925_7q9bqv",
+      "timestamp": "2026-10-25T04:37:41.925Z",
+      "eventType": "page_view",
+      "pagePath": "/alquilar-mi-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/vender-propiedad-san-jose"
     }
   ],
   "seoRecords": [
