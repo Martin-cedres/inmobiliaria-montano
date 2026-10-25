@@ -129,7 +129,7 @@ export async function getAllProperties(): Promise<Property[]> {
       await ensureTablesExist(sql);
       const rows = await sql`SELECT * FROM properties ORDER BY created_at DESC;`;
       if (rows && rows.length > 0) {
-        return rows.map((row: any) => {
+        const dbProperties: Property[] = rows.map((row: any): Property => {
           const latVal = row.lat ? Number(row.lat) : -34.3375;
           const lngVal = row.lng ? Number(row.lng) : -56.7136;
 
@@ -156,8 +156,6 @@ export async function getAllProperties(): Promise<Property[]> {
               neighborhood: row.neighborhood || 'Centro',
               zone: row.zone || undefined,
               address: row.address,
-              lat: latVal,
-              lng: lngVal,
               coordinates: { lat: latVal, lng: lngVal },
               isExactLocation: row.is_exact_location ?? false,
               radiusMeters: row.radius_meters ? Number(row.radius_meters) : 300,
@@ -226,6 +224,22 @@ export async function getAllProperties(): Promise<Property[]> {
             updatedAt: row.updated_at,
           };
         });
+
+        // Sincronización híbrida: Integrar propiedades declaradas en properties.json (ej. fichas de captación como MON-752)
+        // que no hayan sido insertadas aún en Neon Postgres para garantizar disponibilidad inmediata
+        try {
+          const fileContent = await fs.readFile(LOCAL_DB_PATH, 'utf-8');
+          const localProps: Property[] = JSON.parse(fileContent);
+          const dbRefs = new Set(dbProperties.map((p) => (p.codeRef || '').toLowerCase()));
+          const missingProps = localProps.filter((lp) => !dbRefs.has((lp.codeRef || '').toLowerCase()));
+          if (missingProps.length > 0) {
+            dbProperties.push(...missingProps);
+          }
+        } catch {
+          // Ignorar en entornos donde no se pueda acceder al archivo en disco
+        }
+
+        return dbProperties;
       }
     } catch (dbErr: any) {
       console.warn('Error al consultar Neon Postgres, usando fallback local/memoria:', dbErr?.message || dbErr);
@@ -505,6 +519,18 @@ export async function findPropertyBySlugOrPrevious(slug: string): Promise<{ prop
     if (candidate) {
       return { property: candidate, isPrevious: true };
     }
+  }
+
+  // 4. Fallback defensivo: Coincidencia en archivo properties.json local
+  try {
+    const fileContent = await fs.readFile(LOCAL_DB_PATH, 'utf-8');
+    const localProps: Property[] = JSON.parse(fileContent);
+    const localDirect = localProps.find((p) => (p.slug || '').toLowerCase() === cleanRequested);
+    if (localDirect) {
+      return { property: localDirect, isPrevious: false };
+    }
+  } catch {
+    // Ignorar si no se puede leer el archivo
   }
 
   return null;
