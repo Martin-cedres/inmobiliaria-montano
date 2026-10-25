@@ -17,7 +17,6 @@ import {
   Globe,
   UserCheck,
   MapPin,
-  Sparkles,
   PhoneCall,
   CheckCircle2,
   ArrowRight,
@@ -204,7 +203,7 @@ export default function AlquilarPropiedadPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
               <div className="lg:col-span-7 space-y-4 text-left">
                 <span className="inline-flex items-center space-x-1.5 bg-amber-400/15 border border-amber-400/30 text-amber-300 px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider">
-                  <Sparkles className="w-3.5 h-3.5" />
+                  <MapPin className="w-3.5 h-3.5" />
                   <span>Demanda Activa de Alquileres en San José</span>
                 </span>
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white leading-tight">
@@ -286,8 +285,8 @@ export default function AlquilarPropiedadPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center font-black">
+            <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs hover:border-[#5E1754]/30 hover:shadow-md transition-all space-y-3 group">
+              <div className="w-10 h-10 rounded-2xl bg-[#5E1754]/10 text-[#5E1754] border border-[#5E1754]/15 flex items-center justify-center font-black group-hover:scale-105 transition-transform">
                 <UserCheck className="w-5 h-5" />
               </div>
               <h3 className="font-black text-base text-slate-900">1. Filtro Riguroso de Inquilinos</h3>
@@ -296,8 +295,8 @@ export default function AlquilarPropiedadPage() {
               </p>
             </div>
 
-            <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-purple-500/10 text-[#5E1754] flex items-center justify-center font-black">
+            <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs hover:border-[#5E1754]/30 hover:shadow-md transition-all space-y-3 group">
+              <div className="w-10 h-10 rounded-2xl bg-[#5E1754]/10 text-[#5E1754] border border-[#5E1754]/15 flex items-center justify-center font-black group-hover:scale-105 transition-transform">
                 <FileText className="w-5 h-5" />
               </div>
               <h3 className="font-black text-base text-slate-900">2. Inventario Notarial Completo</h3>
@@ -306,8 +305,8 @@ export default function AlquilarPropiedadPage() {
               </p>
             </div>
 
-            <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-blue-500/10 text-blue-600 flex items-center justify-center font-black">
+            <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs hover:border-[#5E1754]/30 hover:shadow-md transition-all space-y-3 group">
+              <div className="w-10 h-10 rounded-2xl bg-[#5E1754]/10 text-[#5E1754] border border-[#5E1754]/15 flex items-center justify-center font-black group-hover:scale-105 transition-transform">
                 <Receipt className="w-5 h-5" />
               </div>
               <h3 className="font-black text-base text-slate-900">3. Control de Servicios y Tributos</h3>
@@ -316,8 +315,8 @@ export default function AlquilarPropiedadPage() {
               </p>
             </div>
 
-            <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center font-black">
+            <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs hover:border-[#5E1754]/30 hover:shadow-md transition-all space-y-3 group">
+              <div className="w-10 h-10 rounded-2xl bg-[#5E1754]/10 text-[#5E1754] border border-[#5E1754]/15 flex items-center justify-center font-black group-hover:scale-105 transition-transform">
                 <CheckCircle2 className="w-5 h-5" />
               </div>
               <h3 className="font-black text-base text-slate-900">4. Cobranza y Liquidación Puntual</h3>
@@ -368,26 +367,26 @@ export default function AlquilarPropiedadPage() {
               </div>
 
               {/* Opción Montaño */}
-              <div className="bg-emerald-50/50 rounded-2xl p-6 border border-emerald-200/80 space-y-4">
-                <div className="flex items-center space-x-2 text-emerald-800 font-black text-sm">
-                  <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
+              <div className="bg-purple-50/50 rounded-2xl p-6 border-2 border-[#5E1754]/25 space-y-4 shadow-xs">
+                <div className="flex items-center space-x-2 text-[#5E1754] font-black text-sm">
+                  <ShieldCheck className="w-5 h-5 text-[#E85D04] flex-shrink-0" />
                   <span>Con Inmobiliaria Montaño (Tranquilidad)</span>
                 </div>
                 <ul className="space-y-2.5 text-xs text-slate-700">
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-600 font-bold">✓</span>
+                    <span className="text-[#E85D04] font-black">✓</span>
                     <span>Garantías homologadas (ANDA, CGN, Porto, SURA) con cobro asegurado.</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-600 font-bold">✓</span>
+                    <span className="text-[#E85D04] font-black">✓</span>
                     <span>Control mensual estricto de consumos y tributos al día.</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-600 font-bold">✓</span>
+                    <span className="text-[#E85D04] font-black">✓</span>
                     <span>Atención y gestión de intermediación con trato directo de Daniel Montaño.</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-600 font-bold">✓</span>
+                    <span className="text-[#E85D04] font-black">✓</span>
                     <span>Contratos notariales redactados por escribano con inventario fotográfico.</span>
                   </li>
                 </ul>

@@ -17,7 +17,6 @@ import {
   Calculator,
   FileCheck,
   MapPin,
-  Sparkles,
   Search,
   TrendingUp,
   Award,
@@ -192,8 +191,8 @@ export default function TasacionesPage() {
         <section className="bg-white border-y border-slate-200/80 py-10 sm:py-12 px-4 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto space-y-8">
             <div className="text-center max-w-2xl mx-auto space-y-2">
-              <span className="inline-flex items-center space-x-1.5 bg-[#5E1754]/10 text-[#5E1754] px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5" />
+              <span className="inline-flex items-center space-x-1.5 bg-[#5E1754]/10 text-[#5E1754] border border-[#5E1754]/15 px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider">
+                <FileCheck className="w-3.5 h-3.5 text-[#E85D04]" />
                 <span>Metodología de Trabajo</span>
               </span>
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">

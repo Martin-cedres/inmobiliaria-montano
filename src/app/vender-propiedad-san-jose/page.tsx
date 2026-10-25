@@ -16,7 +16,6 @@ import {
   Globe,
   UserCheck,
   MapPin,
-  Sparkles,
   Scale,
   Target,
   PhoneCall,
@@ -197,7 +196,7 @@ export default function VenderPropiedadPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
               <div className="lg:col-span-7 space-y-4 text-left">
                 <span className="inline-flex items-center space-x-1.5 bg-amber-400/15 border border-amber-400/30 text-amber-300 px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider">
-                  <Sparkles className="w-3.5 h-3.5" />
+                  <MapPin className="w-3.5 h-3.5" />
                   <span>Demanda Activa en San José</span>
                 </span>
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white leading-tight">
@@ -272,8 +271,8 @@ export default function VenderPropiedadPage() {
         <section className="bg-white border-y border-slate-200/80 py-10 sm:py-12 px-4 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto space-y-8">
             <div className="text-center max-w-2xl mx-auto space-y-2">
-              <span className="inline-flex items-center space-x-1.5 bg-[#5E1754]/10 text-[#5E1754] px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5" />
+              <span className="inline-flex items-center space-x-1.5 bg-[#5E1754]/10 text-[#5E1754] border border-[#5E1754]/15 px-3.5 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#E85D04]" />
                 <span>Nuestra Propuesta de Valor</span>
               </span>
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
@@ -286,7 +285,7 @@ export default function VenderPropiedadPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               <div className="bg-slate-50 hover:bg-white rounded-2xl p-6 border border-slate-200/80 hover:border-[#5E1754]/30 hover:shadow-md transition-all space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-[#5E1754]/10 text-[#5E1754] border border-[#5E1754]/15 flex items-center justify-center flex-shrink-0">
                   <FileText className="w-5 h-5" />
                 </div>
                 <h3 className="font-extrabold text-base text-slate-900">Presentación Destacada</h3>
@@ -296,8 +295,8 @@ export default function VenderPropiedadPage() {
               </div>
 
               <div className="bg-slate-50 hover:bg-white rounded-2xl p-6 border border-slate-200/80 hover:border-[#5E1754]/30 hover:shadow-md transition-all space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex items-center justify-center flex-shrink-0">
-                  <Sparkles className="w-5 h-5" />
+                <div className="w-10 h-10 rounded-xl bg-[#5E1754]/10 text-[#5E1754] border border-[#5E1754]/15 flex items-center justify-center flex-shrink-0">
+                  <Globe className="w-5 h-5" />
                 </div>
                 <h3 className="font-extrabold text-base text-slate-900">Visibilidad en Google e IA</h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
@@ -306,7 +305,7 @@ export default function VenderPropiedadPage() {
               </div>
 
               <div className="bg-slate-50 hover:bg-white rounded-2xl p-6 border border-slate-200/80 hover:border-[#5E1754]/30 hover:shadow-md transition-all space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-[#5E1754]/10 text-[#5E1754] border border-[#5E1754]/15 flex items-center justify-center flex-shrink-0">
                   <Target className="w-5 h-5" />
                 </div>
                 <h3 className="font-extrabold text-base text-slate-900">Negociación Firme y Realista</h3>
@@ -316,7 +315,7 @@ export default function VenderPropiedadPage() {
               </div>
 
               <div className="bg-slate-50 hover:bg-white rounded-2xl p-6 border border-slate-200/80 hover:border-[#5E1754]/30 hover:shadow-md transition-all space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-[#5E1754]/10 text-[#5E1754] border border-[#5E1754]/15 flex items-center justify-center flex-shrink-0">
                   <Scale className="w-5 h-5" />
                 </div>
                 <h3 className="font-extrabold text-base text-slate-900">Acompañamiento Notarial</h3>

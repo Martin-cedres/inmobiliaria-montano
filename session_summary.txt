@@ -1367,3 +1367,10 @@
   * Centralizado el flujo de captación de propietarios exclusivamente en el botón superior `Soy Propietario ▾` (Vender / Alquilar), logrando una jerarquía visual limpia sin opciones duplicadas.
   * Verificado con `tsc` (0 errores) y `npm run build` (81/81 rutas estáticas generadas).
   * Realizado `git commit` y `git push origin main` hacia GitHub para el despliegue automático en Vercel.
+- Armonización Estética Institucional y Erradicación de Estrellitas (alquilar-mi-propiedad, vender-propiedad, tasaciones):
+  * Eliminado por completo el ícono de estrellitas (`Sparkles`) antes de 'Nuestra Propuesta de Valor' y en todas las insignias públicas de captación, reemplazándolo por el escudo notarial de seguridad (`ShieldCheck`) o el pin geográfico (`MapPin`).
+  * Reemplazado el ícono de 'Visibilidad en Google e IA' por `Globe` institucional en lugar de estrellas.
+  * Erradicada la dispersión multicolor (amarillo, azul, verde, morado) en los 4 pilares de administración de la landing de alquileres, unificando todos los contenedores al estándar corporativo Púrpura Montaño (`bg-[#5E1754]/10 text-[#5E1754] border border-[#5E1754]/15`).
+  * Homologada la tarjeta comparativa de Montaño con micro-borde institucional púrpura y checkmarks en Naranja Montaño (`#E85D04`).
+  * Validado con `tsc` (0 errores) y `npm run build` (81/81 páginas pre-renderizadas sin errores).
+  * Realizado `git commit` y `git push origin main` a GitHub (solicitado explícitamente por el usuario), disparando el despliegue automático de producción en Vercel.

@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, CheckCircle2, ShieldCheck, PhoneCall, Sparkles, Home, Trees } from 'lucide-react';
+import { ArrowRight, CheckCircle2, ShieldCheck, PhoneCall, MapPin, Home, Trees } from 'lucide-react';
 import { buildGeneralWhatsAppLink } from '@/utils/whatsapp';
 import { trackWhatsappClick } from '@/utils/telemetry';
 
@@ -52,7 +52,7 @@ export const OwnerCaptureBanner: React.FC<OwnerCaptureBannerProps> = ({
           {/* Contenido Textual */}
           <div className="space-y-3.5 text-left flex-grow">
             <div className="inline-flex items-center space-x-2 bg-amber-400/15 border border-amber-400/30 text-amber-300 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5" />
+              <MapPin className="w-3.5 h-3.5" />
               <span>Clientes Concretos en Espera</span>
             </div>
 
@@ -116,7 +116,7 @@ export const OwnerCaptureBanner: React.FC<OwnerCaptureBannerProps> = ({
           {/* Columna Izquierda: Copy persuasivo */}
           <div className="lg:col-span-7 space-y-5 text-left">
             <div className="inline-flex items-center space-x-2 bg-amber-400/15 border border-amber-400/30 text-amber-300 px-3.5 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5" />
+              <MapPin className="w-3.5 h-3.5" />
               <span>Oportunidad para Propietarios en San José</span>
             </div>
 
