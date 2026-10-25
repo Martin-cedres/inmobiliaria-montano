@@ -1,15 +1,31 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Send, CheckCircle2, Calculator, ArrowRight } from 'lucide-react';
 import { MONTAÑO_WHATSAPP_PHONE } from '@/utils/whatsapp';
 import { trackWhatsappClick } from '@/utils/telemetry';
 
-export function AppraisalPageForm() {
+interface AppraisalPageFormProps {
+  defaultOperation?: 'venta' | 'alquiler' | 'tasacion';
+  badgeText?: string;
+  titleText?: string;
+  subtitleText?: string;
+  sourcePage?: string;
+}
+
+export function AppraisalPageForm({
+  defaultOperation = 'venta',
+  badgeText = 'Formulario de Tasación',
+  titleText = 'Completá los datos de tu inmueble',
+  subtitleText = 'Sin compromiso ni costo inicial. Te respondemos en menos de 24 horas.',
+  sourcePage,
+}: AppraisalPageFormProps = {}) {
+  const router = useRouter();
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [propertyType, setPropertyType] = useState('casa');
-  const [operationType, setOperationType] = useState('venta');
+  const [operationType, setOperationType] = useState(defaultOperation);
   const [neighborhood, setNeighborhood] = useState('');
   const [notes, setNotes] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -19,14 +35,20 @@ export function AppraisalPageForm() {
 
     trackWhatsappClick({
       buttonPosition: 'valuation',
-      pagePath: typeof window !== 'undefined' ? window.location.pathname : '/tasaciones-san-jose-de-mayo',
+      pagePath: typeof window !== 'undefined' ? window.location.pathname : (sourcePage || '/tasaciones-san-jose-de-mayo'),
     });
 
-    const text = `Hola Daniel Montaño, solicito tasación profesional para mi propiedad en San José:\n- Nombre: ${name}\n- Teléfono: ${phone}\n- Tipo de Inmueble: ${propertyType}\n- Intención: ${operationType === 'venta' ? 'Venta' : operationType === 'alquiler' ? 'Alquiler' : 'Tasación informativa'}${neighborhood ? `\n- Barrio / Zona: ${neighborhood}` : ''}${notes ? `\n- Detalles adicionales: ${notes}` : ''}`;
+    const isRental = operationType === 'alquiler';
+    const headerGreeting = isRental
+      ? 'Hola Daniel Montaño, me interesa poner en alquiler / administrar mi propiedad en San José:'
+      : 'Hola Daniel Montaño, solicito tasación profesional para mi propiedad en San José:';
+
+    const text = `${headerGreeting}\n- Nombre: ${name}\n- Teléfono: ${phone}\n- Tipo de Inmueble: ${propertyType}\n- Intención: ${operationType === 'venta' ? 'Venta' : operationType === 'alquiler' ? 'Alquiler y Administración' : 'Tasación informativa'}${neighborhood ? `\n- Barrio / Zona: ${neighborhood}` : ''}${notes ? `\n- Detalles adicionales: ${notes}` : ''}`;
 
     const waUrl = `https://wa.me/${MONTAÑO_WHATSAPP_PHONE}?text=${encodeURIComponent(text)}`;
     window.open(waUrl, '_blank');
     setSubmitted(true);
+    router.push('/gracias');
   };
 
   if (submitted) {
@@ -55,13 +77,13 @@ export function AppraisalPageForm() {
       <div className="space-y-2 text-center mb-6">
         <span className="inline-flex items-center space-x-1.5 bg-[#5E1754]/10 text-[#5E1754] px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider">
           <Calculator className="w-3.5 h-3.5" />
-          <span>Formulario de Tasación</span>
+          <span>{badgeText}</span>
         </span>
         <h3 className="text-xl sm:text-2xl font-black text-slate-900">
-          Completá los datos de tu inmueble
+          {titleText}
         </h3>
         <p className="text-xs sm:text-sm text-slate-600">
-          Sin compromiso ni costo inicial. Te respondemos en menos de 24 horas.
+          {subtitleText}
         </p>
       </div>
 
@@ -120,11 +142,11 @@ export function AppraisalPageForm() {
             </label>
             <select
               value={operationType}
-              onChange={(e) => setOperationType(e.target.value)}
+              onChange={(e) => setOperationType(e.target.value as 'venta' | 'alquiler' | 'tasacion')}
               className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5E1754] text-slate-900 cursor-pointer"
             >
               <option value="venta">Quiero vender mi propiedad</option>
-              <option value="alquiler">Quiero poner en alquiler</option>
+              <option value="alquiler">Quiero poner en alquiler / administrar</option>
               <option value="tasacion">Solo consultar valor de mercado</option>
             </select>
           </div>

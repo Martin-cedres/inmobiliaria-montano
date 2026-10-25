@@ -74,6 +74,13 @@ export function DepartmentInterlinking({ property, currentPath = '' }: Departmen
       category: 'servicio',
     },
     {
+      title: 'Alquilar y Administrar mi Propiedad en San José',
+      shortTitle: 'Alquilar y Administrar',
+      href: '/alquilar-mi-propiedad-san-jose',
+      icon: ShieldCheck,
+      category: 'servicio',
+    },
+    {
       title: 'Inversiones Inmobiliarias en San José',
       shortTitle: 'Inversiones y Renta',
       href: '/inversiones-inmobiliarias-san-jose',

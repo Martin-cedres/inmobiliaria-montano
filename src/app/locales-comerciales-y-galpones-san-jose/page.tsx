@@ -30,15 +30,17 @@ const PAGE_URL = `${BASE_URL}/locales-comerciales-y-galpones-san-jose`;
 export const revalidate = 86400; // 24 horas ISR
 
 export const metadata: Metadata = {
-  title: 'Locales Comerciales y Galpones en San José | Alquiler y Venta',
+  title: 'Locales Comerciales, Galpones y Predios Industriales en San José | Montaño',
   description:
-    'Alquiler y venta de locales comerciales, depósitos y galpones industriales en San José de Mayo, Ruta 3 y Ruta 11. Ubicaciones estratégicas y asesoramiento con Daniel Montaño.',
+    'Alquiler y venta de locales comerciales, depósitos, galpones y predios industriales en San José de Mayo y Bypass Rutas 3 y 11. Ubicaciones comerciales y logísticas estratégicas con Daniel Montaño.',
   keywords: [
     'locales comerciales en san jose de mayo',
     'alquiler de locales comerciales san jose uruguay',
     'galpones en san jose',
     'depositos industriales san jose',
+    'predios industriales san jose',
     'galpones ruta 3 san jose',
+    'terrenos industriales bypass san jose',
     'inmuebles comerciales san jose',
     'inmobiliaria montaño comerciales',
   ],
@@ -46,9 +48,9 @@ export const metadata: Metadata = {
     canonical: PAGE_URL,
   },
   openGraph: {
-    title: 'Locales Comerciales y Galpones en San José — Inmobiliaria Montaño',
+    title: 'Locales Comerciales, Galpones y Predios Industriales en San José — Inmobiliaria Montaño',
     description:
-      'Locales en el centro de San José y galpones sobre corredores logísticos. Alquiler y venta con Daniel Montaño.',
+      'Locales en el centro de San José, galpones y predios industriales sobre Bypass Rutas 3 y 11. Alquiler y venta con Daniel Montaño.',
     url: PAGE_URL,
     siteName: 'Inmobiliaria Montaño',
     locale: 'es_UY',
@@ -64,9 +66,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Locales Comerciales y Galpones en San José — Inmobiliaria Montaño',
+    title: 'Locales Comerciales, Galpones y Predios Industriales en San José — Inmobiliaria Montaño',
     description:
-      'Inmuebles comerciales, locales y naves industriales en San José con Daniel Montaño.',
+      'Inmuebles comerciales, locales, naves y predios industriales en San José con Daniel Montaño.',
     images: [`${BASE_URL}/og-logo.png`],
   },
   other: {
@@ -146,11 +148,11 @@ export default async function LocalesGalponesPage() {
               </span>
 
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
-                Locales Comerciales & <span className="text-amber-300">Galpones</span>
+                Alquiler y Venta de Locales Comerciales, Galpones y <span className="text-amber-300">Predios Industriales</span> en San José
               </h1>
 
               <p className="text-slate-200 text-sm sm:text-base font-normal leading-relaxed max-w-2xl mx-auto">
-                Ubicaciones clave para tu negocio en el Centro de San José de Mayo y depósitos logísticos sobre Ruta 3 y Ruta 11. Alquiler y venta con <strong>Daniel Montaño</strong>.
+                Ubicaciones clave en el Centro comercial de San José de Mayo y predios logísticos sobre Bypass Rutas 3 y 11 (fracciones industriales desde 12.000 m²). Alquiler y venta con <strong>Daniel Montaño</strong>.
               </p>
             </div>
 
@@ -263,9 +265,9 @@ export default async function LocalesGalponesPage() {
                 <div className="w-10 h-10 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex items-center justify-center flex-shrink-0">
                   <Truck className="w-5 h-5" />
                 </div>
-                <h3 className="font-extrabold text-base text-slate-900">Maniobra y Carga Pesada</h3>
+                <h3 className="font-extrabold text-base text-slate-900">Bypass Rutas 3 y 11 y Logística</h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
-                  Para distribuidoras y logística, naves con playas de maniobra y salida rápida a <strong>Ruta 3 y Ruta 11</strong> optimizan tus tiempos de entrega.
+                  Predios industriales de 12 Ha con fracciones desde 12.000 m², suelo nivelado, cerramiento perimetral y salida directa a <strong>Bypass Manuel Morales, Ruta 3 y Ruta 11</strong>.
                 </p>
               </div>
 

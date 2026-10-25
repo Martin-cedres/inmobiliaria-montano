@@ -31,15 +31,18 @@ const PAGE_URL = `${BASE_URL}/terrenos-y-chacras-san-jose`;
 export const revalidate = 86400; // 24 horas ISR
 
 export const metadata: Metadata = {
-  title: 'Terrenos y Chacras en Venta en San José | Solares y Campos',
+  title: 'Terrenos, Solares, Chacras y Campos en Venta en San José | Montaño',
   description:
-    'Venta de terrenos, solares urbanos, fraccionamientos y chacras productivas en San José de Mayo y alrededores. Servicios de OSE y UTE, índice CONEAT y asesoramiento con Daniel Montaño.',
+    'Venta de terrenos, solares, chacras y campos en San José de Mayo, Parquización Arroyo Mallada, Chamizo, Ruta 3 y Ruta 11. Opciones con financiación directa, agua y luz con Daniel Montaño.',
   keywords: [
     'terrenos en venta san jose de mayo',
+    'solares en san jose uruguay',
     'chacras en venta san jose uruguay',
-    'solares en san jose',
+    'campos en venta san jose uruguay',
+    'terrenos arroyo mallada san jose',
+    'chacras chamizo san jose',
+    'terrenos con financiacion directa san jose',
     'terrenos con luz y agua san jose',
-    'campos en san jose uruguay',
     'inmobiliaria montaño terrenos',
     'fraccionamientos san jose',
   ],
@@ -47,9 +50,9 @@ export const metadata: Metadata = {
     canonical: PAGE_URL,
   },
   openGraph: {
-    title: 'Terrenos y Chacras en Venta en San José — Inmobiliaria Montaño',
+    title: 'Terrenos, Solares, Chacras y Campos en Venta en San José | Montaño',
     description:
-      'Solares urbanos para construir y chacras de campo en el departamento de San José. Títulos verificados y servicios al día.',
+      'Solares urbanos para construir y chacras de campo en San José de Mayo, Arroyo Mallada, Chamizo y ejes de Rutas 3 y 11 con Daniel Montaño.',
     url: PAGE_URL,
     siteName: 'Inmobiliaria Montaño',
     locale: 'es_UY',
@@ -65,7 +68,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Terrenos y Chacras en Venta en San José — Inmobiliaria Montaño',
+    title: 'Terrenos, Solares, Chacras y Campos en Venta en San José | Montaño',
     description:
       'Solares urbanos y chacras de campo en el departamento de San José con Daniel Montaño.',
     images: [`${BASE_URL}/og-logo.png`],
@@ -147,11 +150,11 @@ export default async function TerrenosChacrasPage() {
               </span>
 
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
-                Terrenos y Chacras en <span className="text-amber-300">San José</span>
+                Terrenos, Solares, Chacras y Campos en Venta en <span className="text-amber-300">San José</span>
               </h1>
 
               <p className="text-slate-200 text-sm sm:text-base font-normal leading-relaxed max-w-2xl mx-auto">
-                Solares urbanos para construir tu casa, fraccionamientos en crecimiento y chacras de campo en San José de Mayo y alrededores. Títulos verificados, servicios al día y asesoramiento con <strong>Daniel Montaño</strong>.
+                Solares urbanos para construir en Parquización Arroyo Mallada, chacras productivas en Chamizo y fracciones con frente a Ruta 3 y Ruta 11. Títulos verificados, financiación directa y trato personalizado con <strong>Daniel Montaño</strong>.
               </p>
             </div>
 
@@ -254,9 +257,9 @@ export default async function TerrenosChacrasPage() {
                 <div className="w-10 h-10 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex items-center justify-center flex-shrink-0">
                   <Compass className="w-5 h-5" />
                 </div>
-                <h3 className="font-extrabold text-base text-slate-900">Ubicación y Accesos</h3>
+                <h3 className="font-extrabold text-base text-slate-900">Parquización Arroyo Mallada y Rutas</h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
-                  Cercanía a <strong>Ruta 3, Ruta 11 o caminos principales</strong> con buen drenaje, calles transitables todo el año y fácil conectividad a San José de Mayo o Montevideo.
+                  Solares con vistas al parque y frentes estratégicos sobre <strong>Ruta 3, Ruta 11 o Bypass Manuel Morales</strong>, con excelente drenaje y transitabilidad garantizada todo el año.
                 </p>
               </div>
 
@@ -264,9 +267,9 @@ export default async function TerrenosChacrasPage() {
                 <div className="w-10 h-10 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex items-center justify-center flex-shrink-0">
                   <Zap className="w-5 h-5" />
                 </div>
-                <h3 className="font-extrabold text-base text-slate-900">Factibilidad de Servicios</h3>
+                <h3 className="font-extrabold text-base text-slate-900">Servicios de OSE y UTE</h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
-                  Confirmamos la existencia de <strong>red de agua corriente (OSE)</strong>, tendido de <strong>energía eléctrica (UTE)</strong> o alternativas sustentables (tajamar, pozo semisurgente).
+                  Confirmamos la existencia de <strong>red de agua corriente (OSE)</strong>, tendido de <strong>energía eléctrica (UTE)</strong> o recursos naturales propios (tajamares, pozos de agua y cañadas).
                 </p>
               </div>
 
@@ -274,9 +277,9 @@ export default async function TerrenosChacrasPage() {
                 <div className="w-10 h-10 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex items-center justify-center flex-shrink-0">
                   <Activity className="w-5 h-5" />
                 </div>
-                <h3 className="font-extrabold text-base text-slate-900">Productividad e Índice CONEAT</h3>
+                <h3 className="font-extrabold text-base text-slate-900">Chamizo y Financiación Directa</h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
-                  Para chacras y fracciones de campo, analizamos el <strong>Índice CONEAT</strong> de suelo para evaluar aptitud ganadera, agrícola o para proyectos recreativos familiares.
+                  Chacras productivas con <strong>Índice CONEAT</strong> evaluado en zonas como Chamizo o Cañada Grande, con facilidades de entrega inicial y cuotas en moneda nacional o dólares.
                 </p>
               </div>
             </div>

@@ -566,6 +566,36 @@ export function generatePropertyGraphSchema(property: Property) {
     };
   }
 
+  // Enriquecer itemEntity con keywords semánticas de diferenciales reales para bots e IA
+  const featureKeywords: string[] = [];
+  if (property.features?.bankCreditEligible) {
+    featureKeywords.push('Apta crédito hipotecario bancario', 'Apta banco');
+  }
+  if (property.features?.phRegime) {
+    featureKeywords.push('Régimen PH', 'Propiedad horizontal');
+  }
+  if (property.features?.garage || property.features?.cochera) {
+    featureKeywords.push('Con garaje y entrada para auto');
+  }
+  if (property.features?.fondo || property.features?.garden || property.features?.patio) {
+    featureKeywords.push('Con fondo y patio');
+  }
+  if (property.features?.barbecue || property.features?.barbacoa || property.features?.parrillero) {
+    featureKeywords.push('Con parrillero y barbacoa');
+  }
+  if (property.features?.pool) {
+    featureKeywords.push('Con piscina');
+  }
+  if (property.location?.neighborhood) {
+    featureKeywords.push(`Inmueble en ${property.location.neighborhood}`);
+  }
+  if (property.focusKeywords) {
+    featureKeywords.push(...property.focusKeywords.split(',').map((k) => k.trim()).filter(Boolean));
+  }
+  if (featureKeywords.length > 0) {
+    itemEntity.keywords = featureKeywords.join(', ');
+  }
+
   // Entidad de Publicación (RealEstateListing)
   const listingEntity: any = {
     '@type': 'RealEstateListing',
@@ -587,8 +617,13 @@ export function generatePropertyGraphSchema(property: Property) {
     availability = 'https://schema.org/SoldOut';
   }
 
-  // Oferta comercial (Offer) - se emite con estado real si el precio está disponible
-  const offerEntity: any = property.price?.amount
+  // Oferta comercial (Offer): Solo se emite si tiene monto positivo y modalidad 'visible' (o 'desde')
+  // Excluye estrictamente 'consultar', 'reservado', 'oculto' y propiedades no disponibles
+  const hasVisiblePrice =
+    Boolean(property.price?.amount && property.price.amount > 0) &&
+    (property.price?.priceMode === 'visible' || property.price?.priceMode === 'desde');
+
+  const offerEntity: any = (isOfferActive && hasVisiblePrice)
     ? {
         '@type': 'Offer',
         '@id': `${canonicalUrl}#offer`,

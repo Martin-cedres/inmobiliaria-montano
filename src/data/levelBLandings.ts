@@ -107,8 +107,8 @@ export const LEVEL_B_LANDINGS: LevelBLandingDefinition[] = [
     path: '/casas-aptas-para-banco-san-jose',
     title: 'Casas Aptas para Préstamo Bancario e Hipotecario en San José',
     shortTitle: 'Casas Aptas Banco',
-    seoTitle: 'Casas Aptas para Préstamo Bancario e Hipotecario en San José',
-    seoDescription: 'Casas en venta aptas para crédito hipotecario y préstamos bancarios (BHU, Santander, Itaú, BBVA) en San José de Mayo. Títulos y planos al día. Daniel Montaño.',
+    seoTitle: 'Casas Aptas para Préstamo Bancario e Hipotecario en San José | BHU y BROU',
+    seoDescription: 'Casas en venta aptas para crédito hipotecario y préstamos bancarios (BHU, BROU, Santander, Itaú, BBVA) en San José de Mayo. Títulos, planos y sucesiones al día. Daniel Montaño.',
     searchIntentKeywords: [
       'casas aptas para banco san jose',
       'casas aptas para prestamos hipotecarios san jose',
@@ -116,6 +116,8 @@ export const LEVEL_B_LANDINGS: LevelBLandingDefinition[] = [
       'comprar casa con prestamo bancario san jose',
       'casas en venta con credito hipotecario san jose',
       'comprar casa con bhu san jose',
+      'comprar casa con brou san jose',
+      'credito hipotecario brou san jose',
       'prestamos hipotecarios casas san jose de mayo',
       'credito hipotecario casas san jose uruguay',
     ],
@@ -126,19 +128,19 @@ export const LEVEL_B_LANDINGS: LevelBLandingDefinition[] = [
     editorialContent: {
       badgeText: 'Certeza Jurídica y Financiamiento',
       headline: 'Casas Aptas para Préstamo Bancario e Hipotecario en San José',
-      subheadline: 'Propiedades con documentación perfecta, planos registrados y títulos al día para compra con préstamo hipotecario (BHU, Santander, Itaú, BBVA, Scotiabank).',
-      locationContext: 'Comprar una casa con financiamiento bancario exige que la propiedad cumpla estrictos requisitos notariales y de agrimensura ante BHU o bancos privados.',
-      marketAnalysis: 'En Inmobiliaria Montaño auditamos previamente los títulos, aportes a BPS e impuestos municipales para que tu trámite de crédito hipotecario sea ágil y sin objeciones.',
+      subheadline: 'Propiedades con documentación perfecta, planos registrados y títulos al día para compra con crédito hipotecario (BHU, BROU, Santander, Itaú, BBVA, Scotiabank).',
+      locationContext: 'Comprar una casa con financiamiento bancario exige que la propiedad cumpla estrictos requisitos notariales y de agrimensura ante BHU, BROU o bancos privados.',
+      marketAnalysis: 'En Inmobiliaria Montaño auditamos previamente los títulos, sucesiones tramitadas, aportes a BPS e impuestos municipales para que tu trámite de crédito hipotecario sea aprobado con agilidad y sin objeciones.',
       adviceForBuyers: 'Te asesoramos junto a escribanos de confianza durante todo el proceso de tasación pericial del banco y escrituración.',
     },
     faqs: [
       {
-        question: '¿Qué requisitos debe cumplir una casa para ser aceptada por un préstamo bancario o hipotecario?',
-        answer: 'Debe contar con títulos de propiedad continuos de 30 años sin gravámenes, planos de mensura registrados en Catastro, final de obra o regularización de BPS al día, y estar al día con la Contribución Inmobiliaria y Primaria.',
+        question: '¿Qué requisitos debe cumplir una casa para ser aceptada por un crédito bancario (BHU, BROU o privados)?',
+        answer: 'Debe contar con títulos de propiedad continuos de 30 años sin gravámenes ni embargos (o sucesión debidamente inscripta y finalizada), planos de mensura registrados en Catastro coincidentes con la edificación existente, regularización ante BPS y tributos de Contribución Inmobiliaria y Primaria al día.',
       },
       {
         question: '¿Qué bancos financian la compra de casas en San José de Mayo?',
-        answer: 'Trabajamos con todas las entidades bancarias de plaza: Banco Hipotecario del Uruguay (BHU), Banco Santander, Banco Itaú, BBVA y Scotiabank, asesorándote en los requisitos de cada institución.',
+        answer: 'Trabajamos con todas las entidades financieras de plaza: Banco Hipotecario del Uruguay (BHU), Banco República (BROU), Banco Santander, Banco Itaú, BBVA y Scotiabank, orientándote en los requerimientos específicos de cada institución.',
       },
       {
         question: '¿Cuánto porcentaje financian los bancos y cuánto ahorro previo se necesita?',

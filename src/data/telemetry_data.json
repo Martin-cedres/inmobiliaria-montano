@@ -674,6 +674,696 @@
       "pagePath": "/estadisticas-inmobiliarias-san-jose",
       "anonymousSessionId": "anon_1792554795238_kgxcgag",
       "referrer": "http://localhost:3000/admin/mercado"
+    },
+    {
+      "id": "evt_1792891651073_4w75tt",
+      "timestamp": "2026-10-25T01:27:31.073Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792891650828_69j37ne"
+    },
+    {
+      "id": "evt_1792891726283_z6p0n3",
+      "timestamp": "2026-10-25T01:28:46.283Z",
+      "eventType": "page_view",
+      "pagePath": "/vender-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792891650828_69j37ne"
+    },
+    {
+      "id": "evt_1792893834500_3epy53",
+      "timestamp": "2026-10-25T02:03:54.500Z",
+      "eventType": "page_view",
+      "pagePath": "/vender-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792891650828_69j37ne"
+    },
+    {
+      "id": "evt_1792893841595_di8ndf",
+      "timestamp": "2026-10-25T02:04:01.595Z",
+      "eventType": "page_view",
+      "pagePath": "/casas-en-venta-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792891650828_69j37ne"
+    },
+    {
+      "id": "evt_1792893843253_edezow",
+      "timestamp": "2026-10-25T02:04:03.253Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792891650828_69j37ne"
+    },
+    {
+      "id": "evt_1792893844610_832nx5",
+      "timestamp": "2026-10-25T02:04:04.610Z",
+      "eventType": "page_view",
+      "pagePath": "/casas-en-venta-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792891650828_69j37ne"
+    },
+    {
+      "id": "evt_1792893852032_xo3jy0",
+      "timestamp": "2026-10-25T02:04:12.032Z",
+      "eventType": "page_view",
+      "pagePath": "/tasaciones-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792891650828_69j37ne"
+    },
+    {
+      "id": "evt_1792893865545_gzyuk6",
+      "timestamp": "2026-10-25T02:04:25.545Z",
+      "eventType": "page_view",
+      "pagePath": "/vender-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792891650828_69j37ne"
+    },
+    {
+      "id": "evt_1792893868437_p4nqzu",
+      "timestamp": "2026-10-25T02:04:28.437Z",
+      "eventType": "page_view",
+      "pagePath": "/tasaciones-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792891650828_69j37ne"
+    },
+    {
+      "id": "evt_1792893872083_ub5plm",
+      "timestamp": "2026-10-25T02:04:32.083Z",
+      "eventType": "page_view",
+      "pagePath": "/vender-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792891650828_69j37ne"
+    },
+    {
+      "id": "evt_1792893878862_00m76h",
+      "timestamp": "2026-10-25T02:04:38.862Z",
+      "eventType": "page_view",
+      "pagePath": "/tasaciones-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792891650828_69j37ne"
+    },
+    {
+      "id": "evt_1792893887162_dp9356",
+      "timestamp": "2026-10-25T02:04:47.162Z",
+      "eventType": "page_view",
+      "pagePath": "/vender-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792891650828_69j37ne"
+    },
+    {
+      "id": "evt_1792894522442_xroiib",
+      "timestamp": "2026-10-25T02:15:22.442Z",
+      "eventType": "page_view",
+      "pagePath": "/vender-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792891650828_69j37ne"
+    },
+    {
+      "id": "evt_1792894527825_kmytma",
+      "timestamp": "2026-10-25T02:15:27.825Z",
+      "eventType": "page_view",
+      "pagePath": "/tasaciones-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792891650828_69j37ne"
+    },
+    {
+      "id": "evt_1792894531876_r8iqky",
+      "timestamp": "2026-10-25T02:15:31.876Z",
+      "eventType": "page_view",
+      "pagePath": "/vender-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792891650828_69j37ne"
+    },
+    {
+      "id": "evt_1792894534396_vmn5iz",
+      "timestamp": "2026-10-25T02:15:34.396Z",
+      "eventType": "page_view",
+      "pagePath": "/tasaciones-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792891650828_69j37ne"
+    },
+    {
+      "id": "evt_1792894536926_yd5wyq",
+      "timestamp": "2026-10-25T02:15:36.926Z",
+      "eventType": "page_view",
+      "pagePath": "/vender-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792891650828_69j37ne"
+    },
+    {
+      "id": "evt_1792894624543_eiykil",
+      "timestamp": "2026-10-25T02:17:04.543Z",
+      "eventType": "page_view",
+      "pagePath": "/vender-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792891650828_69j37ne",
+      "referrer": "http://localhost:3000/vender-propiedad-san-jose"
+    },
+    {
+      "id": "evt_1792894627739_bx2pgy",
+      "timestamp": "2026-10-25T02:17:07.740Z",
+      "eventType": "page_view",
+      "pagePath": "/estadisticas-inmobiliarias-san-jose",
+      "anonymousSessionId": "anon_1792891650828_69j37ne",
+      "referrer": "http://localhost:3000/vender-propiedad-san-jose"
+    },
+    {
+      "id": "evt_1792894630375_sp0v0d",
+      "timestamp": "2026-10-25T02:17:10.375Z",
+      "eventType": "page_view",
+      "pagePath": "/vender-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792891650828_69j37ne",
+      "referrer": "http://localhost:3000/vender-propiedad-san-jose"
+    },
+    {
+      "id": "evt_1792895138543_nztuit",
+      "timestamp": "2026-10-25T02:25:38.543Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792891650828_69j37ne",
+      "referrer": "http://localhost:3000/vender-propiedad-san-jose"
+    },
+    {
+      "id": "evt_1792895147225_zklflp",
+      "timestamp": "2026-10-25T02:25:47.225Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792891650828_69j37ne",
+      "referrer": "http://localhost:3000/vender-propiedad-san-jose"
+    },
+    {
+      "id": "evt_1792895619612_x7mytb",
+      "timestamp": "2026-10-25T02:33:39.612Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792891650828_69j37ne",
+      "referrer": "http://localhost:3000/"
+    },
+    {
+      "id": "evt_1792896045756_zcrsg8",
+      "timestamp": "2026-10-25T02:40:45.756Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792891650828_69j37ne",
+      "referrer": "http://localhost:3000/"
+    },
+    {
+      "id": "evt_1792896059983_44b4ac",
+      "timestamp": "2026-10-25T02:40:59.983Z",
+      "eventType": "page_view",
+      "pagePath": "/alquilar-mi-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792891650828_69j37ne",
+      "referrer": "http://localhost:3000/"
+    },
+    {
+      "id": "evt_1792896645259_7vyq9m",
+      "timestamp": "2026-10-25T02:50:45.259Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs"
+    },
+    {
+      "id": "evt_1792896883581_d3o82b",
+      "timestamp": "2026-10-25T02:54:43.581Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs"
+    },
+    {
+      "id": "evt_1792896893425_qegj30",
+      "timestamp": "2026-10-25T02:54:53.425Z",
+      "eventType": "page_view",
+      "pagePath": "/alquileres-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs"
+    },
+    {
+      "id": "evt_1792897069070_3fw3u9",
+      "timestamp": "2026-10-25T02:57:49.070Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs"
+    },
+    {
+      "id": "evt_1792897081216_ua3z75",
+      "timestamp": "2026-10-25T02:58:01.216Z",
+      "eventType": "page_view",
+      "pagePath": "/alquileres-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs"
+    },
+    {
+      "id": "evt_1792897131752_60qszq",
+      "timestamp": "2026-10-25T02:58:51.752Z",
+      "eventType": "page_view",
+      "pagePath": "/alquileres-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897191847_k1q8gf",
+      "timestamp": "2026-10-25T02:59:51.847Z",
+      "eventType": "page_view",
+      "pagePath": "/alquilar-mi-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897195963_uxtaum",
+      "timestamp": "2026-10-25T02:59:55.963Z",
+      "eventType": "page_view",
+      "pagePath": "/vender-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897203017_cc1iaw",
+      "timestamp": "2026-10-25T03:00:03.017Z",
+      "eventType": "page_view",
+      "pagePath": "/alquilar-mi-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897309612_pm1gav",
+      "timestamp": "2026-10-25T03:01:49.612Z",
+      "eventType": "page_view",
+      "pagePath": "/tasaciones-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897412083_lhl2ax",
+      "timestamp": "2026-10-25T03:03:32.083Z",
+      "eventType": "page_view",
+      "pagePath": "/casas-en-venta-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897413476_rlff8k",
+      "timestamp": "2026-10-25T03:03:33.476Z",
+      "eventType": "page_view",
+      "pagePath": "/alquileres-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897415432_2trilx",
+      "timestamp": "2026-10-25T03:03:35.432Z",
+      "eventType": "page_view",
+      "pagePath": "/casas-en-venta-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897416575_r5co1b",
+      "timestamp": "2026-10-25T03:03:36.575Z",
+      "eventType": "page_view",
+      "pagePath": "/alquileres-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897426252_b99dhg",
+      "timestamp": "2026-10-25T03:03:46.252Z",
+      "eventType": "page_view",
+      "pagePath": "/casas-en-venta-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897433644_jmj6qw",
+      "timestamp": "2026-10-25T03:03:53.644Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897439083_rlv39u",
+      "timestamp": "2026-10-25T03:03:59.083Z",
+      "eventType": "page_view",
+      "pagePath": "/alquileres-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897440484_egik31",
+      "timestamp": "2026-10-25T03:04:00.485Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897644667_vj3bg5",
+      "timestamp": "2026-10-25T03:07:24.667Z",
+      "eventType": "page_view",
+      "pagePath": "/alquileres-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897645942_mfaso8",
+      "timestamp": "2026-10-25T03:07:25.942Z",
+      "eventType": "page_view",
+      "pagePath": "/casas-en-venta-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897648539_730m0x",
+      "timestamp": "2026-10-25T03:07:28.540Z",
+      "eventType": "page_view",
+      "pagePath": "/vender-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897655154_a2jjbl",
+      "timestamp": "2026-10-25T03:07:35.155Z",
+      "eventType": "page_view",
+      "pagePath": "/alquilar-mi-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897661739_6pkez5",
+      "timestamp": "2026-10-25T03:07:41.739Z",
+      "eventType": "page_view",
+      "pagePath": "/tasaciones-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897686706_xbzhr9",
+      "timestamp": "2026-10-25T03:08:06.706Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897688559_25yh43",
+      "timestamp": "2026-10-25T03:08:08.559Z",
+      "eventType": "page_view",
+      "pagePath": "/casas-en-venta-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897690134_hzne0e",
+      "timestamp": "2026-10-25T03:08:10.134Z",
+      "eventType": "page_view",
+      "pagePath": "/alquileres-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897691638_43wwhu",
+      "timestamp": "2026-10-25T03:08:11.638Z",
+      "eventType": "page_view",
+      "pagePath": "/casas-en-venta-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897692716_6nvlwa",
+      "timestamp": "2026-10-25T03:08:12.716Z",
+      "eventType": "page_view",
+      "pagePath": "/alquileres-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897694041_oyy9bq",
+      "timestamp": "2026-10-25T03:08:14.041Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897725366_9q1l8o",
+      "timestamp": "2026-10-25T03:08:45.366Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897914118_q6qh31",
+      "timestamp": "2026-10-25T03:11:54.118Z",
+      "eventType": "page_view",
+      "pagePath": "/vender-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897918437_2n18wf",
+      "timestamp": "2026-10-25T03:11:58.437Z",
+      "eventType": "page_view",
+      "pagePath": "/alquilar-mi-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792897936950_273d56",
+      "timestamp": "2026-10-25T03:12:16.951Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792898045048_kyj50y",
+      "timestamp": "2026-10-25T03:14:05.048Z",
+      "eventType": "page_view",
+      "pagePath": "/alquileres-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792898066747_uc8ztz",
+      "timestamp": "2026-10-25T03:14:26.747Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792898068666_newxag",
+      "timestamp": "2026-10-25T03:14:28.666Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792898070968_0yalf7",
+      "timestamp": "2026-10-25T03:14:30.968Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792898072285_lrlwo2",
+      "timestamp": "2026-10-25T03:14:32.285Z",
+      "eventType": "page_view",
+      "pagePath": "/alquileres-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792898369330_i26e7e",
+      "timestamp": "2026-10-25T03:19:29.330Z",
+      "eventType": "page_view",
+      "pagePath": "/alquileres-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792898371782_berpoy",
+      "timestamp": "2026-10-25T03:19:31.782Z",
+      "eventType": "page_view",
+      "pagePath": "/alquileres-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792898374448_npci21",
+      "timestamp": "2026-10-25T03:19:34.448Z",
+      "eventType": "page_view",
+      "pagePath": "/alquileres-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792898376994_nr8465",
+      "timestamp": "2026-10-25T03:19:36.994Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792898380844_g2qig0",
+      "timestamp": "2026-10-25T03:19:40.845Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792898753377_faeqw3",
+      "timestamp": "2026-10-25T03:25:53.377Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792898910296_392cbp",
+      "timestamp": "2026-10-25T03:28:30.296Z",
+      "eventType": "page_view",
+      "pagePath": "/casas-en-venta-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792898911019_jtpo8x",
+      "timestamp": "2026-10-25T03:28:31.019Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792898913027_caflh6",
+      "timestamp": "2026-10-25T03:28:33.027Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792898984177_ecf07j",
+      "timestamp": "2026-10-25T03:29:44.177Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792899008668_f13x84",
+      "timestamp": "2026-10-25T03:30:08.668Z",
+      "eventType": "page_view",
+      "pagePath": "/vender-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792899012677_zcvj6x",
+      "timestamp": "2026-10-25T03:30:12.677Z",
+      "eventType": "page_view",
+      "pagePath": "/alquilar-mi-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792899015365_ldwrlu",
+      "timestamp": "2026-10-25T03:30:15.365Z",
+      "eventType": "page_view",
+      "pagePath": "/tasaciones-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792899023131_o500ed",
+      "timestamp": "2026-10-25T03:30:23.131Z",
+      "eventType": "page_view",
+      "pagePath": "/vender-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792899032447_b2esgs",
+      "timestamp": "2026-10-25T03:30:32.447Z",
+      "eventType": "page_view",
+      "pagePath": "/alquilar-mi-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792899226425_8i13pb",
+      "timestamp": "2026-10-25T03:33:46.425Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792899238929_vgdmrk",
+      "timestamp": "2026-10-25T03:33:58.929Z",
+      "eventType": "page_view",
+      "pagePath": "/alquilar-mi-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792899373404_zlbhrj",
+      "timestamp": "2026-10-25T03:36:13.404Z",
+      "eventType": "page_view",
+      "pagePath": "/vender-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792899452622_do0vgi",
+      "timestamp": "2026-10-25T03:37:32.622Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792899456110_wgm4oy",
+      "timestamp": "2026-10-25T03:37:36.110Z",
+      "eventType": "page_view",
+      "pagePath": "/vender-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792899822263_gvb5b4",
+      "timestamp": "2026-10-25T03:43:42.263Z",
+      "eventType": "page_view",
+      "pagePath": "/vender-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquileres-san-jose-de-mayo"
+    },
+    {
+      "id": "evt_1792899823409_oeea0v",
+      "timestamp": "2026-10-25T03:43:43.409Z",
+      "eventType": "page_view",
+      "pagePath": "/vender-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/vender-propiedad-san-jose"
+    },
+    {
+      "id": "evt_1792901515813_jov7u7",
+      "timestamp": "2026-10-25T04:11:55.813Z",
+      "eventType": "page_view",
+      "pagePath": "/alquilar-mi-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/vender-propiedad-san-jose"
+    },
+    {
+      "id": "evt_1792901518740_p5x6br",
+      "timestamp": "2026-10-25T04:11:58.740Z",
+      "eventType": "page_view",
+      "pagePath": "/vender-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/vender-propiedad-san-jose"
+    },
+    {
+      "id": "evt_1792901639899_q03o8c",
+      "timestamp": "2026-10-25T04:13:59.899Z",
+      "eventType": "page_view",
+      "pagePath": "/vender-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/vender-propiedad-san-jose"
+    },
+    {
+      "id": "evt_1792901786488_8kxsh9",
+      "timestamp": "2026-10-25T04:16:26.488Z",
+      "eventType": "page_view",
+      "pagePath": "/alquilar-mi-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/vender-propiedad-san-jose"
     }
   ],
   "seoRecords": [

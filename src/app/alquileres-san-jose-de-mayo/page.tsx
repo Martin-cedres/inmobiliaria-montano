@@ -20,13 +20,13 @@ import {
   FileCheck,
   MapPin,
   Building,
-  Sparkles,
   PhoneCall,
   UserCheck,
   FileText,
   Award,
   CheckCircle2,
   ExternalLink,
+  ArrowRight,
 } from 'lucide-react';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
@@ -35,19 +35,20 @@ const PAGE_URL = `${BASE_URL}/alquileres-san-jose-de-mayo`;
 export const revalidate = 86400; // 24 horas ISR
 
 export const metadata: Metadata = {
-  title: 'Alquileres en San José y San José de Mayo | Casas y Apartamentos',
+  title: 'Alquileres en San José de Mayo: Casas, Apartamentos y Locales | Inmobiliaria Montaño',
   description:
-    'Alquiler de casas, apartamentos y locales en San José de Mayo. Convenio Oficial Círculo Policial (10% OFF) y garantías ANDA, Porto Seguro, SURA, CGN, Mapfre, Santander y FIDECIU. Trato directo con Daniel Montaño al 092 776 715.',
+    'Casas y apartamentos para alquilar en San José de Mayo. Opciones con garantía (ANDA, CGN, Aseguradoras, Depósito BHU y modalidad sin garantía tradicional / LUC) y trato directo con Daniel Montaño al 092 776 715.',
   keywords: [
     'alquileres san jose',
-    'alquileres en san jose',
+    'alquileres en san jose de mayo',
     'alquileres san jose uruguay',
-    'alquiler de casas san jose',
+    'casas para alquilar en san jose de mayo sin garantia',
     'apartamentos en alquiler san jose',
-    'alquileres san jose de mayo',
-    'alquiler de casas san jose uruguay',
+    'alquileres baratos san jose de mayo',
     'alquileres anda san jose',
     'alquileres porto seguro san jose',
+    'alquiler garantia deposito bhu san jose',
+    'alquiler sin garantia luc uruguay',
     'inmobiliaria montaño alquileres',
     'administracion de propiedades san jose',
   ],
@@ -55,9 +56,9 @@ export const metadata: Metadata = {
     canonical: PAGE_URL,
   },
   openGraph: {
-    title: 'Alquileres en San José y San José de Mayo — Inmobiliaria Montaño',
+    title: 'Alquileres en San José de Mayo: Casas, Apartamentos y Locales | Inmobiliaria Montaño',
     description:
-      'Casas, apartamentos y locales en alquiler en San José y San José de Mayo. Opciones con garantías ANDA, Porto Seguro y CGN.',
+      'Casas, apartamentos y locales en alquiler en San José de Mayo. Garantías ANDA, Porto Seguro, CGN, Depósito BHU y régimen sin garantía LUC.',
     url: PAGE_URL,
     siteName: 'Inmobiliaria Montaño',
     locale: 'es_UY',
@@ -67,15 +68,15 @@ export const metadata: Metadata = {
         url: `${BASE_URL}/og-logo.png`,
         width: 1200,
         height: 630,
-        alt: 'Alquileres en San José y San José de Mayo — Inmobiliaria Montaño',
+        alt: 'Alquileres en San José de Mayo — Inmobiliaria Montaño',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Alquileres en San José y San José de Mayo — Inmobiliaria Montaño',
+    title: 'Alquileres en San José de Mayo: Casas, Apartamentos y Locales | Inmobiliaria Montaño',
     description:
-      'Casas, apartamentos y locales en alquiler en San José con garantías seguras.',
+      'Casas, apartamentos y locales en alquiler en San José con garantías seguras y asesoramiento directo.',
     images: [`${BASE_URL}/og-logo.png`],
   },
   other: {
@@ -90,7 +91,17 @@ const FAQS: FaqItem[] = [
   {
     question: '¿Qué garantías de alquiler se aceptan en Inmobiliaria Montaño?',
     answer:
-      'Aceptamos todas las garantías líderes de plaza: ANDA, Contaduría General de la Nación (CGN), Porto Seguro, SURA, Mapfre, Santander y FIDECIU. Además, disponemos de un convenio oficial con el Círculo Policial de San José con 10% de bonificación en honorarios para socios.',
+      'Aceptamos todas las garantías líderes del mercado uruguayo: ANDA, Contaduría General de la Nación (CGN), Porto Seguro, SURA, Mapfre, Santander y FIDECIU. También asesoramos en depósitos de garantía en el BHU y en el régimen de libre contratación sin garantía tradicional al amparo de la LUC (Ley N° 19.889). Además, disponemos de convenio oficial con el Círculo Policial de San José con 10% de bonificación en honorarios para socios.',
+  },
+  {
+    question: '¿Es posible alquilar una propiedad en San José sin garantía tradicional?',
+    answer:
+      'Sí. Bajo la normativa de la Ley de Urgente Consideración (LUC), propietarios e inquilinos pueden acordar contratos de arrendamiento sin necesidad de presentar pólizas o garantías de fianza, siempre que ambas partes lo pacten de común acuerdo. En Inmobiliaria Montaño asesoramos a ambas partes para redactar contratos notariales claros con inventario detallado.',
+  },
+  {
+    question: '¿Cómo funciona la garantía por depósito en el Banco Hipotecario (BHU)?',
+    answer:
+      'Consiste en un depósito en custodia a nombre del arrendamiento en el BHU equivalente a 5 meses de alquiler (para vivienda) que genera intereses y se reintegra al finalizar el contrato tras comprobar el estado del inmueble.',
   },
   {
     question: '¿Cuál es el plazo habitual de los contratos de arrendamiento?',
@@ -103,11 +114,6 @@ const FAQS: FaqItem[] = [
       'Corresponde al inquilino el pago mensual del alquiler, los consumos de servicios (UTE, OSE, Internet), tributos domiciliarios de la Intendencia y gastos comunes si aplican. Corresponde al propietario el pago de la Contribución Inmobiliaria, Impuesto de Primaria y reparaciones estructurales del inmueble.',
   },
   {
-    question: '¿Cómo coordino una visita para ver una propiedad en alquiler?',
-    answer:
-      'Puedes escribirnos directamente por WhatsApp al 092 776 715 o presionar el botón de consulta en la ficha del inmueble. Coordinamos horarios flexibles para que puedas conocer la propiedad en persona.',
-  },
-  {
     question: '¿Qué servicios ofrece Inmobiliaria Montaño para propietarios que desean alquilar?',
     answer:
       'Nos encargamos de la tasación justa de renta, selección rigurosa y chequeo de garantías del inquilino, redacción del contrato notarial, inventario fotográfico inicial y administración mensual de cobranzas sin complicaciones.',
@@ -117,17 +123,19 @@ const FAQS: FaqItem[] = [
 export default async function AlquileresPage() {
   const allProperties = await getCachedProperties();
   
-  // Filtrar alquileres y apartamentos
-  const rentals = allProperties.filter(
-    (p) => p.operation === 'alquiler' || p.category === 'apartamento'
+  // Filtrar alquileres y propiedades en alquiler
+  const allRentals = allProperties.filter(
+    (p) => p.operation === 'alquiler'
   );
+
+  const activeRentals = allRentals.filter((p) => p.status !== 'alquilado' && p.status !== 'vendido');
 
   const contactWhatsappUrl = buildGeneralWhatsAppLink('general');
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 relative">
       {/* 0. Schema JSON-LD */}
-      <AlquileresJsonLd properties={rentals} faqs={FAQS} />
+      <AlquileresJsonLd properties={allRentals} faqs={FAQS} />
 
       {/* 1. Navbar */}
       <Header />
@@ -205,7 +213,7 @@ export default async function AlquileresPage() {
               <h2 className="text-xl sm:text-2xl font-black text-slate-900 flex items-center space-x-2">
                 <span>Propiedades en Alquiler Disponibles</span>
                 <span className="bg-[#5E1754]/10 text-[#5E1754] text-xs font-extrabold px-2.5 py-0.5 rounded-full">
-                  {rentals.length} disponibles
+                  {activeRentals.length} disponibles
                 </span>
               </h2>
               <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
@@ -222,7 +230,7 @@ export default async function AlquileresPage() {
             </Link>
           </div>
 
-          {rentals.length === 0 ? (
+          {activeRentals.length === 0 ? (
             <div className="bg-white rounded-3xl p-10 text-center border border-slate-200/80 space-y-3">
               <Building className="w-12 h-12 text-purple-300 mx-auto" />
               <h3 className="text-base font-bold text-slate-800">
@@ -234,12 +242,51 @@ export default async function AlquileresPage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {rentals.map((property, idx) => (
+              {activeRentals.map((property, idx) => (
                 <PropertyCard key={property.id} property={property} index={idx} />
               ))}
+
+              {/* Tarjeta Nativa de Captación de Alquileres (Cierra la fila en la 3ª columna) */}
+              <div className="bg-gradient-to-br from-[#2D0B28] via-[#43123C] to-[#5E1754] text-white rounded-3xl p-5 sm:p-6 shadow-xl border border-purple-400/25 flex flex-col justify-between relative overflow-hidden group">
+                <div className="space-y-3 relative z-10">
+                  <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/20 shadow-md">
+                    <Image
+                      src="/images/buscamos-propiedades-alquiler-4x3.jpg"
+                      alt="Estamos en la búsqueda de propiedades para alquilar en San José"
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      sizes="(max-width: 768px) 100vw, 350px"
+                    />
+                  </div>
+                  <div className="space-y-1.5 pt-1 text-left">
+                    <span className="inline-flex items-center space-x-1 text-[11px] font-black uppercase text-amber-300 tracking-wider">
+                      <Key className="w-3 h-3" />
+                      <span>Para Propietarios</span>
+                    </span>
+                    <h3 className="font-black text-lg text-white leading-tight">
+                      ¿Tenés una propiedad para alquilar?
+                    </h3>
+                    <p className="text-xs text-purple-200 leading-relaxed font-normal">
+                      Contamos con inquilinos calificados y garantías seguras esperando en San José de Mayo.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="pt-4 relative z-10">
+                  <Link
+                    href="/alquilar-mi-propiedad-san-jose"
+                    className="w-full inline-flex items-center justify-center space-x-2 bg-[#E85D04] hover:bg-[#FF8500] active:scale-95 text-white font-black text-xs py-3 px-4 rounded-xl shadow-lg transition-all"
+                  >
+                    <span>Conocer Servicio de Alquiler y Administración</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              </div>
             </div>
           )}
         </section>
+
+
 
         {/* 3.5. Confianza Institucional: Convenio Círculo Policial & Garantías Homologadas */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 w-full">
@@ -330,7 +377,7 @@ export default async function AlquileresPage() {
           <div className="max-w-6xl mx-auto space-y-8">
             <div className="text-center max-w-2xl mx-auto space-y-2">
               <span className="inline-flex items-center space-x-1.5 bg-[#5E1754]/10 text-[#5E1754] px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5" />
+                <ShieldCheck className="w-3.5 h-3.5" />
                 <span>Gestión de Arrendamientos</span>
               </span>
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
@@ -369,6 +416,68 @@ export default async function AlquileresPage() {
                 <h3 className="font-extrabold text-base text-slate-900">Administración para Propietarios</h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
                   Cuidamos tu patrimonio con cobranza puntual, control de servicios e impuestos al día y atención continua ante cualquier eventualidad.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 4.5. Bloque SEO Informativo: Modalidades de Garantía en San José de Mayo */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 md:p-10 border border-slate-200/80 shadow-xs space-y-6 text-left">
+            <div className="space-y-2">
+              <span className="inline-flex items-center space-x-1.5 bg-[#5E1754]/10 text-[#5E1754] px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>Marco Legal & Garantías en Uruguay</span>
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                Garantías y Modalidades de Alquiler en San José de Mayo
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                En Inmobiliaria Montaño facilitamos el acceso a la vivienda y protegemos el patrimonio de los propietarios asesorando en todas las modalidades legales vigentes en plaza.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pt-2">
+              <div className="bg-slate-50 rounded-2xl p-5 border border-slate-200/80 space-y-2.5">
+                <h3 className="font-black text-sm text-[#5E1754]">Garantías Estatales e Institucionales</h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Operamos con <strong>ANDA</strong> y la <strong>Contaduría General de la Nación (CGN)</strong>, brindando máxima seguridad de cobro para jubilados, pensionistas y funcionarios públicos o dependientes privados.
+                </p>
+              </div>
+
+              <div className="bg-slate-50 rounded-2xl p-5 border border-slate-200/80 space-y-2.5">
+                <h3 className="font-black text-sm text-[#5E1754]">Pólizas de Aseguradoras Privadas</h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Aprobación ágil en 24 horas mediante <strong>Porto Seguro, SURA, Mapfre, Santander y FIDECIU</strong>. Cobertura total de renta mensual, gastos comunes, consumos de UTE/OSE y eventuales daños edilicios.
+                </p>
+              </div>
+
+              <div className="bg-slate-50 rounded-2xl p-5 border border-slate-200/80 space-y-2.5">
+                <h3 className="font-black text-sm text-[#5E1754]">Depósito en Garantía (BHU)</h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Para quienes no cuentan con recibos de sueldo tradicionales o ingresos formales fijos, gestionamos el depósito en custodia en el <strong>Banco Hipotecario del Uruguay (5 meses de alquiler)</strong> con devolución de intereses.
+                </p>
+              </div>
+
+              <div className="bg-slate-50 rounded-2xl p-5 border border-slate-200/80 space-y-2.5">
+                <h3 className="font-black text-sm text-[#5E1754]">Régimen Sin Garantía Tradicional (LUC)</h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Bajo la Ley N° 19.889 (LUC), facilitamos acuerdos directos de arrendamiento sin costo de póliza ni fianza, respaldados por contratos notariales rigurosos con inventario detallado para seguridad de ambas partes.
+                </p>
+              </div>
+
+              <div className="bg-slate-50 rounded-2xl p-5 border border-slate-200/80 space-y-2.5">
+                <h3 className="font-black text-sm text-[#5E1754]">Convenio Círculo Policial San José</h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Los socios activos y retirados del <strong>Círculo Policial de San José</strong> acceden a un <strong>10% de bonificación exclusiva</strong> en la comisión inmobiliaria en todos los contratos de arrendamiento.
+                </p>
+              </div>
+
+              <div className="bg-slate-50 rounded-2xl p-5 border border-slate-200/80 space-y-2.5">
+                <h3 className="font-black text-sm text-[#5E1754]">Administración Mensual Transparente</h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Liquidación puntual mes a mes, control permanente de tributos e impuestos al día e inspección presencial del estado del inmueble con Daniel Montaño.
                 </p>
               </div>
             </div>

@@ -6,6 +6,8 @@ export const revalidate = 86400; // 24 horas
 
 // Fecha base editorial estable para páginas institucionales (no inventa new Date())
 const STABLE_EDITORIAL_DATE = new Date('2026-08-20T00:00:00.000Z');
+// Fecha de actualización para landings institucionales y captación de propietarios
+const RECENT_EDITORIAL_DATE = new Date('2026-10-25T00:00:00.000Z');
 
 /**
  * Obtiene la fecha de modificación más reciente real a partir de un listado de inmuebles.
@@ -105,13 +107,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${baseUrl}/tasaciones-san-jose-de-mayo`,
-      lastModified: STABLE_EDITORIAL_DATE,
+      lastModified: RECENT_EDITORIAL_DATE,
       changeFrequency: 'weekly',
       priority: 0.90,
     },
     {
       url: `${baseUrl}/vender-propiedad-san-jose`,
-      lastModified: STABLE_EDITORIAL_DATE,
+      lastModified: RECENT_EDITORIAL_DATE,
+      changeFrequency: 'weekly',
+      priority: 0.90,
+    },
+    {
+      url: `${baseUrl}/alquilar-mi-propiedad-san-jose`,
+      lastModified: RECENT_EDITORIAL_DATE,
       changeFrequency: 'weekly',
       priority: 0.90,
     },

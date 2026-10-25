@@ -1,12 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon';
 import { Phone, Mail, MapPin, Send, Clock, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { MONTAÑO_WHATSAPP_PHONE, MONTAÑO_OFFICIAL_EMAIL } from '@/utils/whatsapp';
 import { trackWhatsappClick } from '@/utils/telemetry';
 
 export const ContactSection: React.FC = () => {
+  const router = useRouter();
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
@@ -22,6 +24,7 @@ export const ContactSection: React.FC = () => {
     const waUrl = `https://wa.me/${MONTAÑO_WHATSAPP_PHONE}?text=${encodeURIComponent(text)}`;
     window.open(waUrl, '_blank');
     setSubmitted(true);
+    router.push('/gracias');
   };
 
   return (

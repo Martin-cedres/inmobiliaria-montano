@@ -33,19 +33,19 @@ const PAGE_URL = `${BASE_URL}/casas-en-venta-san-jose-de-mayo`;
 export const revalidate = 86400; // 24 horas ISR
 
 export const metadata: Metadata = {
-  title: 'Casas en Venta en San José de Mayo',
+  title: 'Casas en Venta en San José de Mayo: Centro, Molino y Aptas Banco | Inmobiliaria Montaño',
   description:
-    'Catálogo exclusivo de casas en venta en San José y San José de Mayo, Uruguay. Opciones residenciales y céntricas con títulos al día y aptitud para crédito bancario. Asesoramiento con Daniel Montaño al 092 776 715.',
+    'Catálogo exclusivo de casas en venta en San José de Mayo. Opciones en Centro, Plaza Arriaga, Barrio Molino y Parque Rodó. Títulos al día, régimen PH y aptas para crédito bancario (BHU/BROU) con Daniel Montaño al 092 776 715.',
   keywords: [
     'casas en venta en san jose de mayo',
     'casas en venta san jose de mayo',
     'casas en venta san jose',
-    'casas en venta en san jose',
-    'comprar casa en san jose uruguay',
-    'casas en venta san jose uruguay',
-    'casas aptas para banco san jose de mayo',
     'casas centro san jose',
-    'casas arroyo mallada',
+    'casas barrio molino san jose',
+    'casas plaza arriaga san jose',
+    'casas aptas para banco san jose de mayo',
+    'casas en ph san jose de mayo',
+    'comprar casa en san jose uruguay',
     'inmobiliaria montaño casas',
     'daniel montaño propiedades',
   ],
@@ -53,9 +53,9 @@ export const metadata: Metadata = {
     canonical: PAGE_URL,
   },
   openGraph: {
-    title: 'Casas en Venta en San José de Mayo | Inmobiliaria Montaño',
+    title: 'Casas en Venta en San José de Mayo: Centro, Molino y Aptas Banco | Inmobiliaria Montaño',
     description:
-      'Encontrá tu casa en San José y San José de Mayo con títulos verificados, opciones aptas para banco y atención directa de Daniel Montaño.',
+      'Encontrá tu casa en San José de Mayo con títulos verificados, opciones en PH, aptas para banco y atención directa de Daniel Montaño.',
     url: PAGE_URL,
     siteName: 'Inmobiliaria Montaño',
     locale: 'es_UY',
@@ -449,6 +449,76 @@ export default async function CasasEnVentaPage() {
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 5.5. Guía de Barrios para Comprar Casa en San José de Mayo */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 md:p-10 border border-slate-200/80 shadow-xs space-y-6 text-left">
+            <div className="space-y-2">
+              <span className="inline-flex items-center space-x-1.5 bg-[#5E1754]/10 text-[#5E1754] px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider">
+                <MapPin className="w-3.5 h-3.5" />
+                <span>Ubicaciones & Entorno Urbano</span>
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                Principales Barrios para Comprar Casa en San José de Mayo
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                Cada zona de San José ofrece perfiles edilicios y ventajas distintas según tus prioridades familiares, cercanía a servicios o presupuesto:
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pt-2">
+              <div className="bg-slate-50 rounded-2xl p-5 border border-slate-200/80 space-y-2">
+                <h3 className="font-black text-sm text-[#5E1754]">Centro y Plaza de los Treinta y Tres</h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Padrón único, techos altos, construcción tradicional sólida y proximidad inmediata a bancos, colegios, oficinas públicas y mutualistas.
+                </p>
+              </div>
+
+              <div className="bg-slate-50 rounded-2xl p-5 border border-slate-200/80 space-y-2">
+                <h3 className="font-black text-sm text-[#5E1754]">Plaza Arriaga y Régimen PH</h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Zona residencial apacible muy buscada para primera vivienda y casas bajo <strong>régimen de Propiedad Horizontal (PH)</strong> con patio propio y excelente costo-beneficio.
+                </p>
+              </div>
+
+              <div className="bg-slate-50 rounded-2xl p-5 border border-slate-200/80 space-y-2">
+                <h3 className="font-black text-sm text-[#5E1754]">Barrio Molino y Plaza Artigas</h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Barrio histórico, familiar y arbolado. Casas con garaje, fondos generosos y rápida conexión a las principales avenidas de salida hacia rutas nacionales.
+                </p>
+              </div>
+
+              <div className="bg-slate-50 rounded-2xl p-5 border border-slate-200/80 space-y-2">
+                <h3 className="font-black text-sm text-[#5E1754]">Zona Hospital y Policlínicas</h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Puntos estratégicos para quienes valoran la cercanía a centros de salud, farmacias y líneas de transporte. Alta demanda para renta y vivienda compacta.
+                </p>
+              </div>
+
+              <div className="bg-slate-50 rounded-2xl p-5 border border-slate-200/80 space-y-2">
+                <h3 className="font-black text-sm text-[#5E1754]">Parque Rodó y Arroyo Mallada</h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  El pulmón verde de San José: entornos abiertos, chalets con jardines amplios, barbacoas y proyectos modernos con gran proyección de valorización.
+                </p>
+              </div>
+
+              <div className="bg-gradient-to-br from-[#350A2F] to-[#5E1754] text-white rounded-2xl p-5 border border-purple-400/30 space-y-2 flex flex-col justify-between">
+                <div>
+                  <h3 className="font-black text-sm text-amber-300">¿Buscás comprar con Préstamo Bancario?</h3>
+                  <p className="text-xs text-purple-100 leading-relaxed mt-1">
+                    Disponemos de una selección exclusiva de casas con planos registrados y títulos al día aptas para <strong>BHU, BROU, Santander e Itaú</strong>.
+                  </p>
+                </div>
+                <Link
+                  href="/casas-aptas-para-banco-san-jose"
+                  className="text-xs font-black text-white bg-[#E85D04] hover:bg-[#ff7518] px-3.5 py-2 rounded-xl text-center transition-all inline-block mt-2"
+                >
+                  Ver Casas Aptas Banco →
+                </Link>
               </div>
             </div>
           </div>

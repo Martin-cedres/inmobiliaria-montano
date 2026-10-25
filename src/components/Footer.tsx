@@ -151,6 +151,15 @@ export const Footer: React.FC<FooterProps> = () => {
               </li>
               <li>
                 <Link
+                  href="/alquilar-mi-propiedad-san-jose"
+                  className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
+                >
+                  <Key className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
+                  <span>Alquilar y Administrar</span>
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/proyectos-y-viviendas-modulares-san-jose"
                   className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
                 >

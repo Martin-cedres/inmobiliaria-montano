@@ -37,8 +37,12 @@ export async function generateStaticParams() {
 // Generación automática de Metadata SEO para Google y Redes Sociales desde Data Cache
 export async function generateMetadata({ params }: PropertyDetailPageProps) {
   const resolvedParams = await params;
-  const result = await findPropertyBySlugOrPrevious(resolvedParams.slug);
+  const requestedSlug = resolvedParams.slug;
+  const result = await findPropertyBySlugOrPrevious(requestedSlug);
   if (!result) return {};
+  if (result.isPrevious || result.property.slug !== requestedSlug) {
+    permanentRedirect(`/propiedad/${result.property.slug}`);
+  }
   return generatePropertyMetadata(result.property);
 }
 
@@ -484,12 +488,16 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                   </div>
                 )}
                 {property.features.bankCreditEligible && (
-                  <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">
-                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754]/10 text-[#5E1754] flex-shrink-0">
+                  <Link
+                    href="/casas-aptas-para-banco-san-jose"
+                    title="Ver todas las propiedades aptas para préstamo bancario en San José"
+                    className="flex items-center space-x-2.5 sm:space-x-3 bg-purple-50/70 hover:bg-purple-100 border border-purple-200/90 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-[#5E1754] hover:text-[#e85d04] shadow-2xs transition-all group"
+                  >
+                    <span className="p-1.5 sm:p-2 rounded-xl bg-[#5E1754] text-white flex-shrink-0 group-hover:bg-[#e85d04] transition-colors">
                       <Landmark className="w-4 h-4 sm:w-5 sm:h-5" />
                     </span>
-                    <span className="truncate">Apta Crédito</span>
-                  </div>
+                    <span className="truncate">Apta Crédito Bancario →</span>
+                  </Link>
                 )}
                 {property.features.acceptsTradeIn && (
                   <div className="flex items-center space-x-2.5 sm:space-x-3 bg-slate-50 border border-slate-200/80 p-2.5 sm:p-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 shadow-2xs">

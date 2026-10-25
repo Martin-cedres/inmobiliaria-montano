@@ -33,9 +33,9 @@ const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamo
 const PAGE_URL = `${BASE_URL}/vender-propiedad-san-jose`;
 
 export const metadata: Metadata = {
-  title: 'Vender Casa o Terreno en San José de Mayo | Inmobiliaria Montaño',
+  title: 'Estamos en Búsqueda de Propiedades en San José | Inmobiliaria Montaño',
   description:
-    'Vendé tu casa, terreno, solar o chacra en San José con rapidez y seguridad. Clientes concretos en lista de espera, tasación profesional sin costo y acompañamiento notarial con Daniel Montaño.',
+    'Estamos en búsqueda de casas, apartamentos, terrenos y campos en San José. Si estás considerando vender, nos interesa conocer tu propiedad. Contactanos para conversar sobre las posibilidades de venta.',
   keywords: [
     'vender propiedad san jose de mayo',
     'vender casa san jose uruguay',
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     canonical: PAGE_URL,
   },
   openGraph: {
-    title: 'Vender Casa o Terreno en San José — Inmobiliaria Montaño',
+    title: '¿Querés Vender tu Propiedad en San José? Clientes Concretos | Inmobiliaria Montaño',
     description:
       '¡Se precisan propiedades para la venta en San José! Clientes concretos esperando. Tasación y publicación sin costo inicial con Daniel Montaño.',
     url: PAGE_URL,
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Vender Casa o Terreno en San José — Inmobiliaria Montaño',
+    title: '¿Querés Vender tu Propiedad en San José? Clientes Concretos | Inmobiliaria Montaño',
     description:
       'Comercialización profesional de inmuebles en San José con Daniel Montaño. Clientes calificados esperando.',
     images: [`${BASE_URL}/images/se-precisan-propiedades-4x3.jpg`],
@@ -83,34 +83,34 @@ export const metadata: Metadata = {
 
 const FAQS: FaqItem[] = [
   {
-    question: '¿Por qué me conviene vender mi propiedad con Inmobiliaria Montaño?',
+    question: '¿Por qué publicar tu casa, chacra o terreno con Inmobiliaria Montaño?',
     answer:
-      'Combinamos conocimiento profundo del mercado de San José, cartera activa de compradores calificados en espera, plataforma web optimizada para Google e Inteligencia Artificial y un respaldo notarial permanente que protege tu patrimonio.',
+      'Combinamos conocimiento profundo del mercado maragato, cartera activa de compradores calificados en espera con fondos disponibles o crédito bancario pre-aprobado, difusión multicanal y un respaldo notarial permanente con atención directa y personalizada de Daniel Montaño.',
+  },
+  {
+    question: '¿Qué documentos necesito para poner en venta mi propiedad o vender por banco (BHU/BROU)?',
+    answer:
+      'Para comenzar se precisa cédula de identidad de los titulares, número de padrón catastral, plano de mensura registrado y recibos de Contribución Inmobiliaria e Impuesto de Primaria al día. Para operaciones con crédito bancario (BHU, BROU, Santander, Itaú), verificamos que los planos coincidan con lo edificado y que no existan deudas de BPS.',
   },
   {
     question: '¿Tiene algún costo publicar o tasar mi inmueble?',
     answer:
-      'No. La tasación, el relevamiento del inmueble y la publicación en nuestros canales son 100% gratuitos para el propietario. Nuestros honorarios se perciben únicamente al concretar exitosamente la venta ante escribano.',
+      'No. La tasación comercial, el relevamiento técnico del inmueble y la publicación en nuestros canales web y redes son 100% gratuitos para el propietario. Nuestros honorarios se perciben únicamente al concretar exitosamente la venta ante escribano.',
   },
   {
     question: '¿Cuál es la comisión inmobiliaria por venta?',
     answer:
-      'El arancel profesional de plaza está fijado en el 3% + IVA sobre el precio final de venta. No cobramos adelantos, gastos de cartelería ni mensualidades. Los honorarios se abonan únicamente al concretar la venta.',
-  },
-  {
-    question: '¿Qué documentación se necesita para poner una propiedad a la venta?',
-    answer:
-      'Se requiere copia de la cédula del titular, número de padrón catastral, plano de mensura si se cuenta con él, y recibo de Contribución Inmobiliaria al día ante la Intendencia de San José. Si hay una sucesión o trámite pendiente, te orientamos con escribanía asociada.',
+      'El arancel profesional habitual de plaza está fijado en el 3% + IVA sobre el precio final de venta. No cobramos adelantos, gastos de cartelería ni mensualidades. Los honorarios se abonan únicamente al concretar la venta.',
   },
   {
     question: '¿Cómo filtran a los compradores para evitar visitas innecesarias?',
     answer:
-      'Calificamos previamente el interés y la capacidad de pago del solicitante (fondos propios o crédito bancario pre-aprobado). Siempre coordinamos las visitas con aviso previo y acompañamiento presencial de Daniel Montaño.',
+      'Calificamos previamente el interés y la capacidad de pago del solicitante (fondos propios o crédito bancario en trámite). Siempre coordinamos las visitas con aviso previo y acompañamiento presencial de Daniel Montaño.',
   },
   {
     question: '¿Qué tipo de propiedades están buscando actualmente en San José?',
     answer:
-      'Tenemos clientes con intención de compra inmediata para Casas y Apartamentos (especialmente en Centro, Colón, Molino y Parque Rodó), Terrenos y Solares urbanos para edificar, y Chacras o Fracciones de campo cercanas a San José de Mayo, Ruta 1 y Ruta 3.',
+      'Tenemos clientes con intención de compra inmediata para Casas y Apartamentos (especialmente en Centro, Molino, Arriaga y Parque Rodó), Terrenos y Solares urbanos para edificar, y Chacras o Fracciones de campo cercanas a San José de Mayo, Ruta 1 y Ruta 3.',
   },
 ];
 
@@ -148,11 +148,11 @@ export default function VenderPropiedadPage() {
               </span>
 
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
-                Vendé tu Propiedad en <span className="text-amber-300">San José</span>
+                Estamos en Búsqueda de Propiedades en <span className="text-amber-300">San José</span>: Casas, Apartamentos, Terrenos y Campos
               </h1>
 
               <p className="text-slate-200 text-sm sm:text-base font-normal leading-relaxed max-w-2xl mx-auto">
-                Casas, apartamentos, solares y fracciones de campo. Difusión profesional de alto impacto, compradores calificados y la tranquilidad de operar con <strong>Daniel Montaño</strong>.
+                Si estás considerando vender, nos interesa conocer tu propiedad. Contactanos para conversar sobre las posibilidades de venta y clientes en espera con <strong>Daniel Montaño</strong>.
               </p>
             </div>
 
@@ -415,6 +415,27 @@ export default function VenderPropiedadPage() {
             title="Preguntas Frecuentes sobre la Venta de Inmuebles"
             subtitle="Respuestas claras a las consultas más habituales de propietarios."
           />
+        </section>
+
+        {/* 5.5. Banner cruzado hacia Alquileres */}
+        <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+          <div className="bg-gradient-to-r from-purple-50 to-amber-50 rounded-2xl p-5 border border-purple-200/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="space-y-1 text-center sm:text-left">
+              <h4 className="text-sm font-black text-slate-900">
+                ¿Preferís obtener una renta mensual sin vender tu inmueble?
+              </h4>
+              <p className="text-xs text-slate-600">
+                Gestionamos el alquiler con inquilinos calificados, garantías seguras (ANDA, CGN, Porto) y administración mensual.
+              </p>
+            </div>
+            <Link
+              href="/alquilar-mi-propiedad-san-jose"
+              className="inline-flex items-center space-x-1.5 bg-[#5E1754] hover:bg-[#43123C] text-white font-black text-xs px-4 py-2.5 rounded-xl transition-all shadow-xs whitespace-nowrap active:scale-95"
+            >
+              <span>Alquilar y Administrar</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
         </section>
 
         {/* 6. Bloque de Compromiso Personal */}

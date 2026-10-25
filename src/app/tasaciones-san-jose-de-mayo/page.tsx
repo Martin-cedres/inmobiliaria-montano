@@ -8,6 +8,7 @@ import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
 import { FaqAccordion, FaqItem } from '@/components/ui/FaqAccordion';
 import { TasacionesJsonLd } from '@/components/seo/TasacionesJsonLd';
 import { AppraisalPageForm } from '@/components/appraisal/AppraisalPageForm';
+import { OwnerCaptureBanner } from '@/components/OwnerCaptureBanner';
 import { buildGeneralWhatsAppLink } from '@/utils/whatsapp';
 import {
   Home as HomeIcon,
@@ -27,17 +28,17 @@ const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamo
 const PAGE_URL = `${BASE_URL}/tasaciones-san-jose-de-mayo`;
 
 export const metadata: Metadata = {
-  title: 'Tasaciones Inmobiliarias en San José y San José de Mayo — Daniel Montaño',
+  title: 'Tasaciones Inmobiliarias en San José de Mayo: ¿Cuánto Vale tu Propiedad? | Montaño',
   description:
-    'Tasación profesional, objetiva y real de propiedades en San José y San José de Mayo, Uruguay. Casas, apartamentos, solares y chacras. Conocé el verdadero valor de mercado con Daniel Montaño al 092 776 715.',
+    'Tasación profesional de casas, terrenos y chacras en San José de Mayo. Conocé el verdadero valor de mercado de tu propiedad con Daniel Montaño al 092 776 715. Informes en 24-48 hs.',
   keywords: [
     'tasaciones inmobiliarias san jose',
-    'tasaciones san jose',
+    'tasaciones san jose de mayo',
+    'cuanto vale mi casa en san jose',
     'tasador inmobiliario san jose',
     'tasador profesional san jose',
     'tasar casa en san jose uruguay',
-    'cuanto vale mi propiedad en san jose',
-    'tasaciones inmobiliarias san jose de mayo',
+    'tasacion para sucesion san jose',
     'tasacion de terrenos y campos san jose',
     'inmobiliaria montaño tasaciones',
     'daniel montaño tasador',
@@ -46,7 +47,7 @@ export const metadata: Metadata = {
     canonical: PAGE_URL,
   },
   openGraph: {
-    title: 'Tasaciones Inmobiliarias en San José y San José de Mayo — Inmobiliaria Montaño',
+    title: 'Tasaciones Inmobiliarias en San José de Mayo: ¿Cuánto Vale tu Propiedad? | Montaño',
     description:
       'Conocé el verdadero valor de mercado de tu inmueble en San José. Tasaciones objetivas y honestas con Daniel Montaño.',
     url: PAGE_URL,
@@ -64,7 +65,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Tasaciones Inmobiliarias en San José y San José de Mayo — Inmobiliaria Montaño',
+    title: 'Tasaciones Inmobiliarias en San José de Mayo: ¿Cuánto Vale tu Propiedad? | Montaño',
     description:
       'Conocé el verdadero valor de mercado de tu inmueble en San José.',
     images: [`${BASE_URL}/og-logo.png`],
@@ -79,9 +80,19 @@ export const metadata: Metadata = {
 
 const FAQS: FaqItem[] = [
   {
-    question: '¿Por qué es fundamental realizar una tasación profesional antes de publicar una propiedad?',
+    question: '¿Cuánto vale mi casa o terreno en San José de Mayo hoy?',
     answer:
-      'Fijar un precio fuera de mercado genera dos riesgos graves: si es demasiado alto, la propiedad se "quema" comercialmente y pasa meses sin consultas; si es demasiado bajo, pierdes dinero. Una tasación objetiva asegura vender al máximo valor real posible en un plazo óptimo.',
+      'El valor de mercado se determina mediante un Análisis Comparativo de Mercado (ACM) que evalúa las operaciones reales de cierre de propiedades similares en tu barrio, calidad constructiva, metraje edificado y de terreno, estado de conservación y regularización catastral. Entregamos un informe certero en 24 a 48 horas hábiles.',
+  },
+  {
+    question: '¿Cómo tasar y vender una propiedad en sucesión o régimen de PH en San José?',
+    answer:
+      'Para propiedades en sucesión o propiedad horizontal (PH), asesoramos a los copropietarios y herederos con una valoración equitativa y objetiva. Verificamos la documentación notarial (declaratoria de herederos, planos de fraccionamiento) para que la venta pueda realizarse de forma transparente y sin trabas jurídicas.',
+  },
+  {
+    question: '¿Realizan tasaciones para crédito bancario y garantías?',
+    answer:
+      'Sí. Evaluamos si la propiedad reúne los requisitos técnicos y registrales exigidos por bancos de plaza (BHU, BROU, Santander, Itaú, BBVA) para asegurar que califique como "Apta para Banco" sin observaciones imprevistas.',
   },
   {
     question: '¿Qué costo tiene solicitar una tasación con Inmobiliaria Montaño?',
@@ -92,16 +103,6 @@ const FAQS: FaqItem[] = [
     question: '¿Qué documentación es conveniente tener a mano para la tasación?',
     answer:
       'Es de gran utilidad contar con el número de padrón, plano de mensura o construcción si existiera, y el último recibo de Contribución Inmobiliaria para corroborar metrajes de terreno y área edificada.',
-  },
-  {
-    question: '¿Cuánto tiempo demora el proceso de tasación?',
-    answer:
-      'Una vez realizada la visita presencial al inmueble, elaboramos el informe de valoración en un plazo de 24 a 48 horas hábiles.',
-  },
-  {
-    question: '¿Qué factores determinan el precio final de una propiedad en San José?',
-    answer:
-      'Analizamos la ubicación y barrio, calidad constructiva, estado de mantenimiento, orientación solar, metraje del terreno, mejoras (garage, parrillero, piscina), regularización en BPS/Intendencia y los valores reales de cierre de propiedades similares en la zona.',
   },
 ];
 
@@ -139,7 +140,7 @@ export default function TasacionesPage() {
               </span>
 
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
-                Tasaciones Inmobiliarias en <span className="text-amber-300">San José</span> y San José de Mayo
+                Tasación Profesional de Casas, Terrenos y Chacras en <span className="text-amber-300">San José de Mayo</span>
               </h1>
 
               <p className="text-slate-200 text-sm sm:text-base font-normal leading-relaxed max-w-2xl mx-auto">
@@ -235,6 +236,11 @@ export default function TasacionesPage() {
               </div>
             </div>
           </div>
+        </section>
+
+        {/* 4.5. Banner de Enlace Cruzado a Captación Activa */}
+        <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <OwnerCaptureBanner variant="home" />
         </section>
 
         {/* 5. Preguntas Frecuentes */}

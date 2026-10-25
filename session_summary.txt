@@ -1271,3 +1271,90 @@
 
 
 
+
+=== Sesión 2026-10-24 — Implementación de Optimizaciones SEO & Conversión Search Console ===
+- Saneamiento y Limpieza de Slugs Duplicados:
+  * Corregidos los 6 slugs con repeticiones en src/db/properties.json (MON-480, IND-BYPASS-01, MON-171, MON-419, MON-804, MON-711), preservando las URLs anteriores en previousSlugs.
+  * Inyectado permanentRedirect() en generateMetadata() en src/app/propiedad/[slug]/page.tsx para responder con 308/301 inmediato cuando se consulta un slug histórico.
+- Estrategia Anticanibalización de Captación y Tasaciones:
+  * Optimizada /vender-propiedad-san-jose enfocada en captación directa con H1 'Estamos en la Búsqueda de Propiedades en San José: Clientes Concretos Esperando' y FAQs de venta/documentos BHU y BROU.
+  * Optimizada /tasaciones-san-jose-de-mayo enfocada en valoración patrimonial con H1 'Tasación Profesional de Casas, Terrenos y Chacras en San José de Mayo', FAQs de sucesión/PH y banner cruzado de captación.
+  * Creada e integrada la ficha oficial MON-751 (se-precisan-propiedades-para-la-venta-san-jose-de-mayo-mon751) en la base de datos para responder 200 OK y no 404.
+- Captación y CTR en /alquileres-san-jose-de-mayo:
+  * Actualizados meta title y description para incluir modalidades con garantía y régimen sin garantía tradicional (LUC / Depósito BHU).
+  * Añadidas propiedades históricas alquiladas al final de la grilla con badge ALQUILADA y tarjeta de captación para dueños.
+  * Añadido bloque SEO H2 inferior detallando todas las modalidades de garantía y convenio Círculo Policial San José (10% OFF).
+- Corrección de Falso Precio en Schema JSON-LD (src/utils/seo.ts):
+  * Condicionado offerEntity estrictamente a priceMode === 'visible' || 'desde' con monto positivo, eliminando el amount: 50000 por defecto en propiedades 'consultar'.
+  * Enriquecido el itemEntity con características físicas y keywords semánticas de diferenciales reales ('Apta banco', 'Régimen PH', 'Con garaje', etc.).
+- Potenciación de las 4 Landings en Puerta de Página 1:
+  * /casas-en-venta-san-jose-de-mayo: título extendido y sección H2 de barrios (Centro, Molino, Arriaga, Hospital, Parque Rodó, PH).
+  * /casas-aptas-para-banco-san-jose: mención al BROU y conversión del badge 'Apta Crédito' en src/app/propiedad/[slug]/page.tsx en enlace interno hacia la landing.
+  * /terrenos-y-chacras-san-jose: título y H1 con las 4 palabras ('Terrenos, Solares, Chacras y Campos') destacando Arroyo Mallada, Chamizo y financiación directa.
+  * /locales-comerciales-y-galpones-san-jose: H1 con predios industriales y destaque del predio logístico de 12 Ha en Bypass Rutas 3 y 11.
+- Archivos Técnicos y Verificación:
+  * Creada la página de conversión src/app/gracias/page.tsx con robots noindex, nofollow y conectada tras envíos de formulario.
+  * Actualizado src/app/llms.txt/route.ts con las nuevas landings y la ficha MON-751.
+  * Verificado build de producción Next.js (81/81 rutas exitosas) y servidor de desarrollo activo en http://localhost:3000 respondiendo HTTP 200 OK.
+  * CERO git push a producción en cumplimiento con la directiva del usuario.
+- Ajuste de Copywriting en Captación (/vender-propiedad-san-jose):
+  * Actualizado el H1 principal, subtítulo de bajada y metadatos con el enfoque propuesto por el usuario: 'Estamos en Búsqueda de Propiedades en San José: Casas, Apartamentos, Terrenos y Campos' y 'Si estás considerando vender, nos interesa conocer tu propiedad. Contactanos para conversar sobre las posibilidades de venta...', humanizando el llamado a la acción y reduciendo la fricción para el propietario.
+  * Verificado localmente con TypeScript (0 errores) y respuesta HTTP 200 en localhost:3000.
+- Diseño y Generación de Piezas Publicitarias para Alquileres (4:3 y 1:1):
+  * Generado flyer oficial 4:3 (`public/images/buscamos-propiedades-alquiler-4x3.jpg`) y flyer cuadrado 1:1 (`public/images/buscamos-propiedades-alquiler-1x1.jpg`) para captación de alquileres y administración de propiedades en San José.
+  * Composición con casa residencial tradicional maragata y edificio moderno de apartamentos urbanos, manteniendo la identidad visual borgoña y dorada con logotipo oficial.
+  * Actualizada la pieza de ventas 4:3 (`public/images/se-precisan-propiedades-4x3.jpg`) con el diseño renovado provisto por el usuario.
+- Implementación del Ecosistema de Alquileres y Administración (/alquilar-mi-propiedad-san-jose):
+  * Creada la landing page dedicada `src/app/alquilar-mi-propiedad-san-jose/page.tsx` con arquitectura CRO completa: 4 pilares de administración, comparativa con riesgos de alquilar particular, integración con convenio Círculo Policial San José y formulario inteligente preconfigurado.
+  * Creado el componente estructurado `src/components/seo/AlquilarPropiedadJsonLd.tsx` inyectando entidades Service, HowTo de 4 pasos, FAQPage y BreadcrumbList para SEO y GEO.
+  * Creada la ficha oficial MON-752 (`se-precisan-propiedades-para-alquilar-san-jose-de-mayo-mon752`) en `src/db/properties.json`.
+  * Integrada tarjeta nativa de captación 4:3 en el 3er slot de `/alquileres-san-jose-de-mayo` y actualizados botones de captación para derivar a la nueva landing.
+  * Actualizados `src/utils/whatsapp.ts`, `src/components/appraisal/AppraisalPageForm.tsx`, `src/app/sitemap.ts`, `src/app/llms.txt/route.ts`, `src/components/seo/DepartmentInterlinking.tsx` y `src/components/Footer.tsx`.
+  * Verificada la compilación completa (`npm run build`, 83/83 rutas estáticas generadas) y HTTP 200 en localhost:3000. Cero git push a producción.
+- Rediseño del Header y Navbar con Botón Desplegable para Propietarios (Header.tsx):
+  * Incorporado el enlace 'Alquileres' al menú principal superior desktop y drawer móvil para maximizar PageRank interno y capturar el tráfico de búsqueda.
+  * Reemplazado el botón estático de ventas por el botón institucional 'Soy Propietario ▾' con menú desplegable que incluye: 'Vender mi Propiedad' (/vender-propiedad-san-jose), 'Alquilar y Administrar' (/alquilar-mi-propiedad-san-jose) y 'Tasación Oficial' (/tasaciones-san-jose-de-mayo).
+  * Drawer móvil reorganizado en secciones 'Buscar Inmueble' y 'Para Propietarios'.
+  * Compilación validada (npm run build exitoso, 83 rutas) y activo en http://localhost:3000. Cero git push.
+- Depuración de Propiedades Alquiladas en Alquileres (/alquileres-san-jose-de-mayo):
+  * Eliminada por completo la sección 'Propiedades Alquiladas' para preservar la veracidad y transparencia comercial de la marca.
+  * Removidas las fichas de prueba MON-822 y MON-823 de `src/db/properties.json`.
+  * Verificado en servidor local (HTTP 200, TypeScript 0 errores).
+- Reemplazo de Íconos de Destellos (Sparkles) en Alquileres:
+  * Sustituido el ícono `Sparkles` (estrellas) por `Key` (llave) en la pastilla 'Para Propietarios' y por `ShieldCheck` (garantía/seguridad) en 'Gestión de Arrendamientos' para una estética inmobiliaria formal y sobria.
+  * Verificado con `tsc` (0 errores) y respuesta HTTP 200 en localhost:3000.
+- Ajuste de Menú Superior (Opción 1 - Enfoque Sólido de Catálogo):
+  * Retirado el enlace 'Alquileres' del menú central de navegación superior y del drawer móvil para evitar expectativas de inventario residencial antes de contar con volumen de casas/apartamentos.
+  * Preservado el acceso a Alquileres vía filtros de catálogo en portada, enlaces de footer, interlinking SEO y opción 'Alquilar y Administrar' en el menú de Propietarios.
+  * Verificado con `tsc` (0 errores) y HTTP 200 en localhost:3000.
+- Optimización Responsiva Integral del Botón 'Soy Propietario' (Header.tsx):
+  * Implementado cierre automático al hacer click afuera (`handleClickOutside`) y con tecla Escape (`handleKeyDown`).
+  * Adaptado para visualización en todos los viewports: botón visible en desktop, tablets y móviles con tamaño adaptativo (`hidden xs:inline` / `Propietarios`).
+  * Rediseñada la tarjeta para propietarios dentro del drawer móvil con estilo nativo de app y accesos directos táctiles (`touch-manipulation`, área táctil mínima de 44px).
+  * Validado con `tsc` (0 errores) y HTTP 200 en localhost:3000.
+- Armonización Estética de Íconos de Propietarios (Header.tsx):
+  * Unificados los contenedores de íconos en el dropdown de escritorio con la identidad corporativa de Inmobiliaria Montaño (`rounded-xl`, bordes tonales, paleta `#5E1754` púrpura vino y `#E85D04` naranja enérgico, con efecto hover animado que rellena el contenedor con color sólido de marca).
+  * Reemplazados los fondos pasteles genéricos de Tailwind por las proporciones y tintes oficiales de la marca.
+  * Añadidos los badges de íconos en la tarjeta móvil (`w-8 h-8 rounded-xl bg-white/15 border border-white/20 text-amber-300`) en sintonía con las tarjetas dark luxury del sitio.
+  * Verificado con `tsc` (0 errores) y HTTP 200 en localhost:3000. Cero git push.
+- Simplificación del Menú 'Soy Propietario' a 2 Opciones Directas (Header.tsx):
+  * Reducido el menú desplegable (desktop y móvil) a las dos intenciones comerciales clave: 'Vender mi Propiedad' y 'Alquilar mi Propiedad'.
+  * Retirado 'Tasaciones' del desplegable para evitar dudas y maximizar clics calificados hacia captación.
+  * Preservada íntegramente la autoridad SEO de `/tasaciones-san-jose-de-mayo` (enlaces permanentes en Footer, sitemap XML, llms.txt e interlinking interno).
+  * Validado con `tsc` (0 errores) y HTTP 200 en localhost:3000. Cero git push.
+- Corrección de Estabilidad UX en el Desplegable de Propietarios (Header.tsx):
+  * Eliminada la zona muerta de 8px (`mt-2`) que causaba el colapso prematuro al mover el mouse desde el botón hacia el menú.
+  * Implementado puente invisible de hover (`pointer-events-auto`) y margen de tolerancia de 250ms con `setTimeout` (`closeTimeoutRef`) para transicionar el cursor sin cierres accidentales.
+  * Corregida la lógica de clic para evitar toggle invertido indeseado si el menú ya estaba activo por hover.
+  * Verificado en localhost:3000 con `tsc` (0 errores) y HTTP 200. Cero git push.
+- Blindaje Táctil y Responsivo para Dispositivos Pequeños (Header.tsx):
+  * Agregado soporte nativo para eventos `touchstart` en detección de clics externos para iOS (iPhone/iPad) y Android.
+  * Incorporada restricción de ancho `max-w-[calc(100vw-1.5rem)]` para prevenir desbordes laterales en pantallas ultra-angostas (<380px).
+  * Añadida propiedad `touch-manipulation` para anular la latencia táctil de 300ms en smartphones.
+  * Coordinado el cierre mutuo automático: abrir el botón de Propietarios cierra el menú hamburguesa móvil y viceversa.
+  * Verificado con `tsc` (0 errores) y HTTP 200 en localhost:3000. Cero git push.
+- Verificación y Actualización de Indexación para Googlebot (robots.txt, sitemap, feeds):
+  * Comprobado `/robots.txt` con permisos plenos (`Allow: /`) para Googlebot, Google-Extended, Bingbot, Applebot, GPTBot, ClaudeBot y enlace a sitemaps/feeds.
+  * Actualizado `sitemap.ts` con fecha de modificación fresca `2026-10-25` (`RECENT_EDITORIAL_DATE`) para `/alquilar-mi-propiedad-san-jose`, `/vender-propiedad-san-jose` y `/tasaciones-san-jose-de-mayo`, acelerando el rastreo prioritario de Googlebot.
+  * Comprobada la inyección de la ficha MON-752 en `sitemap.xml`, `google-catalog.xml` y `llms.txt`.
+  * Verificado en localhost:3000 con `tsc` (0 errores) y HTTP 200. Cero git push.
