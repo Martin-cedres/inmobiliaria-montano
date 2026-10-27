@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { MarketListing } from '@/types/market';
+import { detectCompetitorSignatures } from '@/lib/whatsapp';
 import {
   X,
-  Plus,
   Building2,
   Phone,
   User,
@@ -13,6 +13,8 @@ import {
   Globe,
   FileText,
   CheckCircle2,
+  ClipboardPaste,
+  AlertTriangle,
 } from 'lucide-react';
 
 interface AddOwnerModalProps {
@@ -24,6 +26,7 @@ interface AddOwnerModalProps {
 export function AddOwnerModal({ isOpen, onClose, onSuccess }: AddOwnerModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [rawPasteText, setRawPasteText] = useState('');
 
   const [formData, setFormData] = useState({
     title: '',
@@ -34,12 +37,111 @@ export function AddOwnerModal({ isOpen, onClose, onSuccess }: AddOwnerModalProps
     priceCurrency: 'USD' as 'USD' | 'UYU',
     contactName: '',
     contactPhone: '',
-    sourceName: 'Cartel en la calle',
+    sourceName: 'Mercado Libre (Dueño)',
     sourceUrl: '',
     internalNotes: '',
   });
 
+  const competitorWarning = useMemo(() => {
+    const check = detectCompetitorSignatures({
+      phone: formData.contactPhone,
+      title: formData.title,
+      description: `${rawPasteText} ${formData.internalNotes}`,
+      contactName: formData.contactName,
+    });
+    return check;
+  }, [formData, rawPasteText]);
+
   if (!isOpen) return null;
+
+  const handleSmartPaste = (text: string) => {
+    setRawPasteText(text);
+    if (!text.trim()) return;
+
+    const lower = text.toLowerCase();
+
+    // 1. Detectar Operación
+    const operation: 'venta' | 'alquiler' =
+      lower.includes('alquiler') || lower.includes('alquilo') || lower.includes('arriendo')
+        ? 'alquiler'
+        : 'venta';
+
+    // 2. Detectar Categoría
+    let category: 'casa' | 'apartamento' | 'terreno' | 'chacra' | 'local' | 'deposito' = 'casa';
+    if (lower.includes('apartamento') || lower.includes('apto') || lower.includes('monoambiente')) {
+      category = 'apartamento';
+    } else if (lower.includes('chacra') || lower.includes('campo') || lower.includes('hectarea') || lower.includes('hectárea') || lower.includes('estancia')) {
+      category = 'chacra';
+    } else if (lower.includes('terreno') || lower.includes('solar') || lower.includes('lote') || lower.includes('fraccion') || lower.includes('fracción')) {
+      category = 'terreno';
+    } else if (lower.includes('galpon') || lower.includes('galpón') || lower.includes('deposito') || lower.includes('depósito')) {
+      category = 'deposito';
+    } else if (lower.includes('local') || lower.includes('comercio') || lower.includes('comercial') || lower.includes('oficina')) {
+      category = 'local';
+    }
+
+    // 3. Detectar Zona / Localidad de San José
+    let neighborhood = 'San José de Mayo';
+    if (lower.includes('molino')) neighborhood = 'Barrio Molino';
+    else if (lower.includes('arriaga')) neighborhood = 'Barrio Arriaga';
+    else if (lower.includes('hospital')) neighborhood = 'Zona Hospital';
+    else if (lower.includes('mallada')) neighborhood = 'Parquización Arroyo Mallada';
+    else if (lower.includes('playa pascual') || lower.includes('pascual')) neighborhood = 'Playa Pascual';
+    else if (lower.includes('ciudad del plata') || lower.includes('delta del tigre') || lower.includes('santa monica') || lower.includes('santa mónica') || lower.includes('autodromo')) neighborhood = 'Ciudad del Plata';
+    else if (lower.includes('libertad') || lower.includes('colonia wilson')) neighborhood = 'Libertad';
+    else if (lower.includes('ecilda') || lower.includes('paullier') || lower.includes('perazza')) neighborhood = 'Ecilda Paullier';
+    else if (lower.includes('kiyu') || lower.includes('kiyú') || lower.includes('arazati') || lower.includes('cufre')) neighborhood = 'Kiyú';
+    else if (lower.includes('ruta 1') || lower.includes('ruta 3') || lower.includes('ruta 11') || lower.includes('juan soler') || lower.includes('rodriguez') || lower.includes('ituzaingo') || lower.includes('valdez')) neighborhood = 'Eje Rutas / Libertad';
+    else if (lower.includes('centro') || lower.includes('plaza')) neighborhood = 'Centro';
+
+    // 4. Extraer Precio y Moneda
+    let priceCurrency: 'USD' | 'UYU' = operation === 'alquiler' ? 'UYU' : 'USD';
+    let priceAmount = '';
+    const usdMatch = text.match(/(?:U\$S|USD|d[oó]lares)\s*([\d.,]+)/i);
+    const uyuMatch = text.match(/(?:\$U|\$)\s*([\d.,]+)/i);
+    if (usdMatch) {
+      priceCurrency = 'USD';
+      priceAmount = usdMatch[1].replace(/\./g, '').replace(/,/g, '');
+    } else if (uyuMatch) {
+      priceCurrency = 'UYU';
+      priceAmount = uyuMatch[1].replace(/\./g, '').replace(/,/g, '');
+    }
+
+    // 5. Extraer Teléfono Uruguayo
+    const phoneMatch = text.match(/(?:\+?598\s*0?9\d|09\d)[\s.\-_]?\d{3}[\s.\-_]?\d{3}/);
+    const contactPhone = phoneMatch ? phoneMatch[0].trim() : formData.contactPhone;
+
+    // 6. Extraer URL si fue pegada
+    const urlMatch = text.match(/https?:\/\/[^\s]+/i);
+    const sourceUrl = urlMatch ? urlMatch[0] : formData.sourceUrl;
+
+    // 7. Detectar Fuente por URL
+    let sourceName = formData.sourceName;
+    if (sourceUrl.includes('mercadolibre')) sourceName = 'Mercado Libre (Dueño)';
+    else if (sourceUrl.includes('facebook')) sourceName = 'Facebook Marketplace';
+    else if (sourceUrl.includes('gallito')) sourceName = 'Gallito Luis (Trato Directo)';
+    else if (sourceUrl.includes('infocasas')) sourceName = 'InfoCasas (Dueño)';
+
+    // 8. Armar título limpio con la primera línea útil
+    const firstLine = text
+      .split(/\r?\n/)
+      .map((l) => l.trim())
+      .find((l) => l.length > 6 && !l.startsWith('http'));
+
+    setFormData((prev) => ({
+      ...prev,
+      title: firstLine ? firstLine.slice(0, 95) : prev.title,
+      operation,
+      category,
+      neighborhood,
+      priceCurrency,
+      priceAmount: priceAmount || prev.priceAmount,
+      contactPhone: contactPhone || prev.contactPhone,
+      sourceUrl: sourceUrl || prev.sourceUrl,
+      sourceName,
+      internalNotes: text.slice(0, 600),
+    }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -97,8 +199,12 @@ export function AddOwnerModal({ isOpen, onClose, onSuccess }: AddOwnerModalProps
               <Building2 className="w-5 h-5 text-amber-300" />
             </div>
             <div>
-              <h3 className="text-base sm:text-lg font-black tracking-tight">Cargar Aviso de Dueño Vende</h3>
-              <p className="text-xs text-purple-200 font-medium">Registra captaciones de Facebook, calle o Mercado Libre</p>
+              <h3 className="text-base sm:text-lg font-black tracking-tight">
+                Cargar Aviso de Dueño Vende
+              </h3>
+              <p className="text-xs text-purple-200 font-medium">
+                Captación rápida de Mercado Libre, Facebook Marketplace o Cartel en Calle
+              </p>
             </div>
           </div>
           <button
@@ -118,6 +224,31 @@ export function AddOwnerModal({ isOpen, onClose, onSuccess }: AddOwnerModalProps
             </div>
           )}
 
+          {/* Autocompletado Inteligente Pegando Texto */}
+          <div className="bg-purple-50/60 border border-purple-200/80 rounded-2xl p-3.5 space-y-1.5">
+            <label className="flex items-center gap-1.5 text-xs font-black text-[#5E1754]">
+              <ClipboardPaste className="w-3.5 h-3.5 text-[#E85D04]" />
+              <span>Autocompletado Rápido (Opcional): Pegá el texto de Facebook o Mercado Libre</span>
+            </label>
+            <textarea
+              rows={2}
+              value={rawPasteText}
+              onChange={(e) => handleSmartPaste(e.target.value)}
+              placeholder="Pegá acá el texto completo del aviso y el sistema detectará solo el teléfono (099...), precio, zona y tipo de propiedad..."
+              className="w-full px-3 py-2 bg-white border border-purple-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#5E1754]/30"
+            />
+          </div>
+
+          {/* Alerta si detecta inmobiliaria */}
+          {competitorWarning.isCompetitor && (
+            <div className="p-3 bg-amber-50 border border-amber-300 rounded-xl flex items-start gap-2 text-xs">
+              <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+              <div className="text-amber-900">
+                <strong>Atención:</strong> El texto contiene señales de inmobiliaria ({competitorWarning.reason}). Verificá que sea realmente un dueño particular.
+              </div>
+            </div>
+          )}
+
           {/* Título */}
           <div>
             <label className="block text-xs font-bold text-slate-700 mb-1">
@@ -126,7 +257,7 @@ export function AddOwnerModal({ isOpen, onClose, onSuccess }: AddOwnerModalProps
             <input
               type="text"
               required
-              placeholder="Ej. Casa 3 dormitorios con fondo y garaje en Molino"
+              placeholder="Ej. Casa 3 dormitorios con fondo y garaje en Barrio Molino"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#5E1754]/30 focus:border-[#5E1754]"
@@ -139,7 +270,7 @@ export function AddOwnerModal({ isOpen, onClose, onSuccess }: AddOwnerModalProps
               <label className="block text-xs font-bold text-slate-700 mb-1">Operación</label>
               <select
                 value={formData.operation}
-                onChange={(e) => setFormData({ ...formData, operation: e.target.value as any })}
+                onChange={(e) => setFormData({ ...formData, operation: e.target.value as 'venta' | 'alquiler' })}
                 className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 focus:outline-none focus:ring-1 focus:ring-[#5E1754]"
               >
                 <option value="venta">Venta</option>
@@ -150,26 +281,31 @@ export function AddOwnerModal({ isOpen, onClose, onSuccess }: AddOwnerModalProps
               <label className="block text-xs font-bold text-slate-700 mb-1">Tipología</label>
               <select
                 value={formData.category}
-                onChange={(e) => setFormData({ ...formData, category: e.target.value as any })}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    category: e.target.value as 'casa' | 'apartamento' | 'terreno' | 'chacra' | 'local' | 'deposito',
+                  })
+                }
                 className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 focus:outline-none focus:ring-1 focus:ring-[#5E1754]"
               >
                 <option value="casa">Casa</option>
-                <option value="apartamento">Apartamento</option>
+                <option value="chacra">Campo / Chacra</option>
                 <option value="terreno">Terreno / Solar</option>
-                <option value="chacra">Chacra / Campo</option>
+                <option value="apartamento">Apartamento</option>
                 <option value="local">Local Comercial</option>
                 <option value="deposito">Galpón / Depósito</option>
               </select>
             </div>
           </div>
 
-          {/* Barrio y Precio */}
+          {/* Localidad en San José y Precio */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1">
                 <span className="flex items-center space-x-1">
                   <MapPin className="w-3.5 h-3.5 text-[#5E1754]" />
-                  <span>Microzona en San José</span>
+                  <span>Zona / Localidad en San José</span>
                 </span>
               </label>
               <select
@@ -177,15 +313,18 @@ export function AddOwnerModal({ isOpen, onClose, onSuccess }: AddOwnerModalProps
                 onChange={(e) => setFormData({ ...formData, neighborhood: e.target.value })}
                 className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 focus:outline-none focus:ring-1 focus:ring-[#5E1754]"
               >
-                <option value="Centro">Centro / Plazas</option>
-                <option value="Barrio Molino">Barrio Molino</option>
-                <option value="Barrio Arriaga">Barrio Arriaga</option>
-                <option value="Parquización Arroyo Mallada">Arroyo Mallada</option>
-                <option value="Libertad">Libertad</option>
-                <option value="Ciudad del Plata">Ciudad del Plata</option>
+                <option value="Centro">Centro / Plazas (SJM)</option>
+                <option value="Barrio Molino">Barrio Molino (SJM)</option>
+                <option value="Barrio Arriaga">Barrio Arriaga (SJM)</option>
+                <option value="Zona Hospital">Zona Hospital (SJM)</option>
+                <option value="Parquización Arroyo Mallada">Arroyo Mallada (SJM)</option>
+                <option value="San José de Mayo">San José de Mayo (General)</option>
+                <option value="Ciudad del Plata">Ciudad del Plata / Sta. Mónica</option>
                 <option value="Playa Pascual">Playa Pascual</option>
-                <option value="Kiyú">Kiyú</option>
-                <option value="Eje Rutas / Libertad">Eje Rutas / Chacras</option>
+                <option value="Libertad">Libertad</option>
+                <option value="Ecilda Paullier">Ecilda Paullier</option>
+                <option value="Kiyú">Kiyú / Costa</option>
+                <option value="Eje Rutas / Libertad">Eje Rutas 1, 3 y 11 / Chacras</option>
               </select>
             </div>
 
@@ -199,7 +338,7 @@ export function AddOwnerModal({ isOpen, onClose, onSuccess }: AddOwnerModalProps
               <div className="flex space-x-2">
                 <select
                   value={formData.priceCurrency}
-                  onChange={(e) => setFormData({ ...formData, priceCurrency: e.target.value as any })}
+                  onChange={(e) => setFormData({ ...formData, priceCurrency: e.target.value as 'USD' | 'UYU' })}
                   className="w-24 px-2 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 focus:outline-none focus:ring-1 focus:ring-[#5E1754]"
                 >
                   <option value="USD">USD</option>
@@ -260,12 +399,12 @@ export function AddOwnerModal({ isOpen, onClose, onSuccess }: AddOwnerModalProps
                 onChange={(e) => setFormData({ ...formData, sourceName: e.target.value })}
                 className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 focus:outline-none focus:ring-1 focus:ring-[#5E1754]"
               >
-                <option value="Cartel en la calle">Cartel en la calle</option>
+                <option value="Mercado Libre (Dueño)">Mercado Libre (Dueño)</option>
                 <option value="Facebook Marketplace">Facebook Marketplace</option>
                 <option value="Grupo de Facebook San José">Grupo de Facebook San José</option>
-                <option value="Mercado Libre">Mercado Libre (Dueño)</option>
-                <option value="Gallito Luis">Gallito Luis</option>
-                <option value="Dato / Recomendación">Dato / Recomendación de cliente</option>
+                <option value="Gallito Luis (Trato Directo)">Gallito Luis (Trato Directo)</option>
+                <option value="Cartel en la calle">Cartel en la calle</option>
+                <option value="Dato / Recomendación">Dato / Recomendación</option>
               </select>
             </div>
 
@@ -278,7 +417,7 @@ export function AddOwnerModal({ isOpen, onClose, onSuccess }: AddOwnerModalProps
               </label>
               <input
                 type="url"
-                placeholder="https://facebook.com/marketplace/item/..."
+                placeholder="https://..."
                 value={formData.sourceUrl}
                 onChange={(e) => setFormData({ ...formData, sourceUrl: e.target.value })}
                 className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-[#5E1754]"
@@ -291,24 +430,23 @@ export function AddOwnerModal({ isOpen, onClose, onSuccess }: AddOwnerModalProps
             <label className="block text-xs font-bold text-slate-700 mb-1">
               <span className="flex items-center space-x-1">
                 <FileText className="w-3.5 h-3.5 text-slate-500" />
-                <span>Notas Internas para Daniel</span>
+                <span>Notas Internas (Dirección exacta, padrón, estado, etc.)</span>
               </span>
             </label>
             <textarea
               rows={2}
-              placeholder="Ej. Cartel en la reja. Casa deshabitada. Llamar temprano para ofrecer tasación formal."
+              placeholder="Ej. Cartel visto en calle Ituzaingó casi Artigas. Casa con rejas negras..."
               value={formData.internalNotes}
               onChange={(e) => setFormData({ ...formData, internalNotes: e.target.value })}
               className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-[#5E1754]"
             />
           </div>
 
-          {/* Botones de Acción */}
-          <div className="pt-2 flex items-center justify-end space-x-3">
+          {/* Botones */}
+          <div className="flex items-center justify-end space-x-2.5 pt-3 border-t border-slate-100">
             <button
               type="button"
               onClick={onClose}
-              disabled={isSubmitting}
               className="px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 transition-all cursor-pointer"
             >
               Cancelar
@@ -316,10 +454,10 @@ export function AddOwnerModal({ isOpen, onClose, onSuccess }: AddOwnerModalProps
             <button
               type="submit"
               disabled={isSubmitting}
-              className="inline-flex items-center space-x-2 bg-[#E85D04] hover:bg-[#FF8500] text-white px-5 py-2.5 rounded-xl text-xs font-black shadow-md transition-all cursor-pointer disabled:opacity-50"
+              className="inline-flex items-center space-x-1.5 px-5 py-2.5 rounded-xl bg-[#E85D04] hover:bg-[#FF8500] text-white text-xs font-black shadow-md transition-all cursor-pointer disabled:opacity-50"
             >
-              <Plus className="w-4 h-4" />
-              <span>{isSubmitting ? 'Guardando...' : 'Guardar en Radar'}</span>
+              <CheckCircle2 className="w-4 h-4" />
+              <span>{isSubmitting ? 'Guardando...' : 'Guardar en el Radar'}</span>
             </button>
           </div>
         </form>

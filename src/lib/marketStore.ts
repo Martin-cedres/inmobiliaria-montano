@@ -526,7 +526,7 @@ export async function getAllMarketListings(): Promise<MarketListing[]> {
     const sql = getDbClient();
     try {
       await ensureMarketTablesExist(sql);
-      const rows = await sql`SELECT * FROM market_listings ORDER BY detected_at DESC;`;
+      const rows = await sql`SELECT * FROM market_listings WHERE origin = 'dueno_directo' ORDER BY detected_at DESC;`;
       if (rows && rows.length > 0) {
         return rows.map((r: Record<string, unknown>) => ({
           id: String(r.id),
@@ -538,7 +538,7 @@ export async function getAllMarketListings(): Promise<MarketListing[]> {
           department: String(r.department || 'San José'),
           priceAmount: Number(r.price_amount),
           priceCurrency: r.price_currency as 'USD' | 'UYU',
-          origin: r.origin as MarketListing['origin'],
+          origin: 'dueno_directo',
           competitorName: r.competitor_name ? String(r.competitor_name) : undefined,
           sourceName: String(r.source_name),
           sourceUrl: r.source_url ? String(r.source_url) : undefined,
@@ -568,20 +568,22 @@ export async function getAllMarketListings(): Promise<MarketListing[]> {
     const content = await fs.readFile(LOCAL_MARKET_LISTINGS_PATH, 'utf-8');
     const parsed: MarketListing[] = JSON.parse(content);
     if (Array.isArray(parsed) && parsed.length > 0) {
-      memoryListings = parsed;
-      return parsed;
+      const ownersOnly = parsed.filter((l) => l.origin === 'dueno_directo');
+      memoryListings = ownersOnly;
+      return ownersOnly;
     }
   } catch {
     // Archivo no existe o vacío, inicializar con INITIAL_MARKET_LISTINGS
   }
 
   if (memoryListings && memoryListings.length > 0) {
-    return memoryListings;
+    return memoryListings.filter((l) => l.origin === 'dueno_directo');
   }
 
-  memoryListings = INITIAL_MARKET_LISTINGS;
+  const initialOwners = INITIAL_MARKET_LISTINGS.filter((l) => l.origin === 'dueno_directo');
+  memoryListings = initialOwners;
   try {
-    await fs.writeFile(LOCAL_MARKET_LISTINGS_PATH, JSON.stringify(INITIAL_MARKET_LISTINGS, null, 2), 'utf-8');
+    await fs.writeFile(LOCAL_MARKET_LISTINGS_PATH, JSON.stringify(initialOwners, null, 2), 'utf-8');
   } catch (err) {
     console.warn('No se pudo guardar market_listings.json localmente:', err);
   }
@@ -590,7 +592,7 @@ export async function getAllMarketListings(): Promise<MarketListing[]> {
 }
 
 /**
- * Obtiene los KPIs consolidados del mercado departamental de forma 100% dinamica
+ * Obtiene los KPIs consolidados del Embudo de Captación de Dueños Directos
  */
 export async function getMarketKpis(): Promise<MarketKpis> {
   const listings = await getAllMarketListings();
@@ -607,40 +609,46 @@ export async function getMarketKpis(): Promise<MarketKpis> {
     console.warn('Error leyendo propiedades de Montaño para KPIs:', err);
   }
 
-  const competitorListings = listings.filter((l) => l.origin === 'inmobiliaria_competencia');
   const ownerAlerts = listings.filter((l) => l.origin === 'dueno_directo');
-
-  const competitorStock = competitorListings.length;
   const ownerAlertsCount = ownerAlerts.length;
-  const totalStock = competitorStock + montanoStock + ownerAlertsCount;
 
-  const montanoSharePercentage =
-    totalStock > 0 ? Number(((montanoStock / totalStock) * 100).toFixed(1)) : 15.0;
+  const pendingContactCount = ownerAlerts.filter(
+    (l) => l.status === 'detectado' || l.status === 'en_analisis'
+  ).length;
+  const contactedCount = ownerAlerts.filter((l) => l.status === 'contactado').length;
+  const scheduledCount = ownerAlerts.filter((l) => l.status === 'reunion_agendada').length;
+  const capturedCount = ownerAlerts.filter((l) => l.status === 'captado').length;
+  const withPhoneCount = ownerAlerts.filter((l) => Boolean(l.contactPhone && l.contactPhone.trim())).length;
 
   const now = Date.now();
   const sevenDaysAgo = now - 7 * 24 * 60 * 60 * 1000;
-  const newEntriesLast7Days = listings.filter((l) => {
+  const newEntriesLast7Days = ownerAlerts.filter((l) => {
     const detected = new Date(l.detectedAt).getTime();
     return !isNaN(detected) && detected >= sevenDaysAgo;
   }).length;
 
-  const priceDropsCount = listings.filter((l) => {
+  const priceDropsCount = ownerAlerts.filter((l) => {
     if (l.priceHistory && l.priceHistory.length >= 2) {
       const first = l.priceHistory[0].priceAmount;
       const last = l.priceHistory[l.priceHistory.length - 1].priceAmount;
       return last < first;
     }
-    return Boolean(l.isOpportunity && l.origin === 'inmobiliaria_competencia');
+    return false;
   }).length;
 
   return {
-    totalStock,
+    totalStock: ownerAlertsCount,
     montanoStock,
-    montanoSharePercentage,
-    newEntriesLast7Days: Math.max(newEntriesLast7Days, 5),
+    montanoSharePercentage: 100,
+    newEntriesLast7Days,
     ownerAlertsCount,
-    priceDropsCount: Math.max(priceDropsCount, 3),
-    competitorStock,
+    priceDropsCount,
+    competitorStock: 0,
+    pendingContactCount,
+    contactedCount,
+    scheduledCount,
+    capturedCount,
+    withPhoneCount,
   };
 }
 
@@ -835,7 +843,9 @@ export async function getWeeklyExecutiveReports(): Promise<WeeklyExecutiveReport
 export async function updateMarketListingStatus(
   id: string,
   status: MarketListingStatus,
-  internalNotes?: string
+  internalNotes?: string,
+  contactPhone?: string,
+  contactName?: string
 ): Promise<MarketListing | null> {
   const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL;
 
@@ -843,19 +853,16 @@ export async function updateMarketListingStatus(
     const sql = getDbClient();
     try {
       await ensureMarketTablesExist(sql);
-      if (internalNotes !== undefined) {
-        await sql`
-          UPDATE market_listings 
-          SET status = ${status}, internal_notes = ${internalNotes}, updated_at = CURRENT_TIMESTAMP 
-          WHERE id = ${id};
-        `;
-      } else {
-        await sql`
-          UPDATE market_listings 
-          SET status = ${status}, updated_at = CURRENT_TIMESTAMP 
-          WHERE id = ${id};
-        `;
-      }
+      await sql`
+        UPDATE market_listings 
+        SET 
+          status = ${status},
+          internal_notes = COALESCE(${internalNotes !== undefined ? internalNotes : null}, internal_notes),
+          contact_phone = COALESCE(${contactPhone !== undefined ? contactPhone : null}, contact_phone),
+          contact_name = COALESCE(${contactName !== undefined ? contactName : null}, contact_name),
+          updated_at = CURRENT_TIMESTAMP 
+        WHERE id = ${id};
+      `;
     } catch (err) {
       console.warn('Error actualizando market_listing en Neon Postgres:', err);
     }
@@ -868,6 +875,12 @@ export async function updateMarketListingStatus(
   listings[index].status = status;
   if (internalNotes !== undefined) {
     listings[index].internalNotes = internalNotes;
+  }
+  if (contactPhone !== undefined) {
+    listings[index].contactPhone = contactPhone;
+  }
+  if (contactName !== undefined) {
+    listings[index].contactName = contactName;
   }
   listings[index].updatedAt = new Date().toISOString();
 

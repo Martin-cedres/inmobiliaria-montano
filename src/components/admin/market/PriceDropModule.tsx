@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { PriceDropOpportunity } from '@/types/market';
+import { buildUruguayWhatsAppUrl } from '@/lib/whatsapp';
 import {
   TrendingDown,
   Copy,
@@ -165,9 +166,10 @@ ${opp.negotiationPitch}`;
                 <div className="flex items-center gap-2">
                   {opp.ownerPhone && (
                     <a
-                      href={`https://wa.me/598${opp.ownerPhone.replace(/\D/g, '')}?text=${encodeURIComponent(
+                      href={buildUruguayWhatsAppUrl(
+                        opp.ownerPhone,
                         `Hola, me comunico de Inmobiliaria Montaño respecto a su propiedad en ${opp.neighborhood}.`
-                      )}`}
+                      )}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 px-2.5 py-1 rounded-lg font-bold text-[11px] transition-colors cursor-pointer"

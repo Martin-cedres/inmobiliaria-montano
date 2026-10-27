@@ -57,6 +57,12 @@ export interface MarketKpis {
   ownerAlertsCount: number;
   priceDropsCount: number;
   competitorStock: number;
+  // KPIs reales del Embudo de Captación de Dueños Directos
+  pendingContactCount?: number;
+  contactedCount?: number;
+  scheduledCount?: number;
+  capturedCount?: number;
+  withPhoneCount?: number;
 }
 
 export interface PriceDropOpportunity {

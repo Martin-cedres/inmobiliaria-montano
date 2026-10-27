@@ -1372,6 +1372,36 @@
       "pagePath": "/alquilar-mi-propiedad-san-jose",
       "anonymousSessionId": "anon_1792896642584_kwpz0zs",
       "referrer": "http://localhost:3000/vender-propiedad-san-jose"
+    },
+    {
+      "id": "evt_1792903844294_v03swb",
+      "timestamp": "2026-10-25T04:50:44.294Z",
+      "eventType": "page_view",
+      "pagePath": "/alquilar-mi-propiedad-san-jose",
+      "anonymousSessionId": "anon_1792896642584_kwpz0zs",
+      "referrer": "http://localhost:3000/alquilar-mi-propiedad-san-jose"
+    },
+    {
+      "id": "evt_1793062330769_5p6deu",
+      "timestamp": "2026-10-27T00:52:10.769Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1793062330152_pm4t1qv"
+    },
+    {
+      "id": "evt_1793064023130_0czzez",
+      "timestamp": "2026-10-27T01:20:23.130Z",
+      "eventType": "page_view",
+      "pagePath": "/estadisticas-inmobiliarias-san-jose",
+      "anonymousSessionId": "anon_1793062330152_pm4t1qv",
+      "referrer": "http://localhost:3000/admin/seo-conversiones"
+    },
+    {
+      "id": "evt_1793064026075_y408ft",
+      "timestamp": "2026-10-27T01:20:26.075Z",
+      "eventType": "page_view",
+      "pagePath": "/casas-en-venta-san-jose-de-mayo",
+      "anonymousSessionId": "anon_1793062330152_pm4t1qv"
     }
   ],
   "seoRecords": [

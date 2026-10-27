@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { updateMarketListingStatus } from '@/lib/marketStore';
+import { updateMarketListingStatus, getMarketKpis } from '@/lib/marketStore';
 import { MarketListingStatus } from '@/types/market';
 
 export async function PATCH(
@@ -9,9 +9,11 @@ export async function PATCH(
   try {
     const { id } = await params;
     const body = await request.json();
-    const { status, internalNotes } = body as {
+    const { status, internalNotes, contactPhone, contactName } = body as {
       status?: MarketListingStatus;
       internalNotes?: string;
+      contactPhone?: string;
+      contactName?: string;
     };
 
     if (!status) {
@@ -21,7 +23,13 @@ export async function PATCH(
       );
     }
 
-    const updated = await updateMarketListingStatus(id, status, internalNotes);
+    const updated = await updateMarketListingStatus(
+      id,
+      status,
+      internalNotes,
+      contactPhone,
+      contactName
+    );
 
     if (!updated) {
       return NextResponse.json(
@@ -30,9 +38,12 @@ export async function PATCH(
       );
     }
 
+    const kpis = await getMarketKpis();
+
     return NextResponse.json({
       success: true,
       data: updated,
+      kpis,
     });
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : 'Error al actualizar aviso';

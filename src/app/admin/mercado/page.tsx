@@ -10,27 +10,20 @@ import {
   MarketListing,
   MarketListingStatus,
   MarketKpis,
-  PriceDropOpportunity,
-  WeeklyExecutiveReportData,
   MarketRadarFilters,
 } from '@/types/market';
 import { MarketKpiStrip } from '@/components/admin/market/MarketKpiStrip';
 import { CaptacionRadarToolbar } from '@/components/admin/market/CaptacionRadarToolbar';
 import { CaptacionRadarTable } from '@/components/admin/market/CaptacionRadarTable';
-import { PriceDropModule } from '@/components/admin/market/PriceDropModule';
-import { ExecutiveWeeklyReport } from '@/components/admin/market/ExecutiveWeeklyReport';
 import { AddOwnerModal } from '@/components/admin/market/AddOwnerModal';
 import {
   Building2,
   Plus,
   TrendingUp,
   Flame,
-  Sparkles,
   Eye,
   RefreshCw,
   Radar,
-  TrendingDown,
-  FileText,
   ShieldCheck,
   LogOut,
   Users,
@@ -53,15 +46,12 @@ export default function AdminMercadoPage() {
   const [isAuthChecking, setIsAuthChecking] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const [activeTab, setActiveTab] = useState<'radar' | 'pricedrops' | 'report'>('radar');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isAddOwnerModalOpen, setIsAddOwnerModalOpen] = useState<boolean>(false);
 
-  // Datos
+  // Datos exclusivos de Dueños Directos
   const [listings, setListings] = useState<MarketListing[]>([]);
   const [kpis, setKpis] = useState<MarketKpis | null>(null);
-  const [priceDrops, setPriceDrops] = useState<PriceDropOpportunity[]>([]);
-  const [reports, setReports] = useState<WeeklyExecutiveReportData[]>([]);
 
   // Filtros del Radar
   const [filters, setFilters] = useState<MarketRadarFilters>(INITIAL_FILTERS);
@@ -70,7 +60,7 @@ export default function AdminMercadoPage() {
     setToastMessage(message);
     setTimeout(() => {
       setToastMessage(null);
-    }, 3500);
+    }, 4000);
   };
 
   const fetchMarketData = async () => {
@@ -81,10 +71,8 @@ export default function AdminMercadoPage() {
       if (data.success && data.data) {
         setListings(data.data.listings || []);
         setKpis(data.data.kpis || null);
-        setPriceDrops(data.data.priceDrops || []);
-        setReports(data.data.reports || []);
       } else {
-        showToast('Error al cargar datos del mercado');
+        showToast('Error al cargar datos del radar');
       }
     } catch (err) {
       console.error('Error cargando datos de mercado:', err);
@@ -104,16 +92,17 @@ export default function AdminMercadoPage() {
 
   const handleRunScan = async () => {
     setIsScanning(true);
-    showToast('Iniciando escaneo de portales en vivo para San José...');
+    showToast('Rastreando Dueños Directos en El Gallito, InfoCasas y Mercado Libre (San José)...');
     try {
       const res = await fetch('/api/admin/market/scan', { method: 'POST' });
       const data = await res.json();
       if (data.success && data.data) {
         setListings(data.data.listings || []);
         setKpis(data.data.kpis || null);
-        setPriceDrops(data.data.priceDrops || []);
-        setReports(data.data.reports || []);
-        showToast('Escaneo completado: Base de datos y radar actualizados');
+        const novos = data.scanResult?.newEntriesCount ?? 0;
+        showToast(
+          `Escaneo completado: ${data.data.listings?.length || 0} dueños directos en radar (${novos} nuevos detectados)`
+        );
       } else {
         showToast(data.error || 'Error al ejecutar escaneo');
       }
@@ -151,18 +140,38 @@ export default function AdminMercadoPage() {
     }
   };
 
-  const handleStatusChange = async (id: string, newStatus: MarketListingStatus) => {
+  const handleStatusChange = async (
+    id: string,
+    newStatus: MarketListingStatus,
+    extra?: { contactPhone?: string; contactName?: string }
+  ) => {
     try {
       const res = await fetch(`/api/admin/market/listing/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: newStatus }),
+        body: JSON.stringify({
+          status: newStatus,
+          ...(extra?.contactPhone ? { contactPhone: extra.contactPhone } : {}),
+          ...(extra?.contactName ? { contactName: extra.contactName } : {}),
+        }),
       });
       const data = await res.json();
       if (data.success) {
         setListings((prev) =>
-          prev.map((l) => (l.id === id ? { ...l, status: newStatus } : l))
+          prev.map((l) =>
+            l.id === id
+              ? {
+                  ...l,
+                  status: newStatus,
+                  contactPhone: extra?.contactPhone || l.contactPhone,
+                  contactName: extra?.contactName || l.contactName,
+                }
+              : l
+          )
         );
+        if (data.kpis) {
+          setKpis(data.kpis);
+        }
         showToast(`Estado actualizado a "${newStatus.replace('_', ' ').toUpperCase()}"`);
       } else {
         showToast(data.error || 'No se pudo actualizar el estado');
@@ -194,7 +203,7 @@ export default function AdminMercadoPage() {
     }
   };
 
-  // Filtrado de avisos
+  // Filtrado de avisos de dueños directos
   const filteredListings = useMemo(() => {
     return listings.filter((l) => {
       // Búsqueda por texto
@@ -203,13 +212,14 @@ export default function AdminMercadoPage() {
         const matches =
           l.title.toLowerCase().includes(q) ||
           l.neighborhood.toLowerCase().includes(q) ||
+          l.sourceName.toLowerCase().includes(q) ||
           (l.contactName && l.contactName.toLowerCase().includes(q)) ||
           (l.contactPhone && l.contactPhone.toLowerCase().includes(q)) ||
           (l.internalNotes && l.internalNotes.toLowerCase().includes(q));
         if (!matches) return false;
       }
 
-      // Zona
+      // Zona / Localidad
       if (filters.neighborhood !== 'todos' && l.neighborhood !== filters.neighborhood) {
         return false;
       }
@@ -219,9 +229,18 @@ export default function AdminMercadoPage() {
         return false;
       }
 
-      // Origen
-      if (filters.origin !== 'todos' && l.origin !== filters.origin) {
-        return false;
+      // Filtro por Portal / Fuente (usando el campo origin del filtro)
+      if (filters.origin !== 'todos') {
+        const src = l.sourceName.toLowerCase();
+        if (filters.origin === 'gallito' && !src.includes('gallito')) return false;
+        if (filters.origin === 'infocasas' && !src.includes('infocasas')) return false;
+        if (filters.origin === 'mercadolibre' && !src.includes('mercado')) return false;
+        if (
+          filters.origin === 'manual' &&
+          (src.includes('gallito') || src.includes('infocasas') || src.includes('mercado'))
+        ) {
+          return false;
+        }
       }
 
       // Operación
@@ -254,7 +273,7 @@ export default function AdminMercadoPage() {
       {/* Floating Toast Notification */}
       {toastMessage && (
         <div className="fixed bottom-6 right-6 z-50 bg-[#350A2F] text-amber-300 px-5 py-3.5 rounded-2xl shadow-2xl border border-purple-400/30 flex items-center space-x-3 text-xs sm:text-sm font-bold animate-in slide-in-from-bottom-4 duration-300">
-          <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+          <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
           <span>{toastMessage}</span>
         </div>
       )}
@@ -343,7 +362,7 @@ export default function AdminMercadoPage() {
             className="flex items-center gap-1.5 bg-[#5E1754] text-white px-3.5 py-2 rounded-xl shadow-xs shrink-0"
           >
             <Radar className="w-4 h-4 text-orange-400" />
-            <span>3. Inteligencia de Mercado</span>
+            <span>3. Captación Dueño Vende</span>
           </Link>
           <Link
             href="/admin/seo-conversiones"
@@ -371,30 +390,30 @@ export default function AdminMercadoPage() {
           </Link>
         </div>
 
-        {/* Encabezado del Módulo de Mercado */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 sm:p-8 rounded-3xl border border-purple-100 shadow-xs">
+        {/* Encabezado del Radar de Dueños Vende */}
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 bg-white p-6 sm:p-8 rounded-3xl border border-purple-100 shadow-xs">
           <div>
             <div className="flex items-center space-x-2 text-[#E85D04] font-bold text-xs uppercase tracking-wider mb-1">
               <Radar className="w-4 h-4 text-[#5E1754]" />
-              <span>Inteligencia de Mercado Departamental</span>
+              <span>Captación Exclusiva en San José (Venta y Alquiler)</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
-              Radar de Captación & Benchmarking
+              Radar de Dueños Vende
             </h1>
-            <p className="text-xs text-slate-500 mt-1">
-              Monitoreo activo de avisos particulares (Dueño Vende), rebajas de precios de competidores y cuota de mercado en San José de Mayo.
+            <p className="text-xs text-slate-500 mt-1 max-w-2xl">
+              Rastreo limpio de particulares en todo el departamento de San José (El Gallito Luis, InfoCasas, Mercado Libre y carga rápida de Facebook/Calle), libre de inmobiliarias competidoras.
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
+          <div className="flex flex-wrap items-center gap-2.5 w-full lg:w-auto">
             <button
               type="button"
               onClick={() => setIsAddOwnerModalOpen(true)}
               className="bg-[#5E1754] hover:bg-[#7A1E6E] active:scale-95 text-white font-bold px-4 py-3 rounded-xl shadow-xs transition-all flex items-center justify-center space-x-2 text-xs sm:text-sm cursor-pointer shrink-0"
-              title="Registrar manualmente aviso de dueño particular de Facebook, calle o Mercado Libre"
+              title="Pegar aviso de Facebook Marketplace, Mercado Libre o cartel de calle"
             >
               <Plus className="w-4 h-4 text-amber-300" />
-              <span>Cargar Dueño Vende</span>
+              <span>Cargar / Pegar Aviso</span>
             </button>
 
             <button
@@ -402,113 +421,86 @@ export default function AdminMercadoPage() {
               onClick={handleRunScan}
               disabled={isScanning || isLoading}
               className="bg-[#E85D04] hover:bg-[#d05303] active:scale-95 disabled:opacity-60 text-white font-bold px-4 py-3 rounded-xl shadow-xs transition-all flex items-center justify-center space-x-2 text-xs sm:text-sm cursor-pointer shrink-0"
-              title="Rastrear y actualizar la oferta real de San José en vivo"
+              title="Ejecutar el robot local para buscar nuevos dueños directos en San José"
             >
               <RefreshCw className={`w-4 h-4 ${isScanning ? 'animate-spin' : ''}`} />
-              <span>{isScanning ? 'Escaneando Mercado...' : 'Escanear Mercado en Vivo'}</span>
+              <span>{isScanning ? 'Buscando Dueños (~25s)...' : 'Escanear Dueños en Vivo'}</span>
             </button>
 
             <button
               type="button"
               onClick={fetchMarketData}
               className="p-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition-colors cursor-pointer"
-              title="Recargar datos del mercado"
+              title="Recargar tabla"
             >
               <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
             </button>
-
-            <Link
-              href="/estadisticas-inmobiliarias-san-jose"
-              target="_blank"
-              className="flex-1 sm:flex-initial bg-[#5E1754] hover:bg-[#7A1E6E] active:scale-95 text-white font-bold px-4 py-3 rounded-xl shadow-xs transition-all flex items-center justify-center space-x-2 text-xs sm:text-sm"
-            >
-              <Eye className="w-4 h-4" />
-              <span>Ver Observatorio Público</span>
-            </Link>
           </div>
         </div>
 
-        {/* KPI Strip (4 Tarjetas sin emojis) */}
-        {kpis && <MarketKpiStrip kpis={kpis} />}
-
-        {/* Barra de Pestañas / Navegación Interna */}
-        <div className="flex items-center gap-2 border-b border-slate-200 pb-1 overflow-x-auto text-xs font-bold">
-          <button
-            type="button"
-            onClick={() => setActiveTab('radar')}
-            className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
-              activeTab === 'radar'
-                ? 'bg-[#5E1754] text-white shadow-xs font-black'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-            }`}
-          >
-            <Radar className="w-4 h-4 text-orange-400" />
-            <span>Radar de Captación ({listings.length})</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setActiveTab('pricedrops')}
-            className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
-              activeTab === 'pricedrops'
-                ? 'bg-[#5E1754] text-white shadow-xs font-black'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-            }`}
-          >
-            <TrendingDown className="w-4 h-4 text-red-500" />
-            <span>Rebajas de Competidores ({priceDrops.length})</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setActiveTab('report')}
-            className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
-              activeTab === 'report'
-                ? 'bg-[#5E1754] text-white shadow-xs font-black'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-            }`}
-          >
-            <FileText className="w-4 h-4 text-blue-500" />
-            <span>Informe Ejecutivo Semanal</span>
-          </button>
+        {/* Accesos Directos a Portales Filtrados por San José (Para revisión o copia rápida) */}
+        <div className="bg-slate-900 text-white px-4 py-3 rounded-2xl flex flex-wrap items-center justify-between gap-3 text-xs">
+          <span className="font-bold text-slate-300">
+            🔍 Atajos directos a búsquedas de particulares en San José:
+          </span>
+          <div className="flex flex-wrap items-center gap-2">
+            <a
+              href="https://inmuebles.mercadolibre.com.uy/san-jose/_OrderId_BEGINS*DESC_NoIndex_True"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 bg-yellow-400/15 hover:bg-yellow-400/25 text-yellow-300 border border-yellow-400/30 px-3 py-1.5 rounded-xl font-bold transition-colors"
+            >
+              <span>Mercado Libre (Recientes San José)</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
+            <a
+              href="https://www.gallito.com.uy/inmuebles/san-jose!cant=80"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 bg-emerald-400/15 hover:bg-emerald-400/25 text-emerald-300 border border-emerald-400/30 px-3 py-1.5 rounded-xl font-bold transition-colors"
+            >
+              <span>Gallito Luis (San José)</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
+            <a
+              href="https://www.facebook.com/marketplace/category/propertyrentals?query=san%20jose%20uruguay"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 bg-blue-400/15 hover:bg-blue-400/25 text-blue-300 border border-blue-400/30 px-3 py-1.5 rounded-xl font-bold transition-colors"
+            >
+              <span>Facebook Marketplace (San José)</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
+          </div>
         </div>
 
-        {/* Contenido según Pestaña Activa */}
+        {/* Embudo Real de Captación (4 Tarjetas) */}
+        {kpis && <MarketKpiStrip kpis={kpis} />}
+
+        {/* Tabla y Filtros del Radar */}
         {isLoading ? (
           <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center text-slate-500 flex items-center justify-center space-x-2">
             <RefreshCw className="w-5 h-5 animate-spin text-[#5E1754]" />
-            <span className="font-bold text-sm">Cargando inteligencia de mercado...</span>
+            <span className="font-bold text-sm">Cargando dueños directos...</span>
           </div>
         ) : (
-          <>
-            {activeTab === 'radar' && (
-              <div className="space-y-4">
-                <CaptacionRadarToolbar
-                  filters={filters}
-                  onChange={setFilters}
-                  onReset={() => setFilters(INITIAL_FILTERS)}
-                  totalFiltered={filteredListings.length}
-                  onOpenAddOwnerModal={() => setIsAddOwnerModalOpen(true)}
-                />
-                <CaptacionRadarTable
-                  listings={filteredListings}
-                  onStatusChange={handleStatusChange}
-                  onSaveNotes={handleSaveNotes}
-                />
-              </div>
-            )}
-
-            {activeTab === 'pricedrops' && (
-              <PriceDropModule opportunities={priceDrops} />
-            )}
-
-            {activeTab === 'report' && (
-              <ExecutiveWeeklyReport reports={reports} />
-            )}
-          </>
+          <div className="space-y-4">
+            <CaptacionRadarToolbar
+              filters={filters}
+              onChange={setFilters}
+              onReset={() => setFilters(INITIAL_FILTERS)}
+              totalFiltered={filteredListings.length}
+              onOpenAddOwnerModal={() => setIsAddOwnerModalOpen(true)}
+            />
+            <CaptacionRadarTable
+              listings={filteredListings}
+              onStatusChange={handleStatusChange}
+              onSaveNotes={handleSaveNotes}
+            />
+          </div>
         )}
 
-        {/* Modal de Carga Express de Dueño Vende */}
+        {/* Modal de Carga / Pegado Inteligente de Dueño Vende */}
         <AddOwnerModal
           isOpen={isAddOwnerModalOpen}
           onClose={() => setIsAddOwnerModalOpen(false)}

@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import { MarketListing, MarketListingStatus } from '@/types/market';
+import { buildUruguayWhatsAppUrl } from '@/lib/whatsapp';
+import { ContactWhatsAppModal } from '@/components/admin/market/ContactWhatsAppModal';
 import {
   ExternalLink,
   Phone,
@@ -17,7 +19,11 @@ import {
 
 interface CaptacionRadarTableProps {
   listings: MarketListing[];
-  onStatusChange: (id: string, newStatus: MarketListingStatus) => Promise<void>;
+  onStatusChange: (
+    id: string,
+    newStatus: MarketListingStatus,
+    extra?: { contactPhone?: string; contactName?: string }
+  ) => Promise<void>;
   onSaveNotes?: (id: string, notes: string) => Promise<void>;
 }
 
@@ -56,6 +62,7 @@ export function CaptacionRadarTable({
   const [activeNotesId, setActiveNotesId] = useState<string | null>(null);
   const [notesDraft, setNotesDraft] = useState<string>('');
   const [isUpdatingStatus, setIsUpdatingStatus] = useState<string | null>(null);
+  const [whatsappModalListing, setWhatsappModalListing] = useState<MarketListing | null>(null);
 
   const handleOpenNotes = (listing: MarketListing) => {
     setActiveNotesId(listing.id);
@@ -89,6 +96,14 @@ export function CaptacionRadarTable({
 
   return (
     <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+      {/* Nota breve y sutil sobre teléfonos en Mercado Libre */}
+      <div className="bg-amber-50/70 border-b border-amber-200/60 px-4 py-2 flex items-center gap-2 text-[11px] text-amber-900">
+        <span className="font-black text-amber-800">💡 Tip Mercado Libre:</span>
+        <span className="text-amber-800/90">
+          Si el aviso no muestra el celular automáticamente, tocá <strong>Ver Aviso</strong>, hacé clic en <em>&quot;Ver teléfono&quot;</em> en ML y pegalo en <strong>+ Tel / WA</strong> para guardarlo.
+        </span>
+      </div>
+
       <div className="overflow-x-auto">
         <table className="w-full text-left text-xs border-collapse min-w-[850px]">
           <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold uppercase text-[10px] tracking-wider">
@@ -112,13 +127,25 @@ export function CaptacionRadarTable({
 
               return (
                 <tr key={item.id} className="hover:bg-purple-50/20 transition-colors">
-                  {/* Col 1: Aviso & Ubicación */}
+                  {/* Col 1: Aviso & Ubicación (limpio, sin repetir enlaces) */}
                   <td className="py-3 px-4 max-w-xs">
                     <div className="space-y-1">
                       <div className="flex items-center gap-1.5 flex-wrap">
-                        <span className="font-bold text-slate-900 line-clamp-1" title={item.title}>
-                          {item.title}
-                        </span>
+                        {item.sourceUrl ? (
+                          <a
+                            href={item.sourceUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-bold text-slate-900 hover:text-[#5E1754] hover:underline line-clamp-1 inline-flex items-center gap-1 transition-colors"
+                            title={`Abrir publicación original: ${item.title}`}
+                          >
+                            <span>{item.title}</span>
+                          </a>
+                        ) : (
+                          <span className="font-bold text-slate-900 line-clamp-1" title={item.title}>
+                            {item.title}
+                          </span>
+                        )}
                         {item.isOpportunity && (
                           <span className="inline-flex items-center gap-1 text-[9px] font-black text-[#5E1754] bg-purple-50 border border-purple-200 px-1.5 py-0.2 rounded">
                             <Sparkles className="w-2.5 h-2.5 text-[#E85D04]" />
@@ -144,20 +171,25 @@ export function CaptacionRadarTable({
                   {/* Col 2: Origen & Fuente */}
                   <td className="py-3 px-3 whitespace-nowrap">
                     <div className="space-y-1">
-                      {isOwner ? (
-                        <span className="inline-flex items-center gap-1 text-[10px] font-black text-orange-800 bg-orange-50 border border-orange-200 px-2 py-0.5 rounded-md">
-                          <UserCheck className="w-3 h-3 text-[#E85D04]" />
-                          Dueño Directo
-                        </span>
-                      ) : (
-                        <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-slate-700 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-md">
-                          <Building2 className="w-3 h-3 text-slate-500" />
-                          {item.competitorName || 'Inmobiliaria'}
-                        </span>
-                      )}
+                      <span className="inline-flex items-center gap-1 text-[10px] font-black text-orange-800 bg-orange-50 border border-orange-200 px-2 py-0.5 rounded-md">
+                        <UserCheck className="w-3 h-3 text-[#E85D04]" />
+                        {item.contactName && item.contactName !== 'Dueño Particular'
+                          ? item.contactName
+                          : 'Dueño Directo'}
+                      </span>
                       <div className="text-[10px] text-slate-400">
-                        Fuente: <strong className="text-slate-600">{item.sourceName}</strong>
+                        Portal: <strong className="text-slate-600">{item.sourceName}</strong>
                       </div>
+                      {item.contactPhone ? (
+                        <div className="text-[11px] font-bold text-emerald-700 flex items-center gap-1 tabular-nums">
+                          <Phone className="w-3 h-3 text-emerald-600" />
+                          <span>{item.contactPhone}</span>
+                        </div>
+                      ) : (
+                        <div className="text-[10px] text-amber-700 font-medium">
+                          <span>Tel. en aviso</span>
+                        </div>
+                      )}
                     </div>
                   </td>
 
@@ -209,21 +241,24 @@ export function CaptacionRadarTable({
                   {/* Col 6: Contacto & Acciones */}
                   <td className="py-3 px-4 text-right whitespace-nowrap">
                     <div className="flex items-center justify-end gap-1.5">
-                      {/* Botón WhatsApp / Llamada si hay teléfono */}
-                      {item.contactPhone && (
-                        <a
-                          href={`https://wa.me/598${item.contactPhone.replace(/\D/g, '')}?text=${encodeURIComponent(
-                            `Hola, me comunico de Inmobiliaria Montaño respecto a su publicación en ${item.neighborhood} (${item.title}).`
-                          )}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-lg text-[11px] font-bold shadow-2xs transition-all cursor-pointer"
-                          title={`Contactar a ${item.contactName || 'propietario'} al ${item.contactPhone}`}
-                        >
-                          <MessageCircle className="w-3 h-3" />
-                          <span>WhatsApp</span>
-                        </a>
-                      )}
+                      {/* Botón WhatsApp / Llamada (siempre disponible para enviar o pegar teléfono) */}
+                      <button
+                        type="button"
+                        onClick={() => setWhatsappModalListing(item)}
+                        className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold shadow-2xs transition-all cursor-pointer ${
+                          item.contactPhone
+                            ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                            : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200'
+                        }`}
+                        title={
+                          item.contactPhone
+                            ? `Contactar por WhatsApp a ${item.contactName || 'propietario'} (${item.contactPhone})`
+                            : 'Pegar teléfono del aviso y abrir WhatsApp'
+                        }
+                      >
+                        <MessageCircle className="w-3 h-3" />
+                        <span>{item.contactPhone ? 'WhatsApp' : '+ Tel / WA'}</span>
+                      </button>
 
                       {/* Botón Ver Aviso Original */}
                       {item.sourceUrl && (
@@ -231,10 +266,11 @@ export function CaptacionRadarTable({
                           href={item.sourceUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-1.5 text-slate-500 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors cursor-pointer"
-                          title="Abrir aviso en fuente original"
+                          className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-bold text-blue-700 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg transition-colors cursor-pointer"
+                          title={`Verificar publicación original: ${item.sourceUrl}`}
                         >
-                          <ExternalLink className="w-3.5 h-3.5" />
+                          <ExternalLink className="w-3 h-3" />
+                          <span>Ver Aviso</span>
                         </a>
                       )}
 
@@ -296,6 +332,14 @@ export function CaptacionRadarTable({
           </div>
         </div>
       )}
+
+      {/* Modal 1-Clic de Contacto por WhatsApp con Plantillas */}
+      <ContactWhatsAppModal
+        listing={whatsappModalListing}
+        isOpen={Boolean(whatsappModalListing)}
+        onClose={() => setWhatsappModalListing(null)}
+        onStatusChange={onStatusChange}
+      />
     </div>
   );
 }

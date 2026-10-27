@@ -1374,3 +1374,65 @@
   * Homologada la tarjeta comparativa de Montaño con micro-borde institucional púrpura y checkmarks en Naranja Montaño (`#E85D04`).
   * Validado con `tsc` (0 errores) y `npm run build` (81/81 páginas pre-renderizadas sin errores).
   * Realizado `git commit` y `git push origin main` a GitHub (solicitado explícitamente por el usuario), disparando el despliegue automático de producción en Vercel.
+- Diagnóstico Técnico y Estrategia de Captación para Radar de Mercado (`/admin/mercado`):
+  * Auditados los 136 inmuebles registrados en la base: se constató que solo 3 provienen de 'dueño directo' (2.2%) y 133 corresponden a inmobiliarias de la competencia (97.8%).
+  * Identificado el cuello de botella de fuentes: el escáner rastrea InfoCasas (portal premium de agencias) y Lema Propiedades (colega), dejando fuera los canales naturales de dueños particulares en San José (Facebook Marketplace, Grupos locales de San José, Mercado Libre y cartelería de calle).
+  * Creado el módulo de utilidad `src/lib/whatsapp.ts` con normalización defensiva para teléfonos uruguayos (`5989XXXXXXX`), lista negra de teléfonos de la competencia y heurísticas de detección de inmobiliarias intermediarias.
+  * Corregidos los bugs de formateo de enlaces `wa.me` en `CaptacionRadarTable.tsx` y `PriceDropModule.tsx` que duplicaban el prefijo `598` y provocaban enlaces rotos.
+  * Diseñada una estrategia integral de captación comercial: Outbound consultivo (presentación de comprador precalificado en vez de comisión fría), Inbound con tasador online y Radar móvil para cartelería física en San José.
+  * Verificado con `tsc --noEmit` (0 errores). Manteniendo directiva estricta de cero `git push`.
+- Implementación de WhatsApp 1-Clic Asistido y Análisis de Rastreo Automatizado (`/admin/mercado`):
+  * Creado el componente interactivo `ContactWhatsAppModal.tsx` e integrado en `CaptacionRadarTable.tsx`: permite abrir WhatsApp con 1 clic con 3 plantillas de captación estratégicas (Comprador calificado, Disponibilidad y Colaboración sin exclusividad).
+  * Incorporado escudo visual anti-competencia: advierte al usuario si el contacto coincide con colegas, inmobiliarias o contiene términos de intermediación en la descripción.
+  * Automatizada la actualización de estado a 'Contactado' al abrir el chat de WhatsApp para evitar contactos duplicados.
+  * Auditada la viabilidad de scraping para Mercado Libre y Gallito: comprobado el bloqueo de peticiones de servidor (Cloudflare 403 y suspicious-traffic-frontend de ML).
+  * Definidas 3 vías técnicas para capturar particulares en San José: Worker headless con Playwright en GitHub Actions, Bookmarklet de 1-clic para el navegador del asesor, o integración vía Webhooks con Apify.
+  * Verificado con `tsc --noEmit` (0 errores). Manteniendo directiva estricta de cero `git push`.
+- Limpieza Integral del Radar de Captación (`/admin/mercado`) y Motor Local Cazador de Dueños Vende en San José:
+  * Purgados los 133 avisos de inmobiliarias competidoras (Lema Propiedades, agencias de InfoCasas, Century 21, Remax, etc.) tanto en `src/db/market_listings.json` como en Neon PostgreSQL (`DELETE FROM market_listings WHERE origin != 'dueno_directo'`), dejando la base 100% exclusiva para propietarios particulares.
+  * Eliminadas de la vista `/admin/mercado` las pestañas de relleno ('Rebajas de Competidores' e 'Informe Ejecutivo Semanal'), centrando el panel en el flujo diario de captación.
+  * Rediseñado `MarketKpiStrip.tsx` y `getMarketKpis()` en `marketStore.ts` con los 4 indicadores del Embudo Real de Captación: 1. Nuevos Detectados (con contador de teléfonos verificados), 2. Contactados por WhatsApp, 3. Tasación / Visita Agendada, y 4. Captados a Cartera.
+  * Implementado el nuevo motor local en `src/lib/marketScanner.ts` y `scripts/market-scanner.ts` con `playwright-core` (usando el Chrome local de la PC, costo $0 y sin consumo de IA):
+    - Escanea en paralelo El Gallito Luis en todo el Dpto. de San José (Venta y Alquiler, todas las tipologías y localidades), filtra las fichas sin inmobiliaria (`#ficha_inmobiliaria`) y ejecuta `AjaxEnviar('VerContacto')` para destapar automáticamente el celular de WhatsApp del propietario.
+    - Escanea todas las páginas de InfoCasas en San José (Venta y Alquiler) filtrando estrictamente `particular === true`.
+    - Soporta perfil persistente de Chrome (`.playwright-ml-profile`) para Mercado Libre Uruguay y atajos de conexión (`conectar-sesion-mercadolibre.bat` y `escanear-duenos-sanjose.bat`).
+    - Aplica el Escudo Anti-Competencia (`detectCompetitorSignatures` y filtro de multi-propiedad) antes de guardar cada aviso, descartando automáticamente corredores encubiertos que mencionan 'honorarios inmobiliarios' o 'comisión'.
+  * Mejorados `AddOwnerModal.tsx` (con autocompletado inteligente al pegar texto de Facebook Marketplace o Mercado Libre) y `ContactWhatsAppModal.tsx` (con edición en vivo de nombre y teléfono que se persiste en base de datos al abrir WhatsApp).
+  * Verificado con `npx tsc --noEmit` (0 errores) y prueba real de escaneo en vivo (17 segundos, 5 dueños directos reales con celular verificado en San José). Cero `git push`.
+
+[2026-10-26] Estrategia CEO & Marketing para Mensajes de WhatsApp a Dueño Vende (Cero Falsas Expectativas):
+- Se rediseñaron las plantillas predeterminadas en `src/components/admin/market/ContactWhatsAppModal.tsx` eliminando el cliché inmobiliario de "tengo un comprador esperando" para proteger la reputación de Daniel Montaño en San José.
+- Se mejoró el saludo dinámico para omitir palabras genéricas como "Hola Propietario" o "Hola Particular" cuando aún no se conoce el nombre de pila del dueño, usando "Hola, ¿cómo estás?" hasta que se ingrese el nombre real.
+- Se configuraron 3 enfoques 100% honestos y adaptados automáticamente según la operación sea Venta o Alquiler:
+  1. Propuesta Honesta y Sin Exclusividad (Predeterminada).
+  2. Rompehielo Corto de Baja Fricción.
+  3. Alivio de Gestión y Filtro de Curiosos (BHU/Bancos en venta, Garantías ANDA/CGN/Aseguradoras en alquiler).
+
+[2026-10-26] Refinamiento de Plantillas WhatsApp (Filtro de "Dueño Particular", Publicidad Web/Redes + Cartera + Link Web):
+- Se incorporó `isGenericOwnerLabel()` en `src/components/admin/market/ContactWhatsAppModal.tsx` para ignorar cualquier variante genérica ("Dueño Particular", "Dueño Directo", "Propietario", "Anunciante") de modo que el mensaje arranque limpio ("Hola, ¿cómo estás?") salvo que exista un nombre de pila real.
+- Se sumó explícitamente en las 3 plantillas el valor diferencial de publicidad en la web y redes sociales, la difusión en la cartera de clientes de la inmobiliaria y el enlace directo a `https://www.inmobiliariamontano.uy`.
+
+[2026-10-26] Enlaces de Verificación Manual de la Publicación Original en Tabla y Modal de WhatsApp:
+- En `src/components/admin/market/CaptacionRadarTable.tsx`: el título del inmueble ahora es clicable hacia la publicación original, se agregó el enlace directo "Ver aviso en [Portal]" debajo de los datos de ubicación, y el botón de acción junto a "WhatsApp" pasó de ser un ícono gris a un botón visible "Ver Aviso".
+- En `src/components/admin/market/ContactWhatsAppModal.tsx`: se incorporó una barra azul destacada ("🔍 Verificar publicación original en [Portal]") con la URL visible para revisar fotos y descripción antes de enviar el mensaje de WhatsApp.
+
+[2026-10-26] Detección de Inmobiliaria Camuflada (ADIU / Tera Inmuebles):
+- Se analizó el aviso de terreno en Ciudad del Plata que contenía "SOCIO ADIU 550" y "Codigo Tera:40", confirmando que se trata 100% de una inmobiliaria (ADIU = Asociación de Inmobiliarias del Uruguay, Tera = software CRM de inmobiliarias).
+- Se añadieron a `COMPETITOR_KEYWORD_PATTERNS` en `src/lib/whatsapp.ts` los términos: `adiu`, `socio adiu`, `ciu`, `cámara inmobiliaria`, `anrtci`, `tera`, `código tera`, `tokko`, `corredor inmobiliario`, `rematador`, `matrícula profesional`.
+- Se añadió el teléfono `59897447431` a `KNOWN_COMPETITOR_PHONES`.
+- Se eliminó el aviso de `src/db/market_listings.json` para que no figure en el panel.
+
+[2026-10-26] Diagnóstico y Ajuste de Mercado Libre Uruguay:
+- Se comprobó mediante prueba en vivo que Mercado Libre Uruguay bloquea las peticiones automatizadas anónimas redirigiéndolas a `account-verification`.
+- Se añadieron URLs de búsqueda directa `dueno-directo/san-jose/` y `dueno-vende/san-jose/` a `src/lib/marketScanner.ts`.
+- Para que el escáner pueda extraer Mercado Libre, se requiere ejecutar una única vez `conectar-sesion-mercadolibre.bat` para autenticar la sesión local en `.playwright-ml-profile`.
+
+[2026-10-26] Solución Definitiva para Escaneo de Mercado Libre Uruguay:
+- Se detectó que Mercado Libre bloqueaba el perfil persistente cuando se lanzaba con `headless: true` y la bandera por defecto `--enable-automation`, además de usar un cargador asíncrono (`?loader=true`).
+- Se actualizó `src/lib/marketScanner.ts` para iniciar el perfil con `ignoreDefaultArgs: ['--enable-automation']`, ventana fuera de pantalla (`--window-position=-2400,-2400`), `waitForSelector('.poly-card')`, filtro de subdominios de inmuebles (`casa|apartamento|terreno|inmueble.mercadolibre.com.uy`), e inspección automática de cada ficha para extraer el nombre de pila real del vendedor (ej. "Susana Maria", "Jose Luis") y descartar cuentas con enlace "Ver propiedades" (inmobiliarias/constructoras como "Inmobiliaria Portones").
+
+[2026-10-26] Limpieza de UI en Radar de Captación y Nota Breve de Mercado Libre:
+- Se eliminó el enlace redundante "Ver aviso en [Portal]" que duplicaba al título y al botón de acción en `src/components/admin/market/CaptacionRadarTable.tsx`.
+- Se añadió un cintillo sutil y conciso al tope de la tabla: "💡 Tip Mercado Libre: Si el aviso no muestra el celular automáticamente, tocá Ver Aviso, hacé clic en 'Ver teléfono' en ML y pegalo en + Tel / WA para guardarlo."
+- En avisos sin teléfono confirmado se colocó la etiqueta clara "Tel. en aviso".
+- Se eliminó el botón duplicado de "Cargar Dueño Vende" en `src/components/admin/market/CaptacionRadarToolbar.tsx` manteniendo únicamente el botón principal del encabezado.
