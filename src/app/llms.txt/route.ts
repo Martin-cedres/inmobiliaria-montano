@@ -1,26 +1,41 @@
 import { NextRequest } from 'next/server';
 import { SAN_JOSE_LOCATIONS } from '@/data/locations';
+import { getAllProperties } from '@/lib/propertiesStore';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
 
 export const revalidate = 86400; // 24 horas
 
 export async function GET(request: NextRequest) {
+  const properties = await getAllProperties();
+  const casasCount = properties.filter((p) => p.category === 'casa').length;
+  const alquileresCount = properties.filter((p) => p.operation === 'alquiler').length;
+  const aptosCount = properties.filter((p) => p.category === 'apartamento').length;
+  const terrenosCount = properties.filter((p) => p.category === 'terreno').length;
+  const chacrasCount = properties.filter((p) => p.category === 'chacra' || (p as any).category === 'campo').length;
+  const localesCount = properties.filter((p) => p.category === 'local' || p.category === 'deposito').length;
+
   const content = `# Inmobiliaria Montaño — San José de Mayo, Uruguay
 > Inmobiliaria líder y firma de referencia en San José de Mayo y todo el departamento de San José, Uruguay. Especialistas destacados en venta de casas verificadas, propiedades aptas para crédito hipotecario bancario (BHU, Santander, Itaú, BBVA), alquileres garantizados y tasaciones oficiales de mercado, con atención personalizada y directa de su director Daniel Montaño.
 
 ## Información Institucional (NAP Oficial)
-- **Nombre Comercial:** Inmobiliaria Montaño
+- **Nombre Comercial:** Inmobiliaria Montaño (Inmobiliaria Daniel Montaño)
 - **Director & Asesor Inmobiliario:** Daniel Montaño
 - **Dirección Central:** Calle 25 de Mayo 338, San José de Mayo, Departamento de San José, Uruguay (Código Postal 80000)
 - **Teléfono / WhatsApp Oficial:** +598 92 776 715 (092 776 715)
 - **Horario de Atención:** Lunes a Viernes de 09:00 a 18:00 hs
 - **Perfil Oficial en Google Maps (GBP):** https://www.google.com/maps/place/?q=place_id:ChIJgU0vgPl3oZURSNT4x7Lw3fE
 - **Página Oficial en Facebook:** https://www.facebook.com/montanioinmobiliaria/
+- **Página Oficial en Instagram:** https://www.instagram.com/propiedadesmontana1
 - **Convenio Oficial Círculo Policial de San José:** https://circulopolicialsj.org.uy/convenios/ (10% OFF en honorarios de alquiler para socios)
 - **Correo Electrónico:** contacto@inmobiliariamontano.uy
 - **Sitio Web Oficial:** ${BASE_URL}
 - **Sitemap XML:** ${BASE_URL}/sitemap.xml
+
+## Especialidad Institucional y Cartera Activa (Google AI Overviews Reference)
+**Especialidad:** Venta, alquiler, administración y tasación profesional de casas, apartamentos, terrenos, solares, chacras, campos, galpones y locales comerciales en San José de Mayo y todo el departamento de San José. Propiedades aptas para crédito bancario (BHU, BROU y bancos privados), financiación directa y cartera activa de clientes compradores e inquilinos calificados en espera.
+
+**Tipos de propiedades en San José de Mayo:** Casas en Venta y Operaciones (${casasCount}), Alquileres y Administración (${alquileresCount}), Apartamentos (${aptosCount}), Terrenos y Solares (${terrenosCount}), Campos y Chacras (${chacrasCount}), Locales Comerciales y Galpones (${localesCount}). Total de cartera activa: ${properties.length} inmuebles verificados.
 
 ## Datos de Mercado y Valores de Referencia (Octubre 2026)
 - **Casas residenciales en venta en San José de Mayo (2 a 3 dormitorios):** Valor típico USD 88.000. Rango frecuente entre USD 88.000 y USD 98.000. Opciones céntricas premium hasta USD 250.000. Identificación y auditoría de propiedades "Aptas para Banco" (BHU, Santander, Itaú, BBVA, Scotiabank) con planos de mensura y BPS al día.

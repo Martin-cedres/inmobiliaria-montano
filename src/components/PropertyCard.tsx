@@ -46,6 +46,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
   // Operation Badge
   const renderOperationBadge = () => {
     if (property.operation === 'ninguna') return null;
+    if (property.status === 'reservado' || property.status === 'vendido' || property.status === 'alquilado') return null;
     if (property.operation !== 'busqueda' && property.price?.priceMode === 'oculto') return null;
 
     switch (property.operation) {
@@ -140,21 +141,23 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
             onError={() => setImageError(true)}
           />
 
-          {/* Banda transversal de lado a lado para propiedades reservadas o vendidas/alquiladas */}
+          {/* Faja institucional diagonal de alto impacto (RESERVÓ, ALQUILÓ, VENDIÓ) */}
           {(isReserved || isUnavailable) && (
             <div
-              className={`absolute inset-x-0 top-1/2 -translate-y-1/2 z-[15] flex items-center justify-center py-2.5 sm:py-3 rotate-[-3deg] scale-x-110 shadow-xl pointer-events-none border-y-2 border-white/60 backdrop-blur-xs ${
-                isReserved
-                  ? 'bg-amber-500 text-white'
-                  : 'bg-red-600 text-white'
+              className={`absolute inset-x-0 top-1/2 -translate-y-1/2 z-[15] flex items-center justify-center pt-2.5 pb-3 sm:pt-3 sm:pb-3.5 rotate-[-12deg] scale-x-125 pointer-events-none border-y-[2.5px] shadow-[0_10px_28px_rgba(0,0,0,0.6)] ${
+                property.status === 'reservado'
+                  ? 'bg-[#E85D04] border-white text-white'
+                  : property.status === 'vendido'
+                  ? 'bg-[#4A1242] border-[#FFD000] text-[#FFD000]'
+                  : 'bg-[#5E1754] border-white text-white'
               }`}
             >
-              <span className="text-white font-black text-xs sm:text-sm md:text-base uppercase tracking-[0.28em] drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)] flex items-center gap-1.5">
+              <span className="font-black text-2xl sm:text-[28px] leading-none -translate-y-[1px] uppercase tracking-wider antialiased [text-shadow:0_2px_4px_rgba(0,0,0,0.45)] select-none">
                 {property.status === 'reservado'
-                  ? 'RESERVADA'
+                  ? 'RESERVÓ'
                   : property.status === 'vendido'
-                  ? 'VENDIDA'
-                  : 'ALQUILADA'}
+                  ? 'VENDIÓ'
+                  : 'ALQUILÓ'}
               </span>
             </div>
           )}

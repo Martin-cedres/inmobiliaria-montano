@@ -36,24 +36,33 @@ export function RealEstateAgentJsonLd() {
     hasMap: 'https://share.google/6I1gbffV5ZTS5heXV',
     sameAs: [
       'https://www.facebook.com/montanioinmobiliaria/',
+      'https://www.instagram.com/propiedadesmontana1',
       'https://www.google.com/maps/place/?q=place_id:ChIJgU0vgPl3oZURSNT4x7Lw3fE',
     ],
     areaServed: [
       {
+        '@type': 'AdministrativeArea',
+        name: 'Departamento de San José',
+      },
+      {
         '@type': 'City',
         name: 'San José de Mayo',
+        postalCode: '80000',
       },
       {
         '@type': 'City',
         name: 'Libertad',
+        postalCode: '80100',
       },
       {
         '@type': 'City',
         name: 'Ciudad del Plata',
+        postalCode: '80500',
       },
       {
         '@type': 'City',
         name: 'Ecilda Paullier',
+        postalCode: '80200',
       },
       {
         '@type': 'City',
@@ -65,9 +74,48 @@ export function RealEstateAgentJsonLd() {
       },
       {
         '@type': 'AdministrativeArea',
+        name: 'Chamizo',
+      },
+      {
+        '@type': 'AdministrativeArea',
+        name: 'Raigón',
+      },
+      {
+        '@type': 'AdministrativeArea',
         name: 'Boca del Cufré',
       },
     ],
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Catálogo Oficial de Propiedades e Inmuebles en San José',
+      itemListElement: [
+        {
+          '@type': 'OfferCatalog',
+          name: 'Casas en Venta en San José de Mayo',
+          url: `${BASE_URL}/casas-en-venta-san-jose-de-mayo`,
+        },
+        {
+          '@type': 'OfferCatalog',
+          name: 'Alquileres en San José de Mayo',
+          url: `${BASE_URL}/alquileres-san-jose-de-mayo`,
+        },
+        {
+          '@type': 'OfferCatalog',
+          name: 'Casas Aptas para Crédito Bancario (BHU/BROU)',
+          url: `${BASE_URL}/casas-aptas-para-banco-san-jose`,
+        },
+        {
+          '@type': 'OfferCatalog',
+          name: 'Terrenos y Chacras en San José',
+          url: `${BASE_URL}/terrenos-y-chacras-san-jose`,
+        },
+        {
+          '@type': 'OfferCatalog',
+          name: 'Locales Comerciales y Galpones',
+          url: `${BASE_URL}/locales-comerciales-y-galpones-san-jose`,
+        },
+      ],
+    },
     founder: {
       '@type': 'Person',
       name: 'Daniel Montaño',
@@ -81,40 +129,6 @@ export function RealEstateAgentJsonLd() {
         closes: '18:00',
       },
     ],
-    hasOfferCatalog: {
-      '@type': 'OfferCatalog',
-      name: 'Catálogo de Inmuebles en San José de Mayo',
-      itemListElement: [
-        {
-          '@type': 'OfferCatalog',
-          name: 'Casas en Venta en San José de Mayo',
-        },
-        {
-          '@type': 'OfferCatalog',
-          name: 'Alquileres en San José de Mayo',
-        },
-        {
-          '@type': 'OfferCatalog',
-          name: 'Terrenos y Solares en San José',
-        },
-        {
-          '@type': 'OfferCatalog',
-          name: 'Chacras y Fracciones de Campo',
-        },
-        {
-          '@type': 'OfferCatalog',
-          name: 'Tasaciones Inmobiliarias Profesionales',
-        },
-        {
-          '@type': 'OfferCatalog',
-          name: 'Convenio Círculo Policial de San José — 10% OFF en Alquileres para Socios',
-        },
-        {
-          '@type': 'OfferCatalog',
-          name: 'Tasaciones Inmobiliarias Express en 24-48 horas',
-        },
-      ],
-    },
     knowsAbout: [
       'Tasaciones Inmobiliarias Rápidas en 24-48 horas en San José de Mayo',
       'Convenio Institucional de Alquiler con Círculo Policial de San José',

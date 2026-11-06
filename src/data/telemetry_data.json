@@ -1402,6 +1402,104 @@
       "eventType": "page_view",
       "pagePath": "/casas-en-venta-san-jose-de-mayo",
       "anonymousSessionId": "anon_1793062330152_pm4t1qv"
+    },
+    {
+      "id": "evt_1793934242012_4trkq9",
+      "timestamp": "2026-11-06T03:04:02.012Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1793934241536_f8uo1v4"
+    },
+    {
+      "id": "evt_1793934330087_1xdo2u",
+      "timestamp": "2026-11-06T03:05:30.087Z",
+      "eventType": "page_view",
+      "pagePath": "/propiedad/alquiler-local-comercial-112m2-sarandi-18-san-jose-mon955",
+      "anonymousSessionId": "anon_1793934241536_f8uo1v4"
+    },
+    {
+      "id": "evt_1793934330240_dxhw9v",
+      "timestamp": "2026-11-06T03:05:30.240Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1793934330272_21rrb3",
+      "timestamp": "2026-11-06T03:05:30.273Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1793934332238_u1cizb",
+      "timestamp": "2026-11-06T03:05:32.238Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1793934241536_f8uo1v4"
+    },
+    {
+      "id": "evt_1793934978831_2plvtz",
+      "timestamp": "2026-11-06T03:16:18.831Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1793934241536_f8uo1v4"
+    },
+    {
+      "id": "evt_1793935225394_7c93ut",
+      "timestamp": "2026-11-06T03:20:25.394Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1793934241536_f8uo1v4"
+    },
+    {
+      "id": "evt_1793935353840_3nkfrj",
+      "timestamp": "2026-11-06T03:22:33.840Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1793934241536_f8uo1v4"
+    },
+    {
+      "id": "evt_1793935587664_y8o5ej",
+      "timestamp": "2026-11-06T03:26:27.664Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1793935587704_nozswc",
+      "timestamp": "2026-11-06T03:26:27.704Z",
+      "eventType": "page_view",
+      "pagePath": "/propiedad/venta-casa-hospital-san-jose-mon311",
+      "anonymousSessionId": "anon_1793934241536_f8uo1v4"
+    },
+    {
+      "id": "evt_1793935587811_au3lmy",
+      "timestamp": "2026-11-06T03:26:27.811Z",
+      "eventType": "property_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_server"
+    },
+    {
+      "id": "evt_1793935594522_d178sf",
+      "timestamp": "2026-11-06T03:26:34.522Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1793934241536_f8uo1v4"
+    },
+    {
+      "id": "evt_1793935940632_hg2wkh",
+      "timestamp": "2026-11-06T03:32:20.632Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1793934241536_f8uo1v4"
+    },
+    {
+      "id": "evt_1793936023980_cmeahz",
+      "timestamp": "2026-11-06T03:33:43.980Z",
+      "eventType": "page_view",
+      "pagePath": "/",
+      "anonymousSessionId": "anon_1793934241536_f8uo1v4"
     }
   ],
   "seoRecords": [

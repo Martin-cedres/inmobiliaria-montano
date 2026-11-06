@@ -1436,3 +1436,56 @@
 - Se añadió un cintillo sutil y conciso al tope de la tabla: "💡 Tip Mercado Libre: Si el aviso no muestra el celular automáticamente, tocá Ver Aviso, hacé clic en 'Ver teléfono' en ML y pegalo en + Tel / WA para guardarlo."
 - En avisos sin teléfono confirmado se colocó la etiqueta clara "Tel. en aviso".
 - Se eliminó el botón duplicado de "Cargar Dueño Vende" en `src/components/admin/market/CaptacionRadarToolbar.tsx` manteniendo únicamente el botón principal del encabezado.
+
+[2026-10-26] Despliegue a Producción Exitoso (Vercel):
+- Se verificó compilación completa local con `npm run build` (81 páginas estáticas y dinámicas compiladas en 24.7s con 0 errores).
+- Se ejecutó `git add .`, commit `feat(mercado): radar exclusivo duenos vende San Jose con WhatsApp honesto y escaner multiportal` y `git push origin main` tras autorización expresa del usuario.
+- El radar de captación de dueños vende, las plantillas honestas de WhatsApp y los ejecutables locales quedaron sincronizados con producción en `https://www.inmobiliariamontano.uy`.
+
+=== Sesión 2026-11-05 ===
+[2026-11-05] Implementación Fase 1: Barras Institucionales, Saneamiento de Base de Datos y Optimización AI Overviews:
+- Fajas Institucionales de Éxito Comercial: Reemplazados los textos con género pasivo ("RESERVADA", "ALQUILADA", "VENDIDA") y el color rojo puro genérico por fajas transversales de logro en 3ª persona (`RESERVÓ`, `ALQUILÓ`, `VENDIÓ`) bajo la identidad visual oficial de Inmobiliaria Montaño:
+  - `RESERVÓ`: Naranja institucional (`bg-[#E85D04]/95 text-white border-y border-white/40`).
+  - `ALQUILÓ`: Púrpura corporativo (`bg-[#5E1754]/95 text-white border-y border-amber-400/50`).
+  - `VENDIÓ`: Gradiente morado profundo a púrpura (`bg-gradient-to-r from-[#2D0B28]/95 via-[#5E1754]/95 to-[#2D0B28]/95 text-amber-300 border-y border-amber-400/60`).
+  - Aplicado de manera unificada tanto en tarjetas (`src/components/PropertyCard.tsx`) como en la vista de detalle de la propiedad (`src/components/PropertyGallery.tsx`).
+- Saneamiento de Base de Datos (`src/db/properties.json`): Corregidas 6 propiedades con modalidad `priceMode: "consultar"` que conservaban el monto ficticio `50000`, asignándoles `amount: 0`.
+- Súper-Schema RealEstateAgent Consistente: Sincronizado el Schema.org en `src/utils/seo.ts` y `src/components/seo/RealEstateAgentJsonLd.tsx` con `alternateName: "Inmobiliaria Daniel Montaño"`, `sameAs` (Facebook, Instagram y Google Maps), cobertura territorial completa (`areaServed` para San José de Mayo, Libertad, Ciudad del Plata, Ecilda Paullier, Rodríguez, Kiyú, Chamizo, Raigón, Boca del Cufré y CPs 80000, 80100, 80200, 80500) y catálogo estructurado `hasOfferCatalog`.
+- Bloque AI Overview Magnet y Jerarquía SEO:
+  - En `src/app/page.tsx`: Inyectada metadata explícita canónica y creado el componente semántico institucional `src/components/seo/AiOverviewMagnetSection.tsx` con cálculo SSR dinámico de inventario por categoría (`casasCount`, `alquileresCount`, etc.).
+  - En `src/app/inmobiliaria-san-jose/page.tsx`: Integrado el bloque con enlace de transferencia de autoridad hacia la portada con anchor text "Ver Catálogo Oficial de Inmobiliaria Montaño en San José de Mayo".
+- Flujo de Contacto y Agentes:
+  - En `src/components/OwnerLeadSection.tsx`: Conectado `router.push('/gracias')` al enviar consulta de propietarios.
+  - En `src/app/llms.txt/route.ts`: Actualizados los datos dinámicos de inventario, redes sociales y bloque literal de especialidad institucional para LLMs.
+- Verificación de Compilación: Ejecutado `npm run build` con éxito (81 de 81 rutas compiladas con 0 errores). Servidor local `npm run dev` activo en http://localhost:3000.
+[2026-11-06] Refinamiento de Marketing y Estética Editorial en Fajas de Éxito Comercial:
+- Actualizado el diseño de las fajas en `src/components/PropertyCard.tsx` y `src/components/PropertyGallery.tsx` con estructura jerárquica de 2 niveles:
+  - Nivel superior: `✦ INMOBILIARIA MONTAÑO ✦` en tipografía de alto tracking para unir gramatical y comercialmente la firma con el logro.
+  - Nivel principal: Ícono vectorial de verificación (`CheckCircle2` / `ShieldCheck`) + verbo en 3ª persona (`VENDIÓ`, `ALQUILÓ`, `RESERVÓ`) con doble ribete tipo sello notarial, relieve 3D interior y velo de contraste sobre la foto.
+- Eliminada la contradicción visual en tarjetas y galería ocultando el badge superior izquierdo (`EN VENTA` / `ALQUILER`) cuando el inmueble ya se encuentra en estado `reservado`, `vendido` o `alquilado`.
+[2026-11-06] Simplificación y Máxima Nitidez en Fajas Institucionales (RESERVÓ, ALQUILÓ, VENDIÓ):
+- Reemplazado el diseño de 2 líneas y efecto blur por una faja de 1 sola línea grande, 100% sólida y ultra nítida (`text-base sm:text-lg font-black uppercase tracking-[0.25em] text-white antialiased`) en `src/components/PropertyCard.tsx` y `src/components/PropertyGallery.tsx`.
+- Colores institucionales puros sin transparencia (`bg-[#5E1754]` con `border-y-2 border-amber-400` para `VENDIÓ`, `bg-[#5E1754]` con `border-y-2 border-white/90` para `ALQUILÓ` y `bg-[#E85D04]` con `border-y-2 border-white/90` para `RESERVÓ`), manteniendo oculto el cartel superior izquierdo de operación en propiedades cerradas/reservadas.
+[2026-11-06] Aumento de Peso Tipográfico y Fuerza Visual en Fajas (RESERVÓ, ALQUILÓ, VENDIÓ):
+- Incrementado el tamaño de fuente a `text-xl sm:text-[25px]` en tarjetas (`PropertyCard.tsx`) y `text-2xl sm:text-3xl lg:text-4xl` en galería (`PropertyGallery.tsx`), con compacto de `tracking-[0.15em]`, engrosamiento físico del trazo (`[-webkit-text-stroke:0.6px_white]`) y doble sombra de corte sólida (`[text-shadow:0_2px_0_rgba(0,0,0,0.4),0_4px_12px_rgba(0,0,0,0.55)]`).
+[2026-11-06] Ajuste Óptico Vertical, Borde Blanco Puro y Diferenciación Cromática entre VENDIÓ y ALQUILÓ:
+- Aplicado ajuste óptico vertical (`pt-2 pb-2.5 sm:pt-2.5 sm:pb-3` y `-translate-y-[1px]`) en `PropertyCard.tsx` y `PropertyGallery.tsx` para compensar el acento agudo de la `Ó` y la sombra inferior, centrando perfectamente la palabra entre las líneas.
+- Unificado el borde blanco puro de 2px (`border-y-2 border-white`) para máxima nitidez de corte sobre cualquier foto de fondo.
+- Diferenciados los tonos corporativos: Púrpura profundo ejecutivo (`bg-[#3B0D36]`) para `VENDIÓ`, Púrpura vibrante (`bg-[#6B1B60]`) para `ALQUILÓ` y Naranja corporativo (`bg-[#E85D04]`) para `RESERVÓ`.
+[2026-11-06] Eliminación de Bordes Blancos Duros en Fajas para Acabado Puro y Sin Escalonado:
+- Retirados los bordes blancos duros (`border-y-2 border-white`) en `PropertyCard.tsx` y `PropertyGallery.tsx` para evitar el efecto escalonado diagonal y dar 100% de protagonismo visual al bloque de color sólido y al texto blanco con sombra profunda.
+[2026-11-06] Fórmula Diagonal de Alto Contraste con Letras Juntas y Grandes (Estilo Cartelería Inmobiliaria):
+- Actualizadas `PropertyCard.tsx` y `PropertyGallery.tsx` con inclinación diagonal intencional (`rotate-[-12deg] scale-x-125`), letras juntas (`tracking-wider`) y tamaño grande (`text-2xl sm:text-[28px]` en tarjetas y `text-3xl sm:text-4xl lg:text-[42px]` en galería).
+- Aplicada combinación de color de marca donde el texto y los bordes (`border-y-[2.5px]`) comparten el mismo tono de acento:
+  - `VENDIÓ`: Fondo Púrpura profundo (`#4A1242`) + Texto y bordes en Amarillo Oro del logo (`#FFD000`).
+  - `RESERVÓ`: Fondo Naranja Montaño (`#E85D04`) + Texto y bordes en Blanco puro.
+  - `ALQUILÓ`: Fondo Púrpura Montaño (`#5E1754`) + Texto y bordes en Blanco puro.
+
+=== Sesión 2026-11-06 ===
+[2026-11-06] Despliegue a Producción (Vercel) de la FASE 1 tras Autorización Expresa del Usuario:
+- Fajas Institucionales de Alto Impacto (RESERVÓ, ALQUILÓ, VENDIÓ): Desplegadas con fórmula diagonal intencional (-12°), escala extendida y tipografía pesada en bloque compacto de 28px/42px (`font-black uppercase tracking-wider`). Acabado con colores contrastantes del logo de Montaño (Púrpura #4A1242 + Oro #FFD000 para `VENDIÓ`, Naranja #E85D04 + Blanco para `RESERVÓ`, Púrpura #5E1754 + Blanco para `ALQUILÓ`), ocultando los badges superiores para eliminar contradicciones visuales.
+- Saneamiento de Base de Datos: Limpiados montos residuales (`amount: 0`) en propiedades en modalidad consultar/oculto en `src/db/properties.json`.
+- Súper-Schema RealEstateAgent: Actualizado con perfil oficial de Instagram, códigos postales departamentales (80000, 80100, 80200, 80500) y catálogo estructurado `hasOfferCatalog`.
+- Bloque AI Overview Magnet: Inyectado con conteos SSR reales y enlazado semántico de autoridad hacia la Home desde `/inmobiliaria-san-jose`.
+- Flujo de Conversión y LLMs: Redirección post-contacto hacia `/gracias` y actualización en tiempo real de `src/app/llms.txt/route.ts`.
+- Compilación y Despliegue: Verificación limpia de producción (81 rutas compiladas en 5.3s con 0 errores) y commit / push hacia `origin/main` para despliegue automatizado en Vercel.

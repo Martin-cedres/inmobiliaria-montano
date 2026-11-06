@@ -1,11 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Search, Calculator, Send, Building, X } from 'lucide-react';
 import { MONTAÑO_WHATSAPP_PHONE } from '@/utils/whatsapp';
 import { trackWhatsappClick } from '@/utils/telemetry';
 
 export const OwnerLeadSection: React.FC = () => {
+  const router = useRouter();
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [propertyType, setPropertyType] = useState('casa');
@@ -29,6 +31,7 @@ export const OwnerLeadSection: React.FC = () => {
     window.open(waUrl, '_blank');
     setSubmitted(true);
     if (onDone) onDone();
+    router.push('/gracias');
   };
 
   const renderFormContent = (onDone?: () => void) => (

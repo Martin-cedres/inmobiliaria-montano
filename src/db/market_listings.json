@@ -76,7 +76,7 @@
     "sourceName": "Gallito Luis (Trato Directo)",
     "sourceUrl": "https://www.gallito.com.uy/venta-comercio-playa-pascual-san-jose-inmuebles-29984456",
     "detectedAt": "2026-10-27T00:40:26.752Z",
-    "daysOnMarket": 4,
+    "daysOnMarket": 5,
     "status": "detectado",
     "contactName": "Dueño Particular",
     "contactPhone": "59896689765",
@@ -91,7 +91,7 @@
     ],
     "isOpportunity": true,
     "opportunityReason": "Dueño directo verificado en San José para captación.",
-    "updatedAt": "2026-10-27T01:41:34.071Z"
+    "updatedAt": "2026-11-02T01:49:48.838Z"
   },
   {
     "id": "infocasas-194387386",
@@ -107,7 +107,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/hotel-boutique-20-habitaciones-salon-de-eventos-250-pax-playa-pascual/194387386",
     "detectedAt": "2026-10-11",
-    "daysOnMarket": 8,
+    "daysOnMarket": 9,
     "status": "detectado",
     "contactName": "Venta Hotel Isis",
     "contactPhone": "+59895308162",
@@ -122,7 +122,7 @@
     ],
     "isOpportunity": true,
     "opportunityReason": "Nuevo aviso directo de propietario para captación temprana.",
-    "updatedAt": "2026-10-27T01:41:34.071Z"
+    "updatedAt": "2026-11-02T01:49:48.838Z"
   },
   {
     "id": "infocasas-193095962",
@@ -138,7 +138,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/chacra-en-costas-de-pereira-san-jose-a-solo-6-km-de-ruta-1-ubicacion-excelen/193095962",
     "detectedAt": "2025-11-13",
-    "daysOnMarket": 8,
+    "daysOnMarket": 9,
     "status": "detectado",
     "contactName": "Jorge",
     "contactPhone": "+59891432601",
@@ -151,7 +151,7 @@
     ],
     "isOpportunity": true,
     "opportunityReason": "Nuevo aviso directo de propietario para captación temprana.",
-    "updatedAt": "2026-10-27T01:41:34.071Z"
+    "updatedAt": "2026-11-02T01:49:48.838Z"
   },
   {
     "id": "infocasas-190142705",
@@ -167,7 +167,7 @@
     "sourceName": "InfoCasas",
     "sourceUrl": "https://www.infocasas.com.uy/apart-hotel-y-restaurante-frente-a-la-playa/190142705",
     "detectedAt": "2023-01-30",
-    "daysOnMarket": 8,
+    "daysOnMarket": 9,
     "status": "detectado",
     "contactName": "Marcelo",
     "contactPhone": "096628287",
@@ -185,6 +185,6 @@
     ],
     "isOpportunity": true,
     "opportunityReason": "Nuevo aviso directo de propietario para captación temprana.",
-    "updatedAt": "2026-10-27T01:41:34.071Z"
+    "updatedAt": "2026-11-02T01:49:48.838Z"
   }
 ]

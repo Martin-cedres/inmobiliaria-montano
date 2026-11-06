@@ -8,6 +8,7 @@ import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
 import { PropertyCard } from '@/components/PropertyCard';
 import { FaqAccordion, FaqItem } from '@/components/ui/FaqAccordion';
 import { DepartmentInterlinking } from '@/components/seo/DepartmentInterlinking';
+import { AiOverviewMagnetSection } from '@/components/seo/AiOverviewMagnetSection';
 import { getAllProperties } from '@/lib/propertiesStore';
 import { SAN_JOSE_LOCATIONS } from '@/data/locations';
 import { generateSiteGraphSchema } from '@/utils/seo';
@@ -375,6 +376,9 @@ export default async function InmobiliariaSanJosePage() {
           </div>
         </section>
       )}
+
+      {/* Bloque Institucional y Especialidad para Usuarios y Google AI Overviews */}
+      <AiOverviewMagnetSection properties={allProperties} showHomeCatalogLink={true} />
 
       {/* Preguntas Frecuentes */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full space-y-8">

@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import { Property } from '@/types/property';
 import { SharePropertyModal } from '@/components/SharePropertyModal';
-import { Maximize2, X, ChevronLeft, ChevronRight, Camera, Play } from 'lucide-react';
+import { Maximize2, X, ChevronLeft, ChevronRight, Camera, Play, CheckCircle2, ShieldCheck } from 'lucide-react';
 
 interface PropertyGalleryProps {
   property: Property;
@@ -147,27 +147,33 @@ export const PropertyGallery: React.FC<PropertyGalleryProps> = ({ property }) =>
           onClick={() => !imageError && setIsLightboxOpen(true)}
         />
 
-        {/* Banda transversal de lado a lado para propiedades reservadas o vendidas/alquiladas */}
+        {/* Faja institucional diagonal de alto impacto (RESERVÓ, ALQUILÓ, VENDIÓ) */}
         {(property.status === 'reservado' || property.status === 'vendido' || property.status === 'alquilado') && (
           <div
-            className={`absolute inset-x-0 top-1/2 -translate-y-1/2 z-[15] flex items-center justify-center py-3 sm:py-4 rotate-[-3deg] scale-x-110 shadow-xl border-y-2 border-white/60 backdrop-blur-xs pointer-events-none ${
+            className={`absolute inset-x-0 top-1/2 -translate-y-1/2 z-[15] flex items-center justify-center pt-3.5 pb-4 sm:pt-4 sm:pb-4.5 rotate-[-12deg] scale-x-125 pointer-events-none border-y-[3px] shadow-[0_12px_32px_rgba(0,0,0,0.65)] ${
               property.status === 'reservado'
-                ? 'bg-amber-500 text-white'
-                : 'bg-red-600 text-white'
+                ? 'bg-[#E85D04] border-white text-white'
+                : property.status === 'vendido'
+                ? 'bg-[#4A1242] border-[#FFD000] text-[#FFD000]'
+                : 'bg-[#5E1754] border-white text-white'
             }`}
           >
-            <span className="text-white font-black text-base sm:text-xl lg:text-2xl uppercase tracking-[0.28em] drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)] flex items-center gap-2">
+            <span className="font-black text-3xl sm:text-4xl lg:text-[42px] leading-none -translate-y-[1.5px] uppercase tracking-wider antialiased [text-shadow:0_2px_6px_rgba(0,0,0,0.5)] select-none">
               {property.status === 'reservado'
-                ? 'RESERVADA'
+                ? 'RESERVÓ'
                 : property.status === 'vendido'
-                ? 'VENDIDA'
-                : 'ALQUILADA'}
+                ? 'VENDIÓ'
+                : 'ALQUILÓ'}
             </span>
           </div>
         )}
 
-        {/* Top Left: Operation Badge */}
-        {property.operation !== 'ninguna' && !(property.operation !== 'busqueda' && property.price?.priceMode === 'oculto') && (
+        {/* Top Left: Operation Badge (oculto si ya está reservado, vendido o alquilado para evitar contradicción) */}
+        {property.operation !== 'ninguna' &&
+          property.status !== 'reservado' &&
+          property.status !== 'vendido' &&
+          property.status !== 'alquilado' &&
+          !(property.operation !== 'busqueda' && property.price?.priceMode === 'oculto') && (
           <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10 pointer-events-none">
             <span
               className={`text-white text-[11px] sm:text-xs font-black uppercase px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full shadow ${
