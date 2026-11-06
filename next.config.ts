@@ -2,6 +2,26 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  images: {
+    formats: ['image/avif', 'image/webp'],
+    deviceSizes: [384, 480, 640, 750, 828, 1080, 1200],
+    imageSizes: [32, 48, 64, 96, 128, 256, 384],
+    minimumCacheTTL: 86400,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*.public.blob.vercel-storage.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'inmobiliariamontano.uy',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.inmobiliariamontano.uy',
+      },
+    ],
+  },
   async redirects() {
     return [
       {
@@ -74,6 +94,22 @@ const nextConfig: NextConfig = {
         source: '/auth.md',
         destination: '/api/well-known/auth-md',
       },
+      {
+        source: '/.well-known/poppy.json',
+        destination: '/api/well-known/poppy',
+      },
+      {
+        source: '/openapi.json',
+        destination: '/api/openapi',
+      },
+      {
+        source: '/about',
+        destination: '/sobre-nosotros',
+      },
+      {
+        source: '/privacy',
+        destination: '/politica-de-privacidad',
+      },
     ];
   },
   async headers() {
@@ -84,7 +120,7 @@ const nextConfig: NextConfig = {
           {
             key: 'Link',
             value:
-              '</llms.txt>; rel="alternate"; type="text/markdown", </llms-full.txt>; rel="alternate"; type="text/markdown", </.well-known/ai-catalog.json>; rel="service-desc", </.well-known/api-catalog>; rel="api-catalog", </.well-known/mcp/server-card.json>; rel="service-desc"',
+              '</llms.txt>; rel="alternate"; type="text/markdown", </llms-full.txt>; rel="alternate"; type="text/markdown", </.well-known/ai-catalog.json>; rel="service-desc", </.well-known/api-catalog>; rel="api-catalog", </.well-known/mcp/server-card.json>; rel="service-desc", </.well-known/poppy.json>; rel="service-desc", </openapi.json>; rel="service-desc"',
           },
           {
             key: 'Vary',

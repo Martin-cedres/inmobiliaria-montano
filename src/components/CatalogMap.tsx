@@ -143,7 +143,7 @@ const ClusteredMarkersLayer = React.memo(function ClusteredMarkersLayer({
           priceMode === 'consultar' ? 'Consultar Precio' :
           priceMode === 'reservado' ? 'Precio Reservado' :
           `${priceMode === 'desde' ? 'Desde ' : ''}${prop.price.currency === 'USD' ? 'USD' : 'UYU $'} ${prop.price.amount.toLocaleString('es-UY')}`;
-        const mainImg = prop.images.find((img) => img.isMain)?.webpUrl || prop.images[0]?.webpUrl || '/logo.png';
+        const mainImg = prop.images.find((img) => img.isMain)?.webpUrl || prop.images[0]?.webpUrl || '/logo-header.webp';
         const icon = pinsMap.get(prop.id) || createCompactPricePin('...', false, prop.id);
 
         return (
@@ -181,7 +181,7 @@ const ClusteredMarkersLayer = React.memo(function ClusteredMarkersLayer({
                     alt={prop.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     onError={(e) => {
-                      (e.target as HTMLImageElement).src = '/logo.png';
+                      (e.target as HTMLImageElement).src = '/logo-header.webp';
                     }}
                   />
                   <div className="absolute top-2 left-2">

@@ -26,7 +26,7 @@ const CATEGORY_CHIPS: CategoryChipItem[] = [
   { id: 'casa', label: 'Casas', IconComponent: Home },
   { id: 'apartamento', label: 'Alquileres', IconComponent: Key },
   { id: 'terreno', label: 'Terrenos', IconComponent: MapPin },
-  { id: 'chacra', label: 'Chacras', IconComponent: Trees },
+  { id: 'chacra', label: 'Chacras y Campos', shortLabel: 'Chacras', IconComponent: Trees },
   { id: 'local', label: 'Locales', IconComponent: Store },
   { id: 'proyecto', label: 'Proyectos', IconComponent: Building2 },
   { id: 'modulo', label: 'Módulos', IconComponent: Box },

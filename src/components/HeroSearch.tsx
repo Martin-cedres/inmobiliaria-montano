@@ -1,18 +1,10 @@
-'use client';
-
 import React from 'react';
 import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon';
-import { Building2, ArrowDown } from 'lucide-react';
 import { buildGeneralWhatsAppLink } from '@/utils/whatsapp';
+import { HeroExploreButton } from '@/components/HeroExploreButton';
 
 export const HeroSearch: React.FC = () => {
   const whatsappUrl = buildGeneralWhatsAppLink('general');
-
-  const handleExploreClick = () => {
-    if (typeof window !== 'undefined') {
-      window.dispatchEvent(new CustomEvent('set-catalog-view', { detail: { view: 'grid', scroll: true } }));
-    }
-  };
 
   return (
     <section className="relative bg-gradient-to-br from-[#2D0B28] via-[#43123C] to-[#5E1754] text-white pt-20 pb-10 sm:pt-32 sm:pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
@@ -22,35 +14,27 @@ export const HeroSearch: React.FC = () => {
 
       <div className="max-w-4xl mx-auto text-center space-y-6 relative z-10">
         
-        {/* Titular Principal Institucional */}
+        {/* Titular Principal Institucional (SSR puro para LCP ultrarrápido) */}
         <div className="space-y-3">
           <span className="inline-flex items-center space-x-2 bg-amber-400/10 text-amber-300 border border-amber-400/20 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider">
             <span>Inmobiliaria Montaño • Daniel Montaño</span>
           </span>
 
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
-            Inmobiliaria en San José de Mayo
+            Inmobiliaria Montaño en San José de Mayo
             <span className="block text-xl sm:text-3xl lg:text-4xl font-extrabold text-amber-300 mt-2 sm:mt-3">
-              Tu próxima propiedad te está esperando
+              Casas en Venta, Alquileres, Terrenos y Tasaciones Oficiales
             </span>
           </h1>
 
           <p className="text-slate-200 text-sm sm:text-lg max-w-2xl mx-auto font-normal leading-relaxed">
-            Ventas, alquileres, terrenos y chacras en San José de Mayo. Tasaciones profesionales, transacciones seguras y atención directa con Daniel Montaño.
+            Compra, venta, alquiler y administración de propiedades en San José de Mayo y todo el departamento. Asesoramiento notarial y bancario directo con Daniel Montaño.
           </p>
         </div>
 
         {/* Botones de Acción Directa en el Hero (CRO 2-CTA Regla de Oro) */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 pt-2">
-          <a
-            href="#catalogo"
-            onClick={handleExploreClick}
-            className="inline-flex items-center justify-center space-x-2.5 bg-[#E85D04] hover:bg-[#FF8500] active:scale-95 text-white font-extrabold px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl sm:rounded-full shadow-lg shadow-orange-500/25 transition-all text-sm sm:text-base flex-shrink-0"
-          >
-            <Building2 className="w-4 h-4 text-amber-200" />
-            <span>Explorar Propiedades</span>
-            <ArrowDown className="w-3.5 h-3.5 hidden sm:inline-block animate-bounce" />
-          </a>
+          <HeroExploreButton />
 
           <a
             href={whatsappUrl}

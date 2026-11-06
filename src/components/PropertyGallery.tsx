@@ -154,7 +154,7 @@ export const PropertyGallery: React.FC<PropertyGalleryProps> = ({ property }) =>
               property.status === 'reservado'
                 ? 'bg-[#E85D04] border-white text-white'
                 : property.status === 'vendido'
-                ? 'bg-[#4A1242] border-[#FFD000] text-[#FFD000]'
+                ? 'bg-[#4A1242] border-white text-white'
                 : 'bg-[#5E1754] border-white text-white'
             }`}
           >

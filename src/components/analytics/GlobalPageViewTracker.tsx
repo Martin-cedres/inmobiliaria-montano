@@ -28,8 +28,14 @@ function GlobalPageViewTrackerInner() {
     if (lastTrackedRef.current === currentUrl) return;
     lastTrackedRef.current = currentUrl;
 
-    // Enviar evento de telemetría de visita global a la página
-    trackPageView(pathname);
+    // Enviar evento de telemetría de forma diferida tras el render crítico
+    const defer = typeof window !== 'undefined' && 'requestIdleCallback' in window
+      ? (window as any).requestIdleCallback
+      : (cb: () => void) => setTimeout(cb, 2500);
+
+    defer(() => {
+      trackPageView(pathname);
+    });
   }, [pathname, searchParams]);
 
   return null;

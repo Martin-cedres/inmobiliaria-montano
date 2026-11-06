@@ -7,11 +7,15 @@ import { GlobalPageViewTracker } from "@/components/analytics/GlobalPageViewTrac
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "optional",
+  preload: true,
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "optional",
+  preload: false,
 });
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
@@ -134,6 +138,9 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <link rel="preload" as="image" href="/logo-header.webp" type="image/webp" />
+      </head>
       <body suppressHydrationWarning className="min-h-full flex flex-col">
         <GlobalPageViewTracker />
         <WebMcpProvider />

@@ -70,7 +70,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
         );
       case 'venta':
         return (
-          <span className="bg-[#e85d04]/95 backdrop-blur-md text-white text-[10px] font-black uppercase px-2.5 py-1 rounded-lg shadow-sm border border-white/20 tracking-wider">
+          <span className="bg-[#C2410C]/95 backdrop-blur-md text-white text-[10px] font-black uppercase px-2.5 py-1 rounded-lg shadow-sm border border-white/20 tracking-wider">
             EN VENTA
           </span>
         );
@@ -114,27 +114,29 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
 
   return (
     <div
-      className={`bg-white rounded-2xl overflow-hidden border border-slate-200/80 hover:border-[#5e1754]/50 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col group ${
+      className={`bg-white rounded-2xl overflow-hidden border border-slate-200/80 hover:border-[#5e1754]/50 shadow-xs hover:shadow-xl transition-[transform,box-shadow,border-color] duration-300 flex flex-col group ${
         isUnavailable || isReserved
           ? 'hover:-translate-y-1'
           : 'hover:-translate-y-1.5'
       }`}
     >
       {/* Clickable Card Area linking to /propiedad/[slug] */}
-      <Link href={`/propiedad/${property.slug}`} aria-label={property.title} className="flex flex-col flex-1 text-left cursor-pointer group/link">
+      <Link href={`/propiedad/${property.slug}`} prefetch={false} className="flex flex-col flex-1 text-left cursor-pointer group/link">
         
         {/* Aspect Ratio 4:3 Image Container */}
         <div className="relative aspect-[4/3] bg-slate-100 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent z-10 pointer-events-none" />
 
           <Image
-            src={imageError || !mainImage ? '/logo.png' : mainImage}
+            src={imageError || !mainImage ? '/logo-header.webp' : mainImage}
             alt={property.title}
             fill
-            unoptimized={true}
             priority={index !== undefined && index < 2}
             loading={index !== undefined && index < 2 ? 'eager' : 'lazy'}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            decoding={index !== undefined && index < 2 ? 'sync' : 'async'}
+            fetchPriority={index !== undefined && index < 2 ? 'high' : 'auto'}
+            sizes="(max-width: 640px) 94vw, (max-width: 1024px) 45vw, 380px"
+            quality={70}
             className={`object-cover w-full h-full group-hover/link:scale-105 transition-transform duration-500 ${
               imageError ? 'object-contain p-6 bg-[#350A2F]' : ''
             }`}
@@ -148,7 +150,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
                 property.status === 'reservado'
                   ? 'bg-[#E85D04] border-white text-white'
                   : property.status === 'vendido'
-                  ? 'bg-[#4A1242] border-[#FFD000] text-[#FFD000]'
+                  ? 'bg-[#4A1242] border-white text-white'
                   : 'bg-[#5E1754] border-white text-white'
               }`}
             >
@@ -196,7 +198,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
               <span className="text-[11px] font-black uppercase tracking-wider text-[#5e1754]">
                 {getCategoryLabel()}
               </span>
-              <span className="font-mono text-[10px] font-extrabold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200/60">
+              <span className="font-mono text-[10px] font-extrabold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-300">
                 Ref. #{property.codeRef}
               </span>
             </div>
@@ -248,7 +250,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
                       )}
                     </span>
                     {property.price.priceDrop && property.price.originalAmount && (
-                      <span className="text-xs line-through text-slate-400 ml-2 font-semibold">
+                      <span className="text-xs line-through text-slate-500 ml-2 font-semibold">
                         {property.price.currency === 'USD' ? 'USD' : 'UYU $'} {property.price.originalAmount.toLocaleString('es-UY')}
                       </span>
                     )}
@@ -387,7 +389,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
               pagePath: typeof window !== 'undefined' ? window.location.pathname : '/',
             });
           }}
-          className="w-full bg-[#e85d04] hover:bg-[#ff7518] active:scale-98 text-white py-2.5 px-4 rounded-xl font-extrabold text-xs sm:text-sm shadow-xs flex items-center justify-center space-x-2 transition-all hover:shadow-orange-500/20"
+          className="w-full bg-[#C2410C] hover:bg-[#9A3412] active:scale-98 text-white py-2.5 px-4 rounded-xl font-extrabold text-xs sm:text-sm shadow-xs flex items-center justify-center space-x-2 transition-all hover:shadow-orange-500/20"
         >
           <WhatsAppIcon className="w-4 h-4 text-white" />
           <span>

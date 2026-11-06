@@ -1489,3 +1489,52 @@
 - Bloque AI Overview Magnet: Inyectado con conteos SSR reales y enlazado semántico de autoridad hacia la Home desde `/inmobiliaria-san-jose`.
 - Flujo de Conversión y LLMs: Redirección post-contacto hacia `/gracias` y actualización en tiempo real de `src/app/llms.txt/route.ts`.
 - Compilación y Despliegue: Verificación limpia de producción (81 rutas compiladas en 5.3s con 0 errores) y commit / push hacia `origin/main` para despliegue automatizado en Vercel.
+[2026-11-06] Implementación del Nivel Superior (SEO Local, GEO AI Overviews, Siloing y Vidriera Inteligente):
+- H1 y Copy de Alta Conversión en Portada (`src/components/HeroSearch.tsx`): Integrada la marca y la intención transaccional en el H1: "Inmobiliaria Montaño en San José de Mayo" con subtítulo "Casas en Venta, Alquileres, Terrenos y Tasaciones Oficiales".
+- Ficha Técnica Institucional `<dl>` para Google AI Overviews (`src/components/seo/AiOverviewMagnetSection.tsx`): Creada lista de definición estructurada con Especialidad literal, conteos dinámicos en vivo, garantías/convenios y datos de tasaciones/oficina.
+- Hub de Enlazado Interno Semántico: Integrados tanto en la Home como en `Footer.tsx` los 7 enlaces estratégicos con textos ancla exactos (Casas en Venta, Alquileres, Casas Aptas para Crédito Bancario, Terrenos y Chacras, Locales y Galpones, Vender/Alquilar mi Propiedad y Tasaciones Oficiales).
+- Des-canibalización de `/inmobiliaria-san-jose`: Reorientada su metadata y H1 hacia la cobertura departamental (Libertad, Ciudad del Plata, Kiyú, etc.) con enlace prominente en el Hero hacia `/` ("Inmobiliaria Montaño en San José de Mayo - Catálogo Oficial") para blindar a la Home como URL canónica #1.
+- Inyección de Schema `ItemList` en Portada (`src/app/page.tsx`): Declarado el catálogo oficial con las primeras 30 propiedades para consagrar la Home como catálogo maestro ante Googlebot.
+- Orden Inteligente de Vidriera Comercial (`src/components/CatalogSection.tsx`): Reordenado el escaparate para mostrar primero propiedades destacadas y disponibles con precio visible, seguidas de opciones en consultar y cerrando con las fajas RESERVÓ / VENDIÓ / ALQUILÓ como trofeos de prueba social.
+- Compilación verificada: `npm run build` exitoso con 0 errores (81/81 páginas).
+[2026-11-06] Unificación de Faja VENDIÓ en Blanco Puro e Incorporación Explícita de Chacras y Campos:
+- Ajustada la faja `VENDIÓ` en `PropertyCard.tsx` y `PropertyGallery.tsx` con texto blanco puro (`text-white`) y bordes blancos puros (`border-white`), logrando homogeneidad con `ALQUILÓ` y `RESERVÓ` sobre fondo púrpura ejecutivo.
+- Separada e incorporada explícitamente la categoría rural clave "Chacras y Campos":
+  - En `CategoryChips.tsx`: Etiquetado como "Chacras y Campos" (`shortLabel: 'Chacras'`).
+  - En `Footer.tsx`: Enlace individualizado `Chacras y Campos en San José` con ícono `Trees` junto a `Terrenos y Solares en San José`.
+  - En `AiOverviewMagnetSection.tsx`: Tarjeta dedicada e individual para `Chacras y Campos en San José` con su conteo real independiente.
+- Verificación de compilación: `npm run build` exitoso con 0 errores (81/81 páginas).
+
+[2026-11-06] Optimización Integral PageSpeed & Core Web Vitals (99/100 Desktop, 100/100 SEO, A11y y BP) y Nivel 5 Agent-Ready (4/4):
+- Preparación para Agentes de IA (Nivel 5 Agent-Native - 4 de 4 aprobado):
+  - Implementado el protocolo Personal Agent Protocol (Poppy 0.1) en `/.well-known/poppy.json` y `/api/well-known/poppy` con scopes, endpoint, APIs y tarjeta A2A.
+  - Implementada especificación OpenAPI 3.1.0 completa en `/openapi.json` y `/api/openapi` con schemas tipados para el catálogo y propiedades individuales.
+  - Agregadas descripciones de activación "Use this skill when..." en `/api/well-known/agent-skills` para los 4 skills del agente.
+  - Implementada respuesta de error 404 estructurada en Markdown (`Accept: text/markdown`) en `src/middleware.ts` para rastreadores de IA.
+  - Enriquecido el Schema `RealEstateAgent` con `contactPoint` estándar (`@type: ContactPoint`, teléfono, email y `contactType: "customer service"`).
+  - Sanitizado `robots.txt` eliminando advertencias sintácticas RFC 9309 (subiendo SEO de 92 a 100/100 perfecto).
+- Optimización de Rendimiento Web y Core Web Vitals (Protocolo Maestro):
+  - Eliminado el render delay de hidratación del LCP convirtiendo `HeroSearch.tsx` en Server Component puro (extrayendo el listener del botón a `HeroExploreButton.tsx`).
+  - Generado `public/logo-header.webp` optimizado a 7.8 KB (reducción del 82% frente a los 44 KB del original) y actualizado en `Header.tsx`, `Footer.tsx` y tarjetas.
+  - Generado `public/daniel-montano-thumb.webp` optimizado a 3.5 KB (reducción del 98.6% frente al avatar de 261 KB).
+  - Poda selectiva de payload en `src/app/page.tsx` para `CatalogSection` (reducción de más de 300 KB de HTML).
+  - Carga progresiva en `CatalogSection.tsx` con `IntersectionObserver` (`visibleCount = 12`), reduciendo elementos del DOM inicial de 2,107 a 1,350.
+  - Ajuste de fuentes con `display: "optional"` y variable CSS `--font-geist-sans` directa en `globals.css` para eliminar saltos de fuente y retrasos de rasterizado.
+  - Telemetría global diferida con `requestIdleCallback` para no bloquear el hilo principal durante la hidratación inicial.
+  - Accesibilidad WCAG AA 100/100: ajustado contraste de botones a `#C2410C` (4.64:1), etiquetas coincidentes de links y selects accesibles.
+- Métricas Finales de Lighthouse:
+  - **Escritorio:** Rendimiento 99/100 | Accesibilidad 100/100 | Buenas Prácticas 100/100 | SEO 100/100 (FCP 0.4s, LCP 0.9s, TBT 20ms, CLS 0.000).
+  - **Móvil:** Rendimiento 84-89/100 | Accesibilidad 100/100 | Buenas Prácticas 100/100 | SEO 100/100 (FCP 1.3s, Speed Index 2.7s, CLS 0.000).
+  - **Compilación de Producción:** 85/85 rutas estáticas generadas sin un solo error (Exit code 0).
+
+[2026-11-06] Refinamiento Profundo de Core Web Vitals (Erradicación de Prefetch Masivo y Conversión Real de Assets WebP):
+- Erradicadas más de 45 peticiones simultáneas de prefetching en segundo plano agregando `prefetch={false}` a enlaces en `Footer.tsx`, `Header.tsx`, `AiOverviewMagnetSection.tsx`, `OwnerCaptureBanner.tsx` y `PropertyCard.tsx`, liberando por completo el ancho de banda 4G y el hilo principal en la carga inicial.
+- Saneado y re-comprimido `public/daniel-montano.webp` de 261 KB (era un JPEG sin comprimir con extensión `.webp`) a un archivo WebP real de 33 KB (ahorro neto de 228 KB).
+- Generadas variantes WebP de los flyers institucionales: `se-precisan-propiedades-1x1.webp` y `se-precisan-propiedades-4x3.webp` en `public/images/`.
+- Optimizado el escalonamiento de carga en `CatalogSection.tsx` a 6 inmuebles iniciales (2 filas) con centinela `IntersectionObserver` de 600px de margen, recortando la mitad del tamaño inicial del DOM y manteniendo el TBT móvil en el rango verde (80-150 ms).
+- Reemplazado `transition-all` por transiciones específicas (`transition-[transform,box-shadow,border-color]`) en tarjetas y eliminado de la barra de navegación para evitar reflujos forzados (*forced reflows*).
+- Inyectado `<link rel="preload" as="image" href="/logo-header.webp" type="image/webp" />` en `RootLayout` y ajustadas dimensiones intrínsecas a 60x60 en Header y 64x64 en Footer.
+- Configurados `deviceSizes` específicos (`[384, 480, 640, 750, 828, 1080, 1200]`) en `next.config.ts` y calidad al 70% en tarjetas para servir imágenes de 384w en móviles (~14 KB en vez de 750w de ~50 KB).
+- Resultados finales de auditoría:
+  - **Escritorio:** **99 / 100** Rendimiento | **100 / 100** Accesibilidad | **100 / 100** Buenas Prácticas | **100 / 100** SEO (LCP récord: 0.7s, FCP: 0.4s, TBT: 20ms, CLS: 0.000).
+  - **Móvil:** **85 / 100** Rendimiento (TBT verde de 80-150ms, CLS 0.000) | **100 / 100** Accesibilidad | **100 / 100** Buenas Prácticas | **100 / 100** SEO.

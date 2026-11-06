@@ -35,28 +35,27 @@ const PAGE_URL = `${BASE_URL}/inmobiliaria-san-jose`;
 export const revalidate = 86400; // 24 horas ISR
 
 export const metadata: Metadata = {
-  title: 'Inmobiliaria en San José, Uruguay — Daniel Montaño',
+  title: 'Inmobiliaria en el Departamento de San José — Daniel Montaño (Libertad, Ciudad del Plata, Kiyú)',
   description:
-    'Inmobiliaria de referencia en San José de Mayo y todo el departamento de San José, Uruguay. Convenio Oficial Círculo Policial (10% OFF) y todas las garantías (ANDA, Porto Seguro, SURA, CGN, Mapfre, Santander, FIDECIU). Casas verificadas y tasaciones con Daniel Montaño al 092 776 715.',
+    'Cobertura inmobiliaria departamental en San José: Libertad, Ciudad del Plata, Ecilda Paullier, Rodríguez, balneario Kiyú y zonas rurales. Venta, alquiler y tasaciones oficiales con Daniel Montaño.',
   keywords: [
-    'inmobiliaria san jose',
-    'inmobiliarias san jose',
-    'inmobiliaria san jose uruguay',
-    'inmobiliaria san jose de mayo',
-    'daniel montaño inmobiliaria',
-    'tasaciones san jose uruguay',
-    'comprar propiedades san jose',
-    'alquileres departamento de san jose',
+    'inmobiliaria departamento de san jose',
+    'inmobiliarias en san jose uruguay',
     'inmobiliaria libertad san jose',
     'inmobiliaria ciudad del plata',
+    'inmobiliaria ecilda paullier',
+    'inmobiliaria kiyu',
+    'tasaciones departamento de san jose',
+    'comprar propiedades san jose uruguay',
+    'chacras y campos san jose',
   ],
   alternates: {
     canonical: PAGE_URL,
   },
   openGraph: {
-    title: 'Inmobiliaria en San José, Uruguay — Inmobiliaria Montaño',
+    title: 'Inmobiliaria en el Departamento de San José — Inmobiliaria Montaño',
     description:
-      'Líderes inmobiliarios en el Departamento de San José. Casas, terrenos, chacras, alquileres y tasaciones profesionales con Daniel Montaño.',
+      'Líderes inmobiliarios en el Departamento de San José. Cobertura en San José de Mayo, Libertad, Ciudad del Plata, Ecilda Paullier y balnearios con Daniel Montaño.',
     url: PAGE_URL,
     siteName: 'Inmobiliaria Montaño',
     locale: 'es_UY',
@@ -66,13 +65,13 @@ export const metadata: Metadata = {
         url: `${BASE_URL}/og-logo.png`,
         width: 1200,
         height: 630,
-        alt: 'Inmobiliaria Montaño — San José, Uruguay',
+        alt: 'Inmobiliaria Montaño — Cobertura Departamental San José',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Inmobiliaria en San José, Uruguay — Inmobiliaria Montaño',
+    title: 'Inmobiliaria en el Departamento de San José — Inmobiliaria Montaño',
     description:
       'Venta, alquiler y tasaciones profesionales en todo el departamento de San José con Daniel Montaño.',
     images: [`${BASE_URL}/og-logo.png`],
@@ -168,7 +167,7 @@ export default async function InmobiliariaSanJosePage() {
             
             <div className="lg:col-span-8 space-y-6">
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
-                Inmobiliaria en <span className="text-[#E85D04]">San José, Uruguay</span>
+                Inmobiliaria en el <span className="text-[#E85D04]">Departamento de San José</span>
               </h1>
               <p className="text-base sm:text-xl text-slate-300 font-normal leading-relaxed max-w-3xl">
                 Lideramos la comercialización, tasación y asesoramiento inmobiliario en todo el departamento. Desde la capital <strong>San José de Mayo</strong> hasta el eje industrial de <strong>Libertad</strong>, la costa de <strong>Ciudad del Plata</strong>, <strong>Kiyú</strong> y zonas rurales productivas.
@@ -186,11 +185,11 @@ export default async function InmobiliariaSanJosePage() {
                 </a>
 
                 <Link
-                  href="/propiedades-san-jose"
+                  href="/"
                   className="bg-white/10 hover:bg-white/20 active:scale-95 text-white text-sm sm:text-base font-bold px-7 py-4 rounded-2xl border border-white/20 backdrop-blur-md transition-all flex items-center space-x-2"
                 >
-                  <span>Explorar Catálogo</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <span>Inmobiliaria Montaño en San José de Mayo - Catálogo Oficial</span>
+                  <ArrowRight className="w-4 h-4 text-amber-300" />
                 </Link>
               </div>
             </div>

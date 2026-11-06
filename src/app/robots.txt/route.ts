@@ -172,15 +172,15 @@ Disallow: /*?*category=*
 Disallow: /*?*focus=*
 
 # Content Signals for AI Agents (contentsignals.org / IETF RFC draft)
-Content-Signal: ai-train=no, search=yes, ai-input=yes
+# Content-Signal: ai-train=no, search=yes, ai-input=yes
 
 # Discovery
 Sitemap: ${baseUrl}/sitemap.xml
-Catalog: ${baseUrl}/google-catalog.xml
-Agentmap: ${baseUrl}/.well-known/ai-catalog.json
-LLMs: ${baseUrl}/llms.txt
-LLMs-Full: ${baseUrl}/llms-full.txt
-Host: ${baseUrl}
+# Catalog: ${baseUrl}/google-catalog.xml
+# Agentmap: ${baseUrl}/.well-known/ai-catalog.json
+# LLMs: ${baseUrl}/llms.txt
+# LLMs-Full: ${baseUrl}/llms-full.txt
+
 `;
 
   return new NextResponse(robotsTxt, {

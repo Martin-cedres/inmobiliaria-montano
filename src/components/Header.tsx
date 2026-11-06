@@ -86,19 +86,23 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-all">
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-18">
           
           {/* Logo Destacado de Inmobiliaria Montaño */}
           <Link href="/" className="flex items-center space-x-2 sm:space-x-3 group py-1 flex-shrink-0">
             <img
-              src="/logo.png"
+              src="/logo-header.webp"
               alt="Inmobiliaria Montaño"
+              width={60}
+              height={60}
+              fetchPriority="high"
+              decoding="async"
               className="h-10 sm:h-13 lg:h-15 w-auto object-contain group-hover:scale-102 transition-transform duration-300 drop-shadow-xs"
             />
             <div className="flex flex-col text-left justify-center">
-              <span className="text-[9px] sm:text-[11px] font-black uppercase tracking-widest text-[#E85D04] leading-none">
+              <span className="text-[9px] sm:text-[11px] font-black uppercase tracking-widest text-[#C2410C] leading-none">
                 Inmobiliaria
               </span>
               <span className="text-sm sm:text-lg lg:text-xl font-black tracking-tight text-[#5E1754] leading-tight">
@@ -109,21 +113,18 @@ export const Header: React.FC = () => {
 
           {/* Menú Central Limpio (Desktop / Laptops) */}
           <nav className="hidden md:flex items-center space-x-6 lg:space-x-8 text-sm font-semibold text-slate-600">
-            <Link
-              href="/#catalogo"
+            <Link href="/#catalogo" prefetch={false}
               onClick={handleCatalogClick}
               className="hover:text-[#5e1754] transition-colors relative py-1.5 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#5e1754] hover:after:w-full after:transition-all duration-300"
             >
               Propiedades
             </Link>
-            <Link
-              href="/casas-en-venta-san-jose-de-mayo"
+            <Link href="/casas-en-venta-san-jose-de-mayo" prefetch={false}
               className="hover:text-[#5e1754] transition-colors relative py-1.5 font-bold after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#5e1754] hover:after:w-full after:transition-all duration-300"
             >
               Casas en Venta
             </Link>
-            <Link
-              href="/?view=map#catalogo"
+            <Link href="/?view=map#catalogo" prefetch={false}
               onClick={handleMapClick}
               rel="nofollow"
               className="hover:text-[#5e1754] transition-colors relative py-1.5 flex items-center gap-1.5 text-slate-700 font-bold after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#e85d04] hover:after:w-full after:transition-all duration-300"
@@ -131,8 +132,7 @@ export const Header: React.FC = () => {
               <Compass className="w-4 h-4 text-[#E85D04]" />
               <span>Mapa</span>
             </Link>
-            <Link
-              href="/#contacto"
+            <Link href="/#contacto" prefetch={false}
               className="hover:text-[#5e1754] transition-colors relative py-1.5 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#5e1754] hover:after:w-full after:transition-all duration-300"
             >
               Contacto
@@ -152,10 +152,10 @@ export const Header: React.FC = () => {
               <button
                 type="button"
                 onClick={handleButtonClick}
-                className="bg-[#e85d04] hover:bg-[#ff7518] active:scale-95 text-white px-2.5 sm:px-4 py-1.5 sm:py-2.5 rounded-xl font-black text-xs sm:text-sm shadow-xs hover:shadow-orange-500/20 transition-all border border-orange-400/20 inline-flex items-center gap-1 sm:gap-1.5 cursor-pointer touch-manipulation"
+                className="bg-[#C2410C] hover:bg-[#9A3412] active:scale-95 text-white px-2.5 sm:px-4 py-1.5 sm:py-2.5 rounded-xl font-black text-xs sm:text-sm shadow-xs hover:shadow-orange-500/20 transition-all border border-orange-400/20 inline-flex items-center gap-1 sm:gap-1.5 cursor-pointer touch-manipulation"
                 aria-expanded={ownerDropdownOpen}
                 aria-haspopup="true"
-                aria-label="Menú de opciones para propietarios"
+                aria-label="Soy Propietario — Opciones para propietarios"
               >
                 <span className="hidden xs:inline sm:inline">Soy Propietario</span>
                 <span className="inline xs:hidden sm:hidden">Propietarios</span>
@@ -183,8 +183,7 @@ export const Header: React.FC = () => {
                   </div>
 
                   <div className="p-1 space-y-1">
-                    <Link
-                      href="/vender-propiedad-san-jose"
+                    <Link href="/vender-propiedad-san-jose" prefetch={false}
                       onClick={() => setOwnerDropdownOpen(false)}
                       className="flex items-center gap-3 p-2.5 sm:p-3 rounded-xl hover:bg-gradient-to-r hover:from-orange-50/80 hover:to-transparent active:bg-orange-100/60 transition-all duration-200 group touch-manipulation"
                       role="menuitem"
@@ -207,8 +206,7 @@ export const Header: React.FC = () => {
                       </div>
                     </Link>
 
-                    <Link
-                      href="/alquilar-mi-propiedad-san-jose"
+                    <Link href="/alquilar-mi-propiedad-san-jose" prefetch={false}
                       onClick={() => setOwnerDropdownOpen(false)}
                       className="flex items-center gap-3 p-2.5 sm:p-3 rounded-xl hover:bg-gradient-to-r hover:from-purple-50/80 hover:to-transparent active:bg-purple-100/60 transition-all duration-200 group touch-manipulation"
                       role="menuitem"
@@ -262,8 +260,7 @@ export const Header: React.FC = () => {
             <span className="text-[10px] font-black uppercase text-slate-400 px-3 tracking-wider">
               Explorar Catálogo
             </span>
-            <Link
-              href="/#catalogo"
+            <Link href="/#catalogo" prefetch={false}
               onClick={handleCatalogClick}
               className="flex items-center space-x-3 p-3 rounded-xl hover:bg-purple-50 text-slate-800 font-bold text-sm group transition-colors"
             >
@@ -271,8 +268,7 @@ export const Header: React.FC = () => {
               <span>Ver Catálogo Completo</span>
             </Link>
 
-            <Link
-              href="/casas-en-venta-san-jose-de-mayo"
+            <Link href="/casas-en-venta-san-jose-de-mayo" prefetch={false}
               onClick={() => setMobileMenuOpen(false)}
               className="flex items-center space-x-3 p-3 rounded-xl hover:bg-purple-50 text-slate-800 font-bold text-sm group transition-colors"
             >
@@ -280,8 +276,7 @@ export const Header: React.FC = () => {
               <span>Casas en Venta en San José</span>
             </Link>
 
-            <Link
-              href="/?view=map#catalogo"
+            <Link href="/?view=map#catalogo" prefetch={false}
               onClick={handleMapClick}
               rel="nofollow"
               className="flex items-center space-x-3 p-3 rounded-xl hover:bg-orange-50 text-slate-800 font-bold text-sm group transition-colors"
@@ -290,8 +285,7 @@ export const Header: React.FC = () => {
               <span className="text-[#E85D04] font-bold">Mapa Interactivo de Inmuebles</span>
             </Link>
 
-            <Link
-              href="/#contacto"
+            <Link href="/#contacto" prefetch={false}
               onClick={() => setMobileMenuOpen(false)}
               className="flex items-center space-x-3 p-3 rounded-xl hover:bg-purple-50 text-slate-800 font-bold text-sm group transition-colors"
             >

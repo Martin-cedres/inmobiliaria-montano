@@ -40,7 +40,7 @@ export const OwnerCaptureBanner: React.FC<OwnerCaptureBannerProps> = ({
           {/* Imagen Flyer 1:1 Cuadrada */}
           <div className="relative w-44 sm:w-52 aspect-square rounded-2xl overflow-hidden shadow-2xl border-2 border-white/20 flex-shrink-0">
             <Image
-              src="/images/se-precisan-propiedades-1x1.jpg"
+              src="/images/se-precisan-propiedades-1x1.webp"
               alt="Se precisan propiedades para la venta en San José — Inmobiliaria Montaño"
               fill
               className="object-cover"
@@ -79,7 +79,8 @@ export const OwnerCaptureBanner: React.FC<OwnerCaptureBannerProps> = ({
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <Link
                 href="/vender-propiedad-san-jose"
-                className="inline-flex items-center space-x-2 bg-[#E85D04] hover:bg-[#FF8500] active:scale-95 text-white font-extrabold text-xs sm:text-sm px-5 py-3 rounded-xl shadow-lg hover:shadow-orange-500/25 transition-all"
+                prefetch={false}
+                className="inline-flex items-center space-x-2 bg-[#C2410C] hover:bg-[#9A3412] active:scale-95 text-white font-extrabold text-xs sm:text-sm px-5 py-3 rounded-xl shadow-lg hover:shadow-orange-500/25 transition-all"
               >
                 <span>Conocer Cómo Vender mi Propiedad</span>
                 <ArrowRight className="w-4 h-4" />
@@ -161,7 +162,8 @@ export const OwnerCaptureBanner: React.FC<OwnerCaptureBannerProps> = ({
             <div className="flex flex-wrap items-center gap-3 pt-3">
               <Link
                 href="/vender-propiedad-san-jose"
-                className="inline-flex items-center space-x-2.5 bg-[#E85D04] hover:bg-[#FF8500] active:scale-95 text-white font-black text-xs sm:text-sm px-6 py-3.5 rounded-xl shadow-lg hover:shadow-orange-500/30 transition-all cursor-pointer"
+                prefetch={false}
+                className="inline-flex items-center space-x-2.5 bg-[#C2410C] hover:bg-[#9A3412] active:scale-95 text-white font-black text-xs sm:text-sm px-6 py-3.5 rounded-xl shadow-lg hover:shadow-orange-500/30 transition-all cursor-pointer"
               >
                 <span>Publicar mi Inmueble con Montaño</span>
                 <ArrowRight className="w-4 h-4" />
@@ -184,7 +186,7 @@ export const OwnerCaptureBanner: React.FC<OwnerCaptureBannerProps> = ({
           <div className="lg:col-span-5 flex justify-center">
             <div className="relative w-full max-w-md sm:max-w-lg aspect-[4/3] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20 transform hover:scale-[1.02] transition-transform duration-300">
               <Image
-                src="/images/se-precisan-propiedades-4x3.jpg"
+                src="/images/se-precisan-propiedades-4x3.webp"
                 alt="¡Se precisan propiedades para la venta! Clientes concretos esperando — Inmobiliaria Montaño"
                 fill
                 className="object-cover"

@@ -27,12 +27,16 @@ export const Footer: React.FC<FooterProps> = () => {
             {/* Official Brand Logo (PNG Transparente + Tipografía de Marca) */}
             <div className="flex items-center space-x-3">
               <img
-                src="/logo.png"
+                src="/logo-header.webp"
                 alt="Inmobiliaria Montaño Logo"
+                width={64}
+                height={64}
+                loading="lazy"
+                decoding="async"
                 className="h-14 sm:h-16 w-auto object-contain filter drop-shadow-md"
               />
               <div className="flex flex-col text-left justify-center">
-                <span className="text-xs font-black uppercase tracking-widest text-[#E85D04]">
+                <span className="text-xs font-black uppercase tracking-widest text-[#FB923C]">
                   Inmobiliaria
                 </span>
                 <span className="text-xl sm:text-2xl font-black text-white tracking-tight">
@@ -62,7 +66,7 @@ export const Footer: React.FC<FooterProps> = () => {
             <h4 className="text-white font-bold text-sm uppercase tracking-wider">Búsquedas Frecuentes</h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <Link
+                <Link prefetch={false}
                   href="/casas-en-venta-san-jose-de-mayo"
                   className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
                 >
@@ -71,57 +75,57 @@ export const Footer: React.FC<FooterProps> = () => {
                 </Link>
               </li>
               <li>
-                <Link
+                <Link prefetch={false}
                   href="/alquileres-san-jose-de-mayo"
                   className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
                 >
                   <Key className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
-                  <span>Alquileres en San José</span>
+                  <span>Alquileres en San José de Mayo (Casas, Aptos y Locales)</span>
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/terrenos-y-chacras-san-jose"
-                  className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
-                >
-                  <MapPin className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
-                  <span>Terrenos en Venta en San José</span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/terrenos-y-chacras-san-jose"
-                  className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
-                >
-                  <Trees className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
-                  <span>Chacras y Campos</span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/locales-comerciales-y-galpones-san-jose"
-                  className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
-                >
-                  <Warehouse className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
-                  <span>Locales y Galpones</span>
-                </Link>
-              </li>
-              <li>
-                <Link
+                <Link prefetch={false}
                   href="/casas-aptas-para-banco-san-jose"
                   className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
                 >
                   <Landmark className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
-                  <span>Casas Aptas para Banco</span>
+                  <span>Casas Aptas para Crédito Bancario (BHU / BROU)</span>
                 </Link>
               </li>
               <li>
-                <Link
+                <Link prefetch={false}
+                  href="/terrenos-y-chacras-san-jose"
+                  className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
+                >
+                  <MapPin className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
+                  <span>Terrenos y Solares en San José</span>
+                </Link>
+              </li>
+              <li>
+                <Link prefetch={false}
+                  href="/terrenos-y-chacras-san-jose"
+                  className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
+                >
+                  <Trees className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
+                  <span>Chacras y Campos en San José</span>
+                </Link>
+              </li>
+              <li>
+                <Link prefetch={false}
+                  href="/locales-comerciales-y-galpones-san-jose"
+                  className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
+                >
+                  <Warehouse className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
+                  <span>Locales Comerciales, Galpones y Predios Industriales</span>
+                </Link>
+              </li>
+              <li>
+                <Link prefetch={false}
                   href="/inversiones-inmobiliarias-san-jose"
                   className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
                 >
                   <TrendingUp className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
-                  <span>Inversiones & Renta</span>
+                  <span>Inversiones & Oportunidades de Renta</span>
                 </Link>
               </li>
             </ul>
@@ -132,25 +136,25 @@ export const Footer: React.FC<FooterProps> = () => {
             <h4 className="text-white font-bold text-sm uppercase tracking-wider">Servicios & Propietarios</h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <Link
-                  href="/tasaciones-san-jose-de-mayo"
-                  className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
-                >
-                  <Calculator className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
-                  <span>Tasación Profesional</span>
-                </Link>
-              </li>
-              <li>
-                <Link
+                <Link prefetch={false}
                   href="/vender-propiedad-san-jose"
                   className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
                 >
                   <Home className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
-                  <span>Vender mi Propiedad</span>
+                  <span>Vender o Alquilar mi Propiedad (Clientes en Espera)</span>
                 </Link>
               </li>
               <li>
-                <Link
+                <Link prefetch={false}
+                  href="/tasaciones-san-jose-de-mayo"
+                  className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
+                >
+                  <Calculator className="w-3.5 h-3.5 text-purple-300 group-hover:text-[#E85D04] transition-colors flex-shrink-0" />
+                  <span>Tasaciones Inmobiliarias en San José de Mayo</span>
+                </Link>
+              </li>
+              <li>
+                <Link prefetch={false}
                   href="/alquilar-mi-propiedad-san-jose"
                   className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
                 >
@@ -159,7 +163,7 @@ export const Footer: React.FC<FooterProps> = () => {
                 </Link>
               </li>
               <li>
-                <Link
+                <Link prefetch={false}
                   href="/proyectos-y-viviendas-modulares-san-jose"
                   className="text-slate-200 hover:text-[#E85D04] transition-colors flex items-center space-x-2 font-medium group"
                 >
@@ -259,42 +263,42 @@ export const Footer: React.FC<FooterProps> = () => {
             Guías Inmobiliarias & Cobertura Departamental San José
           </p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-300">
-            <Link
+            <Link prefetch={false}
               href="/inmobiliaria-san-jose"
               className="hover:text-[#E85D04] transition-colors font-medium"
             >
               Inmobiliaria en San José
             </Link>
             <span className="text-purple-400/40 hidden sm:inline">•</span>
-            <Link
+            <Link prefetch={false}
               href="/guia-tasacion-inmobiliaria-san-jose"
               className="hover:text-[#E85D04] transition-colors font-medium"
             >
               Guía de Tasación Profesional
             </Link>
             <span className="text-purple-400/40 hidden sm:inline">•</span>
-            <Link
+            <Link prefetch={false}
               href="/guia-compra-propiedad-credito-bancario-uruguay"
               className="hover:text-[#E85D04] transition-colors font-medium"
             >
               Guía Compra con Crédito Bancario
             </Link>
             <span className="text-purple-400/40 hidden sm:inline">•</span>
-            <Link
+            <Link prefetch={false}
               href="/estadisticas-inmobiliarias-san-jose"
               className="hover:text-[#E85D04] transition-colors font-medium"
             >
               Estadísticas del Mercado San José
             </Link>
             <span className="text-purple-400/40 hidden sm:inline">•</span>
-            <Link
+            <Link prefetch={false}
               href="/tasaciones-san-jose-de-mayo"
               className="hover:text-[#E85D04] transition-colors font-medium"
             >
               Tasaciones Profesionales
             </Link>
             <span className="text-purple-400/40 hidden sm:inline">•</span>
-            <Link
+            <Link prefetch={false}
               href="/vender-propiedad-san-jose"
               className="hover:text-[#E85D04] transition-colors font-medium"
             >
@@ -307,7 +311,7 @@ export const Footer: React.FC<FooterProps> = () => {
         <div className="mt-8 pt-6 border-t border-[#2D1D42] text-center text-xs text-slate-300 flex flex-col md:flex-row justify-between items-center gap-4 pr-0 sm:pr-24 lg:pr-28">
           <div className="flex items-center space-x-2">
             <p>© {new Date().getFullYear()} Inmobiliaria Montaño. Todos los derechos reservados. San José de Mayo, Uruguay.</p>
-            <Link
+            <Link prefetch={false}
               href="/admin"
               className="text-slate-400 hover:text-[#E85D04] transition-colors p-1"
               title="Acceso Administración Interna"

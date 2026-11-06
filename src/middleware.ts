@@ -53,6 +53,27 @@ export async function middleware(request: NextRequest) {
       } catch {
         // Fallback to normal flow if internal fetch fails
       }
+    } else {
+      const knownPrefixes = [
+        '/', '/propiedad', '/propiedades', '/alquileres', '/casas-en-venta',
+        '/terrenos-y-chacras', '/locales-comerciales', '/vender-propiedad',
+        '/tasaciones', '/inmobiliaria-san-jose', '/casas-aptas', '/guia-compra',
+        '/estadisticas', '/sobre-nosotros', '/contacto', '/politica-de-privacidad',
+        '/terminos-y-condiciones', '/admin', '/api', '/.well-known', '/llms',
+        '/sitemap.xml', '/robots.txt', '/openapi.json', '/about', '/privacy'
+      ];
+      const isKnown = knownPrefixes.some(p => pathname === p || pathname.startsWith(p + '/') || pathname.startsWith(p + '-'));
+      if (!isKnown) {
+        const markdown404 = `# 404 Not Found\n\nThe requested resource does not exist on Inmobiliaria Montaño.\n\n- Official LLMs Index: ${origin}/llms.txt\n- Full Knowledge Base: ${origin}/llms-full.txt\n- Property Catalog: ${origin}/propiedades-san-jose\n- XML Sitemap: ${origin}/sitemap.xml\n`;
+        return new NextResponse(markdown404, {
+          status: 404,
+          headers: {
+            'Content-Type': 'text/markdown; charset=utf-8',
+            'Access-Control-Allow-Origin': '*',
+            'Cache-Control': 'no-cache, no-store',
+          },
+        });
+      }
     }
   }
 

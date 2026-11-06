@@ -57,6 +57,32 @@ export function CatalogSection({ initialProperties }: CatalogSectionProps) {
   const [viewMode, setViewMode] = useState<'grid' | 'map'>('grid');
   const [activePropertyId, setActivePropertyId] = useState<string | null>(null);
   const [isFooterVisible, setIsFooterVisible] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(6);
+  const loadMoreRef = React.useRef<HTMLDivElement | null>(null);
+
+  // Reiniciar conteo visible al cambiar de categoría
+  useEffect(() => {
+    setVisibleCount(6);
+  }, [selectedCategory]);
+
+  // Centinela de carga progresiva sin layout shift
+  useEffect(() => {
+    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) return;
+    const el = loadMoreRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry && entry.isIntersecting) {
+          setVisibleCount((prev) => Math.min(prev + 6, properties.length));
+        }
+      },
+      { rootMargin: '600px' }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [properties.length]);
 
   // Ocultar botón flotante al llegar al Footer para no tapar créditos ni enlaces legales
   useEffect(() => {
@@ -117,9 +143,9 @@ export function CatalogSection({ initialProperties }: CatalogSectionProps) {
     }
   };
 
-  // Filtrar propiedades solo por categoría
+  // Filtrar y ordenar inteligentemente para escaparate comercial
   const filteredProperties = useMemo(() => {
-    return properties.filter((prop) => {
+    const list = properties.filter((prop) => {
       if (selectedCategory !== 'todos') {
         if (selectedCategory === 'apartamento' && (prop.category === 'apartamento' || prop.operation === 'alquiler')) {
           return true;
@@ -127,6 +153,29 @@ export function CatalogSection({ initialProperties }: CatalogSectionProps) {
         return prop.category === selectedCategory;
       }
       return true;
+    });
+
+    // Orden comercial de vidriera:
+    // 1. Inmuebles destacados y disponibles con precio visible (conversión inmediata para compradores)
+    // 2. Inmuebles disponibles en modo consultar / búsqueda
+    // 3. Inmuebles reservados
+    // 4. Inmuebles vendidos / alquilados (prueba social de éxito comercial al hacer scroll)
+    return [...list].sort((a, b) => {
+      const getPriority = (p: Property) => {
+        const isClosed = p.status === 'vendido' || p.status === 'alquilado';
+        const isReserved = p.status === 'reservado';
+        const hasVisiblePrice = Boolean(p.price?.amount && p.price.amount > 0 && p.price?.priceMode === 'visible');
+
+        if (p.featured && hasVisiblePrice && !isClosed && !isReserved) return 0;
+        if (hasVisiblePrice && !isClosed && !isReserved) return 1;
+        if (!isClosed && !isReserved) return 2;
+        if (isReserved) return 3;
+        return 4;
+      };
+
+      const prioA = getPriority(a);
+      const prioB = getPriority(b);
+      return prioA - prioB;
     });
   }, [properties, selectedCategory]);
 
@@ -150,8 +199,8 @@ export function CatalogSection({ initialProperties }: CatalogSectionProps) {
         
         {/* Section Title Header */}
         <div className="mb-8 text-left">
-          <div className="inline-flex items-center space-x-1.5 text-xs font-black uppercase tracking-wider text-[#E85D04] mb-2">
-            <Building2 className="w-4 h-4 text-[#E85D04]" />
+          <div className="inline-flex items-center space-x-1.5 text-xs font-black uppercase tracking-wider text-[#9A3412] mb-2">
+            <Building2 className="w-4 h-4 text-[#9A3412]" />
             <span>Catálogo Inmobiliario</span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
@@ -162,15 +211,30 @@ export function CatalogSection({ initialProperties }: CatalogSectionProps) {
         {/* Property Catalog Content (Grid or Interactive Map Split View) */}
         {filteredProperties.length > 0 ? (
           viewMode === 'grid' ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-              {filteredProperties.map((property, index) => (
-                <PropertyCard
-                  key={property.id}
-                  property={property}
-                  index={index}
-                />
-              ))}
-            </div>
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                {filteredProperties.slice(0, visibleCount).map((property, index) => (
+                  <PropertyCard
+                    key={property.id}
+                    property={property}
+                    index={index}
+                  />
+                ))}
+              </div>
+
+              {/* Centinela de carga progresiva y disparador manual */}
+              {visibleCount < filteredProperties.length && (
+                <div ref={loadMoreRef} className="mt-10 flex flex-col items-center justify-center space-y-3">
+                  <button
+                    type="button"
+                    onClick={() => setVisibleCount((prev) => Math.min(prev + 12, filteredProperties.length))}
+                    className="px-6 py-3 rounded-full bg-white hover:bg-slate-100 text-slate-800 font-bold text-xs border border-slate-300 shadow-xs transition-all hover:shadow active:scale-95 cursor-pointer"
+                  >
+                    Ver más propiedades ({filteredProperties.length - visibleCount} restantes)
+                  </button>
+                </div>
+              )}
+            </>
           ) : (
             /* Split View: Mapa a la izquierda / Lista interactiva a la derecha */
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
@@ -187,7 +251,7 @@ export function CatalogSection({ initialProperties }: CatalogSectionProps) {
                 {activePropertyId && (() => {
                   const activeProp = filteredProperties.find((p) => p.id === activePropertyId);
                   if (!activeProp) return null;
-                  const mainImg = activeProp.images.find((img) => img.isMain)?.webpUrl || activeProp.images[0]?.webpUrl || '/logo.png';
+                  const mainImg = activeProp.images.find((img) => img.isMain)?.webpUrl || activeProp.images[0]?.webpUrl || '/logo-header.webp';
                   const priceMode = activeProp.price.priceMode || (activeProp.price.amount === 0 ? 'consultar' : 'visible');
                   const priceText =
                     priceMode === 'consultar' ? 'Consultar Precio' :
@@ -269,7 +333,7 @@ export function CatalogSection({ initialProperties }: CatalogSectionProps) {
                 <div className="flex-1 overflow-y-auto space-y-3.5 pr-2 custom-scrollbar">
                   {filteredProperties.map((property, index) => {
                     const isActive = activePropertyId === property.id;
-                    const mainImg = property.images.find((img) => img.isMain)?.webpUrl || property.images[0]?.webpUrl || '/logo.png';
+                    const mainImg = property.images.find((img) => img.isMain)?.webpUrl || property.images[0]?.webpUrl || '/logo-header.webp';
                     const priceMode = property.price.priceMode || (property.price.amount === 0 ? 'consultar' : 'visible');
                     const priceText =
                       priceMode === 'consultar' ? 'Consultar Precio' :

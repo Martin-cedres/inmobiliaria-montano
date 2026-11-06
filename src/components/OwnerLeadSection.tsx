@@ -81,8 +81,10 @@ export const OwnerLeadSection: React.FC = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Quiero...</label>
+              <label htmlFor="operation-type-select" className="block text-xs font-bold uppercase text-slate-600 mb-1">Quiero...</label>
               <select
+                id="operation-type-select"
+                aria-label="Quiero realizar la siguiente operación"
                 value={operationType}
                 onChange={(e) => setOperationType(e.target.value)}
                 className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-base sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5e1754]"
@@ -93,8 +95,10 @@ export const OwnerLeadSection: React.FC = () => {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-bold uppercase text-slate-600 mb-1">Tipo de Propiedad</label>
+              <label htmlFor="property-type-select" className="block text-xs font-bold uppercase text-slate-600 mb-1">Tipo de Propiedad</label>
               <select
+                id="property-type-select"
+                aria-label="Tipo de propiedad"
                 value={propertyType}
                 onChange={(e) => setPropertyType(e.target.value)}
                 className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-base sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#5e1754]"
@@ -132,7 +136,7 @@ export const OwnerLeadSection: React.FC = () => {
 
           <button
             type="submit"
-            className="w-full bg-[#e85d04] hover:bg-[#ff7518] active:scale-98 text-white font-black py-3.5 rounded-xl shadow-lg hover:shadow-orange-500/20 transition-all flex items-center justify-center space-x-2 text-sm sm:text-base mt-2 cursor-pointer"
+            className="w-full bg-[#C2410C] hover:bg-[#9A3412] active:scale-98 text-white font-black py-3.5 rounded-xl shadow-lg hover:shadow-orange-500/20 transition-all flex items-center justify-center space-x-2 text-sm sm:text-base mt-2 cursor-pointer"
           >
             <Send className="w-4 h-4" />
             <span>Solicitar Tasación con Respuesta Inmediata</span>
@@ -174,8 +178,12 @@ export const OwnerLeadSection: React.FC = () => {
                 <div className="flex-shrink-0">
                   <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden ring-4 ring-[#E85D04]/30 border-2 border-[#E85D04] shadow-2xl bg-slate-900">
                     <img
-                      src="/daniel-montano.webp"
+                      src="/daniel-montano-thumb.webp"
                       alt="Daniel Montaño — Director & Asesor Inmobiliario"
+                      width={96}
+                      height={96}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover object-[center_28%] scale-105"
                     />
                   </div>
@@ -216,7 +224,7 @@ export const OwnerLeadSection: React.FC = () => {
                 {/* Primary Modal Trigger Button */}
                 <button
                   onClick={() => setIsModalOpen(true)}
-                  className="w-full bg-[#E85D04] hover:bg-[#FF8500] active:scale-95 text-white font-black py-3.5 px-4 rounded-2xl shadow-xl flex items-center justify-center space-x-2 text-sm transition-all"
+                  className="w-full bg-[#C2410C] hover:bg-[#9A3412] active:scale-95 text-white font-black py-3.5 px-4 rounded-2xl shadow-xl flex items-center justify-center space-x-2 text-sm transition-all"
                 >
                   <Calculator className="w-4.5 h-4.5" />
                   <span>Solicitar Tasación con Respuesta Inmediata</span>

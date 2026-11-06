@@ -651,6 +651,14 @@ export function generatePropertyGraphSchema(property: Property) {
       image: `${BASE_URL}/og-logo.png`,
       telephone: '+59892776715',
       email: 'contacto@inmobiliariamontano.uy',
+      contactPoint: {
+        '@type': 'ContactPoint',
+        telephone: '+59892776715',
+        contactType: 'customer service',
+        email: 'contacto@inmobiliariamontano.uy',
+        areaServed: 'UY',
+        availableLanguage: ['es', 'Spanish'],
+      },
       hasMap: 'https://share.google/6I1gbffV5ZTS5heXV',
       sameAs: [
         'https://www.facebook.com/montanioinmobiliaria/',
@@ -805,6 +813,14 @@ export function generateSiteGraphSchema() {
         image: `${BASE_URL}/og-logo.png`,
         telephone: '+59892776715',
         email: 'contacto@inmobiliariamontano.uy',
+        contactPoint: {
+          '@type': 'ContactPoint',
+          telephone: '+59892776715',
+          contactType: 'customer service',
+          email: 'contacto@inmobiliariamontano.uy',
+          areaServed: 'UY',
+          availableLanguage: ['es', 'Spanish'],
+        },
         hasMap: 'https://share.google/6I1gbffV5ZTS5heXV',
         sameAs: [
           'https://www.facebook.com/montanioinmobiliaria/',
