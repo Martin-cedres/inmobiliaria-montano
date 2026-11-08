@@ -110,10 +110,24 @@ async function ensureTablesExist(sql: any) {
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS cadastral_number VARCHAR(64);`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS property_tax_up_to_date BOOLEAN DEFAULT TRUE;`;
     await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS primary_tax_up_to_date BOOLEAN DEFAULT TRUE;`;
+    await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS sort_order INT;`;
     tablesInitialized = true;
   } catch (err) {
     console.warn('Error al auto-crear tablas en Neon Postgres:', err);
   }
+}
+
+/**
+ * Ordena las propiedades: primero las que tienen sortOrder manual (0, 1, 2...),
+ * y luego el resto en orden cronológico estricto por fecha de publicación (created_at DESC).
+ */
+export function sortPropertiesList(list: Property[]): Property[] {
+  return [...list].sort((a, b) => {
+    const oA = a.sortOrder !== undefined && a.sortOrder !== null ? a.sortOrder : 999999;
+    const oB = b.sortOrder !== undefined && b.sortOrder !== null ? b.sortOrder : 999999;
+    if (oA !== oB) return oA - oB;
+    return new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime();
+  });
 }
 
 /**
@@ -127,7 +141,7 @@ export async function getAllProperties(): Promise<Property[]> {
     const sql = getDbClient();
     try {
       await ensureTablesExist(sql);
-      const rows = await sql`SELECT * FROM properties ORDER BY created_at DESC;`;
+      const rows = await sql`SELECT * FROM properties ORDER BY CASE WHEN sort_order IS NOT NULL THEN 0 ELSE 1 END, sort_order ASC, created_at DESC;`;
       if (rows && rows.length > 0) {
         const dbProperties: Property[] = rows.map((row: any): Property => {
           const latVal = row.lat ? Number(row.lat) : -34.3375;
@@ -220,6 +234,7 @@ export async function getAllProperties(): Promise<Property[]> {
             whatsappClicksCount: Number(row.whatsapp_clicks_count || 0),
             sharesCount: Number(row.shares_count || 0),
             featured: row.featured,
+            sortOrder: row.sort_order !== null && row.sort_order !== undefined ? Number(row.sort_order) : undefined,
             createdAt: row.created_at,
             updatedAt: row.updated_at,
           };
@@ -239,7 +254,7 @@ export async function getAllProperties(): Promise<Property[]> {
           // Ignorar en entornos donde no se pueda acceder al archivo en disco
         }
 
-        return dbProperties;
+        return sortPropertiesList(dbProperties);
       }
     } catch (dbErr: any) {
       console.warn('Error al consultar Neon Postgres, usando fallback local/memoria:', dbErr?.message || dbErr);
@@ -256,6 +271,7 @@ export async function getAllProperties(): Promise<Property[]> {
     const rawProperties: any[] = JSON.parse(fileContent);
     const properties: Property[] = rawProperties.map((p) => ({
       ...p,
+      sortOrder: p.sortOrder !== undefined && p.sortOrder !== null ? Number(p.sortOrder) : undefined,
       location: {
         ...p.location,
         coordinates: p.location?.coordinates || {
@@ -271,8 +287,9 @@ export async function getAllProperties(): Promise<Property[]> {
           )
         : [],
     }));
-    memoryProperties = properties;
-    return properties;
+    const sorted = sortPropertiesList(properties);
+    memoryProperties = sorted;
+    return sorted;
   } catch (error) {
     if (memoryProperties && memoryProperties.length > 0) {
       return memoryProperties;
@@ -346,7 +363,7 @@ export async function saveProperty(property: Property): Promise<Property> {
           water_well_or_pond, titles_up_to_date, accepts_trade_in, security_system, paved_street, shed_or_corral, coneat_index,
           is_hectares, hectares_amount, fractionable, min_fraction_m2, fraction_notes, route_frontage, price_per_m2, price_unit_type, soil_topography, gated_perimeter,
           cadastral_number, property_tax_up_to_date, primary_tax_up_to_date,
-          guarantees, images, seo_title, seo_description, previous_slugs, focus_keywords, no_index, featured
+          guarantees, images, seo_title, seo_description, previous_slugs, focus_keywords, no_index, featured, sort_order
         ) VALUES (
           ${property.id}, ${property.codeRef}, ${property.title}, ${property.slug}, ${property.description}, ${property.operation}, ${property.category}, ${property.status},
           ${property.price.amount}, ${property.price.currency}, ${property.price.period || null}, ${property.price.priceDrop || false}, ${property.price.originalAmount || null}, ${property.price.priceMode || 'visible'},
@@ -358,7 +375,8 @@ export async function saveProperty(property: Property): Promise<Property> {
           ${property.features.waterWellOrPond || false}, ${property.features.titlesUpToDate || false}, ${property.features.acceptsTradeIn || false}, ${property.features.securitySystem || false}, ${property.features.pavedStreet || false}, ${property.features.shedOrCorral || false}, ${property.features.coneatIndex || null},
           ${property.features.isHectares || false}, ${property.features.hectaresAmount || null}, ${property.features.fractionable || false}, ${property.features.minFractionM2 || null}, ${property.features.fractionNotes || null}, ${property.features.routeFrontage || null}, ${property.features.pricePerM2 || null}, ${property.features.priceUnitType || 'm²'}, ${property.features.soilTopography || null}, ${property.features.gatedPerimeter || false},
           ${property.features.cadastralNumber || null}, ${property.features.propertyTaxUpToDate ?? true}, ${property.features.primaryTaxUpToDate ?? true},
-          ${JSON.stringify(property.guarantees || [])}, ${JSON.stringify(property.images || [])}, ${property.seoTitle || null}, ${property.seoDescription || null}, ${JSON.stringify(property.previousSlugs || [])}, ${property.focusKeywords || null}, ${property.noIndex ?? false}, ${property.featured}
+          ${JSON.stringify(property.guarantees || [])}, ${JSON.stringify(property.images || [])}, ${property.seoTitle || null}, ${property.seoDescription || null}, ${JSON.stringify(property.previousSlugs || [])}, ${property.focusKeywords || null}, ${property.noIndex ?? false}, ${property.featured},
+          ${property.sortOrder ?? null}
         ) ON CONFLICT (id) DO UPDATE SET
           code_ref = EXCLUDED.code_ref,
           title = EXCLUDED.title,
@@ -437,6 +455,7 @@ export async function saveProperty(property: Property): Promise<Property> {
           focus_keywords = EXCLUDED.focus_keywords,
           no_index = EXCLUDED.no_index,
           featured = EXCLUDED.featured,
+          sort_order = COALESCE(EXCLUDED.sort_order, properties.sort_order),
           updated_at = CURRENT_TIMESTAMP;
       `;
       return property;
@@ -659,5 +678,84 @@ export async function incrementPropertyMetric(
   }
 
   return false;
+}
+
+/**
+ * Reordena las propiedades según un arreglo ordenado de IDs (Drag & Drop desde el Admin).
+ * Asigna sortOrder = 0, 1, 2... respetando la prioridad establecida por el usuario.
+ */
+export async function reorderProperties(orderedIds: string[]): Promise<boolean> {
+  const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL;
+
+  if (connectionString) {
+    const sql = getDbClient();
+    try {
+      await ensureTablesExist(sql);
+      for (let i = 0; i < orderedIds.length; i++) {
+        await sql`UPDATE properties SET sort_order = ${i} WHERE id = ${orderedIds[i]};`;
+      }
+    } catch (sqlErr: any) {
+      console.warn('Error reordenando propiedades en Neon Postgres:', sqlErr?.message || sqlErr);
+    }
+  }
+
+  const properties = await getAllProperties();
+  const idMap = new Map<string, number>();
+  orderedIds.forEach((id, index) => {
+    idMap.set(id, index);
+  });
+
+  properties.forEach((p) => {
+    if (idMap.has(p.id)) {
+      p.sortOrder = idMap.get(p.id);
+    }
+  });
+
+  const sorted = sortPropertiesList(properties);
+  memoryProperties = [...sorted];
+
+  try {
+    await fs.writeFile(LOCAL_DB_PATH, JSON.stringify(sorted, null, 2), 'utf-8');
+  } catch (err) {
+    console.warn('Ignorando escritura en disco en entorno serverless read-only:', err);
+  }
+
+  return true;
+}
+
+/**
+ * Restablece todas las propiedades a orden cronológico natural por fecha (created_at DESC),
+ * eliminando cualquier sortOrder manual.
+ */
+export async function resetPropertiesOrder(): Promise<boolean> {
+  const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL;
+
+  if (connectionString) {
+    const sql = getDbClient();
+    try {
+      await ensureTablesExist(sql);
+      await sql`UPDATE properties SET sort_order = NULL;`;
+    } catch (sqlErr: any) {
+      console.warn('Error restableciendo orden en Neon Postgres:', sqlErr?.message || sqlErr);
+    }
+  }
+
+  const properties = await getAllProperties();
+  properties.forEach((p) => {
+    delete p.sortOrder;
+  });
+
+  const sorted = [...properties].sort(
+    (a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime()
+  );
+  memoryProperties = [...sorted];
+
+  try {
+    await fs.writeFile(LOCAL_DB_PATH, JSON.stringify(sorted, null, 2), 'utf-8');
+  } catch (err) {
+    console.warn('Ignorando escritura en disco en entorno serverless read-only:', err);
+  }
+
+  return true;
 }
 

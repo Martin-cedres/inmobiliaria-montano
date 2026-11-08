@@ -155,27 +155,15 @@ export function CatalogSection({ initialProperties }: CatalogSectionProps) {
       return true;
     });
 
-    // Orden comercial de vidriera:
-    // 1. Inmuebles destacados y disponibles con precio visible (conversión inmediata para compradores)
-    // 2. Inmuebles disponibles en modo consultar / búsqueda
-    // 3. Inmuebles reservados
-    // 4. Inmuebles vendidos / alquilados (prueba social de éxito comercial al hacer scroll)
+    // Orden de vidriera:
+    // 1. Respetar sortOrder manual asignado desde el Admin (Drag & Drop) si existe
+    // 2. Orden cronológico estricto por fecha de publicación (lo más nuevo primero)
+    // Mantiene las fajas de vendidos, alquilados y reservados intercaladas en su fecha real como prueba social
     return [...list].sort((a, b) => {
-      const getPriority = (p: Property) => {
-        const isClosed = p.status === 'vendido' || p.status === 'alquilado';
-        const isReserved = p.status === 'reservado';
-        const hasVisiblePrice = Boolean(p.price?.amount && p.price.amount > 0 && p.price?.priceMode === 'visible');
-
-        if (p.featured && hasVisiblePrice && !isClosed && !isReserved) return 0;
-        if (hasVisiblePrice && !isClosed && !isReserved) return 1;
-        if (!isClosed && !isReserved) return 2;
-        if (isReserved) return 3;
-        return 4;
-      };
-
-      const prioA = getPriority(a);
-      const prioB = getPriority(b);
-      return prioA - prioB;
+      const orderA = a.sortOrder !== undefined && a.sortOrder !== null ? a.sortOrder : 999999;
+      const orderB = b.sortOrder !== undefined && b.sortOrder !== null ? b.sortOrder : 999999;
+      if (orderA !== orderB) return orderA - orderB;
+      return new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime();
     });
   }, [properties, selectedCategory]);
 

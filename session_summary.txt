@@ -1538,3 +1538,16 @@
 - Resultados finales de auditoría:
   - **Escritorio:** **99 / 100** Rendimiento | **100 / 100** Accesibilidad | **100 / 100** Buenas Prácticas | **100 / 100** SEO (LCP récord: 0.7s, FCP: 0.4s, TBT: 20ms, CLS: 0.000).
   - **Móvil:** **85 / 100** Rendimiento (TBT verde de 80-150ms, CLS 0.000) | **100 / 100** Accesibilidad | **100 / 100** Buenas Prácticas | **100 / 100** SEO.
+
+
+=== Sesión 2026-11-08 ===
+[2026-11-08] Implementación de Orden Cronológico Determinado y Sistema Drag & Drop en Panel Admin:
+- Catálogo Público: Reemplazado el agrupamiento artificial de vidriera por orden cronológico estricto (`created_at DESC` / `createdAt`), manteniendo las fajas de vendidos, alquilados y reservados intercaladas de forma natural en su fecha real para generar prueba social y efecto FOMO.
+- Soporte de Override Manual (Drag & Drop): Añadido campo `sort_order` / `sortOrder` en `Property`, Neon Postgres y `properties.json`. Si una o más propiedades son reordenadas desde el admin, se muestran en los primeros lugares (`sortOrder ASC`) y el resto fluye automáticamente por fecha.
+- Panel Admin (/admin):
+  - Integrado soporte de arrastrar y soltar nativo (HTML5 Drag & Drop) en la tabla de inmuebles con ícono de agarre `GripVertical`.
+  - Añadidos botones de flechas (`▲` y `▼`) para subir/bajar posiciones con un clic (ideal para operar desde celulares o pantallas táctiles).
+  - Indicadores visuales durante el arrastre, banner de cambios pendientes y botón animado de "Guardar Nuevo Orden".
+  - Botón de "Restablecer a Fecha" para volver en un solo clic al orden cronológico puro en caso de requerirlo.
+- API Route `/api/admin/properties/reorder`: Endpoint dinámico para persistir `orderedIds` o `{ reset: true }` en base de datos e invalidar caché Edge/ISR (`revalidateTag('properties')`).
+- Verificación de compilación: `npm run build` ejecutado exitosamente con 0 errores (85/85 rutas estáticas generadas).

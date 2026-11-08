@@ -12,7 +12,8 @@ import {
   Plus, Trash2, Eye, Edit3, CheckCircle2, Sparkles, Search, 
   RefreshCw, AlertCircle, Building2, Key, Tag, MessageCircle, 
   Flame, TrendingUp, ArrowUpDown, Users, LogOut, ShieldCheck, Shield, Zap,
-  Copy, Share2, Filter, Check, ImageIcon, MapPin, Radar
+  Copy, Share2, Filter, Check, ImageIcon, MapPin, Radar,
+  GripVertical, ArrowUp, ArrowDown, Save, RotateCcw
 } from 'lucide-react';
 import { FlyerGeneratorModal } from '@/components/admin/FlyerGeneratorModal';
 import { SocialPublisherModal } from '@/components/admin/SocialPublisherModal';
@@ -35,6 +36,95 @@ export default function AdminDashboardPage() {
   const [isAuthChecking, setIsAuthChecking] = useState<boolean>(true);
   const [selectedFlyerProperty, setSelectedFlyerProperty] = useState<Property | null>(null);
   const [selectedSocialProperty, setSelectedSocialProperty] = useState<Property | null>(null);
+  const [hasOrderChanged, setHasOrderChanged] = useState<boolean>(false);
+  const [isSavingOrder, setIsSavingOrder] = useState<boolean>(false);
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+
+  const moveProperty = (fromIndex: number, toIndex: number) => {
+    if (fromIndex === toIndex || toIndex < 0 || toIndex >= properties.length) return;
+    const updated = [...properties];
+    const [moved] = updated.splice(fromIndex, 1);
+    updated.splice(toIndex, 0, moved);
+    setProperties(updated);
+    setHasOrderChanged(true);
+  };
+
+  const handleDragStart = (index: number) => {
+    setDraggedIndex(index);
+  };
+
+  const handleDragOver = (e: React.DragEvent, index: number) => {
+    e.preventDefault();
+    if (draggedIndex === null || draggedIndex === index) return;
+    setDragOverIndex(index);
+  };
+
+  const handleDrop = (dropIndex: number) => {
+    if (draggedIndex === null) return;
+    moveProperty(draggedIndex, dropIndex);
+    setDraggedIndex(null);
+    setDragOverIndex(null);
+  };
+
+  const handleDragEnd = () => {
+    setDraggedIndex(null);
+    setDragOverIndex(null);
+  };
+
+  const handleSaveOrder = async () => {
+    setIsSavingOrder(true);
+    try {
+      const orderedIds = properties.map((p) => p.id);
+      const res = await fetch('/api/admin/properties/reorder', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderedIds }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setHasOrderChanged(false);
+        showToast('✅ ¡Orden de vidriera guardado y sincronizado con éxito!');
+        fetch('/api/revalidate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ secret: 'montano_revalidate_secret_2026' }),
+        }).catch(() => null);
+      } else {
+        showToast(data.error || 'Error al guardar el nuevo orden');
+      }
+    } catch {
+      showToast('Error de conexión al guardar el orden');
+    } finally {
+      setIsSavingOrder(false);
+    }
+  };
+
+  const handleResetOrder = async () => {
+    if (!confirm('¿Deseas restablecer el orden de todas las propiedades a su fecha original de publicación (más nuevo primero)?')) {
+      return;
+    }
+    setIsSavingOrder(true);
+    try {
+      const res = await fetch('/api/admin/properties/reorder', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reset: true }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setHasOrderChanged(false);
+        showToast('↺ ¡Catálogo restablecido al orden cronológico por fecha!');
+        fetchProperties();
+      } else {
+        showToast(data.error || 'Error al restablecer orden');
+      }
+    } catch {
+      showToast('Error de conexión al restablecer orden');
+    } finally {
+      setIsSavingOrder(false);
+    }
+  };
 
   const showToast = (message: string) => {
     setToastMessage(message);
@@ -283,6 +373,8 @@ ${link}`;
       return convB - convA;
     });
   }
+
+  const isReorderable = sortBy === 'recent' && !searchQuery.trim() && statusFilter === 'todos' && categoryFilter === 'todos';
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 relative">
@@ -692,14 +784,57 @@ ${link}`;
         {/* Properties Management Table */}
         <div className="bg-white rounded-3xl border border-purple-100 shadow-xs overflow-hidden text-left">
           
-          <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+          <div className="px-6 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3">
             <h3 className="font-extrabold text-slate-900 text-sm flex items-center space-x-2">
               <span>Listado de Inmuebles</span>
               <span className="bg-purple-100 text-[#5E1754] text-xs font-black px-2.5 py-0.5 rounded-full">
                 {filteredProperties.length}
               </span>
             </h3>
+
+            <div className="flex items-center space-x-2">
+              {hasOrderChanged && (
+                <button
+                  onClick={handleSaveOrder}
+                  disabled={isSavingOrder}
+                  className="flex items-center space-x-1.5 bg-[#E85D04] hover:bg-[#C2410C] text-white px-3.5 py-1.5 rounded-xl font-extrabold text-xs shadow-md transition-all cursor-pointer animate-pulse"
+                >
+                  <Save className="w-4 h-4" />
+                  <span>{isSavingOrder ? 'Guardando...' : 'Guardar Nuevo Orden'}</span>
+                </button>
+              )}
+              <button
+                onClick={handleResetOrder}
+                disabled={isSavingOrder}
+                className="flex items-center space-x-1.5 text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-xl font-bold text-xs transition-all cursor-pointer"
+                title="Restablecer todas las propiedades al orden cronológico natural por fecha"
+              >
+                <RotateCcw className="w-3.5 h-3.5 text-slate-500" />
+                <span className="hidden sm:inline">Restablecer a Fecha</span>
+              </button>
+            </div>
           </div>
+
+          {/* Banner de ayuda contextual para Drag & Drop */}
+          {isReorderable ? (
+            <div className="bg-purple-50/70 border-b border-purple-100 px-6 py-2.5 text-xs text-[#5E1754] font-semibold flex flex-wrap items-center justify-between gap-2">
+              <div className="flex items-center space-x-2">
+                <GripVertical className="w-4 h-4 text-[#5E1754] shrink-0" />
+                <span>
+                  <strong>Arrastrar y Soltar activo:</strong> Arrastrá las filas desde el ícono o usá las flechitas para definir qué propiedades van primero en la web pública.
+                </span>
+              </div>
+              {hasOrderChanged && (
+                <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider bg-orange-100 text-orange-700 border border-orange-200">
+                  ● Cambios sin guardar
+                </span>
+              )}
+            </div>
+          ) : (
+            <div className="bg-slate-50 border-b border-slate-100 px-6 py-2 text-xs text-slate-500 font-medium flex items-center space-x-2">
+              <span>💡 Para ordenar la vidriera con Arrastrar y Soltar, seleccioná la vista &ldquo;Recientes&rdquo; y desactivá los filtros.</span>
+            </div>
+          )}
 
           {isLoading ? (
             <div className="p-12 text-center text-slate-500 font-bold text-sm flex items-center justify-center space-x-2">
@@ -716,6 +851,7 @@ ${link}`;
               <table className="w-full text-left text-xs min-w-[760px]">
                 <thead className="bg-slate-50 text-slate-500 uppercase font-extrabold text-[10px] tracking-wider border-b border-slate-100">
                   <tr>
+                    <th className="py-3 px-2 sm:px-3 text-center w-16"># Orden</th>
                     <th className="py-3 px-3 sm:px-4">Ref. & Inmueble</th>
                     <th className="py-3 px-2 hidden sm:table-cell">Tipo</th>
                     <th className="py-3 px-2">Precio</th>
@@ -725,7 +861,7 @@ ${link}`;
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
-                  {filteredProperties.map((prop) => {
+                  {filteredProperties.map((prop, index) => {
                     const categoryLabel = prop.category === 'casa' ? 'Casa'
                       : prop.category === 'apartamento' ? 'Apto'
                       : prop.category === 'terreno' ? 'Terreno'
@@ -742,7 +878,63 @@ ${link}`;
                     const isCopied = copiedId === prop.id;
 
                     return (
-                    <tr key={prop.id} className="hover:bg-purple-50/20 transition-colors">
+                    <tr
+                      key={prop.id}
+                      draggable={isReorderable}
+                      onDragStart={() => handleDragStart(index)}
+                      onDragOver={(e) => handleDragOver(e, index)}
+                      onDrop={() => handleDrop(index)}
+                      onDragEnd={handleDragEnd}
+                      className={`transition-colors ${
+                        draggedIndex === index
+                          ? 'opacity-40 bg-purple-100 border-2 border-dashed border-[#5E1754]'
+                          : dragOverIndex === index
+                          ? 'bg-amber-100/60 border-t-2 border-[#E85D04]'
+                          : 'hover:bg-purple-50/20'
+                      }`}
+                    >
+                      {/* Col 0: Drag Handle & Posición */}
+                      <td className="py-3 px-2 sm:px-3 text-center">
+                        <div className="flex items-center justify-center space-x-1">
+                          {isReorderable ? (
+                            <>
+                              <div
+                                className="p-1 text-slate-400 hover:text-[#5E1754] cursor-grab active:cursor-grabbing rounded hover:bg-purple-100/60 transition-colors"
+                                title="Arrastrar y soltar para mover posición"
+                              >
+                                <GripVertical className="w-4 h-4" />
+                              </div>
+                              <div className="flex flex-col -space-y-0.5">
+                                <button
+                                  type="button"
+                                  disabled={index === 0}
+                                  onClick={() => moveProperty(index, index - 1)}
+                                  className="p-0.5 text-slate-400 hover:text-slate-800 disabled:opacity-20 disabled:hover:text-slate-400 cursor-pointer"
+                                  title="Subir una posición"
+                                >
+                                  <ArrowUp className="w-3 h-3" />
+                                </button>
+                                <button
+                                  type="button"
+                                  disabled={index === filteredProperties.length - 1}
+                                  onClick={() => moveProperty(index, index + 1)}
+                                  className="p-0.5 text-slate-400 hover:text-slate-800 disabled:opacity-20 disabled:hover:text-slate-400 cursor-pointer"
+                                  title="Bajar una posición"
+                                >
+                                  <ArrowDown className="w-3 h-3" />
+                                </button>
+                              </div>
+                              <span className="text-[10px] font-bold text-slate-500 font-mono w-4 text-right">
+                                {index + 1}
+                              </span>
+                            </>
+                          ) : (
+                            <span className="text-[11px] font-bold text-slate-400 font-mono">
+                              {index + 1}
+                            </span>
+                          )}
+                        </div>
+                      </td>
                       {/* Col 1: Ref + Título + Categoría */}
                       <td className="py-3 px-3 sm:px-4">
                         <div className="flex items-center space-x-2.5">

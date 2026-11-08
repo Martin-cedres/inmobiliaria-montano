@@ -129,6 +129,7 @@ export interface Property {
   whatsappClicksCount?: number;
   sharesCount?: number;
   featured: boolean;
+  sortOrder?: number;
   createdAt: string;
   updatedAt: string;
 }
