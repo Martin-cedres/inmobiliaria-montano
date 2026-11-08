@@ -1551,3 +1551,5 @@
   - Botón de "Restablecer a Fecha" para volver en un solo clic al orden cronológico puro en caso de requerirlo.
 - API Route `/api/admin/properties/reorder`: Endpoint dinámico para persistir `orderedIds` o `{ reset: true }` en base de datos e invalidar caché Edge/ISR (`revalidateTag('properties')`).
 - Verificación de compilación: `npm run build` ejecutado exitosamente con 0 errores (85/85 rutas estáticas generadas).
+
+- Despliegue a Producción (Vercel): Autorizado expresamente por el usuario. Realizado `git commit` y `git push origin main` (commit `d46cdad`) disparando el despliegue automático en producción de Vercel.
