@@ -1,10 +1,14 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 import { Property } from '@/types/property';
 import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon';
 import { buildPropertyShareMessage } from '@/utils/whatsapp';
+import {
+  buildPropertyShareUrl,
+  isClosedOrReservedStatus,
+} from '@/components/admin/flyer-templates/closurePresets';
 import { Share2, Copy, Check, Mail, Printer, X, Sparkles, ExternalLink, Image as ImageIcon } from 'lucide-react';
 
 interface SharePropertyModalProps {
@@ -15,6 +19,8 @@ interface SharePropertyModalProps {
 
 const PRODUCTION_BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
 
+const emptySubscribe = () => () => {};
+
 export const SharePropertyModal: React.FC<SharePropertyModalProps> = ({
   property,
   className = '',
@@ -23,17 +29,15 @@ export const SharePropertyModal: React.FC<SharePropertyModalProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [instagramToast, setInstagramToast] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
 
   // Production absolute URL (Essential for WhatsApp / Facebook OpenGraph crawlers to fetch photos)
-  const prodShareUrl = `${PRODUCTION_BASE_URL}/propiedad/${property.slug}`;
-  const localShareUrl = typeof window !== 'undefined' 
-    ? `${window.location.origin}/propiedad/${property.slug}`
-    : prodShareUrl;
+  const prodShareUrl = buildPropertyShareUrl(property, PRODUCTION_BASE_URL);
+  const isClosedOrReserved = isClosedOrReservedStatus(property.status);
 
   const mainImage = property.images.find((img) => img.isMain) || property.images[0];
   const photoUrl = mainImage?.webpUrl || mainImage?.blobUrl || '/images/sample-house-1.jpg';
@@ -192,7 +196,7 @@ export const SharePropertyModal: React.FC<SharePropertyModalProps> = ({
               <div className="min-w-0 flex-1">
                 <div className="flex items-center justify-between gap-2">
                   <span className="text-[10px] font-extrabold uppercase text-[#E85D04] tracking-wider">
-                    Enlace & Foto HD
+                    {isClosedOrReserved ? 'Tarjeta Cierre + Banda HD' : 'Enlace & Foto HD'}
                   </span>
                   <span className="font-black text-xs text-[#5E1754]">{formattedPrice}</span>
                 </div>

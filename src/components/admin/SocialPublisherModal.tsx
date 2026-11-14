@@ -3,6 +3,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Property } from '@/types/property';
 import {
+  buildClosureSocialCaptureCopy,
+  buildPropertyShareUrl,
+  isClosedOrReservedStatus,
+} from '@/components/admin/flyer-templates/closurePresets';
+import {
   MapPin,
   Share2,
   MessageCircle,
@@ -50,11 +55,19 @@ export const SocialPublisherModal: React.FC<SocialPublisherModalProps> = ({
 
   const mainImageUrl = mainImage?.webpUrl || mainImage?.blobUrl || '';
 
-  // Public Property Link
+  const isClosedOrReserved = isClosedOrReservedStatus(property.status);
+
+  // Public Property Link (uses production URL + cache-buster on closed properties so OG bots refresh the ribbon card)
   const publicUrl = useMemo(() => {
-    const origin = typeof window !== 'undefined' ? window.location.origin : 'https://inmobiliariamontano.com';
-    return `${origin}/propiedad/${property.slug}`;
-  }, [property.slug]);
+    const prodBase =
+      process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
+    return buildPropertyShareUrl(property, prodBase);
+  }, [property]);
+
+  const closureCapture = useMemo(
+    () => (isClosedOrReserved ? buildClosureSocialCaptureCopy(property) : null),
+    [isClosedOrReserved, property]
+  );
 
   // Formatted Price
   const formattedPrice = useMemo(() => {
@@ -110,6 +123,20 @@ export const SocialPublisherModal: React.FC<SocialPublisherModalProps> = ({
 
   // Template Generators
   const defaultGoogleText = useMemo(() => {
+    if (closureCapture) {
+      return [
+        `✅ ${closureCapture.ownerHeadline}`,
+        ``,
+        `${closureCapture.ownerBody}`,
+        ``,
+        `🔗 Ver referencia en nuestra web oficial:`,
+        `${publicUrl}`,
+        ``,
+        `📞 Consultá directo con Daniel Montaño al 092 776 715 o visitanos en 25 de Mayo 338, San José.`,
+        `Inmobiliaria Montaño · Confianza, trayectoria y resultados reales.`,
+      ].join('\n');
+    }
+
     const lines = [
       `📍 Novedad en San José de Mayo: ${property.title}`,
       ``,
@@ -137,9 +164,27 @@ export const SocialPublisherModal: React.FC<SocialPublisherModalProps> = ({
     );
 
     return lines.join('\n');
-  }, [property.title, property.operation, neighborhood, city, operationLabel, categoryLabel, formattedPrice, featureList, legalCertaintyText, publicUrl]);
+  }, [closureCapture, property.title, property.operation, neighborhood, city, operationLabel, categoryLabel, formattedPrice, featureList, legalCertaintyText, publicUrl]);
 
   const defaultFacebookText = useMemo(() => {
+    if (closureCapture) {
+      return [
+        `🎉 ¡OTRA OPERACIÓN CONCRETADA EN SAN JOSÉ DE MAYO! (${closureCapture.outcome})`,
+        ``,
+        `🏡 ${closureCapture.cleanTitle}`,
+        `📍 ${closureCapture.zoneLabel} · Ref. #${property.codeRef}`,
+        ``,
+        `📌 ${closureCapture.ownerBody}`,
+        ``,
+        `📲 ¿Tenés una casa, apartamento, terreno o local para vender o alquilar?`,
+        `📞 Daniel Montaño: 092 776 715`,
+        `🌐 Mirá la ficha y consultanos aquí:`,
+        `${publicUrl}`,
+        ``,
+        `#SanJoseDeMayo #InmobiliariaMontaño #Vendida #Alquilada #PropiedadesSanJose #BienesRaicesUruguay #DanielMontaño`,
+      ].join('\n');
+    }
+
     const lines = [
       `✨ ¡NUEVA OPORTUNIDAD EN SAN JOSÉ DE MAYO! ✨`,
       ``,
@@ -170,9 +215,13 @@ export const SocialPublisherModal: React.FC<SocialPublisherModalProps> = ({
     );
 
     return lines.join('\n');
-  }, [property.title, neighborhood, city, operationLabel, property.codeRef, formattedPrice, featureList, legalCertaintyText, publicUrl]);
+  }, [closureCapture, property.title, neighborhood, city, operationLabel, property.codeRef, formattedPrice, featureList, legalCertaintyText, publicUrl]);
 
   const defaultWhatsappText = useMemo(() => {
+    if (closureCapture) {
+      return closureCapture.shareMessage;
+    }
+
     const lines = [
       `🏡 *INMOBILIARIA MONTAÑO* · Ref. *#${property.codeRef}*`,
       `━━━━━━━━━━━━━━━━━━━━━━━━━━`,
@@ -198,7 +247,7 @@ export const SocialPublisherModal: React.FC<SocialPublisherModalProps> = ({
     );
 
     return lines.join('\n');
-  }, [property.codeRef, property.title, neighborhood, city, operationLabel, categoryLabel, formattedPrice, featureList, legalCertaintyText, publicUrl]);
+  }, [closureCapture, property.codeRef, property.title, neighborhood, city, operationLabel, categoryLabel, formattedPrice, featureList, legalCertaintyText, publicUrl]);
 
   // Effective texts
   const googleText = customGoogleText ?? defaultGoogleText;

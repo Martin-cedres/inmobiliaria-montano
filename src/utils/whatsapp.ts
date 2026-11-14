@@ -1,4 +1,9 @@
 import { Property } from '@/types/property';
+import {
+  buildClosureSocialCaptureCopy,
+  buildPropertyShareUrl,
+  isClosedOrReservedStatus,
+} from '@/components/admin/flyer-templates/closurePresets';
 
 export const MONTAÑO_WHATSAPP_PHONE = '59892776715';
 export const MONTAÑO_OFFICIAL_EMAIL = 'contacto@inmobiliariamontano.uy';
@@ -45,17 +50,10 @@ export function buildPropertyWhatsAppLink(
  * Genera el texto del mensaje cuando se comparte una propiedad por WhatsApp u otras redes sociales.
  */
 export function buildPropertyShareMessage(property: Property): string {
-  const propertyUrl = `${SITE_URL}/propiedad/${property.slug}`;
-  if (property.status === 'reservado') {
-    return `Esta propiedad (Ref. #${property.codeRef}) se acaba de reservar. Podés ver otras opciones similares en San José: ${propertyUrl}`;
+  if (isClosedOrReservedStatus(property.status)) {
+    return buildClosureSocialCaptureCopy(property, SITE_URL).shareMessage;
   }
-  if (property.status === 'vendido') {
-    return `Esta propiedad (Ref. #${property.codeRef}) ya fue vendida. Podés ver otras opciones similares en San José: ${propertyUrl}`;
-  }
-  if (property.status === 'alquilado') {
-    return `Esta propiedad (Ref. #${property.codeRef}) ya fue alquilada. Podés ver otras opciones similares en San José: ${propertyUrl}`;
-  }
-  return propertyUrl;
+  return buildPropertyShareUrl(property, SITE_URL);
 }
 
 export type WhatsAppServiceSubject = 'tasacion' | 'publicar' | 'notarial' | 'general' | 'vender' | 'alquilar' | 'alquilar_propiedad';

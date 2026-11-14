@@ -17,6 +17,10 @@ import {
 } from 'lucide-react';
 import { FlyerGeneratorModal } from '@/components/admin/FlyerGeneratorModal';
 import { SocialPublisherModal } from '@/components/admin/SocialPublisherModal';
+import {
+  buildClosureSocialCaptureCopy,
+  isClosedOrReservedStatus,
+} from '@/components/admin/flyer-templates/closurePresets';
 
 export default function AdminDashboardPage() {
   const router = useRouter();
@@ -278,8 +282,21 @@ export default function AdminDashboardPage() {
   };
 
   const handleCopyWhatsAppSnippet = (prop: Property) => {
-    const origin = typeof window !== 'undefined' ? window.location.origin : 'https://inmobiliariamontano.com';
-    const link = `${origin}/propiedad/${prop.slug}`;
+    const publicBase =
+      process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
+
+    if (isClosedOrReservedStatus(prop.status)) {
+      const closure = buildClosureSocialCaptureCopy(prop, publicBase);
+      navigator.clipboard.writeText(closure.shareMessage);
+      setCopiedId(prop.id);
+      showToast(
+        `📋 ¡Link de cierre (${closure.outcome}) Ref. #${prop.codeRef} copiado con tarjeta OG y banda!`
+      );
+      setTimeout(() => setCopiedId(null), 2500);
+      return;
+    }
+
+    const link = `${publicBase}/propiedad/${prop.slug}`;
     
     let priceText = `${prop.price.currency} ${prop.price.amount.toLocaleString('es-UY')}`;
     if (prop.price.priceMode === 'consultar') priceText = 'A consultar';

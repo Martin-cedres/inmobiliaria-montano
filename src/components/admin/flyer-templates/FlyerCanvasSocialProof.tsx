@@ -18,12 +18,12 @@ export const FlyerCanvasSocialProof: React.FC<FlyerCanvasSocialProofProps> = ({ 
   const outcome = data.closureOutcome || 'VENDIÓ';
   const theme = CLOSURE_THEME_MAP[outcome];
 
-  const photoHeight = isStory ? 330 : isSquare ? 210 : 250;
+  const photoHeight = isStory ? 330 : isSquare ? 355 : 385;
   const paddingClass = isStory
     ? 'pt-14 pb-16 px-8'
     : isSquare
-    ? 'pt-4 pb-4 px-5'
-    : 'pt-6 pb-6 px-6';
+    ? 'pt-3 pb-3 px-4'
+    : 'py-4 px-5';
 
   const zoneText = data.locationBadgeSubtitle || data.locationCity || 'San José de Mayo';
   const refBadge = data.codeRef
@@ -83,15 +83,15 @@ export const FlyerCanvasSocialProof: React.FC<FlyerCanvasSocialProofProps> = ({ 
       {/* 1. CABECERA CORPORATIVA BLANCA */}
       <header
         className={`relative z-10 bg-white/98 rounded-2xl flex items-center justify-between gap-3 border-2 border-[#FFB800]/45 shadow-xl shrink-0 ${
-          isSquare ? 'px-4 py-2.5' : 'px-5 py-3'
+          isSquare ? 'px-3.5 py-2' : isStory ? 'px-5 py-3' : 'px-4 py-2'
         }`}
       >
-        <div className="flex items-center gap-3.5 min-w-0">
+        <div className="flex items-center gap-3 min-w-0">
           <img
             src="/logo-clean.png"
             alt="Inmobiliaria Montaño"
             crossOrigin="anonymous"
-            className={`${isSquare ? 'h-12' : isStory ? 'h-16' : 'h-14'} w-auto object-contain shrink-0`}
+            className={`${isSquare ? 'h-11' : isStory ? 'h-16' : 'h-12'} w-auto object-contain shrink-0`}
           />
           <div className="flex flex-col leading-tight min-w-0">
             <span
@@ -123,13 +123,13 @@ export const FlyerCanvasSocialProof: React.FC<FlyerCanvasSocialProofProps> = ({ 
 
       {/* 2. GANCHO SUPERIOR (VISIBLE EN 9:16 Y 4:5; COMPACTO EN 1:1) */}
       {!isSquare && (
-        <div className={`relative z-10 text-center shrink-0 ${isStory ? 'my-2' : 'my-1'}`}>
-          <div className="inline-flex items-center gap-1.5 bg-[#FFB800]/15 border border-[#FFB800]/55 text-[#FFD166] text-[11px] font-black uppercase tracking-widest px-3.5 py-1 rounded-full mb-1.5">
+        <div className={`relative z-10 text-center shrink-0 ${isStory ? 'my-2' : 'my-0.5'}`}>
+          <div className="inline-flex items-center gap-1.5 bg-[#FFB800]/15 border border-[#FFB800]/55 text-[#FFD166] text-[11px] font-black uppercase tracking-widest px-3.5 py-1 rounded-full mb-1">
             <span>{theme.kicker}</span>
           </div>
           <h2
             className={`${
-              isStory ? 'text-[40px]' : 'text-[33px]'
+              isStory ? 'text-[40px]' : 'text-[30px]'
             } font-black text-white leading-[1.08] tracking-tight drop-shadow`}
           >
             {theme.hookTitle}
@@ -140,7 +140,7 @@ export const FlyerCanvasSocialProof: React.FC<FlyerCanvasSocialProofProps> = ({ 
       {/* 3. TARJETA BLANCA PROTAGONISTA */}
       <main
         className={`relative z-10 bg-white rounded-[28px] shadow-2xl border-2 border-white/95 overflow-hidden flex flex-col justify-between ${
-          isSquare ? 'p-4 gap-2.5 flex-1 my-2.5' : isStory ? 'p-6 gap-4' : 'p-5 gap-3'
+          isSquare ? 'p-3.5 gap-2 flex-1 my-1.5' : isStory ? 'p-6 gap-4' : 'p-4 gap-2.5'
         }`}
       >
         {/* Barra superior de acento */}
@@ -209,17 +209,17 @@ export const FlyerCanvasSocialProof: React.FC<FlyerCanvasSocialProofProps> = ({ 
         {/* Título limpio (sin precio por privacidad) */}
         <h3
           className={`${
-            isStory ? 'text-[23px]' : isSquare ? 'text-lg' : 'text-xl'
-          } font-black text-slate-900 leading-snug tracking-tight`}
+            isStory ? 'text-[23px]' : isSquare ? 'text-[17px]' : 'text-lg'
+          } font-black text-slate-900 leading-tight tracking-tight`}
         >
           {data.closurePropertyTitle || 'Propiedad gestionada con éxito en San José'}
         </h3>
 
-        {/* Dos cajas de información: Prueba Social + Demanda Activa en Espera */}
-        <div className={`grid ${isSquare ? 'grid-cols-2 gap-2' : 'grid-cols-1 gap-2.5'}`}>
+        {/* Dos cajas de información: Operación Concretada + Clientes en Espera */}
+        <div className={`grid ${isStory ? 'grid-cols-1 gap-2.5' : 'grid-cols-2 gap-2'}`}>
           <div
             className={`bg-slate-50 border border-slate-200 rounded-2xl ${
-              isSquare ? 'p-2.5' : 'px-4 py-3'
+              isStory ? 'px-4 py-3' : 'px-3 py-2'
             }`}
           >
             <div className="min-w-0">
@@ -228,7 +228,7 @@ export const FlyerCanvasSocialProof: React.FC<FlyerCanvasSocialProofProps> = ({ 
               </div>
               <p
                 className={`${
-                  isSquare ? 'text-[11px] leading-snug' : isStory ? 'text-[15px] leading-snug' : 'text-xs leading-snug'
+                  isStory ? 'text-[15px] leading-snug' : isSquare ? 'text-[11px] leading-snug' : 'text-[11.5px] leading-snug'
                 } font-bold text-slate-800 mt-0.5`}
               >
                 {data.closureProofText}
@@ -238,7 +238,7 @@ export const FlyerCanvasSocialProof: React.FC<FlyerCanvasSocialProofProps> = ({ 
 
           <div
             className={`bg-slate-50 border border-slate-200 rounded-2xl ${
-              isSquare ? 'p-2.5' : 'px-4 py-3'
+              isStory ? 'px-4 py-3' : 'px-3 py-2'
             }`}
           >
             <div className="min-w-0">
@@ -247,7 +247,7 @@ export const FlyerCanvasSocialProof: React.FC<FlyerCanvasSocialProofProps> = ({ 
               </div>
               <p
                 className={`${
-                  isSquare ? 'text-[11px] leading-snug' : isStory ? 'text-[15px] leading-snug' : 'text-xs leading-snug'
+                  isStory ? 'text-[15px] leading-snug' : isSquare ? 'text-[11px] leading-snug' : 'text-[11.5px] leading-snug'
                 } font-bold text-slate-800 mt-0.5`}
               >
                 {data.closureDemandText}
@@ -259,7 +259,7 @@ export const FlyerCanvasSocialProof: React.FC<FlyerCanvasSocialProofProps> = ({ 
         {/* CTA WhatsApp Captación Propietarios */}
         <div
           className={`rounded-2xl text-white flex items-center justify-between gap-3 shadow-lg ${
-            isSquare ? 'px-4 py-2.5' : 'px-5 py-3.5'
+            isStory ? 'px-5 py-3.5' : 'px-4 py-2.5'
           }`}
           style={{ background: theme.ctaGradient }}
         >

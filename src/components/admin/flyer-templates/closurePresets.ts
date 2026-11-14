@@ -209,3 +209,107 @@ export function buildDefaultClosureCopy(property: Property): {
     ctaTitle,
   };
 }
+
+export function buildPropertyShareUrl(
+  property: Pick<Property, 'slug' | 'status'>,
+  baseUrl: string = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy'
+): string {
+  const cleanBase = baseUrl.replace(/\/+$/, '');
+  const url = `${cleanBase}/propiedad/${property.slug}`;
+  if (isClosedOrReservedStatus(property.status)) {
+    return `${url}?estado=${property.status}`;
+  }
+  return url;
+}
+
+export function buildClosureSocialCaptureCopy(
+  property: Property,
+  baseUrl?: string
+): {
+  outcome: FlyerClosureOutcome;
+  statusAdjective: 'VENDIDA' | 'ALQUILADA' | 'RESERVADA';
+  zoneLabel: string;
+  cleanTitle: string;
+  shareUrl: string;
+  ogTitle: string;
+  ogDescription: string;
+  ogBannerLine: string;
+  ogBannerSubline: string;
+  shareMessage: string;
+  ownerHeadline: string;
+  ownerBody: string;
+  ownerCtaLabel: string;
+  ownerLandingHref: string;
+  ownerLandingLabel: string;
+  ownerWhatsAppSubject: 'vender' | 'alquilar_propiedad' | 'publicar';
+} {
+  const baseCopy = buildDefaultClosureCopy(property);
+  const shareUrl = buildPropertyShareUrl(property, baseUrl);
+  const statusAdjective =
+    baseCopy.outcome === 'ALQUILÓ'
+      ? 'ALQUILADA'
+      : baseCopy.outcome === 'RESERVÓ'
+      ? 'RESERVADA'
+      : 'VENDIDA';
+
+  if (baseCopy.outcome === 'ALQUILÓ') {
+    return {
+      outcome: baseCopy.outcome,
+      statusAdjective,
+      zoneLabel: baseCopy.zoneLabel,
+      cleanTitle: baseCopy.propertyTitle,
+      shareUrl,
+      ogTitle: `¡ALQUILADA! ${baseCopy.propertyTitle} — Buscamos similares | Inmobiliaria Montaño`,
+      ogDescription: `¡Alquilada en ${baseCopy.zoneLabel} con garantías verificadas! Seguimos con inquilinos calificados esperando propiedades similares. ¿Tenés una propiedad para alquilar? Publicala con Inmobiliaria Montaño.`,
+      ogBannerLine: `Alquilada en ${baseCopy.zoneLabel} • Garantías verificadas`,
+      ogBannerSubline: 'Nos quedaron inquilinos buscando • ¿Alquilás tu propiedad?',
+      shareMessage: `✅ *¡OTRA PROPIEDAD ALQUILADA EN ${baseCopy.zoneLabel.toUpperCase()}!*\n\n${baseCopy.proofText}\n📌 *${baseCopy.demandText}*\n\n¿Tenés una casa, apartamento o local para alquilar?\n👉 ${shareUrl}`,
+      ownerHeadline: `¡Propiedad alquilada en ${baseCopy.zoneLabel}! Tenemos inquilinos esperando`,
+      ownerBody: `Nos quedaron interesados aprobados con garantía (ANDA, CGN, aseguradoras y Círculo Policial) buscando opciones similares. ¿Tenés una propiedad para alquilar?`,
+      ownerCtaLabel: 'Publicar para alquilar por WhatsApp',
+      ownerLandingHref: '/alquilar-mi-propiedad-san-jose',
+      ownerLandingLabel: 'Cómo alquilamos tu propiedad',
+      ownerWhatsAppSubject: 'alquilar_propiedad',
+    };
+  }
+
+  if (baseCopy.outcome === 'RESERVÓ') {
+    return {
+      outcome: baseCopy.outcome,
+      statusAdjective,
+      zoneLabel: baseCopy.zoneLabel,
+      cleanTitle: baseCopy.propertyTitle,
+      shareUrl,
+      ogTitle: `¡RESERVADA! ${baseCopy.propertyTitle} — Alta demanda en ${baseCopy.zoneLabel} | Inmobiliaria Montaño`,
+      ogDescription: `¡Reservada en ${baseCopy.zoneLabel}! Seguimos con compradores e interesados buscando propiedades similares en la zona. ¿Evaluás vender o alquilar la tuya? Consultanos.`,
+      ogBannerLine: `Reservada en ${baseCopy.zoneLabel} • Alta demanda activa`,
+      ogBannerSubline: 'Nos quedaron clientes en espera • ¿Publicás tu propiedad?',
+      shareMessage: `🔥 *¡OTRA PROPIEDAD RESERVADA EN ${baseCopy.zoneLabel.toUpperCase()}!*\n\n${baseCopy.proofText}\n📌 *${baseCopy.demandText}*\n\n¿Tenés una propiedad en San José para vender o alquilar?\n👉 ${shareUrl}`,
+      ownerHeadline: `¡Propiedad reservada en ${baseCopy.zoneLabel}! Clientes en lista de espera`,
+      ownerBody: `Esta operación generó fuerte demanda y nos quedaron compradores e interesados activos buscando en la zona. Si estás evaluando vender o alquilar, conversemos.`,
+      ownerCtaLabel: 'Consultar / Publicar mi propiedad',
+      ownerLandingHref: property.operation === 'alquiler' ? '/alquilar-mi-propiedad-san-jose' : '/vender-propiedad-san-jose',
+      ownerLandingLabel: property.operation === 'alquiler' ? 'Alquilar mi propiedad' : 'Tasar o vender mi propiedad',
+      ownerWhatsAppSubject: 'publicar',
+    };
+  }
+
+  return {
+    outcome: baseCopy.outcome,
+    statusAdjective,
+    zoneLabel: baseCopy.zoneLabel,
+    cleanTitle: baseCopy.propertyTitle,
+    shareUrl,
+    ogTitle: `¡VENDIDA! ${baseCopy.propertyTitle} — Buscamos similares | Inmobiliaria Montaño`,
+    ogDescription: `¡Vendida en ${baseCopy.zoneLabel}! Nos quedaron compradores calificados buscando viviendas similares. ¿Querés vender tu propiedad? Tasala y publicala con Inmobiliaria Montaño.`,
+    ogBannerLine: `Vendida en ${baseCopy.zoneLabel} • Compradores buscando`,
+    ogBannerSubline: 'Tenemos demanda activa en la zona • ¿Vendés tu propiedad?',
+    shareMessage: `✅ *¡OTRA PROPIEDAD VENDIDA EN ${baseCopy.zoneLabel.toUpperCase()}!*\n\n${baseCopy.proofText}\n📌 *${baseCopy.demandText}*\n\n¿Querés vender tu casa, terreno o chacra en San José?\n👉 ${shareUrl}`,
+    ownerHeadline: `¡Propiedad vendida en ${baseCopy.zoneLabel}! Hay compradores buscando similares`,
+    ownerBody: `Nos quedaron compradores calificados (crédito bancario y contado) buscando opciones similares en la zona. Si querés vender, te asesoramos sin compromiso.`,
+    ownerCtaLabel: 'Quiero vender / tasar por WhatsApp',
+    ownerLandingHref: '/vender-propiedad-san-jose',
+    ownerLandingLabel: 'Solicitar tasación para vender',
+    ownerWhatsAppSubject: 'vender',
+  };
+}

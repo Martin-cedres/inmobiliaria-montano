@@ -39,8 +39,8 @@ const FORMATS: FormatSpec[] = [
     folder: 'facebook-4x5',
     width: 1080,
     height: 1350,
-    photoHeight: 380,
-    paddingCss: '46px 56px 50px 56px',
+    photoHeight: 540,
+    paddingCss: '34px 48px 36px 48px',
   },
 ];
 
@@ -158,23 +158,23 @@ function buildClosureCardHtml(
     /* Hook superior */
     .hook-section {
       text-align: center;
-      margin: ${isStory ? '18px 0 16px 0' : '10px 0 8px 0'};
+      margin: ${isStory ? '18px 0 16px 0' : '6px 0 6px 0'};
     }
     .hook-kicker {
       display: inline-flex; align-items: center;
       background: rgba(255,184,0,0.16);
       border: 2px solid rgba(255,184,0,0.55);
       color: #FFD166;
-      font-size: ${isStory ? '20px' : '18px'};
+      font-size: ${isStory ? '20px' : '17px'};
       font-weight: 900;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      padding: ${isStory ? '8px 24px' : '6px 20px'};
+      padding: ${isStory ? '8px 24px' : '5px 18px'};
       border-radius: 999px;
-      margin-bottom: ${isStory ? '12px' : '8px'};
+      margin-bottom: ${isStory ? '12px' : '6px'};
     }
     .hook-title {
-      font-size: ${isStory ? '58px' : '48px'};
+      font-size: ${isStory ? '58px' : '44px'};
       font-weight: 900;
       color: #FFFFFF;
       line-height: 1.08;
@@ -186,12 +186,12 @@ function buildClosureCardHtml(
     .card {
       background: #FFFFFF;
       border-radius: 40px;
-      padding: ${isStory ? '36px 40px' : '28px 34px'};
+      padding: ${isStory ? '36px 40px' : '22px 28px'};
       box-shadow: 0 34px 80px rgba(8,2,12,0.52);
       border: 2px solid rgba(255,255,255,0.95);
       display: flex;
       flex-direction: column;
-      gap: ${isStory ? '22px' : '16px'};
+      gap: ${isStory ? '22px' : '14px'};
       position: relative;
       overflow: hidden;
     }
@@ -288,8 +288,8 @@ function buildClosureCardHtml(
 
     .boxes {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: ${isStory ? '14px' : '10px'};
+      grid-template-columns: ${isStory ? '1fr' : '1fr 1fr'};
+      gap: 14px;
     }
     .info-box {
       display: flex; flex-direction: column;
@@ -299,11 +299,11 @@ function buildClosureCardHtml(
       padding: ${isStory ? '18px 22px' : '14px 18px'};
     }
     .info-label {
-      font-size: 16px; font-weight: 900; text-transform: uppercase;
+      font-size: ${isStory ? '16px' : '15px'}; font-weight: 900; text-transform: uppercase;
       letter-spacing: 0.06em; color: #64748B; margin-bottom: 3px;
     }
     .info-text {
-      font-size: ${isStory ? '22px' : '19px'};
+      font-size: ${isStory ? '22px' : '17.5px'};
       font-weight: 700; color: #1E293B; line-height: 1.32;
     }
 

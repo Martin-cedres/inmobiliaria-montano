@@ -5,7 +5,11 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { getAllProperties, findPropertyBySlugOrPrevious } from '@/lib/propertiesStore';
 import { generatePropertyMetadata, generatePropertyJsonLd, getPillarPageForProperty } from '@/utils/seo';
-import { buildPropertyWhatsAppLink } from '@/utils/whatsapp';
+import { buildGeneralWhatsAppLink, buildPropertyWhatsAppLink } from '@/utils/whatsapp';
+import {
+  buildClosureSocialCaptureCopy,
+  isClosedOrReservedStatus,
+} from '@/components/admin/flyer-templates/closurePresets';
 import { MapPin, Bed, Bath, Maximize2, Car, Building, CheckCircle2, MessageCircle, ArrowLeft, ShieldCheck, Share2, Compass, Trees, Droplets, FileCheck, Landmark, ArrowLeftRight, Wifi, Flame, Zap, Dog, Waves, LayoutGrid, Milestone, DollarSign, Layers } from 'lucide-react';
 import { PropertyMapWrapper } from '@/components/PropertyMapWrapper';
 import { SharePropertyModal } from '@/components/SharePropertyModal';
@@ -68,6 +72,11 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
 
   const isSoldOrRented = property.status === 'vendido' || property.status === 'alquilado';
   const isReserved = property.status === 'reservado';
+  const isClosedOrReserved = isClosedOrReservedStatus(property.status);
+  const closureCapture = isClosedOrReserved ? buildClosureSocialCaptureCopy(property) : null;
+  const ownerClosureWaUrl = closureCapture
+    ? buildGeneralWhatsAppLink(closureCapture.ownerWhatsAppSubject)
+    : '';
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50">
@@ -94,34 +103,51 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
           </Link>
         </div>
 
-        {/* Banner de estado si la propiedad está reservada, vendida o alquilada */}
-        {isSoldOrRented && (
-          <div className="mb-6 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-between gap-4">
-            <div className="flex items-center space-x-3">
-              <span className="p-2 rounded-xl bg-amber-500 text-white font-black text-xs uppercase">
-                {property.status === 'vendido' ? 'Propiedad Vendida' : 'Propiedad Alquilada'}
-              </span>
-              <p className="text-xs sm:text-sm font-bold text-amber-900">
-                Esta propiedad ya fue {property.status === 'vendido' ? 'vendida' : 'alquilada'}. Podés consultar opciones similares disponibles en nuestro catálogo.
-              </p>
-            </div>
-            <Link
-              href={getPillarPageForProperty(property).href}
-              className="text-xs font-black text-white bg-amber-600 hover:bg-amber-700 px-3.5 py-2 rounded-xl transition-all flex-shrink-0"
-            >
-              Ver Similares
-            </Link>
-          </div>
-        )}
+        {/* Banner de doble conversión cuando la propiedad está vendida, alquilada o reservada */}
+        {closureCapture && (
+          <div className="mb-6 p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-[#2D0B28] via-[#4A1142] to-[#23071F] text-white border border-[#FFB800]/35 shadow-xl">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+              <div className="space-y-2 max-w-2xl">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="px-3 py-1 rounded-full bg-[#E85D04] text-white font-black text-[11px] uppercase tracking-wider shadow-xs">
+                    Propiedad {closureCapture.statusAdjective}
+                  </span>
+                  <span className="px-3 py-1 rounded-full bg-white/10 border border-white/20 text-[#FFD166] font-bold text-[11px]">
+                    Operación Concretada • Alta Demanda
+                  </span>
+                </div>
+                <h2 className="text-lg sm:text-xl font-black leading-snug">
+                  {closureCapture.ownerHeadline}
+                </h2>
+                <p className="text-xs sm:text-sm text-purple-100/90 font-medium leading-relaxed">
+                  {closureCapture.ownerBody}
+                </p>
+              </div>
 
-        {isReserved && (
-          <div className="mb-6 p-4 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center space-x-3">
-            <span className="p-2 rounded-xl bg-[#5E1754] text-white font-black text-xs uppercase">
-              Reservada
-            </span>
-            <p className="text-xs sm:text-sm font-bold text-purple-900">
-              Esta propiedad se encuentra actualmente en proceso de reserva. Consultá por propiedades similares.
-            </p>
+              <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5 flex-shrink-0">
+                <a
+                  href={ownerClosureWaUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 bg-[#E85D04] hover:bg-[#FF6B00] text-white text-xs sm:text-sm font-black px-4 py-3 rounded-2xl shadow-lg shadow-orange-950/30 transition-all"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>{closureCapture.ownerCtaLabel}</span>
+                </a>
+                <Link
+                  href={closureCapture.ownerLandingHref}
+                  className="inline-flex items-center justify-center bg-white/10 hover:bg-white/20 border border-white/25 text-white text-xs font-extrabold px-4 py-3 rounded-2xl transition-all"
+                >
+                  {closureCapture.ownerLandingLabel}
+                </Link>
+                <Link
+                  href={getPillarPageForProperty(property).href}
+                  className="inline-flex items-center justify-center bg-white text-[#5E1754] hover:bg-amber-50 text-xs font-black px-4 py-3 rounded-2xl transition-all"
+                >
+                  Ver disponibles similares
+                </Link>
+              </div>
+            </div>
           </div>
         )}
 

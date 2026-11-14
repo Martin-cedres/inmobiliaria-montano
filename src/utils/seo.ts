@@ -1,6 +1,10 @@
 import { Property } from '@/types/property';
 import { Metadata } from 'next';
 import { buildOrganizationReviewsAndDemandsSchema } from '@/data/reviewsAndDemands';
+import {
+  buildClosureSocialCaptureCopy,
+  isClosedOrReservedStatus,
+} from '@/components/admin/flyer-templates/closurePresets';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
 
@@ -947,8 +951,23 @@ export function generateSiteGraphSchema() {
 export function generatePropertyMetadata(property: Property): Metadata {
   const mainImage = property.images?.find((img) => img.isMain) || property.images?.[0];
   const rawImg = mainImage?.webpUrl || mainImage?.blobUrl || '/logo.png';
-  const imageUrl = rawImg.startsWith('http') ? rawImg : `${BASE_URL}${rawImg}`;
+  const fallbackPhotoUrl = rawImg.startsWith('http') ? rawImg : `${BASE_URL}${rawImg}`;
   const canonicalUrl = `${BASE_URL}/propiedad/${property.slug}`;
+  const isClosedOrReserved = isClosedOrReservedStatus(property.status);
+  const closureCapture = isClosedOrReserved
+    ? buildClosureSocialCaptureCopy(property, BASE_URL)
+    : null;
+  const ogVersion = encodeURIComponent(property.updatedAt || property.status || '1');
+  const ogImageUrl = isClosedOrReserved
+    ? `${BASE_URL}/api/og/propiedad/${property.slug}?estado=${property.status}&v=${ogVersion}`
+    : fallbackPhotoUrl;
+  const ogImageType = isClosedOrReserved
+    ? 'image/png'
+    : fallbackPhotoUrl.endsWith('.webp')
+    ? 'image/webp'
+    : fallbackPhotoUrl.endsWith('.png')
+    ? 'image/png'
+    : 'image/jpeg';
 
   const statusPrefix =
     property.status === 'reservado'
@@ -962,7 +981,7 @@ export function generatePropertyMetadata(property: Property): Metadata {
   const rawBaseTitle = property.seoTitle || generateSmartSeoTitle(property);
   const cleanBaseTitle = cleanTitleForMetadata(rawBaseTitle);
   const titleStr = statusPrefix ? `${statusPrefix}${cleanBaseTitle}` : cleanBaseTitle;
-  const fullTitleWithBrand = `${titleStr} | Inmobiliaria Montaño`;
+  const fullTitleWithBrand = closureCapture ? closureCapture.ogTitle : `${titleStr} | Inmobiliaria Montaño`;
 
   const descPrefix =
     property.status === 'reservado'
@@ -973,6 +992,7 @@ export function generatePropertyMetadata(property: Property): Metadata {
       ? 'Propiedad ya alquilada. '
       : '';
   const descriptionStr = `${descPrefix}${property.seoDescription || generateSmartSeoDescription(property)}`;
+  const socialDescription = closureCapture ? closureCapture.ogDescription : descriptionStr;
 
   const focusKeys = property.focusKeywords
     ? property.focusKeywords.split(',').map((k) => k.trim()).filter(Boolean)
@@ -1014,17 +1034,17 @@ export function generatePropertyMetadata(property: Property): Metadata {
     },
     openGraph: {
       title: fullTitleWithBrand,
-      description: descriptionStr,
+      description: socialDescription,
       url: canonicalUrl,
       siteName: 'Inmobiliaria Montaño',
       images: [
         {
-          url: imageUrl,
-          secureUrl: imageUrl,
+          url: ogImageUrl,
+          secureUrl: ogImageUrl,
           width: 1200,
           height: 630,
           alt: `${statusPrefix}${mainImage?.altText || property.title}`,
-          type: imageUrl.endsWith('.webp') ? 'image/webp' : imageUrl.endsWith('.png') ? 'image/png' : 'image/jpeg',
+          type: ogImageType,
         },
       ],
       locale: 'es_UY',
@@ -1033,8 +1053,8 @@ export function generatePropertyMetadata(property: Property): Metadata {
     twitter: {
       card: 'summary_large_image',
       title: fullTitleWithBrand,
-      description: descriptionStr,
-      images: [imageUrl],
+      description: socialDescription,
+      images: [ogImageUrl],
     },
     other: {
       'geo.region': 'UY-SJ',
