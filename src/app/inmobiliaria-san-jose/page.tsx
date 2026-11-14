@@ -9,23 +9,20 @@ import { PropertyCard } from '@/components/PropertyCard';
 import { FaqAccordion, FaqItem } from '@/components/ui/FaqAccordion';
 import { DepartmentInterlinking } from '@/components/seo/DepartmentInterlinking';
 import { AiOverviewMagnetSection } from '@/components/seo/AiOverviewMagnetSection';
+import { ActiveDemandBoard } from '@/components/ActiveDemandBoard';
+import { GoogleReviewsSection } from '@/components/GoogleReviewsSection';
 import { getAllProperties } from '@/lib/propertiesStore';
 import { SAN_JOSE_LOCATIONS } from '@/data/locations';
 import { generateSiteGraphSchema } from '@/utils/seo';
 import { buildGeneralWhatsAppLink } from '@/utils/whatsapp';
 import {
-  Building2,
   MapPin,
   ShieldCheck,
   Award,
   CheckCircle2,
-  Calculator,
   Compass,
   ArrowRight,
   PhoneCall,
-  UserCheck,
-  Landmark,
-  FileCheck,
   ExternalLink,
 } from 'lucide-react';
 
@@ -79,8 +76,8 @@ export const metadata: Metadata = {
   other: {
     'geo.region': 'UY-SJ',
     'geo.placename': 'San José, Uruguay',
-    'geo.position': '-34.3375;-56.7136',
-    'ICBM': '-34.3375, -56.7136',
+    'geo.position': '-34.3397;-56.7136',
+    'ICBM': '-34.3397, -56.7136',
   },
 };
 
@@ -211,7 +208,7 @@ export default async function InmobiliariaSanJosePage() {
                 <p className="text-xs font-bold text-orange-400">Director & Asesor Inmobiliario</p>
               </div>
               <p className="text-xs text-slate-300 italic leading-relaxed">
-                "Defendemos el verdadero valor de tu propiedad con tasaciones honestas, contratos transparentes y atención personalizada en cada rincón del departamento."
+                &ldquo;Defendemos el verdadero valor de tu propiedad con tasaciones honestas, contratos transparentes y atención personalizada en cada rincón del departamento.&rdquo;
               </p>
               <div className="pt-2 border-t border-white/15 flex items-center justify-center space-x-2 text-xs text-slate-300 font-bold">
                 <MapPin className="w-3.5 h-3.5 text-[#E85D04]" />
@@ -378,6 +375,12 @@ export default async function InmobiliariaSanJosePage() {
 
       {/* Bloque Institucional y Especialidad para Usuarios y Google AI Overviews */}
       <AiOverviewMagnetSection properties={allProperties} showHomeCatalogLink={true} />
+
+      {/* Cartelera de Demandas Activas en Todo el Departamento */}
+      <ActiveDemandBoard defaultFilter="todos" />
+
+      {/* Reseñas Verificadas de Google Maps */}
+      <GoogleReviewsSection />
 
       {/* Preguntas Frecuentes */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full space-y-8">

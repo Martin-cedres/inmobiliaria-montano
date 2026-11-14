@@ -1,6 +1,7 @@
-export type FlyerTemplateId = 'classic' | 'chacra' | 'modular';
+export type FlyerTemplateId = 'classic' | 'chacra' | 'modular' | 'social_proof';
 export type FlyerAspectRatio = '1:1' | '9:16' | '4:5';
 export type FlyerLayoutMode = 'single' | 'collage';
+export type FlyerClosureOutcome = 'VENDIÓ' | 'ALQUILÓ' | 'RESERVÓ';
 
 export interface FlyerAmenityItem {
   id: string;
@@ -43,4 +44,10 @@ export interface FlyerData {
   showQrCode: boolean;
   qrCodeDataUrl?: string;
   coBrandingTitle?: string; // "INGENIERÍA MODULAR"
+  codeRef?: string;
+  closureOutcome?: FlyerClosureOutcome;
+  closurePropertyTitle?: string;
+  closureProofText?: string;
+  closureDemandText?: string;
+  closureCtaTitle?: string;
 }

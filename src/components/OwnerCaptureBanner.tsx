@@ -41,7 +41,7 @@ export const OwnerCaptureBanner: React.FC<OwnerCaptureBannerProps> = ({
           <div className="relative w-44 sm:w-52 aspect-square rounded-2xl overflow-hidden shadow-2xl border-2 border-white/20 flex-shrink-0">
             <Image
               src="/images/se-precisan-propiedades-1x1.webp"
-              alt="Se precisan propiedades para la venta en San José — Inmobiliaria Montaño"
+              alt="Se precisan propiedades para venta y alquiler en San José — Inmobiliaria Montaño"
               fill
               className="object-cover"
               sizes="(max-width: 640px) 176px, 208px"
@@ -53,15 +53,15 @@ export const OwnerCaptureBanner: React.FC<OwnerCaptureBannerProps> = ({
           <div className="space-y-3.5 text-left flex-grow">
             <div className="inline-flex items-center space-x-2 bg-amber-400/15 border border-amber-400/30 text-amber-300 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider">
               <MapPin className="w-3.5 h-3.5" />
-              <span>Clientes Concretos en Espera</span>
+              <span>Demanda Activa • Venta y Alquiler</span>
             </div>
 
             <h3 className="text-xl sm:text-2xl font-black text-white leading-tight">
-              ¿Tenés una propiedad para vender en <span className="text-amber-300">{currentCity}</span>?
+              ¿Tenés una propiedad para vender o alquilar en <span className="text-amber-300">{currentCity}</span>?
             </h3>
 
             <p className="text-xs sm:text-sm text-purple-100 leading-relaxed max-w-xl">
-              Compradores calificados están buscando activamente <strong>Casas, Terrenos, Solares y Chacras</strong> en esta zona. Tasamos profesionalmente y publicamos tu inmueble con máxima difusión.
+              Contamos con compradores con <strong>crédito BHU/BROU o contado</strong> e inquilinos con garantías seguras (<strong>ANDA, CGN, Porto y Convenio Círculo Policial</strong>). Asesoramiento notarial con escribana de confianza o tu propio escribano.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-xs text-purple-200">
@@ -71,7 +71,7 @@ export const OwnerCaptureBanner: React.FC<OwnerCaptureBannerProps> = ({
               </div>
               <div className="flex items-center space-x-2">
                 <ShieldCheck className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                <span>Comisión solo contra venta firmada</span>
+                <span>Respaldo notarial flexible</span>
               </div>
             </div>
 
@@ -82,8 +82,17 @@ export const OwnerCaptureBanner: React.FC<OwnerCaptureBannerProps> = ({
                 prefetch={false}
                 className="inline-flex items-center space-x-2 bg-[#C2410C] hover:bg-[#9A3412] active:scale-95 text-white font-extrabold text-xs sm:text-sm px-5 py-3 rounded-xl shadow-lg hover:shadow-orange-500/25 transition-all"
               >
-                <span>Conocer Cómo Vender mi Propiedad</span>
+                <span>Quiero Vender</span>
                 <ArrowRight className="w-4 h-4" />
+              </Link>
+
+              <Link
+                href="/alquilar-mi-propiedad-san-jose"
+                prefetch={false}
+                className="inline-flex items-center space-x-2 bg-white/15 hover:bg-white/25 active:scale-95 text-white border border-white/25 font-extrabold text-xs sm:text-sm px-4 py-3 rounded-xl transition-all"
+              >
+                <span>Quiero Alquilar</span>
+                <ArrowRight className="w-4 h-4 text-amber-300" />
               </Link>
 
               <a
@@ -94,7 +103,7 @@ export const OwnerCaptureBanner: React.FC<OwnerCaptureBannerProps> = ({
                 className="inline-flex items-center space-x-2 bg-white/10 hover:bg-white/20 active:scale-95 text-white border border-white/20 font-bold text-xs sm:text-sm px-4 py-3 rounded-xl transition-all"
               >
                 <PhoneCall className="w-4 h-4 text-amber-300" />
-                <span>Hablar con Daniel Montaño</span>
+                <span>Hablar con Daniel</span>
               </a>
             </div>
           </div>
@@ -123,11 +132,11 @@ export const OwnerCaptureBanner: React.FC<OwnerCaptureBannerProps> = ({
 
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
               ¡Se precisan propiedades <br className="hidden sm:inline" />
-              <span className="text-amber-300">para la venta</span> en San José!
+              <span className="text-amber-300">para Venta y Alquiler</span> en San José!
             </h2>
 
             <p className="text-sm sm:text-base text-purple-100 font-normal leading-relaxed max-w-2xl">
-              Contamos con una cartera activa de compradores concretos esperando adquirir <strong>casas, solares, terrenos y chacras</strong> en San José de Mayo y zonas aledañas.
+              Contamos con demanda real de compradores con <strong>crédito BHU/BROU o contado</strong> e inquilinos calificados con garantías seguras (<strong>ANDA, CGN, Porto y Convenio Círculo Policial</strong>) buscando casas, apartamentos, terrenos, chacras y locales.
             </p>
 
             {/* Micro-puntos de valor */}
@@ -135,25 +144,25 @@ export const OwnerCaptureBanner: React.FC<OwnerCaptureBannerProps> = ({
               <div className="flex items-start space-x-2.5">
                 <Home className="w-4 h-4 text-amber-300 mt-0.5 flex-shrink-0" />
                 <span>
-                  <strong>Casas y Apartamentos:</strong> Alta demanda en Centro, Colón y Molino.
+                  <strong>Venta y Alquiler:</strong> Casas, aptos, locales y depósitos con alta rotación.
                 </span>
               </div>
               <div className="flex items-start space-x-2.5">
                 <Trees className="w-4 h-4 text-amber-300 mt-0.5 flex-shrink-0" />
                 <span>
-                  <strong>Terrenos y Chacras:</strong> Búsqueda activa de solares y fracciones.
+                  <strong>Terrenos y Chacras:</strong> Búsqueda activa de solares y fracciones en San José.
                 </span>
               </div>
               <div className="flex items-start space-x-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                 <span>
-                  <strong>Tasación profesional:</strong> Fijamos el precio real de mercado.
+                  <strong>Tasación profesional:</strong> Fijamos el valor real de mercado en 24-48 hs.
                 </span>
               </div>
               <div className="flex items-start space-x-2.5">
                 <ShieldCheck className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                 <span>
-                  <strong>Seguridad notarial:</strong> Blindaje legal con Daniel Montaño.
+                  <strong>Asesoramiento notarial flexible:</strong> Con nuestra escribana de confianza o con tu propio escribano.
                 </span>
               </div>
             </div>
@@ -163,10 +172,19 @@ export const OwnerCaptureBanner: React.FC<OwnerCaptureBannerProps> = ({
               <Link
                 href="/vender-propiedad-san-jose"
                 prefetch={false}
-                className="inline-flex items-center space-x-2.5 bg-[#C2410C] hover:bg-[#9A3412] active:scale-95 text-white font-black text-xs sm:text-sm px-6 py-3.5 rounded-xl shadow-lg hover:shadow-orange-500/30 transition-all cursor-pointer"
+                className="inline-flex items-center space-x-2 bg-[#C2410C] hover:bg-[#9A3412] active:scale-95 text-white font-black text-xs sm:text-sm px-5 py-3.5 rounded-xl shadow-lg hover:shadow-orange-500/30 transition-all cursor-pointer"
               >
-                <span>Publicar mi Inmueble con Montaño</span>
+                <span>Quiero Vender mi Propiedad</span>
                 <ArrowRight className="w-4 h-4" />
+              </Link>
+
+              <Link
+                href="/alquilar-mi-propiedad-san-jose"
+                prefetch={false}
+                className="inline-flex items-center space-x-2 bg-white/15 hover:bg-white/25 active:scale-95 text-white border border-white/25 font-black text-xs sm:text-sm px-5 py-3.5 rounded-xl transition-all cursor-pointer"
+              >
+                <span>Quiero Alquilar / Administrar</span>
+                <ArrowRight className="w-4 h-4 text-amber-300" />
               </Link>
 
               <a
@@ -174,10 +192,10 @@ export const OwnerCaptureBanner: React.FC<OwnerCaptureBannerProps> = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={handleWhatsappClick}
-                className="inline-flex items-center space-x-2 bg-white/10 hover:bg-white/20 active:scale-95 text-white border border-white/25 font-bold text-xs sm:text-sm px-5 py-3.5 rounded-xl transition-all"
+                className="inline-flex items-center space-x-2 bg-white/10 hover:bg-white/20 active:scale-95 text-white border border-white/20 font-bold text-xs sm:text-sm px-4 py-3.5 rounded-xl transition-all"
               >
                 <PhoneCall className="w-4 h-4 text-amber-300" />
-                <span>Consultar por WhatsApp</span>
+                <span>WhatsApp Directo</span>
               </a>
             </div>
           </div>
@@ -187,7 +205,7 @@ export const OwnerCaptureBanner: React.FC<OwnerCaptureBannerProps> = ({
             <div className="relative w-full max-w-md sm:max-w-lg aspect-[4/3] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20 transform hover:scale-[1.02] transition-transform duration-300">
               <Image
                 src="/images/se-precisan-propiedades-4x3.webp"
-                alt="¡Se precisan propiedades para la venta! Clientes concretos esperando — Inmobiliaria Montaño"
+                alt="¡Se precisan propiedades para venta y alquiler! — Inmobiliaria Montaño"
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 450px"

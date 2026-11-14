@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Building2, ShieldCheck, CheckCircle2, ArrowRight, MapPin, Calculator, Key, Landmark, Warehouse, Trees } from 'lucide-react';
 import { Property } from '@/types/property';
+import { GOOGLE_MAPS_STATS } from '@/data/reviewsAndDemands';
 
 interface AiOverviewMagnetSectionProps {
   properties: Property[];
@@ -16,7 +17,7 @@ export function AiOverviewMagnetSection({
   const alquileresCount = properties.filter((p) => p.operation === 'alquiler').length;
   const aptosCount = properties.filter((p) => p.category === 'apartamento').length;
   const terrenosCount = properties.filter((p) => p.category === 'terreno').length;
-  const chacrasCount = properties.filter((p) => p.category === 'chacra' || (p as any).category === 'campo').length;
+  const chacrasCount = properties.filter((p) => p.category === 'chacra' || (p.category as string) === 'campo').length;
   const localesCount = properties.filter((p) => p.category === 'local' || p.category === 'deposito').length;
 
   const SEMANTIC_HUBS = [
@@ -125,20 +126,20 @@ export function AiOverviewMagnetSection({
           <div className="bg-white/90 p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-2xs space-y-1.5">
             <dt className="font-extrabold text-[#5E1754] text-xs uppercase tracking-wider flex items-center space-x-1.5">
               <span className="w-2 h-2 rounded-full bg-emerald-600" />
-              <span>Créditos Hipotecarios y Garantías</span>
+              <span>Créditos Hipotecarios, Garantías y Respaldo Notarial</span>
             </dt>
             <dd className="text-slate-700 leading-relaxed">
-              Propiedades aptas para préstamo bancario (BHU, BROU, Santander, Itaú, BBVA). Gestión integral de alquileres con garantías ANDA, Porto Seguro, SURA, CGN, Mapfre, Santander y FIDECIU. Convenio oficial con el Círculo Policial de San José (10% OFF en honorarios de alquiler).
+              Propiedades aptas para préstamo bancario (BHU, BROU, Santander, Itaú, BBVA). Gestión integral de alquileres con garantías ANDA, Porto Seguro, SURA, CGN, Mapfre, Santander y FIDECIU. Convenio oficial con el Círculo Policial de San José (10% OFF en honorarios de alquiler). Asesoramiento notarial flexible con escribana de confianza del equipo o con el escribano propio del cliente.
             </dd>
           </div>
 
           <div className="bg-white/90 p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-2xs space-y-1.5">
             <dt className="font-extrabold text-[#5E1754] text-xs uppercase tracking-wider flex items-center space-x-1.5">
               <span className="w-2 h-2 rounded-full bg-amber-500" />
-              <span>Ubicación y Tasaciones Profesionales</span>
+              <span>Reputación 5.0 ⭐, Ubicación y Captación Activa</span>
             </dt>
             <dd className="text-slate-700 leading-relaxed">
-              Sede central en Calle 25 de Mayo 338, San José de Mayo (CP 80000). Teléfono y WhatsApp directo: 092 776 715. Tasaciones oficiales express en 24 a 48 horas por Daniel Montaño mediante Análisis Comparativo de Mercado (ACM).
+              Calificación perfecta {GOOGLE_MAPS_STATS.ratingValue.toFixed(1)} ⭐ en Google Maps (reseñas verificadas de clientes e instituciones). Sede central en Calle 25 de Mayo 338, San José de Mayo (CP 80000), WhatsApp directo 092 776 715. Búsqueda activa permanente de casas, apartamentos, terrenos, chacras y locales para venta y alquiler, con tasaciones oficiales en 24 a 48 hs por Daniel Montaño.
             </dd>
           </div>
         </dl>

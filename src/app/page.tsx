@@ -9,6 +9,7 @@ import { Footer } from '@/components/Footer';
 import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
 import { RealEstateAgentJsonLd } from '@/components/seo/RealEstateAgentJsonLd';
 import { AiOverviewMagnetSection } from '@/components/seo/AiOverviewMagnetSection';
+import { GoogleReviewsSection } from '@/components/GoogleReviewsSection';
 import { getCachedProperties } from '@/lib/propertiesStore';
 
 export const metadata: Metadata = {
@@ -51,7 +52,7 @@ export default async function Home() {
       position: idx + 1,
       name: prop.title,
       url: `${BASE_URL}/propiedad/${prop.slug}`,
-      image: (prop.images?.[0] as any)?.webpUrl || (prop.images?.[0] as any)?.blobUrl || `${BASE_URL}/logo-header.webp`,
+      image: prop.images?.[0]?.webpUrl || prop.images?.[0]?.blobUrl || `${BASE_URL}/logo-header.webp`,
     })),
   };
 
@@ -75,6 +76,9 @@ export default async function Home() {
 
       {/* 4. Bloque Institucional y Especialidad para Usuarios y Google AI Overviews */}
       <AiOverviewMagnetSection properties={initialProperties} />
+
+      {/* 4.5. Prueba Social Verificada en Google Maps (Modo Ejecutivo Compacto) */}
+      <GoogleReviewsSection compact />
 
       {/* 5. Banner de Alto Impacto para Propietarios (Flyer Oficial Montaño) */}
       <OwnerCaptureBanner variant="home" />

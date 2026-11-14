@@ -4,9 +4,21 @@ import React, { useState, useRef, useEffect } from 'react';
 import * as htmlToImage from 'html-to-image';
 import QRCode from 'qrcode';
 import { Property } from '@/types/property';
-import { FlyerData, FlyerTemplateId, FlyerAmenityItem, FlyerAspectRatio, FlyerLayoutMode } from './flyer-templates/flyerTypes';
-import { FlyerCanvasResponsive } from './flyer-templates/FlyerCanvasResponsive';
 import {
+  FlyerData,
+  FlyerAmenityItem,
+  FlyerAspectRatio,
+  FlyerClosureOutcome,
+} from './flyer-templates/flyerTypes';
+import { FlyerCanvasResponsive } from './flyer-templates/FlyerCanvasResponsive';
+import { FlyerCanvasSocialProof } from './flyer-templates/FlyerCanvasSocialProof';
+import {
+  buildDefaultClosureCopy,
+  isClosedOrReservedStatus,
+  SOCIAL_PROOF_PRESETS,
+} from './flyer-templates/closurePresets';
+import {
+  Award,
   Download,
   Copy,
   X,
@@ -20,12 +32,10 @@ import {
   RefreshCw,
   Check,
   QrCode,
-  Maximize2,
   Smartphone,
   Square,
   RectangleVertical,
   Layers,
-  PhoneCall,
 } from 'lucide-react';
 
 interface FlyerGeneratorModalProps {
@@ -42,18 +52,31 @@ const PRESET_SLOGANS = [
   { top: 'MODERNA Y FUNCIONAL', bottom: 'LISTA PARA INGRESAR' },
 ];
 
+function getZoomForAspectRatio(ratio: FlyerAspectRatio): number {
+  if (ratio === '9:16') return 0.48;
+  if (ratio === '4:5') return 0.58;
+  return 0.66;
+}
+
 export const FlyerGeneratorModal: React.FC<FlyerGeneratorModalProps> = ({
   property,
   isOpen,
   onClose,
 }) => {
+  if (!isOpen) return null;
+  return <FlyerGeneratorModalContent key={property.id} property={property} onClose={onClose} />;
+};
+
+const FlyerGeneratorModalContent: React.FC<{
+  property: Property;
+  onClose: () => void;
+}> = ({ property, onClose }) => {
   const previewRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<'format' | 'texts' | 'amenities' | 'photo' | 'conversion'>('format');
   const [isExporting, setIsExporting] = useState(false);
   const [exportSuccess, setExportSuccess] = useState(false);
   const [copiedSuccess, setCopiedSuccess] = useState(false);
   const [customAmenityText, setCustomAmenityText] = useState('');
-  const [previewZoom, setPreviewZoom] = useState<number>(0.65);
 
   // Extract initial flyer data from Property
   const buildInitialData = (): FlyerData => {
@@ -128,14 +151,17 @@ export const FlyerGeneratorModal: React.FC<FlyerGeneratorModalProps> = ({
       ? 'LOCAL COMERCIAL CÉNTRICO'
       : 'CASA RESIDENCIAL';
 
+    const autoClosure = isClosedOrReservedStatus(property.status);
+    const closureDefaults = buildDefaultClosureCopy(property);
+
     return {
-      templateId: 'classic',
-      aspectRatio: '1:1',
+      templateId: autoClosure ? 'social_proof' : 'classic',
+      aspectRatio: autoClosure ? '9:16' : '1:1',
       layoutMode: 'single',
       mainHeadline: headline,
-      subHeadline: defaultSubHeadline,
+      subHeadline: autoClosure ? closureDefaults.categoryLabel : defaultSubHeadline,
       locationBadgeTitle: (property.location?.neighborhood || property.location?.city || 'SAN JOSÉ').toUpperCase(),
-      locationBadgeSubtitle: `${property.location?.neighborhood ? `${property.location.neighborhood}, ` : ''}${property.location?.city || 'San José de Mayo'}`,
+      locationBadgeSubtitle: closureDefaults.zoneLabel,
       pricePrefix: 'VALOR DE PUBLICACIÓN',
       priceAmount: priceText,
       sloganTop: PRESET_SLOGANS[0].top,
@@ -154,15 +180,29 @@ export const FlyerGeneratorModal: React.FC<FlyerGeneratorModalProps> = ({
       bulletPoints: defaultBullets,
       chacraBadges: [],
       showWebsiteInFooter: true,
-      showQrCode: true,
+      showQrCode: !autoClosure,
+      codeRef: property.codeRef,
+      closureOutcome: closureDefaults.outcome,
+      closurePropertyTitle: closureDefaults.propertyTitle,
+      closureProofText: closureDefaults.proofText,
+      closureDemandText: closureDefaults.demandText,
+      closureCtaTitle: closureDefaults.ctaTitle,
     };
   };
 
-  const [flyerData, setFlyerData] = useState<FlyerData>(buildInitialData());
+  const [flyerData, setFlyerData] = useState<FlyerData>(() => buildInitialData());
+  const [previewZoom, setPreviewZoom] = useState<number>(() =>
+    getZoomForAspectRatio(flyerData.aspectRatio)
+  );
+
+  const handleAspectRatioChange = (ratio: FlyerAspectRatio) => {
+    setFlyerData((p) => ({ ...p, aspectRatio: ratio }));
+    setPreviewZoom(getZoomForAspectRatio(ratio));
+  };
 
   // Generar QR en base64 de la URL canónica
   useEffect(() => {
-    if (!isOpen) return;
+    let active = true;
     const generateQr = async () => {
       try {
         const canonicalUrl = `https://www.inmobiliariamontano.uy/propiedad/${property.slug}`;
@@ -174,35 +214,18 @@ export const FlyerGeneratorModal: React.FC<FlyerGeneratorModalProps> = ({
             light: '#FFFFFF',
           },
         });
-        setFlyerData((p) => ({ ...p, qrCodeDataUrl: qrDataUrl }));
+        if (active) {
+          setFlyerData((p) => ({ ...p, qrCodeDataUrl: qrDataUrl }));
+        }
       } catch (err) {
         console.error('Error generando QR code:', err);
       }
     };
     generateQr();
-  }, [isOpen, property.slug]);
-
-  // Actualizar datos iniciales al abrir
-  useEffect(() => {
-    if (isOpen) {
-      setFlyerData(buildInitialData());
-      setExportSuccess(false);
-      setCopiedSuccess(false);
-    }
-  }, [isOpen, property]);
-
-  // Ajustar zoom inicial según formato
-  useEffect(() => {
-    if (flyerData.aspectRatio === '9:16') {
-      setPreviewZoom(0.48);
-    } else if (flyerData.aspectRatio === '4:5') {
-      setPreviewZoom(0.58);
-    } else {
-      setPreviewZoom(0.66);
-    }
-  }, [flyerData.aspectRatio]);
-
-  if (!isOpen) return null;
+    return () => {
+      active = false;
+    };
+  }, [property.slug]);
 
   // Exportar a JPG en Alta Resolución (2.5x)
   const handleDownloadJpg = async () => {
@@ -213,15 +236,21 @@ export const FlyerGeneratorModal: React.FC<FlyerGeneratorModalProps> = ({
       const canvasNode = previewRef.current.firstElementChild as HTMLElement;
       if (!canvasNode) throw new Error('No se encontró el elemento lienzo');
 
+      const exportBg = flyerData.templateId === 'social_proof' ? '#2D0B28' : '#FAF9F6';
+
       const dataUrl = await htmlToImage.toJpeg(canvasNode, {
         quality: 0.96,
         pixelRatio: 2.5,
-        backgroundColor: '#FAF9F6',
+        backgroundColor: exportBg,
         cacheBust: true,
       });
 
       const link = document.createElement('a');
-      const filename = `ficha-${flyerData.aspectRatio.replace(':', 'x')}-${property.codeRef || 'inmobiliaria-montano'}-${Date.now()}.jpg`;
+      const prefix =
+        flyerData.templateId === 'social_proof'
+          ? `cierre-${(flyerData.closureOutcome || 'exitos').toLowerCase()}`
+          : 'ficha';
+      const filename = `${prefix}-${flyerData.aspectRatio.replace(':', 'x')}-${property.codeRef || 'inmobiliaria-montano'}-${Date.now()}.jpg`;
       link.download = filename;
       link.href = dataUrl;
       link.click();
@@ -245,9 +274,11 @@ export const FlyerGeneratorModal: React.FC<FlyerGeneratorModalProps> = ({
       const canvasNode = previewRef.current.firstElementChild as HTMLElement;
       if (!canvasNode) throw new Error('No se encontró el elemento lienzo');
 
+      const exportBg = flyerData.templateId === 'social_proof' ? '#2D0B28' : '#FAF9F6';
+
       const blob = await htmlToImage.toBlob(canvasNode, {
         pixelRatio: 2,
-        backgroundColor: '#FAF9F6',
+        backgroundColor: exportBg,
       });
 
       if (blob && navigator.clipboard && window.ClipboardItem) {
@@ -406,14 +437,72 @@ export const FlyerGeneratorModal: React.FC<FlyerGeneratorModalProps> = ({
               {/* PESTAÑA 1: FORMATO & ASPECT RATIO */}
               {activeTab === 'format' && (
                 <div className="space-y-4">
-                  {/* SELECTOR DE 3 FORMATOS ESTÁNDAR */}
+                  {/* SELECTOR DE PLANTILLA */}
                   <div className="space-y-2">
                     <span className="text-[11px] font-black text-orange-400 uppercase tracking-wider block">
-                      📐 1. Formato según Destino
+                      🎨 1. Estilo de Tarjeta
+                    </span>
+                    <div className="grid grid-cols-2 gap-2">
+                      <button
+                        onClick={() =>
+                          setFlyerData((p) => ({
+                            ...p,
+                            templateId: 'classic',
+                          }))
+                        }
+                        className={`p-3 rounded-xl border text-left flex items-center gap-2.5 transition-all cursor-pointer ${
+                          flyerData.templateId !== 'social_proof'
+                            ? 'bg-[#E85D04]/20 border-[#E85D04] text-white shadow-md'
+                            : 'bg-[#18112F] border-slate-800 text-slate-400 hover:text-slate-200'
+                        }`}
+                      >
+                        <div className="w-8 h-8 rounded-lg bg-black/40 flex items-center justify-center shrink-0">
+                          <Layout size={16} className={flyerData.templateId !== 'social_proof' ? 'text-[#E85D04]' : 'text-slate-500'} />
+                        </div>
+                        <div>
+                          <span className="text-xs font-black block">Ficha Comercial</span>
+                          <span className="text-[10px] text-slate-400">Venta / Alquiler con precio</span>
+                        </div>
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          const nextRatio =
+                            flyerData.aspectRatio === '1:1' ? '9:16' : flyerData.aspectRatio;
+                          setFlyerData((p) => ({
+                            ...p,
+                            templateId: 'social_proof',
+                            layoutMode: 'single',
+                            showQrCode: false,
+                            aspectRatio: nextRatio,
+                          }));
+                          setPreviewZoom(getZoomForAspectRatio(nextRatio));
+                        }}
+                        className={`p-3 rounded-xl border text-left flex items-center gap-2.5 transition-all cursor-pointer ${
+                          flyerData.templateId === 'social_proof'
+                            ? 'bg-[#5E1754]/50 border-amber-400 text-white shadow-md'
+                            : 'bg-[#18112F] border-slate-800 text-slate-400 hover:text-slate-200'
+                        }`}
+                      >
+                        <div className="w-8 h-8 rounded-lg bg-black/40 flex items-center justify-center shrink-0">
+                          <Award size={16} className={flyerData.templateId === 'social_proof' ? 'text-amber-400' : 'text-slate-500'} />
+                        </div>
+                        <div>
+                          <span className="text-xs font-black block">Cierre / Prueba Social</span>
+                          <span className="text-[10px] text-slate-400">VENDIÓ • ALQUILÓ • RESERVÓ</span>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* SELECTOR DE 3 FORMATOS ESTÁNDAR */}
+                  <div className="space-y-2 pt-2 border-t border-orange-500/20">
+                    <span className="text-[11px] font-black text-orange-400 uppercase tracking-wider block">
+                      📐 2. Formato según Destino
                     </span>
                     <div className="grid grid-cols-3 gap-2">
                       <button
-                        onClick={() => setFlyerData((p) => ({ ...p, aspectRatio: '1:1' }))}
+                        onClick={() => handleAspectRatioChange('1:1')}
                         className={`p-3 rounded-xl border text-center flex flex-col items-center gap-1.5 transition-all cursor-pointer ${
                           flyerData.aspectRatio === '1:1'
                             ? 'bg-[#E85D04]/20 border-[#E85D04] text-white shadow-md'
@@ -426,7 +515,7 @@ export const FlyerGeneratorModal: React.FC<FlyerGeneratorModalProps> = ({
                       </button>
 
                       <button
-                        onClick={() => setFlyerData((p) => ({ ...p, aspectRatio: '9:16' }))}
+                        onClick={() => handleAspectRatioChange('9:16')}
                         className={`p-3 rounded-xl border text-center flex flex-col items-center gap-1.5 transition-all cursor-pointer ${
                           flyerData.aspectRatio === '9:16'
                             ? 'bg-[#E85D04]/20 border-[#E85D04] text-white shadow-md'
@@ -439,7 +528,7 @@ export const FlyerGeneratorModal: React.FC<FlyerGeneratorModalProps> = ({
                       </button>
 
                       <button
-                        onClick={() => setFlyerData((p) => ({ ...p, aspectRatio: '4:5' }))}
+                        onClick={() => handleAspectRatioChange('4:5')}
                         className={`p-3 rounded-xl border text-center flex flex-col items-center gap-1.5 transition-all cursor-pointer ${
                           flyerData.aspectRatio === '4:5'
                             ? 'bg-[#E85D04]/20 border-[#E85D04] text-white shadow-md'
@@ -454,9 +543,10 @@ export const FlyerGeneratorModal: React.FC<FlyerGeneratorModalProps> = ({
                   </div>
 
                   {/* SELECTOR DE DISPOSICIÓN: 1 FOTO VS COLLAGE */}
+                  {flyerData.templateId !== 'social_proof' && (
                   <div className="space-y-2 pt-2 border-t border-orange-500/20">
                     <span className="text-[11px] font-black text-orange-400 uppercase tracking-wider block">
-                      🍱 2. Distribución de Fotografías
+                      🍱 3. Distribución de Fotografías
                     </span>
                     <div className="grid grid-cols-2 gap-2">
                       <button
@@ -494,11 +584,144 @@ export const FlyerGeneratorModal: React.FC<FlyerGeneratorModalProps> = ({
                       </button>
                     </div>
                   </div>
+                  )}
                 </div>
               )}
 
               {/* PESTAÑA 2: TEXTOS & PRECIO */}
-              {activeTab === 'texts' && (
+              {activeTab === 'texts' && flyerData.templateId === 'social_proof' && (
+                <div className="space-y-3">
+                  {/* SELLO DIAGONAL */}
+                  <div className="bg-[#1C1438] border border-amber-400/40 p-3 rounded-xl space-y-2">
+                    <span className="text-[11px] font-black text-amber-300 uppercase tracking-wider block">
+                      🏷️ Faja Diagonal de Cierre
+                    </span>
+                    <div className="grid grid-cols-3 gap-2">
+                      {(['VENDIÓ', 'ALQUILÓ', 'RESERVÓ'] as FlyerClosureOutcome[]).map((outcomeOpt) => (
+                        <button
+                          key={outcomeOpt}
+                          type="button"
+                          onClick={() =>
+                            setFlyerData((p) => ({
+                              ...p,
+                              closureOutcome: outcomeOpt,
+                              closureCtaTitle:
+                                outcomeOpt === 'ALQUILÓ'
+                                  ? '¿Tenés una propiedad para alquilar?'
+                                  : outcomeOpt === 'VENDIÓ'
+                                  ? '¿Querés vender tu propiedad?'
+                                  : '¿Tenés una propiedad para vender o alquilar?',
+                            }))
+                          }
+                          className={`py-2 px-2 rounded-lg text-xs font-black tracking-wider transition-all cursor-pointer border ${
+                            flyerData.closureOutcome === outcomeOpt
+                              ? 'bg-[#E85D04] text-white border-amber-300 shadow'
+                              : 'bg-[#120D22] text-slate-300 border-slate-700 hover:border-slate-500'
+                          }`}
+                        >
+                          {outcomeOpt}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* PRESETS RÁPIDOS DE PRUEBA SOCIAL */}
+                  <div className="space-y-1.5">
+                    <span className="text-[10px] font-black text-orange-400 uppercase tracking-wider block">
+                      ⚡ Frases Rápidas de Prueba Social
+                    </span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {SOCIAL_PROOF_PRESETS.map((preset) => (
+                        <button
+                          key={preset.id}
+                          type="button"
+                          onClick={() =>
+                            setFlyerData((p) => ({
+                              ...p,
+                              closureOutcome: preset.outcome,
+                              closureProofText: preset.proofText,
+                              closureDemandText: preset.demandText,
+                            }))
+                          }
+                          className="text-[10px] font-bold bg-[#1F163B] hover:bg-[#5E1754] text-slate-200 px-2.5 py-1.5 rounded-lg border border-purple-400/25 cursor-pointer transition-colors"
+                        >
+                          {preset.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* TÍTULO Y UBICACIÓN */}
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-300 block mb-1">
+                      Título de Propiedad (sin precio por privacidad)
+                    </label>
+                    <input
+                      type="text"
+                      value={flyerData.closurePropertyTitle || ''}
+                      onChange={(e) => setFlyerData((p) => ({ ...p, closurePropertyTitle: e.target.value }))}
+                      className="w-full bg-[#1A1230] border border-orange-500/30 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="text-[10px] font-bold text-slate-300 block mb-1">Categoría</label>
+                      <input
+                        type="text"
+                        value={flyerData.subHeadline || ''}
+                        onChange={(e) => setFlyerData((p) => ({ ...p, subHeadline: e.target.value }))}
+                        className="w-full bg-[#1A1230] border border-orange-500/30 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[10px] font-bold text-slate-300 block mb-1">Ubicación / Barrio</label>
+                      <input
+                        type="text"
+                        value={flyerData.locationBadgeSubtitle || ''}
+                        onChange={(e) => setFlyerData((p) => ({ ...p, locationBadgeSubtitle: e.target.value }))}
+                        className="w-full bg-[#1A1230] border border-orange-500/30 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-300 block mb-1">
+                      Prueba Social (Operación Concretada)
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={flyerData.closureProofText || ''}
+                      onChange={(e) => setFlyerData((p) => ({ ...p, closureProofText: e.target.value }))}
+                      className="w-full bg-[#1A1230] border border-orange-500/30 rounded-xl px-2.5 py-1.5 text-xs text-white font-medium"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-300 block mb-1">
+                      Gancho de Demanda (Clientes en Espera)
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={flyerData.closureDemandText || ''}
+                      onChange={(e) => setFlyerData((p) => ({ ...p, closureDemandText: e.target.value }))}
+                      className="w-full bg-[#1A1230] border border-orange-500/30 rounded-xl px-2.5 py-1.5 text-xs text-white font-medium"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-300 block mb-1">Llamado a Propietarios (CTA)</label>
+                    <input
+                      type="text"
+                      value={flyerData.closureCtaTitle || ''}
+                      onChange={(e) => setFlyerData((p) => ({ ...p, closureCtaTitle: e.target.value }))}
+                      className="w-full bg-[#1A1230] border border-orange-500/30 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'texts' && flyerData.templateId !== 'social_proof' && (
                 <div className="space-y-3">
                   {/* PRECIO DESTACADO */}
                   <div className="bg-[#1C1438] border-2 border-orange-500/70 p-3 rounded-xl space-y-2">
@@ -885,7 +1108,11 @@ export const FlyerGeneratorModal: React.FC<FlyerGeneratorModalProps> = ({
               }}
             >
               <div ref={previewRef} style={{ width: canvasWidth, height: canvasHeight }}>
-                <FlyerCanvasResponsive data={flyerData} />
+                {flyerData.templateId === 'social_proof' ? (
+                  <FlyerCanvasSocialProof data={flyerData} />
+                ) : (
+                  <FlyerCanvasResponsive data={flyerData} />
+                )}
               </div>
             </div>
           </div>

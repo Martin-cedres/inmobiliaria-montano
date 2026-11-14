@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaqItem } from '@/components/ui/FaqAccordion';
+import { buildOrganizationReviewsAndDemandsSchema } from '@/data/reviewsAndDemands';
 
 interface AlquilarPropiedadJsonLdProps {
   faqs: FaqItem[];
@@ -9,6 +10,8 @@ const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamo
 const PAGE_URL = `${BASE_URL}/alquilar-mi-propiedad-san-jose`;
 
 export function AlquilarPropiedadJsonLd({ faqs }: AlquilarPropiedadJsonLdProps) {
+  const { aggregateRating, seeks } = buildOrganizationReviewsAndDemandsSchema();
+
   const schema = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -38,6 +41,7 @@ export function AlquilarPropiedadJsonLd({ faqs }: AlquilarPropiedadJsonLdProps) 
           'Gestión integral de alquileres en San José de Mayo con Inmobiliaria Montaño y Daniel Montaño. Selección de inquilinos con garantías seguras (ANDA, CGN, Aseguradoras, Depósito BHU), inventario detallado, contratos notariales y cobranza mensual puntual.',
         provider: {
           '@type': 'RealEstateAgent',
+          '@id': `${BASE_URL}/#organization`,
           name: 'Inmobiliaria Montaño',
           telephone: '+59892776715',
           email: 'contacto@inmobiliariamontano.uy',
@@ -45,8 +49,11 @@ export function AlquilarPropiedadJsonLd({ faqs }: AlquilarPropiedadJsonLdProps) 
           hasMap: 'https://share.google/6I1gbffV5ZTS5heXV',
           sameAs: [
             'https://share.google/6I1gbffV5ZTS5heXV',
+            'https://www.google.com/maps/place/?q=place_id:ChIJgU0vgPl3oZURSNT4x7Lw3fE',
             'https://wa.me/59892776715',
           ],
+          aggregateRating,
+          seeks: seeks.filter((d) => d.name.includes('Alquiler')),
         },
         areaServed: {
           '@type': 'AdministrativeArea',

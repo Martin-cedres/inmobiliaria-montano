@@ -113,8 +113,8 @@ export const metadata: Metadata = {
   other: {
     'geo.region': 'UY-SJ',
     'geo.placename': 'San José de Mayo, San José, Uruguay',
-    'geo.position': '-34.3375;-56.7136',
-    'ICBM': '-34.3375, -56.7136',
+    'geo.position': '-34.3397;-56.7136',
+    'ICBM': '-34.3397, -56.7136',
     'business:contact_data:street_address': '25 de Mayo 338',
     'business:contact_data:locality': 'San José de Mayo',
     'business:contact_data:region': 'San José',

@@ -8,6 +8,8 @@ import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
 import { FaqAccordion, FaqItem } from '@/components/ui/FaqAccordion';
 import { VenderPropiedadJsonLd } from '@/components/seo/VenderPropiedadJsonLd';
 import { AppraisalPageForm } from '@/components/appraisal/AppraisalPageForm';
+import { ActiveDemandBoard } from '@/components/ActiveDemandBoard';
+import { GoogleReviewsSection } from '@/components/GoogleReviewsSection';
 import { buildGeneralWhatsAppLink } from '@/utils/whatsapp';
 import {
   Home as HomeIcon,
@@ -25,7 +27,6 @@ import {
   Trees,
   Building2,
   Percent,
-  Clock,
 } from 'lucide-react';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
@@ -75,8 +76,8 @@ export const metadata: Metadata = {
   other: {
     'geo.region': 'UY-SJ',
     'geo.placename': 'San José de Mayo, San José, Uruguay',
-    'geo.position': '-34.3375;-56.7136',
-    'ICBM': '-34.3375, -56.7136',
+    'geo.position': '-34.3397;-56.7136',
+    'ICBM': '-34.3397, -56.7136',
   },
 };
 
@@ -84,7 +85,7 @@ const FAQS: FaqItem[] = [
   {
     question: '¿Por qué publicar tu casa, chacra o terreno con Inmobiliaria Montaño?',
     answer:
-      'Combinamos conocimiento profundo del mercado maragato, cartera activa de compradores calificados en espera con fondos disponibles o crédito bancario pre-aprobado, difusión multicanal y un respaldo notarial permanente con atención directa y personalizada de Daniel Montaño.',
+      'Combinamos conocimiento profundo del mercado maragato, compradores calificados con fondos disponibles o crédito bancario pre-aprobado, difusión multicanal y asesoramiento notarial flexible (contamos con escribana de confianza que trabaja con la inmobiliaria o podés operar con tu propio escribano) bajo atención directa de Daniel Montaño.',
   },
   {
     question: '¿Qué documentos necesito para poner en venta mi propiedad o vender por banco (BHU/BROU)?',
@@ -262,6 +263,13 @@ export default function VenderPropiedadPage() {
           </div>
         </section>
 
+        {/* 2.5. Cartelera de Demanda Activa (Búsquedas de Compra en San José) */}
+        <ActiveDemandBoard
+          defaultFilter="venta"
+          title="Búsquedas Activas de Compra en San José"
+          subtitle="Estos son los perfiles de compradores que hoy nos consultan en San José. Si tu propiedad encaja en alguno, hablalo directo con Daniel Montaño."
+        />
+
         {/* 3. Formulario de Captación */}
         <section id="formulario-tasacion" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
           <AppraisalPageForm />
@@ -320,7 +328,7 @@ export default function VenderPropiedadPage() {
                 </div>
                 <h3 className="font-extrabold text-base text-slate-900">Acompañamiento Notarial</h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
-                  Supervisamos la seña, el boleto de reserva, la entrega de documentación y la firma de la escritura para una operación 100% blindada.
+                  Contamos con escribana que trabaja junto a la inmobiliaria para revisar títulos, seña y escritura sin demoras, aunque siempre podés operar libremente con tu propio escribano de confianza.
                 </p>
               </div>
             </div>
@@ -406,6 +414,9 @@ export default function VenderPropiedadPage() {
             </a>
           </div>
         </section>
+
+        {/* 5.5. Prueba Social Verificada de Google Maps */}
+        <GoogleReviewsSection />
 
         {/* 6. Preguntas Frecuentes */}
         <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">

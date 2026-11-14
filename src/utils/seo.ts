@@ -1,5 +1,6 @@
 import { Property } from '@/types/property';
 import { Metadata } from 'next';
+import { buildOrganizationReviewsAndDemandsSchema } from '@/data/reviewsAndDemands';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
 
@@ -255,7 +256,7 @@ export function generatePropertySlug(
   categoryParam?: string,
   operationParam?: string,
   neighborhoodParam?: string,
-  featuresParam?: any
+  featuresParam?: GenerateSlugParams['features']
 ): string {
   let p: GenerateSlugParams;
 
@@ -514,7 +515,7 @@ export function generatePropertyGraphSchema(property: Property) {
   const isOfferActive = property.status === 'disponible' || property.status === 'nuevo' || property.status === 'oportunidad';
 
   // Entidad del Inmueble (Item)
-  const itemEntity: any = {
+  const itemEntity: Record<string, unknown> = {
     '@type': schemaType,
     '@id': `${canonicalUrl}#item`,
     name: property.title,
@@ -597,7 +598,7 @@ export function generatePropertyGraphSchema(property: Property) {
   }
 
   // Entidad de Publicación (RealEstateListing)
-  const listingEntity: any = {
+  const listingEntity: Record<string, unknown> = {
     '@type': 'RealEstateListing',
     '@id': `${canonicalUrl}#listing`,
     url: canonicalUrl,
@@ -623,7 +624,7 @@ export function generatePropertyGraphSchema(property: Property) {
     Boolean(property.price?.amount && property.price.amount > 0) &&
     (property.price?.priceMode === 'visible' || property.price?.priceMode === 'desde');
 
-  const offerEntity: any = (isOfferActive && hasVisiblePrice)
+  const offerEntity: Record<string, unknown> | null = (isOfferActive && hasVisiblePrice)
     ? {
         '@type': 'Offer',
         '@id': `${canonicalUrl}#offer`,
@@ -638,8 +639,10 @@ export function generatePropertyGraphSchema(property: Property) {
     listingEntity.offers = { '@id': `${canonicalUrl}#offer` };
   }
 
+  const orgReviewsAndDemands = buildOrganizationReviewsAndDemandsSchema();
+
   // Grafo unificado
-  const graph: any[] = [
+  const graph: Record<string, unknown>[] = [
     // 1. Agencia Inmobiliaria
     {
       '@type': ['RealEstateAgent', 'LocalBusiness'],
@@ -671,7 +674,12 @@ export function generatePropertyGraphSchema(property: Property) {
         'Alquileres con Garantías ANDA, Porto Seguro, SURA, CGN, Mapfre, Santander y FIDECIU',
         'Créditos Hipotecarios y Préstamos Bancarios BHU',
         'Venta de Casas y Terrenos con Títulos Verificados en San José',
+        'Asesoramiento Notarial Flexible con Escribana de Confianza o Escribano del Cliente',
+        'Captación Activa de Propiedades para Venta y Alquiler en San José',
       ],
+      aggregateRating: orgReviewsAndDemands.aggregateRating,
+      review: orgReviewsAndDemands.review,
+      seeks: orgReviewsAndDemands.seeks,
       slogan: 'Líder en venta de casas verificadas, créditos hipotecarios y tasaciones en San José de Mayo',
       address: {
         '@type': 'PostalAddress',
@@ -800,6 +808,8 @@ export const generatePropertyJsonLd = generatePropertyGraphSchema;
  * Genera el Schema.org @graph institucional para páginas principales y de servicios.
  */
 export function generateSiteGraphSchema() {
+  const orgReviewsAndDemands = buildOrganizationReviewsAndDemandsSchema();
+
   return {
     '@context': 'https://schema.org',
     '@graph': [
@@ -833,7 +843,12 @@ export function generateSiteGraphSchema() {
           'Alquileres con Garantías ANDA, Porto Seguro, SURA, CGN, Mapfre, Santander y FIDECIU',
           'Créditos Hipotecarios y Préstamos Bancarios BHU',
           'Venta de Casas y Terrenos con Títulos Verificados en San José',
+          'Asesoramiento Notarial Flexible con Escribana de Confianza o Escribano del Cliente',
+          'Captación Activa de Propiedades para Venta y Alquiler en San José',
         ],
+        aggregateRating: orgReviewsAndDemands.aggregateRating,
+        review: orgReviewsAndDemands.review,
+        seeks: orgReviewsAndDemands.seeks,
         slogan: 'Líder en venta de casas verificadas, créditos hipotecarios y tasaciones en San José de Mayo',
         description: 'Inmobiliaria líder de referencia en San José de Mayo, Uruguay. Especialistas destacados en venta de casas verificadas, propiedades aptas para crédito bancario (BHU e hipotecarios), alquileres garantizados y tasaciones oficiales con Daniel Montaño.',
         address: {

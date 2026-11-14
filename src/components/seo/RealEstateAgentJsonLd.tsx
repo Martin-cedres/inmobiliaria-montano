@@ -1,8 +1,11 @@
 import React from 'react';
+import { buildOrganizationReviewsAndDemandsSchema } from '@/data/reviewsAndDemands';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.inmobiliariamontano.uy';
 
 export function RealEstateAgentJsonLd() {
+  const { aggregateRating, review, seeks } = buildOrganizationReviewsAndDemandsSchema();
+
   const schema = {
     '@context': 'https://schema.org',
     '@type': ['RealEstateAgent', 'LocalBusiness'],
@@ -143,13 +146,17 @@ export function RealEstateAgentJsonLd() {
       'Alquileres con Garantías ANDA, Porto Seguro, SURA, CGN, Mapfre, Santander y FIDECIU',
       'Créditos Hipotecarios y Préstamos Bancarios BHU',
       'Venta de Casas y Terrenos con Títulos Verificados en San José',
+      'Asesoramiento Notarial Flexible con Escribana de Confianza o Escribano del Cliente',
+      'Captación Activa de Propiedades para Venta y Alquiler en San José',
       'Venta de inmuebles en San José',
       'Alquileres residenciales y comerciales',
       'Tasaciones oficiales y peritajes',
-      'Asesoramiento notarial y crediticio',
       'Lotes y fraccionamientos de terrenos',
       'Chacras marítimas y productivas',
     ],
+    aggregateRating,
+    review,
+    seeks,
   };
 
   return (

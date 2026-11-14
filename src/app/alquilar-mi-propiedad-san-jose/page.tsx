@@ -9,12 +9,13 @@ import { FaqAccordion, FaqItem } from '@/components/ui/FaqAccordion';
 import { AlquilarPropiedadJsonLd } from '@/components/seo/AlquilarPropiedadJsonLd';
 import { AppraisalPageForm } from '@/components/appraisal/AppraisalPageForm';
 import { DepartmentInterlinking } from '@/components/seo/DepartmentInterlinking';
+import { ActiveDemandBoard } from '@/components/ActiveDemandBoard';
+import { GoogleReviewsSection } from '@/components/GoogleReviewsSection';
 import { buildGeneralWhatsAppLink } from '@/utils/whatsapp';
 import {
   Home as HomeIcon,
   ChevronRight,
   ShieldCheck,
-  Globe,
   UserCheck,
   MapPin,
   PhoneCall,
@@ -22,12 +23,9 @@ import {
   ArrowRight,
   FileText,
   Building2,
-  Clock,
   Award,
-  AlertTriangle,
   XCircle,
   Receipt,
-  Scale,
   KeyRound,
 } from 'lucide-react';
 
@@ -78,8 +76,8 @@ export const metadata: Metadata = {
   other: {
     'geo.region': 'UY-SJ',
     'geo.placename': 'San José de Mayo, San José, Uruguay',
-    'geo.position': '-34.3375;-56.7136',
-    'ICBM': '-34.3375, -56.7136',
+    'geo.position': '-34.3397;-56.7136',
+    'ICBM': '-34.3397, -56.7136',
   },
 };
 
@@ -87,7 +85,7 @@ const FAQS: FaqItem[] = [
   {
     question: '¿Por qué confiar el alquiler o administración de tu propiedad a Inmobiliaria Montaño?',
     answer:
-      'Porque nos ocupamos de punta a punta para que disfrutes de tu renta sin dolores de cabeza: tasamos el valor óptimo de mercado, realizamos un inventario fotográfico exhaustivo, seleccionamos inquilinos con solvencia comprobada, formalizamos contratos ante escribano público y gestionamos la cobranza mensual con control de tributos al día.',
+      'Porque nos ocupamos de punta a punta para que disfrutes de tu renta sin dolores de cabeza: tasamos el valor óptimo de mercado, realizamos un inventario fotográfico exhaustivo, seleccionamos inquilinos con solvencia comprobada, formalizamos contratos con nuestra escribana de confianza (o podés usar tu propio escribano si lo preferís) y gestionamos la cobranza mensual con control de tributos al día.',
   },
   {
     question: '¿Qué garantías de alquiler ofrecen mayor seguridad para el propietario en San José?',
@@ -112,7 +110,7 @@ const FAQS: FaqItem[] = [
   {
     question: '¿Qué documentación necesito para poner mi inmueble en alquiler?',
     answer:
-      'Copia de cédula de identidad del titular, número de padrón catastral, comprobantes de pago de Contribución Inmobiliaria e Impuesto de Primaria al día, y detalle de los servicios existentes (UTE/OSE). Nosotros nos encargamos de todo el relevamiento fotográfico y la redacción del contrato notarial.',
+      'Copia de cédula de identidad del titular, número de padrón catastral, comprobantes de pago de Contribución Inmobiliaria e Impuesto de Primaria al día, y detalle de los servicios existentes (UTE/OSE). Nosotros nos encargamos del relevamiento fotográfico y coordinamos la redacción del contrato notarial con nuestra escribana o con tu escribano de elección.',
   },
 ];
 
@@ -269,6 +267,13 @@ export default function AlquilarPropiedadPage() {
           </div>
         </section>
 
+        {/* 3.5. Cartelera de Demanda Activa en Alquileres */}
+        <ActiveDemandBoard
+          defaultFilter="alquiler"
+          title="Búsquedas Activas de Alquiler en San José"
+          subtitle="Inquilinos con garantías verificadas (ANDA, CGN, Porto Seguro, SURA y Convenio Círculo Policial) buscan activamente estas tipologías."
+        />
+
         {/* 4. Los 4 Pilares de Administración de Inmobiliaria Montaño */}
         <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-8">
           <div className="text-center max-w-2xl mx-auto space-y-2">
@@ -387,7 +392,7 @@ export default function AlquilarPropiedadPage() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-[#E85D04] font-black">✓</span>
-                    <span>Contratos notariales redactados por escribano con inventario fotográfico.</span>
+                    <span>Contratos notariales con nuestra escribana de confianza (o tu propio escribano) e inventario fotográfico.</span>
                   </li>
                 </ul>
               </div>
@@ -437,6 +442,9 @@ export default function AlquilarPropiedadPage() {
             sourcePage="/alquilar-mi-propiedad-san-jose"
           />
         </section>
+
+        {/* 6.5. Prueba Social Verificada de Google Maps */}
+        <GoogleReviewsSection />
 
         {/* 7. Preguntas Frecuentes */}
         <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
