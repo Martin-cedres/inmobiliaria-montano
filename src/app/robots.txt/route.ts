@@ -16,6 +16,7 @@ Disallow: /api/auth/*
 Disallow: /*?*view=*
 Disallow: /*?*category=*
 Disallow: /*?*focus=*
+Disallow: /cdn-cgi/
 
 User-Agent: Googlebot
 Allow: /
@@ -27,6 +28,7 @@ Disallow: /api/auth/*
 Disallow: /*?*view=*
 Disallow: /*?*category=*
 Disallow: /*?*focus=*
+Disallow: /cdn-cgi/
 
 User-Agent: Google-Extended
 Allow: /

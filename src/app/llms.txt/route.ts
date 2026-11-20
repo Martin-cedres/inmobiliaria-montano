@@ -125,6 +125,7 @@ ${SAN_JOSE_LOCATIONS.map((loc) => `- **${loc.name}** (CP ${loc.postalCode}, ${lo
       'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=43200',
       'x-markdown-tokens': 'true',
       'Access-Control-Allow-Origin': '*',
+      'X-Robots-Tag': 'noindex, nofollow',
     },
   });
 }

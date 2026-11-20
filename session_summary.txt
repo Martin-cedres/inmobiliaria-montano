@@ -1585,3 +1585,9 @@
   - Integración con History API (`pushState` / `popstate`) para que el botón o gesto "Atrás" del navegador/celular cierre únicamente la foto sin sacar al usuario de la publicación.
   - Botón `Cerrar` de alto contraste (`bg-white text-slate-950`, `min-h-[44px]`), barra superior con truncado seguro (`min-w-0 flex-1`), cierre al tocar el fondo oscuro, swipe vertical para descartar, zoom (botón `+`/`-`, doble tap y pinch-to-zoom), auto-scroll de miniaturas dentro del visor y atributos ARIA completos.
   - Verificación local: `eslint` (`0` errores, `0` warnings), `npx tsc --noEmit` (exit `0`) y pruebas Playwright en `localhost:3000` (mobile `375x812` y desktop `1280x800`).
+
+[2026-11-20 01:30] Correcciones SEO GSC (inmobiliariamontano.uy):
+- next.config.ts y route handlers (src/app/api/markdown/propiedad/[slug]/route.ts, src/app/llms.txt/route.ts, src/app/llms-full.txt/route.ts): agregado X-Robots-Tag: noindex, nofollow a /.well-known/*, /propiedad/:slug.md, /api/markdown/*, /llms*.txt, /propiedades/*/llms.txt, /auth.md y /openapi.json.
+- src/app/sitemap.ts: filtrado !p.noIndex en validProperties.
+- src/app/robots.txt/route.ts: bloqueado /cdn-cgi/ para * y Googlebot.
+- Verificado con npx tsc --noEmit y npm run build (85/85 páginas estáticas). Pendiente de commit/deploy por el usuario.

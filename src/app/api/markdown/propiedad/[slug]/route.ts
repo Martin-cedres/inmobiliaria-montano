@@ -20,6 +20,7 @@ export async function GET(
       headers: {
         'Content-Type': 'text/markdown; charset=utf-8',
         'Access-Control-Allow-Origin': '*',
+        'X-Robots-Tag': 'noindex, nofollow',
       },
     });
   }
@@ -33,6 +34,7 @@ export async function GET(
       'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=43200',
       'x-markdown-tokens': 'true',
       'Access-Control-Allow-Origin': '*',
+      'X-Robots-Tag': 'noindex, nofollow',
     },
   });
 }

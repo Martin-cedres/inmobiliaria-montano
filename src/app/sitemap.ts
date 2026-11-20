@@ -34,7 +34,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Filtro defensivo: Solo incluir propiedades activas, reservadas, vendidas o alquiladas.
   // Excluye estrictamente cualquier inmueble con estado 'retirada' o 'inactiva'.
   const validProperties = allProperties.filter(
-    (p) => p.status !== 'retirada' && p.status !== 'inactiva'
+    (p) => p.status !== 'retirada' && p.status !== 'inactiva' && !p.noIndex
   );
 
   // Fechas reales calculadas según el inventario que alimenta cada sección
